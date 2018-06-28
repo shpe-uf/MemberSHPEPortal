@@ -1,0 +1,73 @@
+.container-max{
+  width: 100%;
+}
+
+body {
+  color: rgb(0, 48, 80);
+  font-family: 'Roboto';
+  height: auto;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Oswald';
+  text-transform: uppercase;
+}
+
+h2 {
+  color: rgb(235, 70, 22);
+}
+
+h4 {
+  color: rgb(235, 70, 22);
+}
+
+span {
+  color: rgb(235, 70, 22);
+}
+
+hr {
+  background-color: rgb(0, 48, 80);
+}
+
+.navbar-dark, .bg-dark {
+  background-color: rgb(0, 40, 67) !important;
+}
+
+.navbar-brand {
+  font-family: 'Oswald';
+}
+
+.white {
+  background-color: rgb(255, 255, 255);
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.footer {
+  margin-top: 16px;
+  padding-top: 32px;
+  padding-bottom: 32px;
+  background-color: rgb(204, 204, 204);
+}
+
+.white-text {
+  color: rgb(255, 255, 255);
+}
+
+.orange-text {
+  color: rgb(235, 70, 22);
+}
+
+.jumbotron {
+  background-color: rgb(0, 48, 80);
+  border-radius: 0px;
+  margin-bottom: 16px;
+}
+
+.fas {
+  color: rgb(235, 70, 22);
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
