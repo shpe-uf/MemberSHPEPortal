@@ -3,13 +3,13 @@
 }
 
 body {
-  color: rgb(0, 48, 80);
+  color: rgb(88, 88, 88);
   font-family: 'Roboto';
   height: auto;
 }
 
 h1, h2, h3, h4, h5 {
-  font-family: 'Oswald';
+  font-family: 'Bree Serif';
   text-transform: uppercase;
 }
 
@@ -34,7 +34,8 @@ hr {
 }
 
 .navbar-brand {
-  font-family: 'Oswald';
+  font-family: 'Bree Serif';
+  font-size: 1.6rem;
 }
 
 .white {
@@ -70,4 +71,9 @@ hr {
   color: rgb(235, 70, 22);
   padding-top: 16px;
   padding-bottom: 16px;
+}
+
+.img-logo {
+  max-width: 100%;
+  height: auto;
 }
