@@ -6,8 +6,12 @@ angular.module('appRoutes', ['ngRoute'])
     templateUrl: 'app/views/pages/home.html'
   })
 
-  .when('/sign-up', {
-    templateUrl: 'app/views/pages/sign-up.html'
+  .when('/register', {
+    templateUrl: 'app/views/pages/users/register.html'
+  })
+
+  .when('/login', {
+    templateUrl: 'app/views/pages/users/login.html'
   })
 
   .otherwise({

@@ -8,9 +8,7 @@
 }
 
 body {
-  color: rgb(88, 88, 88);
   font-family: 'Roboto';
-  height: auto;
 }
 
 h1, h2, h3, h4, h5 {
@@ -45,7 +43,6 @@ hr {
 }
 
 .footer {
-  margin-top: 16px;
   padding-top: 32px;
   padding-bottom: 32px;
   background-color: rgb(230, 230, 230);
@@ -74,4 +71,47 @@ hr {
 .img-logo {
   max-width: 100%;
   height: auto;
+}
+
+.register-container, .login-container {
+  padding: 30px 30px 30px 30px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
+}
+
+.register-container {
+  margin-top: 128px;
+  margin-bottom: 128px;
+}
+
+.login-container {
+  margin-top: 300px;
+  margin-bottom: 300px;
+}
+
+.register-bg, .login-bg {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+}
+
+.register-bg{
+  background-image: url(../images/register-bg.jpg);
+}
+
+.login-bg{
+  background-image: url(../images/login-bg.jpg);
+}
+
+.btn-submit {
+  color: rgb(235, 70, 22);
+  background-color: rgb(255, 255, 255);
+  border-color: rgb(235, 70, 22);
+}
+
+.btn-submit:hover {
+  color: rgb(255, 255, 255);
+  background-color: rgb(235, 70, 22);
+  border-color: rgb(235, 70, 22);
 }
