@@ -1,6 +1,6 @@
 angular.module('userControllers', ['userServices'])
 
-  .controller('regCtrl', function($http, $location, User) {
+  .controller('regCtrl', function($http, $location, $timeout, User) {
 
     var app = this;
 
@@ -10,7 +10,9 @@ angular.module('userControllers', ['userServices'])
       User.create(app.regData).then(function(data) {
         if (data.data.success) {
           app.successMsg = data.data.message;
-          $location.path('/');
+          $timeout(function() {
+            $location.path('/login');
+          }, 1500);
         } else {
           app.errorMsg = data.data.message;
         }

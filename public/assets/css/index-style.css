@@ -121,3 +121,15 @@ hr {
   padding: 6px 6px 6px 6px;
   text-align: center;
 }
+
+.success-message {
+  -webkit-animation: pulse 0.3s both ease;
+  -moz-animation: pulse 0.3s both ease;
+  animation: pulse 0.3s both ease;
+}
+
+.error-message {
+  -webkit-animation: shake 0.3s both ease;
+  -moz-animation: shake 0.3s both ease;
+  animation: shake 0.3s both ease;
+}
