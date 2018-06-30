@@ -13,16 +13,61 @@ module.exports = function(router) {
     // user.listServ = req.body.listServ;
 
     if (req.body.username == null || req.body.password == null || req.body.email == null || req.body.firstName == null || req.body.lastName == null || req.body.major == null || req.body.year == null || req.body.username == '' || req.body.password == '' || req.body.email == '' || req.body.firstName == '' || req.body.lastName == '' || req.body.major == '' || req.body.year == '') {
-      res.json({success: false, message: 'Make sure you filled out the entire form!'});
+      res.json({
+        success: false,
+        message: 'Make sure you filled out the entire form!'
+      });
     } else {
       user.save(function(err) {
         if (err) {
-          res.json({success: false, message: 'User already exists!'});
+          res.json({
+            success: false,
+            message: 'User already exists!'
+          });
         } else {
-          res.json({success: true, message: 'Congratulations! Welcome!'});
+          res.json({
+            success: true,
+            message: 'Congratulations! Welcome!'
+          });
         }
       });
     }
+  });
+
+  router.post('/authenticate', function(req, res) {
+    User.findOne({
+      username: req.body.username
+    }).select('email username password').exec(function(err, user) {
+      if (err) throw err;
+
+      if (!user) {
+        res.json({
+          success: false,
+          message: 'User not found'
+        });
+      } else if (user) {
+        if (!req.body.password) {
+          res.json({
+            success: false,
+            message: 'Enter a password'
+          });
+        } else {
+          var validPassword = user.comparePassword(req.body.password);
+
+          if (!validPassword) {
+            res.json({
+              success: false,
+              message: 'Wrong password'
+            });
+          } else {
+            res.json({
+              success: true,
+              message: 'User authenticated'
+            });
+          }
+        }
+      }
+    });
   });
 
   return router;
