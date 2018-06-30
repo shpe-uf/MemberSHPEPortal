@@ -10,16 +10,16 @@ module.exports = function(router) {
     user.username = req.body.username;
     user.email = req.body.email;
     user.password = req.body.password;
-    user.listServ = req.body.listServ;
+    // user.listServ = req.body.listServ;
 
     if (req.body.username == null || req.body.password == null || req.body.email == null || req.body.firstName == null || req.body.lastName == null || req.body.major == null || req.body.year == null || req.body.username == '' || req.body.password == '' || req.body.email == '' || req.body.firstName == '' || req.body.lastName == '' || req.body.major == '' || req.body.year == '') {
-      res.send('Make sure you filled out the entire form!')
+      res.json({success: false, message: 'Make sure you filled out the entire form!'});
     } else {
       user.save(function(err) {
         if (err) {
-          res.send('User already exists!');
+          res.json({success: false, message: 'User already exists!'});
         } else {
-          res.send("\nUser created");
+          res.json({success: true, message: 'Congratulations! Welcome!'});
         }
       });
     }

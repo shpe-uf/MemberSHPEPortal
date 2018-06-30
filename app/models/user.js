@@ -35,8 +35,14 @@ var UserSchema = new Schema({
     type: String,
     required: true
   },
-  listServ: {
-    type: Boolean
+  // listServ: {
+  //   type: Boolean,
+  //   default: false,
+  //   required: true
+  // },
+  points: {
+    type: Number,
+    default: 0
   }
 });
 

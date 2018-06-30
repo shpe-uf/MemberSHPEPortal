@@ -7,7 +7,9 @@ angular.module('appRoutes', ['ngRoute'])
   })
 
   .when('/register', {
-    templateUrl: 'app/views/pages/users/register.html'
+    templateUrl: 'app/views/pages/users/register.html',
+    controller: 'regCtrl',
+    controllerAs: 'register'
   })
 
   .when('/login', {
