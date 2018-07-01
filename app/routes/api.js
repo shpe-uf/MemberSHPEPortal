@@ -1,4 +1,6 @@
 var User = require('../models/user');
+var jwt = require('jsonwebtoken');
+var secret = 'loremipsum';
 
 module.exports = function(router) {
   router.post('/users', function(req, res) {
@@ -37,7 +39,7 @@ module.exports = function(router) {
   router.post('/authenticate', function(req, res) {
     User.findOne({
       username: req.body.username
-    }).select('email username password').exec(function(err, user) {
+    }).select('email username password firstName lastName').exec(function(err, user) {
       if (err) throw err;
 
       if (!user) {
@@ -60,14 +62,52 @@ module.exports = function(router) {
               message: 'Wrong password'
             });
           } else {
+            
+            var token = jwt.sign({
+              username: user.username,
+              email: user.email,
+              firstName: user.firstName,
+              lastName: user.lastName
+            }, secret, {
+              expiresIn: '24h'
+            });
+
             res.json({
               success: true,
-              message: 'User authenticated'
+              message: 'User authenticated',
+              token: token
             });
           }
         }
       }
     });
+  });
+
+  router.use(function(req, res, next) {
+    var token = req.body.token || req.body.query || req.headers['x-access-token'];
+
+    if(token) {
+      jwt.verify(token, secret, function(err, decoded) {
+        if (err) {
+          res.json({
+            success: false,
+            message: 'Token invalid'
+          });
+        } else {
+          req.decoded = decoded;
+          next();
+        }
+      });
+    } else {
+      res.json({
+        success: false,
+        message: 'No token provided'
+      });
+    }
+  });
+
+  router.post('/me', function(req, res) {
+    res.send(req.decoded);
   });
 
   return router;

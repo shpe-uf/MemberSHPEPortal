@@ -11,6 +11,12 @@ body {
   font-family: 'Roboto';
 }
 
+.footer {
+  padding-top: 32px;
+  padding-bottom: 32px;
+  background-color: rgb(230, 230, 230);
+}
+
 h1, h2, h3, h4, h5 {
   font-family: 'Uni Neue';
   text-transform: uppercase;
@@ -40,12 +46,6 @@ hr {
   margin-bottom: 5px;
   padding-top: 0px;
   padding-bottom: 0px;
-}
-
-.footer {
-  padding-top: 32px;
-  padding-bottom: 32px;
-  background-color: rgb(230, 230, 230);
 }
 
 .white-text {
@@ -132,4 +132,8 @@ hr {
   -webkit-animation: shake 0.3s both ease;
   -moz-animation: shake 0.3s both ease;
   animation: shake 0.3s both ease;
+}
+
+.nav-name:hover {
+  color: rgb(255, 210, 0) !important;
 }
