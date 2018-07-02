@@ -69,6 +69,10 @@ hr {
   background-color: rgba(255, 255, 255, 0.8);
 }
 
+.profile-container {
+  padding-top: 32px;
+}
+
 .register-bg, .login-bg {
   background-repeat: no-repeat;
   background-size: cover;

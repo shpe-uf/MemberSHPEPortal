@@ -39,7 +39,7 @@ module.exports = function(router) {
   router.post('/authenticate', function(req, res) {
     User.findOne({
       username: req.body.username
-    }).select('email username password firstName lastName').exec(function(err, user) {
+    }).select('email username password firstName lastName major year').exec(function(err, user) {
       if (err) throw err;
 
       if (!user) {
@@ -62,12 +62,14 @@ module.exports = function(router) {
               message: 'Wrong password'
             });
           } else {
-            
+
             var token = jwt.sign({
               username: user.username,
               email: user.email,
               firstName: user.firstName,
-              lastName: user.lastName
+              lastName: user.lastName,
+              major: user.major,
+              year: user.year
             }, secret, {
               expiresIn: '24h'
             });
