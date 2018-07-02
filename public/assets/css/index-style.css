@@ -5,16 +5,12 @@
 
 body {
   font-family: 'Roboto';
-  color: rgb(32, 32, 32);
 }
 
-footer {
-  background-color: rgb(190, 190, 190);
-}
-
-.footer-text {
-  padding-top: 10px;
-  padding-bottom: 10px;
+.footer {
+  padding-top: 32px;
+  padding-bottom: 32px;
+  background-color: rgb(230, 230, 230);
 }
 
 .navbar-dark, .bg-dark {
@@ -62,6 +58,10 @@ hr {
   color: rgb(235, 70, 22);
   padding-top: 15px;
   padding-bottom: 15px;
+}
+
+.carousel {
+  padding-bottom: 50px;
 }
 
 .register-container, .login-container {
