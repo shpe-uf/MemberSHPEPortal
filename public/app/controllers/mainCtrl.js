@@ -15,7 +15,6 @@ angular.module('mainController', ['authServices'])
           app.major = data.data.major;
           app.year = data.data.year;
 
-          console.log(data.data);
           app.loadme = true;
         });
       } else {
@@ -36,10 +35,10 @@ angular.module('mainController', ['authServices'])
         if (data.data.success) {
           app.successMsg = data.data.message;
           $timeout(function() {
-            $location.path('/');
+            $location.path('/profile');
             app.loginData = '';
             app.successMsg = false;
-          }, 1500);
+          }, 1000);
         } else {
           app.errorMsg = data.data.message;
         }
@@ -51,7 +50,7 @@ angular.module('mainController', ['authServices'])
       $location.path('/logout');
       $timeout(function() {
         $location.path('/');
-      }, 1500);
+      }, 1000);
     };
 
   });

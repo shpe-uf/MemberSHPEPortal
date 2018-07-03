@@ -3,8 +3,14 @@
   src: url(../fonts/UniNeue-HeavyItalic.otf);
 }
 
+@font-face {
+  font-family: "Avenir";
+  src: url(../fonts/Avenir-Book.otf);
+}
+
 body {
-  font-family: 'Roboto';
+  font-family: 'Avenir';
+  color: rgb(45, 45, 45);
 }
 
 .footer {
@@ -56,8 +62,8 @@ hr {
 
 .fas {
   color: rgb(235, 70, 22);
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding-top: 24px;
+  padding-bottom: 24px;
 }
 
 .carousel {
@@ -69,7 +75,7 @@ hr {
   background-color: rgba(255, 255, 255, 0.8);
 }
 
-.profile-container {
+.custom-container {
   padding-top: 36px;
 }
 
@@ -127,4 +133,29 @@ hr {
 
 .nav-name:hover {
   color: rgb(255, 210, 0) !important;
+}
+
+th, td {
+  border-color: rgb(221, 225, 230) !important;
+  border-bottom: solid;
+  border-width: 1px 1px 1px 1px !important;
+}
+
+.card-text {
+  font-family: "Avenir";
+  color: rgb(255, 255, 255);
+}
+
+.bg-points {
+  background-color: rgb(0, 204, 204);
+}
+
+.bg-percentile {
+  background-color: rgb(255, 0, 102);
+}
+
+.subtitle {
+  font-family: "Avenir";
+  text-transform: capitalize;
+  color: rgb(45, 45, 45);
 }

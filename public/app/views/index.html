@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="shortcut icon" type="image/png" href="../../../assets/images/favicon.png" />
 
-  <title>MemberSHPE UF Portal</title>
+  <title>MemberSHPE UF</title>
 
   <!-- STYLE CDNs - Bootstrap/Google Fonts/Font Awesome/Custom CSS/Animate -->
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -39,9 +39,9 @@
 
 <body ng-app="userApp" ng-controller="mainCtrl as main" ng-show="main.loadme" ng-cloak>
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
     <div class="container">
-      <a class="navbar-brand" href="/">MEMBER<span>SHPE UF</span> PORTAL</a>
+      <a class="navbar-brand" href="/">MEMBER<span>SHPE UF</span></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -56,8 +56,14 @@
           <li class="nav-item">
             <a class="nav-link" href="#" ng-show="main.isLoggedIn" ng-click="main.logout()">Logout</a>
           </li>
-          <li>
-            <a class="nav-link nav-name" href="/profile" ng-show="main.isLoggedIn">{{ main.firstName }} {{ main.lastName }}</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link nav-name dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-show="main.isLoggedIn">{{ main.firstName }} {{ main.lastName }}</a>
+            <div class="dropdown-menu"  aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="/profile">My Profile</a>
+              <a class="dropdown-item" href="/rewards">Rewards Program</a>
+              <a class="dropdown-item" href="/alumni">Alumni Directory</a>
+              <a class="dropdown-item" href="/resume">Résumé</a>
+            </div>
           </li>
         </ul>
       </div>
