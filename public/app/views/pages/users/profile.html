@@ -1,9 +1,13 @@
 <div class="container custom-container">
-  <h1>My Profile</h1>
+  <h2>My Profile</h2>
   <hr>
   <div class="row">
-    <div class="col-sm-6">
-      <table class="table table-hover">
+    <div class="col-md-6 col-sm-12">
+      <img class="img-fluid" src="../../assets/images/profile.png">
+    </div>
+
+    <div class="col-md-6 col-sm-12">
+      <table class="table table-responsive-sm table-hover">
         <tr>
           <th>Name</th>
           <td>{{ main.firstName }} {{ main.lastName }}</td>
@@ -21,11 +25,7 @@
           <td>{{ main.year }}</td>
         </tr>
       </table>
-      <button type="button" class="btn btn-submit">Modify Profile</button>
-    </div>
-
-    <div class="col-sm-6">
-      <img class="img-fluid" src="../../assets/images/profile.png">
+      <button type="button" class="btn btn-submit float-right">Modify Profile</button>
     </div>
   </div>
 </div>
