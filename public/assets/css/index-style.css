@@ -132,19 +132,20 @@ hr {
 }
 
 .nav-name {
-  color: rgb(255, 233, 128) !important;
+  color: rgb(255, 222, 68) !important;
+  text-transform: uppercase;
 }
 
 .nav-name:hover {
-  color: rgb(255, 210, 0) !important;
+  color: rgb(221, 182, 0) !important;
 }
 
 .admin-text {
-  color: rgb(255, 233, 128) !important;
+  color: rgb(255, 222, 68) !important;
 }
 
 .admin-text:hover {
-  color: rgb(255, 210, 0) !important;
+  color: rgb(221, 182, 0) !important;
 }
 
 th, td {
