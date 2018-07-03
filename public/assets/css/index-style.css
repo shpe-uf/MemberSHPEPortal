@@ -131,7 +131,19 @@ hr {
   animation: shake 0.3s both ease;
 }
 
+.nav-name {
+  color: rgb(255, 233, 128) !important;
+}
+
 .nav-name:hover {
+  color: rgb(255, 210, 0) !important;
+}
+
+.admin-text {
+  color: rgb(255, 233, 128) !important;
+}
+
+.admin-text:hover {
   color: rgb(255, 210, 0) !important;
 }
 

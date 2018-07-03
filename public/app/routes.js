@@ -43,6 +43,11 @@ var app = angular.module('appRoutes', ['ngRoute'])
         authenticated: true
       })
 
+      .when('/admin', {
+        templateUrl: 'app/views/pages/admin/admin.html',
+        authenticated: true
+      })
+
       .otherwise({
         redirectTo: '/'
       });
