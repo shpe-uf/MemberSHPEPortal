@@ -14,20 +14,20 @@
           <div class="alert alert-danger">{{ register.errorMsg }}</div>
         </div>
 
-        <form ng-submit="register.regUser(regData);">
+        <form name="regForm" ng-submit="register.regUser(regData);" novalidate>
           <div class="form-group">
-            <label for="userFirst">First Name</label>
-            <input type="text" class="form-control" id="userFirst" ng-model="register.regData.firstName">
+            <label for="userFirst">First Name <span ng-show="(!regForm.firstName.$pristine && regForm.firstName.$error.required) || (regForm.$submitted && regForm.firstName.$error.required)"> (This field is required)</span></label>
+            <input type="text" class="form-control" name="firstName" id="userFirst" ng-model="register.regData.firstName" required>
           </div>
 
           <div class="form-group">
-            <label for="userLast">Last Name</label>
-            <input type="text" class="form-control" id="userLast" ng-model="register.regData.lastName">
+            <label for="userLast">Last Name <span ng-show="(!regForm.lastName.$pristine && regForm.lastName.$error.required) || (regForm.$submitted && regForm.lastName.$error.required)"> (This field is required)</span></label>
+            <input type="text" class="form-control" name="lastName" id="userLast" ng-model="register.regData.lastName" required>
           </div>
 
           <div class="form-group">
-            <label for="userMajor">Major</label>
-            <select class="form-control" id="userMajor" ng-model="register.regData.major">
+            <label for="userMajor">Major  <span ng-show="(!regForm.major.$pristine && regForm.major.$error.required) || (regForm.$submitted && regForm.major.$error.required)"> (This field is required)</span></label>
+            <select class="form-control" name="major" id="userMajor" ng-model="register.regData.major" required>
                 <option>Aerospace Engineering</option>
                 <option>Agricultural & Biological Engineering</option>
                 <option>Biomedical Engineering</option>
@@ -49,8 +49,8 @@
           </div>
 
           <div class="form-group">
-            <label for="userYear">Year</label>
-            <select class="form-control" id="userYear" ng-model="register.regData.year">
+            <label for="userYear">Year <span ng-show="(!regForm.year.$pristine && regForm.year.$error.required) || (regForm.$submitted && regForm.year.$error.required)"> (This field is required)</span></label>
+            <select class="form-control" name="year" id="userYear" ng-model="register.regData.year" required>
                 <option>1st Year</option>
                 <option>2nd Year</option>
                 <option>3rd Year</option>
@@ -61,18 +61,18 @@
           </div>
 
           <div class="form-group">
-            <label for="userEmail">Email</label>
-            <input type="email" class="form-control" id="userEmail" ng-model="register.regData.email">
+            <label for="userEmail">Email <span ng-show="(!regForm.email.$pristine && regForm.email.$error.required) || (regForm.$submitted && regForm.email.$error.required)"> (This field is required)</span></label>
+            <input type="email" class="form-control" name="email" id="userEmail" ng-model="register.regData.email" required>
           </div>
 
           <div class="form-group">
-            <label for="userUsername">Username</label>
-            <input type="text" class="form-control" id="userUsername" ng-model="register.regData.username">
+            <label for="userUsername">Username <span ng-show="(!regForm.username.$pristine && regForm.username.$error.required) || (regForm.$submitted && regForm.username.$error.required)"> (This field is required)</span></label>
+            <input type="text" class="form-control" name="username" id="userUsername" ng-model="register.regData.username" required>
           </div>
 
           <div class="form-group">
-            <label for="userPassword">Password</label>
-            <input type="password" class="form-control" id="userPassword" ng-model="register.regData.password">
+            <label for="userPassword">Password <span ng-show="(!regForm.password.$pristine && regForm.password.$error.required) || (regForm.$submitted && regForm.password.$error.required)"> (This field is required)</span></label>
+            <input type="password" class="form-control" name="password" id="userPassword" ng-model="register.regData.password" required>
           </div>
 
           <hr>
