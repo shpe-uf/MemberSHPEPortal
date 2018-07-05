@@ -19,7 +19,6 @@ angular.module('mainController', ['authServices'])
           app.loadme = true;
         });
       } else {
-        app.isLoggedIn = false;
         app.firstName = '';
         app.lastName = '';
         app.username = '';
@@ -28,6 +27,7 @@ angular.module('mainController', ['authServices'])
         app.year = '';
         app.points = '';
         app.loadme = true;
+        app.isLoggedIn = false;
       }
     });
 

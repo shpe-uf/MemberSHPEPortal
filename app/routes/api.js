@@ -22,10 +22,53 @@ module.exports = function(router) {
     } else {
       user.save(function(err) {
         if (err) {
-          res.json({
-            success: false,
-            message: 'User already exists!'
-          });
+
+          if (err.errors != null) {
+            if (err.errors.firstName) {
+              res.json({
+                success: false,
+                message: err.errors.firstName.properties.message
+              });
+            } else if (err.errors.lastName) {
+              res.json({
+                success: false,
+                message: err.errors.lastName.properties.message
+              });
+            } else if (err.errors.email) {
+              res.json({
+                success: false,
+                message: err.errors.email.properties.message
+              });
+            } else if (err.errors.username) {
+              res.json({
+                success: false,
+                message: err.errors.username.properties.message
+              });
+            } else if (err.errors.password) {
+              res.json({
+                success: false,
+                message: err.errors.password.properties.message
+              });
+            } else{
+              res.json({
+                success: false,
+                message: err
+              });
+            }
+          } else if(err) {
+            if (err.code == 11000) {
+              res.json({
+                success: false,
+                message: 'Username and/or email already taken.'
+              });
+            } else {
+              res.json({
+                success: false,
+                message: err
+              });
+            }
+          }
+
         } else {
           res.json({
             success: true,
@@ -89,7 +132,7 @@ module.exports = function(router) {
   router.use(function(req, res, next) {
     var token = req.body.token || req.body.query || req.headers['x-access-token'];
 
-    if(token) {
+    if (token) {
       jwt.verify(token, secret, function(err, decoded) {
         if (err) {
           res.json({
