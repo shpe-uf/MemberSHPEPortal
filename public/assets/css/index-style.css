@@ -13,12 +13,6 @@ body {
   color: rgb(45, 45, 45);
 }
 
-.footer {
-  padding-top: 32px;
-  padding-bottom: 32px;
-  background-color: rgb(230, 230, 230);
-}
-
 .navbar-dark, .bg-dark {
   background-color: rgb(0, 51, 80) !important;
 }
@@ -71,7 +65,7 @@ hr {
 }
 
 .register-container, .login-container {
-  padding: 16px 16px 16px 16px;
+  padding: 24px 24px 24px 24px;
   background-color: rgba(255, 255, 255, 0.8);
 }
 
@@ -90,6 +84,7 @@ hr {
 .register-bg {
   background-image: url(../images/register-bg.jpg);
   background-position: 0% 50%;
+  height: 1000px;
 }
 
 .login-bg {
@@ -124,35 +119,42 @@ hr {
   -webkit-animation: pulse 0.3s both ease;
   -moz-animation: pulse 0.3s both ease;
   animation: pulse 0.3s both ease;
+  margin-bottom: 16px;
 }
 
 .error-message {
   -webkit-animation: shake 0.3s both ease;
   -moz-animation: shake 0.3s both ease;
   animation: shake 0.3s both ease;
+  margin-bottom: 16px;
 }
 
 .nav-name {
-  color: rgb(255, 222, 68) !important;
+  color: rgb(255, 116, 75) !important;
   text-transform: uppercase;
 }
 
 .nav-name:hover {
-  color: rgb(221, 182, 0) !important;
+  color: rgb(235, 70, 22) !important;
 }
 
 .admin-text {
-  color: rgb(255, 222, 68) !important;
+  color: rgb(255, 116, 75) !important;
 }
 
 .admin-text:hover {
-  color: rgb(221, 182, 0) !important;
+  color: rgb(235, 70, 22) !important;
 }
 
 th, td {
   border-color: rgb(221, 225, 230) !important;
   border-bottom: solid;
   border-width: 1px 1px 1px 1px !important;
+}
+
+.img-profile {
+  /* max-height: 500px;
+  max-width: 500px; */
 }
 
 .card-text {

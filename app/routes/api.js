@@ -39,7 +39,7 @@ module.exports = function(router) {
   router.post('/authenticate', function(req, res) {
     User.findOne({
       username: req.body.username
-    }).select('email username password firstName lastName major year').exec(function(err, user) {
+    }).select('email username password firstName lastName major year points').exec(function(err, user) {
       if (err) throw err;
 
       if (!user) {
@@ -69,7 +69,8 @@ module.exports = function(router) {
               firstName: user.firstName,
               lastName: user.lastName,
               major: user.major,
-              year: user.year
+              year: user.year,
+              points: user.points
             }, secret, {
               expiresIn: '24h'
             });

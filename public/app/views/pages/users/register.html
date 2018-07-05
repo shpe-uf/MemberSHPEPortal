@@ -1,30 +1,33 @@
 <div class="register-bg full-height">
   <div class="container">
     <div class="row">
-      <div class="offset-sm-1 col-sm-10 offset-md-2 col-md-8 register-container">
+      <div class="offset-sm-1 col-sm-10 offset-md-3 col-md-6 register-container">
         <h1 class="text-center">Register</h1>
-        <p>Just register to the MemberSHPE UF Portal once and say goodbye to lines for signing in to General Body Meetings. Sign in and earn your points. This is your one place for everything SHPE UF related. View your points, the alumni directory, and upload
-          your résumé to the Résumé Repository.</p>
+
         <hr>
+
+        <div class="success-message" ng-show="register.successMsg">
+          <div class="alert alert-success">{{ register.successMsg }}</div>
+        </div>
+
+        <div class="error-message" ng-show="register.errorMsg">
+          <div class="alert alert-danger">{{ register.errorMsg }}</div>
+        </div>
+
         <form ng-submit="register.regUser(regData);">
-          <div class="form-group row">
-            <label for="userFirst" class="col-sm-3 col-form-label text-right">First Name</label>
-            <div class="col-sm-9">
-              <input type="text" class="form-control" id="userFirst" ng-model="register.regData.firstName">
-            </div>
+          <div class="form-group">
+            <label for="userFirst">First Name</label>
+            <input type="text" class="form-control" id="userFirst" ng-model="register.regData.firstName">
           </div>
 
-          <div class="form-group row">
-            <label for="userLast" class="col-sm-3 col-form-label text-right">Last Name</label>
-            <div class="col-sm-9">
-              <input type="text" class="form-control" id="userLast" ng-model="register.regData.lastName">
-            </div>
+          <div class="form-group">
+            <label for="userLast">Last Name</label>
+            <input type="text" class="form-control" id="userLast" ng-model="register.regData.lastName">
           </div>
 
-          <div class="form-group row">
-            <label for="userMajor" class="col-sm-3 col-form-label text-right">Major</label>
-            <div class="col-sm-9">
-              <select class="form-control" id="userMajor" ng-model="register.regData.major">
+          <div class="form-group">
+            <label for="userMajor">Major</label>
+            <select class="form-control" id="userMajor" ng-model="register.regData.major">
                 <option>Aerospace Engineering</option>
                 <option>Agricultural & Biological Engineering</option>
                 <option>Biomedical Engineering</option>
@@ -43,13 +46,11 @@
                 <option>Nuclear Engineering</option>
                 <option>Other</option>
               </select>
-            </div>
           </div>
 
-          <div class="form-group row">
-            <label for="userYear" class="col-sm-3 col-form-label text-right">Year</label>
-            <div class="col-sm-9">
-              <select class="form-control" id="userYear" ng-model="register.regData.year">
+          <div class="form-group">
+            <label for="userYear">Year</label>
+            <select class="form-control" id="userYear" ng-model="register.regData.year">
                 <option>1st Year</option>
                 <option>2nd Year</option>
                 <option>3rd Year</option>
@@ -57,56 +58,31 @@
                 <option>5th Year or higher</option>
                 <option>Graduate Student</option>
               </select>
-            </div>
           </div>
 
-          <div class="form-group row">
-            <label for="userEmail" class="col-sm-3 col-form-label text-right">Email</label>
-            <div class="col-sm-9">
-              <input type="email" class="form-control" id="userEmail" ng-model="register.regData.email">
-            </div>
+          <div class="form-group">
+            <label for="userEmail">Email</label>
+            <input type="email" class="form-control" id="userEmail" ng-model="register.regData.email">
           </div>
 
-          <div class="form-group row">
-            <label for="userUsername" class="col-sm-3 col-form-label text-right">Username</label>
-            <div class="col-sm-9">
-              <input type="text" class="form-control" id="userUsername" ng-model="register.regData.username">
-            </div>
+          <div class="form-group">
+            <label for="userUsername">Username</label>
+            <input type="text" class="form-control" id="userUsername" ng-model="register.regData.username">
           </div>
 
-          <div class="form-group row">
-            <label for="userPassword" class="col-sm-3 col-form-label text-right">Password</label>
-            <div class="col-sm-9">
-              <input type="password" class="form-control" id="userPassword" ng-model="register.regData.password">
-            </div>
+          <div class="form-group">
+            <label for="userPassword">Password</label>
+            <input type="password" class="form-control" id="userPassword" ng-model="register.regData.password">
           </div>
 
           <hr>
 
           <div class="row">
-
-            <!-- <div class="col-sm-9">
-              <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="userListServ" ng-model="register.regData.listServ">
-                <label class="form-check-label" for="userListServ">Please, add me to the ListServ!</label>
-              </div>
-            </div> -->
-
-            <div class="col-sm-9">
-              <div class="success-message" ng-show="register.successMsg">
-                <div class="alert alert-success">{{ register.successMsg }}</div>
-              </div>
-
-              <div class="error-message" ng-show="register.errorMsg">
-                <div class="alert alert-danger">{{ register.errorMsg }}</div>
-              </div>
-            </div>
-
-            <div class="col-sm-3">
+            <div class="col-sm-12">
               <button type="submit" class="btn btn-submit float-right">Submit</button>
             </div>
-
           </div>
+
         </form>
       </div>
     </div>

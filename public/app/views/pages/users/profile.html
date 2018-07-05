@@ -3,27 +3,33 @@
   <hr>
   <div class="row">
     <div class="col-md-6 col-sm-12">
-      <img class="img-fluid" src="../../assets/images/profile.png">
+      <img class="img-thumbnail img-profile" src="../../assets/images/profile.png">
     </div>
 
     <div class="col-md-6 col-sm-12">
-      <table class="table table-responsive-sm table-hover">
-        <tr>
-          <th>Name</th>
-          <td>{{ main.firstName }} {{ main.lastName }}</td>
-        </tr>
-        <tr>
-          <th>Email</th>
-          <td>{{ main.email }}</td>
-        </tr>
-        <tr>
-          <th>Major</th>
-          <td>{{ main.major }}</td>
-        </tr>
-        <tr>
-          <th>Year</th>
-          <td>{{ main.year }}</td>
-        </tr>
+      <table class="table table-user-information">
+        <tbody>
+          <tr>
+            <td>Name</td>
+            <td>{{ main.firstName }} {{ main.lastName }}</td>
+          </tr>
+          <tr>
+            <td>Username</td>
+            <td>{{ main.username }}</td>
+          </tr>
+          <tr>
+            <td>Email</td>
+            <td>{{ main.email }}</td>
+          </tr>
+          <tr>
+            <td>Major</td>
+            <td>{{ main.major }}</td>
+          </tr>
+          <tr>
+            <td>Year</td>
+            <td>{{ main.year }}</td>
+          </tr>
+        </tbody>
       </table>
     </div>
   </div>

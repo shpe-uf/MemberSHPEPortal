@@ -11,19 +11,22 @@ angular.module('mainController', ['authServices'])
         Auth.getUser().then(function(data) {
           app.firstName = data.data.firstName;
           app.lastName = data.data.lastName;
+          app.username = data.data.username;
           app.email = data.data.email;
           app.major = data.data.major;
           app.year = data.data.year;
-
+          app.points = data.data.points;
           app.loadme = true;
         });
       } else {
         app.isLoggedIn = false;
         app.firstName = '';
         app.lastName = '';
+        app.username = '';
         app.email = '';
         app.major = '';
         app.year = '';
+        app.points = '';
         app.loadme = true;
       }
     });
