@@ -35,8 +35,6 @@ angular.module('userControllers', ['userServices'])
             } else {
               $scope.confirmed = false;
             }
-            console.log(ele);
-            console.log($scope.confirm);
           });
         }
       },

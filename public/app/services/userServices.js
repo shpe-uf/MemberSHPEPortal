@@ -7,5 +7,9 @@ angular.module('userServices', [])
       return $http.post('/api/users', regData);
     }
 
+    userFactory.sendUsername = function(userData) {
+      return $http.get('/api/forgetusername/' + userData);
+    };
+
     return userFactory;
   });

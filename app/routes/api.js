@@ -1,8 +1,20 @@
+require('dotenv').config();
+
 var User = require('../models/user');
 var jwt = require('jsonwebtoken');
 var secret = 'loremipsum';
+var nodemailer = require('nodemailer');
 
 module.exports = function(router) {
+
+  var transporter = nodemailer.createTransport({
+    service: process.env.SERVICE,
+    auth: {
+      user: process.env.USER,
+      pass: process.env.PASS
+    }
+  });
+
   router.post('/users', function(req, res) {
     var user = new User();
     user.firstName = req.body.firstName;
@@ -49,13 +61,13 @@ module.exports = function(router) {
                 success: false,
                 message: err.errors.password.properties.message
               });
-            } else{
+            } else {
               res.json({
                 success: false,
                 message: err
               });
             }
-          } else if(err) {
+          } else if (err) {
             if (err.code == 11000) {
               res.json({
                 success: false,
@@ -122,6 +134,56 @@ module.exports = function(router) {
               success: true,
               message: 'User authenticated',
               token: token
+            });
+          }
+        }
+      }
+    });
+  });
+
+  router.get('/forgetusername/:email', function(req, res) {
+    console.log("API LINE 145");
+    console.log(req);
+    User.findOne({
+      email: req.params.email
+    }).select('email firstName username').exec(function(err, user) {
+      if (err) {
+        res.json({
+          success: false,
+          message: err
+        });
+      } else {
+        if (!req.params.email) {
+          res.json({
+            success: false,
+            message: 'No email was provided'
+          })
+        } else {
+          if (!user) {
+            res.json({
+              success: false,
+              message: 'Email not found'
+            });
+          } else {
+            var email = {
+              from: 'local@localhost.com',
+              to: user.email,
+              subject: 'MemberSHPE UF Username Request',
+              text: 'Hello ' + user.firstName + ', \n\nYou recently requested your username. Please save it in your files: ' + user.username,
+              html: 'Hello<strong> ' + user.firstName + '</strong>,<br><br>You recently requested your username. Please save it in your files: <strong>' + user.username + '</strong>.'
+            };
+
+            transporter.sendMail(email, function(err, info) {
+              if (err) {
+                console.log(err);
+              } else {
+                console.log('Email sent: ' + info.response);
+              }
+            });
+
+            res.json({
+              success: true,
+              message: 'Username has been sent to email.'
             });
           }
         }

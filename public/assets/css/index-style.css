@@ -64,7 +64,7 @@ hr {
   padding-bottom: 50px;
 }
 
-.register-container, .login-container {
+.register-container, .login-container, .username-container, .password-container {
   padding: 24px 24px 24px 24px;
   background-color: rgba(255, 255, 255, 0.8);
 }
@@ -74,7 +74,7 @@ hr {
   padding-bottom: 36px;
 }
 
-.register-bg, .login-bg {
+.register-bg, .login-bg, .username-bg, .password-bg {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -90,6 +90,14 @@ hr {
 
 .login-bg {
   background-image: url(../images/login-bg.jpg);
+}
+
+.username-bg {
+  background-image: url(../images/username-bg.jpg);
+}
+
+.password-bg {
+  background-image: url(../images/password-bg.jpg);  
 }
 
 .full-height {

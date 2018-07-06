@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 app.use('/api', appRoutes);
 
-mongoose.connect('mongodb://admin:password123@ds115350.mlab.com:15350/shpeuf', function(err) {
+mongoose.connect(process.env.URI, function(err) {
   if (err) {
     console.log('\nDatabase connection error:\n' + err);
   } else {
