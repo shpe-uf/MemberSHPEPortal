@@ -71,9 +71,16 @@
           </div>
 
           <div class="form-group">
-            <label for="userPassword">Password <span ng-show="(!regForm.password.$pristine && regForm.password.$error.required) || (regForm.$submitted && regForm.password.$error.required)"> (This field is required)</span></label>
-            <input type="password" class="form-control" name="password" id="userPassword" ng-model="register.regData.password" required>
+            <label for="userPassword">Password <span ng-show="(!regForm.firstPassword.$pristine && regForm.firstPassword.$error.required) || (regForm.$submitted && regForm.firstPassword.$error.required)"> (This field is required)</span></label>
+            <input type="password" class="form-control" name="firstPassword" id="userPassword" ng-model="firstPassword" required>
+            <p class="text-muted">At least 8 characters. It must contain at least one lowercase character, one uppercase character, one number, and one special character.</p>
           </div>
+
+          <div class="form-group">
+            <label for="userConfirmPassword">Confirm Password <span ng-show="!confirmed && !regForm.confirmPassword.$pristine && regForm.firstPassword.$valid"> (Passwords don't match)</span></label>
+            <input type="password" class="form-control" name="confirmPassword" id="userConfirmPassword" ng-model="confirm" match="{{[ firstPassword ]}}" ng-change="register.regData.password = confirm" required>
+          </div>
+
 
           <hr>
 
