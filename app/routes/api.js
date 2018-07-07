@@ -142,8 +142,6 @@ module.exports = function(router) {
   });
 
   router.get('/forgetusername/:email', function(req, res) {
-    console.log("API LINE 145");
-    console.log(req);
     User.findOne({
       email: req.params.email
     }).select('email firstName username').exec(function(err, user) {
@@ -166,7 +164,7 @@ module.exports = function(router) {
             });
           } else {
             var email = {
-              from: 'local@localhost.com',
+              from: process.env.USER,
               to: user.email,
               subject: 'MemberSHPE UF Username Request',
               text: 'Hello ' + user.firstName + ', \n\nYou recently requested your username. Please save it in your files: ' + user.username,
@@ -187,6 +185,140 @@ module.exports = function(router) {
             });
           }
         }
+      }
+    });
+  });
+
+  router.put('/resetpassword/', function(req, res) {
+    User.findOne({
+      username: req.body.username
+    }).select('username email resettoken firstName').exec(function(err, user) {
+
+      if (err) throw err;
+
+      if (!user) {
+        res.json({
+          success: false,
+          message: 'User not found'
+        });
+      } else {
+        user.resettoken = jwt.sign({
+          username: user.username,
+          email: user.email,
+        }, secret, {
+          expiresIn: '24h'
+        });
+
+        user.save(function(err) {
+          if (err) {
+            res.json({
+              success: false,
+              message: err
+            });
+          } else {
+            var email = {
+              from: process.env.USER,
+              to: user.email,
+              subject: 'MemberSHPE UF Password Reset Link Request',
+              text: 'Hello ' + user.firstName + ', You recently requested a password reset link. Please click on the link below to reset your password:<br><br><a href="https://membershpeuf.herokuapp.com/reset/' + user.resettoken,
+              html: 'Hello<strong> ' + user.firstName + '</strong>,<br><br>You recently requested a password reset link. Please click on the link below to reset your password:<br><br><a href="https://membershpeuf.herokuapp.com/reset/' + user.resettoken + '">http://localhost:3000/reset/</a>'
+            };
+
+            transporter.sendMail(email, function(err, info) {
+              if (err) {
+                console.log(err);
+              } else {
+                console.log('Email sent: ' + info.response);
+              }
+            });
+
+            res.json({
+              success: true,
+              message: 'Please check your email for password reset link'
+            });
+          }
+        });
+      }
+    });
+  });
+
+  router.get('/resetpassword/:token', function(req, res) {
+    User.findOne({
+      resettoken: req.params.token
+    }).select().exec(function(err, user) {
+      if (err) throw err;
+
+      var token = req.params.token;
+
+      jwt.verify(token, secret, function(err, decoded) {
+        if (err) {
+          res.json({
+            success: false,
+            message: 'Password reset link has expired'
+          });
+        } else {
+          if (!user) {
+            res.json({
+              success: false,
+              message: 'Password reset link has expired'
+            });
+          } else {
+            res.json({
+              success: true,
+              user: user
+            });
+          }
+        }
+      });
+
+    });
+  });
+
+  router.put('/savepassword', function(req, res) {
+    User.findOne({
+      username: req.body.username
+    }).select('firstName username email password resettoken').exec(function(err, user) {
+      if (err) throw err;
+
+      if (req.body.password == null || req.body.password == '') {
+        res.json({
+          success: false,
+          message: 'Password not provided'
+        });
+      } else {
+        user.password = req.body.password;
+        user.resettoken = false;
+
+        user.save(function(err) {
+          if (err) {
+            res.json({
+              success: false,
+              message: err
+            });
+          } else {
+
+            var email = {
+              from: process.env.USER,
+              to: user.email,
+              subject: 'MemberSHPE UF Password Reset Notification',
+              text: 'Hello ' + user.firstName + ', This email is to notify you that your password was reset at MemberSHPE UF',
+              html: 'Hello<strong> ' + user.firstName + '</strong>,<br><br>This email is to notify you that your password was reset at MemberSHPE UF'
+            };
+
+            transporter.sendMail(email, function(err, info) {
+              if (err) {
+                console.log(err);
+              } else {
+                console.log('Email sent: ' + info.response);
+              }
+            });
+
+            res.json({
+              success: true,
+              message: 'Password has been reset'
+            });
+          }
+        });
       }
     });
   });

@@ -89,6 +89,10 @@ var UserSchema = new Schema({
   points: {
     type: Number,
     default: 0
+  },
+  resettoken: {
+    type: String,
+    required: false
   }
 });
 

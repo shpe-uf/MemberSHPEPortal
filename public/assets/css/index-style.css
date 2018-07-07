@@ -64,9 +64,9 @@ hr {
   padding-bottom: 50px;
 }
 
-.register-container, .login-container, .username-container, .password-container {
+.register-container, .login-container, .username-container, .password-container, .reset-container {
   padding: 24px 24px 24px 24px;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.7);
 }
 
 .custom-container {
@@ -74,7 +74,7 @@ hr {
   padding-bottom: 36px;
 }
 
-.register-bg, .login-bg, .username-bg, .password-bg {
+.register-bg, .login-bg, .username-bg, .password-bg, .reset-bg {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -97,7 +97,11 @@ hr {
 }
 
 .password-bg {
-  background-image: url(../images/password-bg.jpg);  
+  background-image: url(../images/password-bg.jpg);
+}
+
+.reset-bg {
+  background-image: url(../images/reset-bg.jpg);
 }
 
 .full-height {
