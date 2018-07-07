@@ -216,12 +216,13 @@ module.exports = function(router) {
               message: err
             });
           } else {
+
             var email = {
               from: process.env.USER,
               to: user.email,
               subject: 'MemberSHPE UF Password Reset Link Request',
-              text: 'Hello ' + user.firstName + ', You recently requested a password reset link. Please click on the link below to reset your password:<br><br><a href="https://membershpeuf.herokuapp.com/reset/' + user.resettoken,
-              html: 'Hello<strong> ' + user.firstName + '</strong>,<br><br>You recently requested a password reset link. Please click on the link below to reset your password:<br><br><a href="https://membershpeuf.herokuapp.com/reset/' + user.resettoken + '">http://localhost:3000/reset/</a>'
+              text: 'Hello ' + user.firstName + ', You recently requested a password reset link. Please click on the link below to reset your password: https://membershpeuf.herokuapp.com/reset/' + user.resettoken,
+              html: 'Hello<strong> ' + user.firstName + '</strong>,<br><br>You recently requested a password reset link. Please click on the link below to reset your password:<br><br><a href="http://membershpeuf.herokuapp.com/reset/' + user.resettoken + '">Password Reset Link</a>'
             };
 
             transporter.sendMail(email, function(err, info) {
