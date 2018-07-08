@@ -1,5 +1,4 @@
 angular.module('mainController', ['authServices', 'userServices'])
-
     .controller('mainCtrl', function($timeout, $location, $rootScope, $interval, $window, $route, Auth, User, AuthToken) {
         var app = this;
         app.loadme = false;
@@ -16,7 +15,7 @@ angular.module('mainController', ['authServices', 'userServices'])
                             var base64url = token.split('.')[1];
                             var base64 = base64url.replace('-', '+').replace('_', '/');
                             return JSON.parse($window.atob(base64));
-                        }
+                        };
                         var expireTime = self.parseJwt(token);
                         var timeStamp = Math.floor(Date.now() / 1000);
 
@@ -48,8 +47,8 @@ angular.module('mainController', ['authServices', 'userServices'])
                     backdrop: "static"
                 });
                 $timeout(function() {
-					if (!app.choiceMade) app.endSession();
-				}, 10000);
+                    if (!app.choiceMade) app.endSession();
+                }, 10000);
             } else if (option === 2) {
                 app.hideButton = true;
                 app.modalHeader = 'Logging out';
@@ -66,7 +65,6 @@ angular.module('mainController', ['authServices', 'userServices'])
         };
 
         app.renewSession = function() {
-            console.log("MAIN CONTROLLER - RENEW SESSION");
             app.choiceMade = true;
             User.renewSession(app.username).then(function(data) {
                 if (data.data.success) {
