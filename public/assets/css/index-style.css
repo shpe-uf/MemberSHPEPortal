@@ -54,7 +54,7 @@ hr {
   color: rgb(255, 255, 255);
 }
 
-.fas {
+.fas-feature {
   color: rgb(235, 70, 22);
   padding-top: 24px;
   padding-bottom: 24px;
@@ -163,11 +163,6 @@ th, td {
   border-color: rgb(221, 225, 230) !important;
   border-bottom: solid;
   border-width: 1px 1px 1px 1px !important;
-}
-
-.img-profile {
-  /* max-height: 500px;
-  max-width: 500px; */
 }
 
 .card-text {
