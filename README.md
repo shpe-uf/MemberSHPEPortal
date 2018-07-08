@@ -12,21 +12,21 @@ Official MemberSHPE UF website for the Society of Hispanic Professional Engineer
 
 ## Road Map:
 1. Admin Panel
-    - View member information
-    - Create event codes
-    - Request system
-    - Create Event table on database
+    - [  ] View member information
+    - [  ] Create event codes
+    - [  ] Request system
+    - [  ] Create Event table on database
 2. My Profile
-    - Display user information
-    - Edit user information
+    - [  ] Display user information
+    - [  ] Edit user information
 3. Rewards Program
-    - Redeem points code
-    - Send request for points
-    - View points redeemed and approved
+    - [  ] Redeem points code
+    - [  ] Send request for points
+    - [  ] View points redeemed and approved
 4. Alumni Directory
-    - Integrate Google Maps API
-    - Email and collect alumni information
+    - [  ] Integrate Google Maps API
+    - [  ] Email and collect alumni information
 5. Résumé Repository
-    - Link to Google Drive
-    - Link résumé to the user
-    - Update résumé
+    - [  ] Link to Google Drive
+    - [  ] Link résumé to the user
+    - [  ] Update résumé
