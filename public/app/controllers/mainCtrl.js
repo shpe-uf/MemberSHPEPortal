@@ -95,26 +95,27 @@ angular.module('mainController', ['authServices', 'userServices'])
 
             if (Auth.isLoggedIn()) {
                 app.isLoggedIn = true;
+
                 Auth.getUser().then(function(data) {
-                    app.firstName = data.data.firstName;
-                    app.lastName = data.data.lastName;
                     app.username = data.data.username;
                     app.email = data.data.email;
-                    app.major = data.data.major;
-                    app.year = data.data.year;
-                    app.points = data.data.points;
-                    app.loadme = true;
+
+                    User.getPermission().then(function(data) {
+                        if (data.data.message === 'admin') {
+                            app.authorized = true;
+                            app.loadme = true;
+                        } else {
+                            app.authorized = false;
+                            app.loadme = true;
+                        }
+                    });
+
                 });
             } else {
-                app.firstName = '';
-                app.lastName = '';
-                app.username = '';
-                app.email = '';
-                app.major = '';
-                app.year = '';
-                app.points = '';
-                app.loadme = true;
                 app.isLoggedIn = false;
+                app.username = '';
+                // app.email = '';
+                app.loadme = true;
             }
         });
 

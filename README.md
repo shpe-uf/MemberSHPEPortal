@@ -6,9 +6,11 @@ Official MemberSHPE UF website for the Society of Hispanic Professional Engineer
 - Alumni Directory
 - Résumé Repository
 
-## To Do:
+## To Do/Known Bugs:
 - Fix times for token renewal modal and renewing the token. (07/08/18)
 - Stop relying on tokens for user information. (07/08/18)
+- Error message for non-matching passwords. (07/08/18)
+- Buttons will log user out after renewing session. (07/08/18)
 
 ## Road Map:
 1. Admin Panel

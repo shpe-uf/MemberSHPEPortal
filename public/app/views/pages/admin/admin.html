@@ -21,48 +21,16 @@
             <th>Username</th>
             <th>Major</th>
             <th>Year</th>
-            <th>Phone #</th>
             <th>Email</th>
+            <th>Points</th>
           </tr>
-          <tr>
-            <td>Maria Arroyo</td>
-            <td>marroyo</td>
-            <td>Mechanical Engineering</td>
-            <td>2nd Year</td>
-            <td>(305) 943-4059</td>
-            <td>maria.arroyo@gmail.com</td>
-          </tr>
-          <tr>
-            <td>Maria Arroyo</td>
-            <td>marroyo</td>
-            <td>Mechanical Engineering</td>
-            <td>2nd Year</td>
-            <td>(305) 943-4059</td>
-            <td>maria.arroyo@gmail.com</td>
-          </tr>
-          <tr>
-            <td>Maria Arroyo</td>
-            <td>marroyo</td>
-            <td>Mechanical Engineering</td>
-            <td>2nd Year</td>
-            <td>(305) 943-4059</td>
-            <td>maria.arroyo@gmail.com</td>
-          </tr>
-          <tr>
-            <td>Maria Arroyo</td>
-            <td>marroyo</td>
-            <td>Mechanical Engineering</td>
-            <td>2nd Year</td>
-            <td>(305) 943-4059</td>
-            <td>maria.arroyo@gmail.com</td>
-          </tr>
-          <tr>
-            <td>Maria Arroyo</td>
-            <td>marroyo</td>
-            <td>Mechanical Engineering</td>
-            <td>2nd Year</td>
-            <td>(305) 943-4059</td>
-            <td>maria.arroyo@gmail.com</td>
+          <tr ng-repeat="person in admin.users">
+            <td>{{ person.firstName }} {{ person.lastName }}</td>
+            <td>{{ person.username }}</td>
+            <td>{{ person.major }}</td>
+            <td>{{ person.year }}</td>
+            <td>{{ person.email }}</td>
+            <td>{{ person.points }}</td>
           </tr>
         </table>
       </div>

@@ -47,7 +47,8 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 templateUrl: 'app/views/pages/admin/admin.html',
                 controller: 'adminCtrl',
                 controllerAs: 'admin',
-                authenticated: true
+                authenticated: true,
+                permission: ['admin']
             })
 
             .when('/forgotusername', {
@@ -82,19 +83,29 @@ var app = angular.module('appRoutes', ['ngRoute'])
 
     });
 
-app.run(['$rootScope', 'Auth', '$location', function($rootScope, Auth, $location) {
+app.run(['$rootScope', 'Auth', '$location', 'User', function($rootScope, Auth, $location, User) {
 
     $rootScope.$on('$routeChangeStart', function(event, next, current) {
+        if (next.$$route !== undefined) {
+            if (next.$$route.authenticated == true) {
+                if (!Auth.isLoggedIn()) {
+                    event.preventDefault();
+                    $location.path('/');
+                } else if (next.$$route.permission) {
 
-        if (next.$$route.authenticated == true) {
-            if (!Auth.isLoggedIn()) {
-                event.preventDefault();
-                $location.path('/');
-            }
-        } else if (next.$$route.authenticated == false) {
-            if (Auth.isLoggedIn()) {
-                event.preventDefault();
-                $location.path('/profile');
+                    User.getPermission().then(function(data) {
+                        if (next.$$route.permission[0] !== data.data.message) {
+                            event.preventDefault();
+                            $location.path('/');
+                        }
+                    });
+                }
+
+            } else if (next.$$route.authenticated == false) {
+                if (Auth.isLoggedIn()) {
+                    event.preventDefault();
+                    $location.path('/profile');
+                }
             }
         }
     });

@@ -121,13 +121,13 @@ module.exports = function(router) {
                         var token = jwt.sign({
                             username: user.username,
                             email: user.email,
-                            firstName: user.firstName,
-                            lastName: user.lastName,
-                            major: user.major,
-                            year: user.year,
-                            points: user.points
+                            // firstName: user.firstName,
+                            // lastName: user.lastName,
+                            // major: user.major,
+                            // year: user.year,
+                            // points: user.points
                         }, secret, {
-                            expiresIn: '30s'
+                            expiresIn: '1800s'
                         });
 
                         res.json({
@@ -155,7 +155,7 @@ module.exports = function(router) {
                     res.json({
                         success: false,
                         message: 'No email was provided'
-                    })
+                    });
                 } else {
                     if (!user) {
                         res.json({
@@ -352,7 +352,6 @@ module.exports = function(router) {
     });
 
     router.get('/renewtoken/:username', function(req, res) {
-        console.log("\n\n\nAPI - RENEW TOKEN\n\n\n");
         User.findOne({
             username: req.params.username
         }).select().exec(function(err, user) {
@@ -365,11 +364,11 @@ module.exports = function(router) {
                 var newToken = jwt.sign({
                     username: user.username,
                     email: user.email,
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    major: user.major,
-                    year: user.year,
-                    points: user.points
+                    // firstName: user.firstName,
+                    // lastName: user.lastName,
+                    // major: user.major,
+                    // year: user.year,
+                    // points: user.points
                 }, secret, {
                     expiresIn: '24h'
                 });
@@ -381,5 +380,66 @@ module.exports = function(router) {
         });
     });
 
+    router.get('/permission', function(req, res) {
+        User.findOne({
+            username: req.decoded.username
+        }, function(err, user) {
+            if (err) throw err;
+
+            if (!user) {
+                res.json({
+                    success: false,
+                    message: 'User not found'
+                });
+            } else {
+                res.json({
+                    success: true,
+                    message: user.permission
+                });
+            }
+        });
+    });
+
+    router.get('/admin', function(req, res) {
+        User.find({
+
+        }, function(err, users) {
+            if (err) throw err;
+            User.findOne({
+                username: req.decoded.username
+            }, function(err, mainUser) {
+                if (err) throw err;
+
+                if (!mainUser) {
+                    res.json({
+                        success: false,
+                        message: 'No user found'
+                    });
+                } else {
+                    if (mainUser.permission === 'admin') {
+                        if (!users) {
+                            res.json({
+                                success: false,
+                                message: 'Users not found'
+                            });
+                        } else {
+                            res.json({
+                                success: true,
+                                message: users,
+                                permission: mainUser.permission
+                            });
+                        }
+                    } else {
+                        res.json({
+                            success: false,
+                            message: 'Insufficient permission'
+                        });
+                    }
+                }
+            });
+
+        });
+    });
+
     return router;
-}
+};

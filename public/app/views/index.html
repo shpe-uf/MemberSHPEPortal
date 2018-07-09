@@ -59,9 +59,9 @@
                         <a class="nav-link" href="#" ng-show="main.isLoggedIn" ng-click="main.logout()">Logout</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link nav-name dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-show="main.isLoggedIn">{{ main.firstName }} {{ main.lastName }}</a>
+                        <a class="nav-link nav-name dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-show="main.isLoggedIn">{{ main.username }}</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item admin-text" href="/admin">Admin Panel</a>
+                            <a class="dropdown-item admin-text" href="/admin" ng-show="main.authorized && main.isLoggedIn">Admin Panel</a>
                             <a class="dropdown-item" href="/profile">My Profile</a>
                             <a class="dropdown-item" href="/rewards">Rewards Program</a>
                             <a class="dropdown-item" href="/alumni">Alumni Directory</a>
@@ -74,10 +74,6 @@
     </nav>
 
     <div class="ng-view"></div>
-
-    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tokenExpire">
-        Launch demo modal
-    </button> -->
 
     <div class="modal fade" id="tokenExpire" aria-labelledby="tokenExpireLabel">
         <div class="modal-dialog">
