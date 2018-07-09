@@ -274,3 +274,11 @@ iframe {
 }
 
 /* LOGOUT LOADER */
+
+.tab-pane {
+    padding: 30px 10px 30px 10px;
+}
+
+.btn-row {
+    height: 54px;
+}
