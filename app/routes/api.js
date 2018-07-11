@@ -348,7 +348,11 @@ module.exports = function(router) {
     });
 
     router.post('/me', function(req, res) {
-        res.send(req.decoded);
+        User.findOne({
+            username: req.decoded.username
+        }).select('firstName lastName username email major year').exec(function(err, user) {
+            res.send(user);
+        });
     });
 
     router.get('/renewtoken/:username', function(req, res) {
@@ -363,12 +367,7 @@ module.exports = function(router) {
             } else {
                 var newToken = jwt.sign({
                     username: user.username,
-                    email: user.email,
-                    // firstName: user.firstName,
-                    // lastName: user.lastName,
-                    // major: user.major,
-                    // year: user.year,
-                    // points: user.points
+                    email: user.email
                 }, secret, {
                     expiresIn: '24h'
                 });

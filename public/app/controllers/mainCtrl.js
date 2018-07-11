@@ -97,8 +97,12 @@ angular.module('mainController', ['authServices', 'userServices'])
                 app.isLoggedIn = true;
 
                 Auth.getUser().then(function(data) {
+                    app.firstName = data.data.firstName;
+                    app.lastName = data.data.lastName;
                     app.username = data.data.username;
                     app.email = data.data.email;
+                    app.major = data.data.major;
+                    app.year = data.data.year;
 
                     User.getPermission().then(function(data) {
                         if (data.data.message === 'admin') {
@@ -109,12 +113,11 @@ angular.module('mainController', ['authServices', 'userServices'])
                             app.loadme = true;
                         }
                     });
-
                 });
             } else {
                 app.isLoggedIn = false;
                 app.username = '';
-                // app.email = '';
+                app.email = '';
                 app.loadme = true;
             }
         });
