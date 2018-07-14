@@ -1,45 +1,113 @@
 <div class="container custom-container">
-  <div class="row">
-    <div class="col-10">
-      <h2>My Profile</h2>
+    <div class="row">
+        <div class="col-12">
+            <h2>My Profile</h2>
+        </div>
+        <!-- <div class="col-2">
+            <div class="float-right">
+                <button type="button" class="btn btn-submit" ng-click="main.updateProfile()">Update Profile</button>
+            </div>
+        </div> -->
     </div>
-    <div class="col-2">
-      <div class="float-right">
-        <button type="button" class="btn btn-submit">Update Profile</button>
-      </div>
-    </div>
-  </div>
-  <hr>
-  <div class="row">
-    <div class="col-md-6 col-sm-12">
-      <img class="img-thumbnail img-profile" src="../../assets/images/profile.png">
-    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <img class="img-thumbnail img-profile" src="../../assets/images/profile.png">
+        </div>
 
-    <div class="col-md-6 col-sm-12">
-      <table class="table">
-        <tbody>
-          <tr>
-            <td>Name</td>
-            <td>{{ main.firstName }} {{ main.lastName }}</td>
-          </tr>
-          <tr>
-            <td>Username</td>
-            <td>{{ main.username }}</td>
-          </tr>
-          <tr>
-            <td>Email</td>
-            <td>{{ main.email }}</td>
-          </tr>
-          <tr>
-            <td>Major</td>
-            <td>{{ main.major }}</td>
-          </tr>
-          <tr>
-            <td>Year</td>
-            <td>{{ main.year }}</td>
-          </tr>
-        </tbody>
-      </table>
+        <div class="col-md-6 col-sm-12">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td>Name</td>
+                        <td>{{ main.firstName }} {{ main.lastName }}</td>
+                    </tr>
+                    <tr>
+                        <td>Username</td>
+                        <td>{{ main.username }}</td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>{{ main.email }}</td>
+                    </tr>
+                    <tr>
+                        <td>Major</td>
+                        <td>{{ main.major }}</td>
+                    </tr>
+                    <tr>
+                        <td>Year</td>
+                        <td>{{ main.year }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-  </div>
 </div>
+
+<!-- Modal -->
+<!-- <div class="modal fade" id="profileUpdate" aria-labelledby="profileUpdateLabel">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="profileUpdateLabel">Update Profile</h3>
+            </div>
+            <div class="modal-body">
+                <form name="updateForm" ng-submit="update.updateUser(updateData);" novalidate>
+                    <div class="form-group">
+                        <label for="userFirst">First Name <span ng-show="(!updateForm.firstName.$pristine && updateForm.firstName.$error.required) || (updateForm.$submitted && updateForm.firstName.$error.required)"> (This field is required)</span></label>
+                        <input type="text" class="form-control" name="firstName" id="userFirst" ng-model="update.updateData.firstName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="userLast">Last Name <span ng-show="(!updateForm.lastName.$pristine && updateForm.lastName.$error.required) || (updateForm.$submitted && updateForm.lastName.$error.required)"> (This field is required)</span></label>
+                        <input type="text" class="form-control" name="lastName" id="userLast" ng-model="update.updateData.lastName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="userMajor">Major  <span ng-show="(!updateForm.major.$pristine && updateForm.major.$error.required) || (updateForm.$submitted && updateForm.major.$error.required)"> (This field is required)</span></label>
+                        <select class="form-control" name="major" id="userMajor" ng-model="update.updateData.major" required>
+                        <option>Aerospace Engineering</option>
+                        <option>Agricultural & Biological Engineering</option>
+                        <option>Biomedical Engineering</option>
+                        <option>Chemical Engineering</option>
+                        <option>Civil Engineering</option>
+                        <option>Computer Engineering</option>
+                        <option>Coastal & Oceanographic Engineering</option>
+                        <option>Computer Science</option>
+                        <option>Digital Arts & Sciences</option>
+                        <option>Electrical Engineering</option>
+                        <option>Environmental Engineering Sciences</option>
+                        <option>Human-Centered Computing</option>
+                        <option>Industrial & Systems Engineering</option>
+                        <option>Materials Science & Engineering</option>
+                        <option>Mechanical Engineering</option>
+                        <option>Nuclear Engineering</option>
+                        <option>Other</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="userYear">Year <span ng-show="(!updateForm.year.$pristine && updateForm.year.$error.required) || (updateForm.$submitted && updateForm.year.$error.required)"> (This field is required)</span></label>
+                        <select class="form-control" name="year" id="userYear" ng-model="update.updateData.year" required>
+                        <option>1st Year</option>
+                        <option>2nd Year</option>
+                        <option>3rd Year</option>
+                        <option>4th Year</option>
+                        <option>5th Year or higher</option>
+                        <option>Graduate Student</option>
+                      </select>
+                    </div>
+
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <button type="submit" class="btn btn-submit">Submit</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div> -->

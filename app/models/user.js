@@ -7,7 +7,7 @@ var firstNameValidator = [
     validate({
         validator: 'matches',
         arguments: /^[a-zA-Z]{3,20}$/i,
-        message: 'First name must be at least 3 character, max 20, no special characters or numbers.'
+        message: 'First name must be at least 3 character, max 20. No special characters or numbers.'
     })
 ];
 
@@ -15,7 +15,7 @@ var lastNameValidator = [
     validate({
         validator: 'matches',
         arguments: /^[a-zA-Z]{3,20}$/i,
-        message: 'Last name must be at least 3 character, max 20, no special characters or numbers.'
+        message: 'Last name must be at least 3 character, max 20. No special characters or numbers.'
     })
 ];
 
@@ -31,7 +31,7 @@ var usernameValidator = [
     validate({
         validator: 'matches',
         arguments: /^[a-zA-Z0-9]{6,20}$/i,
-        message: 'Username must be at least 6 characters, max 20, no special characters.'
+        message: 'Username must be at least 6 characters, max 20. No special characters.'
     })
 ];
 

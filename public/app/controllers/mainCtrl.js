@@ -103,6 +103,7 @@ angular.module('mainController', ['authServices', 'userServices'])
                     app.email = data.data.email;
                     app.major = data.data.major;
                     app.year = data.data.year;
+                    app.points = data.data.points;
 
                     User.getPermission().then(function(data) {
                         if (data.data.message === 'admin') {
@@ -142,6 +143,13 @@ angular.module('mainController', ['authServices', 'userServices'])
 
         app.logout = function() {
             showModal(2);
+        };
+
+        app.updateProfile = function() {
+            console.log("UPDATE PROFILE MAIN CONTROLLER");
+            $("#profileUpdate").modal({
+                backdrop: "static"
+            });
         };
 
     });

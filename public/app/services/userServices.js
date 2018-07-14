@@ -35,5 +35,13 @@ angular.module('userServices', [])
             return $http.get('api/admin/');
         };
 
+        userFactory.createCode = function() {
+            return $http.post('api/codes/');
+        };
+
+        userFactory.getCodes = function() {
+            return $http.get('api/getcodes/');
+        };
+
         return userFactory;
     });

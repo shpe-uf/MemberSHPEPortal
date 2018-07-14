@@ -10,13 +10,14 @@
 
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link active" id="nav-members-tab" data-toggle="tab" data-target="#nav-members" role="tab" aria-controls="nav-members" aria-selected="true">Members Directory</a>
-                    <a class="nav-item nav-link" id="nav-event-tab" data-toggle="tab" data-target="#nav-event" role="tab" aria-controls="nav-event" aria-selected="false">Event Management</a>
+                    <a class="nav-item nav-link active" id="nav-member-tab" data-toggle="tab" data-target="#nav-member" role="tab" aria-controls="nav-member" aria-selected="true">Members</a>
+                    <a class="nav-item nav-link" id="nav-event-tab" data-toggle="tab" data-target="#nav-event" role="tab" aria-controls="nav-event" aria-selected="false">Events</a>
+                    <a class="nav-item nav-link" id="nav-request-tab" data-toggle="tab" data-target="#nav-request" role="tab" aria-controls="nav-request" aria-selected="false">Requests</a>
                 </div>
             </nav>
 
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-members" role="tabpanel" aria-labelledby="nav-members-tab">
+                <div class="tab-pane fade show active" id="nav-member" role="tabpanel" aria-labelledby="nav-member-tab">
                     <div class="container">
                         <div class="row">
                             <div class="col-12">
@@ -31,13 +32,12 @@
 
                         <table class="table table-responsive-lg table-striped">
                             <tr>
-                                <th>Name</th>
-                                <th>Username</th>
-                                <th>Major</th>
-                                <th>Year</th>
-                                <th>Email</th>
-                                <th>Points</th>
-                                <th>Profile</th>
+                                <th>NAME</th>
+                                <th>USERNAME</th>
+                                <th>MAJOR</th>
+                                <th>YEAR</th>
+                                <th>EMAIL</th>
+                                <th>POINTS</th>
                             </tr>
                             <tr ng-repeat="user in admin.users | orderBy: 'lastName' | filter: searchText">
                                 <td>{{ user.lastName }}, {{ user.firstName }}</td>
@@ -46,7 +46,6 @@
                                 <td>{{ user.year }}</td>
                                 <td>{{ user.email }}</td>
                                 <td>{{ user.points }}</td>
-                                <td><button type="button" class="btn btn-submit btn-block"><i class="far fa-user"></i></button></td>
                             </tr>
                         </table>
                     </div>
@@ -55,7 +54,7 @@
                 <div class="tab-pane fade" id="nav-event" role="tabpanel" aria-labelledby="nav-event-tab">
                     <div class="container">
                         <div class="row">
-                            <div class="col-md-7 col-sm-8 col-12">
+                            <div class="col-md-8 col-sm-9 col-12">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Search</span>
@@ -63,34 +62,111 @@
                                     <input type="text" class="form-control" ng-model="searchText">
                                 </div>
                             </div>
-                            <div class="col-md-5 col-sm-4 col-12">
-                                <div class="btn-row float-right">
-                                    <div class="btn-group" role="group">
-                                        <button type="button" class="btn btn-submit">Create Event</button>
-                                        <button type="button" class="btn btn-submit">View Events</button>
+                            <div class="col-md-4 col-sm-3 col-12">
+                                <button type="button" class="btn btn-submit float-right">Create Event</button>
+                            </div>
+                        </div>
+
+                        <table class="table table-responsive-lg table-striped">
+                            <tr>
+                                <th>NAME</th>
+                                <th>CODE</th>
+                                <th>TYPE</th>
+                                <th>EXPIRATION</th>
+                                <th>POINTS</th>
+                            </tr>
+                            <tr ng-repeat="code in admin.codes | orderBy: 'lastName' | filter: searchText">
+                                <td>{{ code.name }}</td>
+                                <td>{{ code.code }}</td>
+                                <td>{{ code.type }}</td>
+                                <td>{{ code.expiration | date:'MM/dd/yyyy @ hh:mm a' }}</td>
+                                <td>{{ code.points }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="nav-request" role="tabpanel" aria-labelledby="nav-request-tab">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Search</span>
                                     </div>
+                                    <input type="text" class="form-control" ng-model="searchText">
                                 </div>
                             </div>
                         </div>
 
                         <table class="table table-responsive-lg table-striped">
                             <tr>
-                                <th>Name</th>
-                                <th>Username</th>
-                                <th>Major</th>
-                                <th>Year</th>
-                                <th>Email</th>
-                                <th>Points</th>
-                                <th>Profile</th>
+                                <th>MEMBER</th>
+                                <th>EVENT</th>
+                                <th>CODE</th>
+                                <th>POINTS</th>
+                                <th class="text-center">ACCEPT</th>
+                                <th class="text-center">REJECT</th>
                             </tr>
-                            <tr ng-repeat="user in admin.users | orderBy: 'lastName' | filter: searchText">
-                                <td>{{ user.lastName }}, {{ user.firstName }}</td>
-                                <td>{{ user.username }}</td>
-                                <td>{{ user.major }}</td>
-                                <td>{{ user.year }}</td>
-                                <td>{{ user.email }}</td>
-                                <td>{{ user.points }}</td>
-                                <td><button type="button" class="btn btn-submit btn-block"><i class="far fa-user"></i></button></td>
+                            <tr>
+                                <td class="align-middle">Gonzalez, Cesar</td>
+                                <td class="align-middle">General Body Meeting Fall 1</td>
+                                <td class="align-middle">GreenInflatableMan</td>
+                                <td class="align-middle">1</td>
+                                <td class="text-center">
+                                    <button class="btn btn-success"><i class="fas fa-check"></i></button>
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-danger"><i class="fas fa-times"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="align-middle">Gonzalez, Cesar</td>
+                                <td class="align-middle">General Body Meeting Fall 1</td>
+                                <td class="align-middle">GreenInflatableMan</td>
+                                <td class="align-middle">1</td>
+                                <td class="text-center">
+                                    <button class="btn btn-success"><i class="fas fa-check"></i></button>
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-danger"><i class="fas fa-times"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="align-middle">Gonzalez, Cesar</td>
+                                <td class="align-middle">General Body Meeting Fall 1</td>
+                                <td class="align-middle">GreenInflatableMan</td>
+                                <td class="align-middle">1</td>
+                                <td class="text-center">
+                                    <button class="btn btn-success"><i class="fas fa-check"></i></button>
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-danger"><i class="fas fa-times"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="align-middle">Gonzalez, Cesar</td>
+                                <td class="align-middle">General Body Meeting Fall 1</td>
+                                <td class="align-middle">GreenInflatableMan</td>
+                                <td class="align-middle">1</td>
+                                <td class="text-center">
+                                    <button class="btn btn-success"><i class="fas fa-check"></i></button>
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-danger"><i class="fas fa-times"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="align-middle">Gonzalez, Cesar</td>
+                                <td class="align-middle">General Body Meeting Fall 1</td>
+                                <td class="align-middle">GreenInflatableMan</td>
+                                <td class="align-middle">1</td>
+                                <td class="text-center">
+                                    <button class="btn btn-success"><i class="fas fa-check"></i></button>
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-danger"><i class="fas fa-times"></i></button>
+                                </td>
                             </tr>
                         </table>
                     </div>

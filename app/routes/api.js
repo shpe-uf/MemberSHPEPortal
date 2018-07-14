@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 var User = require('../models/user');
+var Code = require('../models/code');
 var jwt = require('jsonwebtoken');
 var secret = 'loremipsum';
 var nodemailer = require('nodemailer');
@@ -89,6 +90,81 @@ module.exports = function(router) {
                 }
             });
         }
+    });
+
+    router.post('/codes', function(req, res) {
+        var code = new Code();
+        code.name = req.body.name;
+        code.code = req.body.code;
+        code.type = req.body.type;
+
+        if ((code.type == "General Body Meeting") || (code.type == "Cabinet Meeting")) {
+            code.points = 1;
+        } else if (code.type == "Social") {
+            code.points = 2;
+        } else if (code.type == "Fundraiser") {
+            code.points = 3;
+        } else if (code.type == "Volunteering") {
+            code.points = 4;
+        }
+
+        code.expiration = Date.now() + (60 * 60 * 1000);
+
+        code.save(function(err) {
+            if (err) {
+
+                if (err.errors != null) {
+                    if (err.errors.name) {
+                        res.json({
+                            success: false,
+                            message: err.errors.name.properties.message
+                        });
+                    } else if (err.errors.code) {
+                        res.json({
+                            success: false,
+                            message: err.errors.code.properties.message
+                        });
+                    } else if (err.errors.type) {
+                        res.json({
+                            success: false,
+                            message: err.errors.type.properties.message
+                        });
+                    } else if (err.errors.points) {
+                        res.json({
+                            success: false,
+                            message: err.errors.points.properties.message
+                        });
+                    } else if (err.errors.expiration) {
+                        res.json({
+                            success: false,
+                            message: err.errors.expiration.properties.message
+                        });
+                    } else {
+                        res.json({
+                            success: false,
+                            message: err
+                        });
+                    }
+                } else if (err) {
+                    if (err.code == 11000) {
+                        res.json({
+                            success: false,
+                            message: 'Event name and/or code already taken.'
+                        });
+                    } else {
+                        res.json({
+                            success: false,
+                            message: err
+                        });
+                    }
+                }
+            } else {
+                res.json({
+                    success: true,
+                    message: "Success! Event created!"
+                });
+            }
+        });
     });
 
     router.post('/authenticate', function(req, res) {
@@ -350,7 +426,7 @@ module.exports = function(router) {
     router.post('/me', function(req, res) {
         User.findOne({
             username: req.decoded.username
-        }).select('firstName lastName username email major year').exec(function(err, user) {
+        }).select('firstName lastName username email major year points').exec(function(err, user) {
             res.send(user);
         });
     });
@@ -436,7 +512,48 @@ module.exports = function(router) {
                     }
                 }
             });
+        });
+    });
 
+    router.get('/getcodes', function(req, res) {
+        Code.find({
+
+        }, function(err, events) {
+            if (err) throw err;
+            User.findOne({
+                username: req.decoded.username
+            }, function(err, mainUser) {
+                if (err) throw err;
+
+                if (!mainUser) {
+                    res.json({
+                        success: false,
+                        message: 'No event found'
+                    });
+                } else {
+                    if (mainUser.permission === 'admin') {
+                        if (!events) {
+                            res.json({
+                                success: false,
+                                message: 'Events not found'
+                            });
+                        } else {
+                            console.log("\nEVENTS");
+                            console.log(events);
+                            res.json({
+                                success: true,
+                                message: events,
+                                permission: mainUser.permission
+                            });
+                        }
+                    } else {
+                        res.json({
+                            success: false,
+                            message: 'Insufficient permission'
+                        });
+                    }
+                }
+            });
         });
     });
 
