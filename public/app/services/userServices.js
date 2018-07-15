@@ -1,47 +1,57 @@
 angular.module('userServices', [])
 
-    .factory('User', function($http) {
-        var userFactory = {};
+  .factory('User', function($http) {
+    var userFactory = {};
 
-        userFactory.create = function(regData) {
-            return $http.post('/api/users', regData);
-        };
+    // CREATE/REGISTER USERS
+    userFactory.create = function(regData) {
+      return $http.post('/api/users', regData);
+    };
 
-        userFactory.sendUsername = function(userData) {
-            return $http.get('/api/forgetusername/' + userData);
-        };
+    // CREATE EVENT CODES
+    userFactory.createCode = function(eventData) {
+      return $http.post('api/codes/', eventData);
+    };
 
-        userFactory.sendPassword = function(resetData) {
-            return $http.put('/api/resetpassword', resetData);
-        };
+    // FORGOT USERNAME
+    userFactory.sendUsername = function(userData) {
+      return $http.get('/api/forgetusername/' + userData);
+    };
 
-        userFactory.resetUser = function(token) {
-            return $http.get('/api/resetpassword/' + token);
-        };
+    // SEND PASSWORD RESET EMAIL
+    userFactory.sendPassword = function(resetData) {
+      return $http.put('/api/resetpassword', resetData);
+    };
 
-        userFactory.savePassword = function(regData) {
-            return $http.put('/api/savepassword/', regData);
-        };
+    // PASSWORD RESET
+    userFactory.resetPassword = function(token) {
+      return $http.get('/api/resetpassword/' + token);
+    };
 
-        userFactory.renewSession = function(username) {
-            return $http.get('/api/renewtoken/' + username);
-        };
+    // SAVE PASSWORD
+    userFactory.savePassword = function(regData) {
+      return $http.put('/api/savepassword/', regData);
+    };
 
-        userFactory.getPermission = function() {
-            return $http.get('/api/permission/');
-        };
+    // RENEW USER TOKEN
+    userFactory.renewSession = function(username) {
+      return $http.get('/api/renewtoken/' + username);
+    };
 
-        userFactory.getUsers = function() {
-            return $http.get('api/admin/');
-        };
+    // DETERMINE USER PERMISSION
+    userFactory.getPermission = function() {
+      return $http.get('/api/permission/');
+    };
 
-        userFactory.createCode = function(eventData) {
-            return $http.post('api/codes/', eventData);
-        };
+    // RETRIEVE ALL USERS
+    userFactory.getUsers = function() {
+      return $http.get('api/admin/');
+    };
 
-        userFactory.getCodes = function() {
-            return $http.get('api/getcodes/');
-        };
+    // RETRIEVE ALL EVENT CODES
+    userFactory.getCodes = function() {
+      return $http.get('api/getcodes/');
+    };
 
-        return userFactory;
-    });
+    return userFactory;
+  });

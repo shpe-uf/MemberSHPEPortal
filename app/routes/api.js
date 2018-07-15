@@ -16,6 +16,7 @@ module.exports = function(router) {
     }
   });
 
+  // ENDPOINT TO CREATE/REGISTER USERS
   router.post('/users', function(req, res) {
     var user = new User();
     user.firstName = req.body.firstName;
@@ -25,7 +26,6 @@ module.exports = function(router) {
     user.username = req.body.username;
     user.email = req.body.email;
     user.password = req.body.password;
-    // user.listServ = req.body.listServ;
 
     if (req.body.username == null || req.body.password == null || req.body.email == null || req.body.firstName == null || req.body.lastName == null || req.body.major == null || req.body.year == null || req.body.username == '' || req.body.password == '' || req.body.email == '' || req.body.firstName == '' || req.body.lastName == '' || req.body.major == '' || req.body.year == '') {
       res.json({
@@ -91,6 +91,7 @@ module.exports = function(router) {
     }
   });
 
+  // ENDPOINT TO CREATE EVENT CODES
   router.post('/codes', function(req, res) {
     var code = new Code();
     code.name = req.body.name;
@@ -172,6 +173,7 @@ module.exports = function(router) {
     }
   });
 
+  // ENDPOINT TO AUTHENTICATE THAT THE USER EXISTS IN THE DATABASE
   router.post('/authenticate', function(req, res) {
     User.findOne({
       username: req.body.username
@@ -201,12 +203,7 @@ module.exports = function(router) {
 
             var token = jwt.sign({
               username: user.username,
-              email: user.email,
-              // firstName: user.firstName,
-              // lastName: user.lastName,
-              // major: user.major,
-              // year: user.year,
-              // points: user.points
+              email: user.email
             }, secret, {
               expiresIn: '1800s'
             });
@@ -222,6 +219,7 @@ module.exports = function(router) {
     });
   });
 
+  // ENDPOINT TO SEND THE USER A FORGOT USERNAME EMAIL
   router.get('/forgetusername/:email', function(req, res) {
     User.findOne({
       email: req.params.email
@@ -270,6 +268,7 @@ module.exports = function(router) {
     });
   });
 
+  // ENDPOINT TO SEND THE USER A RESET PASSWORD EMAIL
   router.put('/resetpassword/', function(req, res) {
     User.findOne({
       username: req.body.username
@@ -324,6 +323,7 @@ module.exports = function(router) {
     });
   });
 
+  // ENDPOINT TO RESET THE PASSWORD
   router.get('/resetpassword/:token', function(req, res) {
     User.findOne({
       resettoken: req.params.token
@@ -356,6 +356,7 @@ module.exports = function(router) {
     });
   });
 
+  // ENDPOINT TO SAVE PASSWORD
   router.put('/savepassword', function(req, res) {
     User.findOne({
       username: req.body.username
@@ -405,6 +406,7 @@ module.exports = function(router) {
     });
   });
 
+  // MIDDLEWARE TO LOG USER IN
   router.use(function(req, res, next) {
     var token = req.body.token || req.body.query || req.headers['x-access-token'];
 
@@ -428,6 +430,7 @@ module.exports = function(router) {
     }
   });
 
+  // ENDPOINT TO SEND USER PROFILE INFORMATION
   router.post('/me', function(req, res) {
     User.findOne({
       username: req.decoded.username
@@ -436,6 +439,7 @@ module.exports = function(router) {
     });
   });
 
+  // ENDPOINT TO RENEW THE USER TOKEN
   router.get('/renewtoken/:username', function(req, res) {
     User.findOne({
       username: req.params.username
@@ -460,6 +464,7 @@ module.exports = function(router) {
     });
   });
 
+  // ENDPOINT TO DETERMINE USER PERMISSION
   router.get('/permission', function(req, res) {
     User.findOne({
       username: req.decoded.username
@@ -480,6 +485,7 @@ module.exports = function(router) {
     });
   });
 
+  // ENDPOINT TO RETRIEVE ALL USERS
   router.get('/admin', function(req, res) {
     User.find({
 
@@ -520,6 +526,7 @@ module.exports = function(router) {
     });
   });
 
+  // ENDPOINT TO RETRIEVE EVENT CODES
   router.get('/getcodes', function(req, res) {
     Code.find({
 

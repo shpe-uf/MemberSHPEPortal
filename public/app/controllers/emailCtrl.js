@@ -50,7 +50,7 @@ angular.module('emailController', ['userServices'])
     app = this;
     app.hide = true;
 
-    User.resetUser($routeParams.token).then(function(data) {
+    User.resetPassword($routeParams.token).then(function(data) {
 
       if (data.data.success) {
         app.hide = false;
