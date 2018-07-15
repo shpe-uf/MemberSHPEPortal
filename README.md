@@ -8,27 +8,26 @@ Official MemberSHPE UF website for the Society of Hispanic Professional Engineer
 
 ## To Do/Known Bugs:
 - Fix times for token renewal modal and renewing the token. (07/08/18)
-- Stop relying on tokens for user information. (07/08/18)
 - Error message for non-matching passwords. (07/08/18)
 - Buttons will log user out after renewing session. (07/08/18)
 
 ## Road Map:
 1. Admin Panel
-    - [  ] View member information
-    - [  ] Create event codes
-    - [  ] Request system
-    - [  ] Create Event table on database
+    - [X] View member information
+    - [X] Create event codes
+    - [ ] Request system
+    - [X] Create Event table on database
 2. My Profile
-    - [  ] Display user information
-    - [  ] Edit user information
+    - [X] Display user information
+    - [ ] Edit user information
 3. Rewards Program
-    - [  ] Redeem points code
-    - [  ] Send request for points
-    - [  ] View points redeemed and approved
+    - [ ] Redeem points code
+    - [ ] Send request for points
+    - [ ] View points redeemed and approved
 4. Alumni Directory
-    - [  ] Integrate Google Maps API
-    - [  ] Email and collect alumni information
+    - [ ] Integrate Google Maps API
+    - [ ] Email and collect alumni information
 5. Résumé Repository
-    - [  ] Link to Google Drive
-    - [  ] Link résumé to the user
-    - [  ] Update résumé
+    - [ ] Link to Google Drive
+    - [ ] Link résumé to the user
+    - [ ] Update résumé

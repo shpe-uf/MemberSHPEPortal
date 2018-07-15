@@ -1,155 +1,154 @@
 angular.module('mainController', ['authServices', 'userServices'])
-    .controller('mainCtrl', function($timeout, $location, $rootScope, $interval, $window, $route, Auth, User, AuthToken) {
-        var app = this;
-        app.loadme = false;
+  .controller('mainCtrl', function($timeout, $location, $rootScope, $interval, $window, $route, Auth, User, AuthToken) {
+    var app = this;
+    app.loadme = false;
 
-        app.checkSession = function() {
-            if (Auth.isLoggedIn()) {
-                app.checkInSession = true;
-                var interval = $interval(function() {
-                    var token = $window.localStorage.getItem('token');
-                    if (token === null) {
-                        $interval.cancel(interval);
-                    } else {
-                        self.parseJwt = function(token) {
-                            var base64url = token.split('.')[1];
-                            var base64 = base64url.replace('-', '+').replace('_', '/');
-                            return JSON.parse($window.atob(base64));
-                        };
-                        var expireTime = self.parseJwt(token);
-                        var timeStamp = Math.floor(Date.now() / 1000);
+    app.checkSession = function() {
+      if (Auth.isLoggedIn()) {
+        app.checkInSession = true;
+        var interval = $interval(function() {
+          var token = $window.localStorage.getItem('token');
+          if (token === null) {
+            $interval.cancel(interval);
+          } else {
+            self.parseJwt = function(token) {
+              var base64url = token.split('.')[1];
+              var base64 = base64url.replace('-', '+').replace('_', '/');
+              return JSON.parse($window.atob(base64));
+            };
+            var expireTime = self.parseJwt(token);
+            var timeStamp = Math.floor(Date.now() / 1000);
 
-                        var timeCheck = expireTime.exp - timeStamp;
+            var timeCheck = expireTime.exp - timeStamp;
 
-                        if (timeCheck <= 25) {
-                            showModal(1);
-                            $interval.cancel(interval);
-                        } else {
-
-                        }
-                    }
-                }, 2000);
-            }
-        };
-
-        app.checkSession();
-
-        var showModal = function(option) {
-            app.choiceMade = false;
-            app.modalHeader = undefined;
-            app.modalBody = undefined;
-            app.hideButton = false;
-
-            if (option === 1) {
-                app.modalHeader = 'Timeout Warning';
-                app.modalBody = 'Your session will expire in 5 minutes. Would you like to renew your session?';
-                $("#tokenExpire").modal({
-                    backdrop: "static"
-                });
-                $timeout(function() {
-                    if (!app.choiceMade) app.endSession();
-                }, 10000);
-            } else if (option === 2) {
-                app.hideButton = true;
-                app.modalHeader = 'Logging out';
-                $("#tokenExpire").modal({
-                    backdrop: "static"
-                });
-                $timeout(function() {
-                    Auth.logout();
-                    $location.path('/');
-                    hideModal();
-                    $route.reload();
-                }, 2000);
-            }
-        };
-
-        app.renewSession = function() {
-            app.choiceMade = true;
-            User.renewSession(app.username).then(function(data) {
-                if (data.data.success) {
-                    AuthToken.setToken(data.data.message);
-                    app.checkSession();
-                } else {
-                    app.modalBody = data.data.message;
-                }
-            });
-            hideModal();
-        };
-
-        app.endSession = function() {
-            app.choiceMade = true;
-            hideModal();
-            $timeout(function() {
-                showModal(2);
-            }, 1000);
-        };
-
-        var hideModal = function() {
-            $("#tokenExpire").modal('hide');
-        };
-
-        $rootScope.$on('$routeChangeStart', function() {
-
-            if (!app.checkInSession) app.checkSession();
-
-            if (Auth.isLoggedIn()) {
-                app.isLoggedIn = true;
-
-                Auth.getUser().then(function(data) {
-                    app.firstName = data.data.firstName;
-                    app.lastName = data.data.lastName;
-                    app.username = data.data.username;
-                    app.email = data.data.email;
-                    app.major = data.data.major;
-                    app.year = data.data.year;
-                    app.points = data.data.points;
-
-                    User.getPermission().then(function(data) {
-                        if (data.data.message === 'admin') {
-                            app.authorized = true;
-                            app.loadme = true;
-                        } else {
-                            app.authorized = false;
-                            app.loadme = true;
-                        }
-                    });
-                });
+            if (timeCheck <= 25) {
+              showModal(1);
+              $interval.cancel(interval);
             } else {
-                app.isLoggedIn = false;
-                app.username = '';
-                app.email = '';
-                app.loadme = true;
+
             }
+          }
+        }, 2000);
+      }
+    };
+
+    app.checkSession();
+
+    var showModal = function(option) {
+      app.choiceMade = false;
+      app.modalHeader = undefined;
+      app.modalBody = undefined;
+      app.hideButton = false;
+
+      if (option === 1) {
+        app.modalHeader = 'Timeout Warning';
+        app.modalBody = 'Your session will expire in 5 minutes. Would you like to renew your session?';
+        $("#tokenExpire").modal({
+          backdrop: "static"
         });
+        $timeout(function() {
+          if (!app.choiceMade) app.endSession();
+        }, 10000);
+      } else if (option === 2) {
+        app.hideButton = true;
+        app.modalHeader = 'Logging out';
+        $("#tokenExpire").modal({
+          backdrop: "static"
+        });
+        $timeout(function() {
+          Auth.logout();
+          $location.path('/');
+          hideModal();
+          $route.reload();
+        }, 2000);
+      }
+    };
 
-        this.doLogin = function(loginData) {
-            app.errorMsg = false;
+    app.renewSession = function() {
+      app.choiceMade = true;
+      User.renewSession(app.username).then(function(data) {
+        if (data.data.success) {
+          AuthToken.setToken(data.data.message);
+          app.checkSession();
+        } else {
+          app.modalBody = data.data.message;
+        }
+      });
+      hideModal();
+    };
 
-            Auth.login(app.loginData).then(function(data) {
-                if (data.data.success) {
-                    app.successMsg = data.data.message;
-                    $timeout(function() {
-                        $location.path('/profile');
-                        app.loginData = '';
-                        app.successMsg = false;
-                        app.checkSession();
-                    }, 1000);
-                } else {
-                    app.errorMsg = data.data.message;
-                }
-            });
-        };
+    app.endSession = function() {
+      app.choiceMade = true;
+      hideModal();
+      $timeout(function() {
+        showModal(2);
+      }, 1000);
+    };
 
-        app.logout = function() {
-            showModal(2);
-        };
+    var hideModal = function() {
+      $("#tokenExpire").modal('hide');
+    };
 
-        app.updateProfile = function() {
-            console.log("UPDATE PROFILE MAIN CONTROLLER");
-            $("#profileUpdate").modal({
-                backdrop: "static"
-            });
-        };
+    $rootScope.$on('$routeChangeStart', function() {
 
+      if (!app.checkInSession) app.checkSession();
+
+      if (Auth.isLoggedIn()) {
+        app.isLoggedIn = true;
+
+        Auth.getUser().then(function(data) {
+          app.firstName = data.data.firstName;
+          app.lastName = data.data.lastName;
+          app.username = data.data.username;
+          app.email = data.data.email;
+          app.major = data.data.major;
+          app.year = data.data.year;
+          app.points = data.data.points;
+
+          User.getPermission().then(function(data) {
+            if (data.data.message === 'admin') {
+              app.authorized = true;
+              app.loadme = true;
+            } else {
+              app.authorized = false;
+              app.loadme = true;
+            }
+          });
+        });
+      } else {
+        app.isLoggedIn = false;
+        app.username = '';
+        app.email = '';
+        app.loadme = true;
+      }
     });
+
+    this.doLogin = function(loginData) {
+      app.errorMsg = false;
+
+      Auth.login(app.loginData).then(function(data) {
+        if (data.data.success) {
+          app.successMsg = data.data.message;
+          $timeout(function() {
+            $location.path('/profile');
+            app.loginData = '';
+            app.successMsg = false;
+            app.checkSession();
+          }, 1000);
+        } else {
+          app.errorMsg = data.data.message;
+        }
+      });
+    };
+
+    app.logout = function() {
+      showModal(2);
+    };
+
+    app.updateProfile = function() {
+      $("#profileUpdate").modal({
+        backdrop: "static"
+      });
+    };
+
+  });

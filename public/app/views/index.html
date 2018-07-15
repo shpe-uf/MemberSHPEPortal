@@ -3,108 +3,106 @@
 
 <head>
 
-    <base href="/">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="shortcut icon" type="image/png" href="../../../assets/images/favicon.png" />
+  <base href="/">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" type="image/png" href="../../../assets/images/favicon.png" />
 
-    <title>MemberSHPE UF</title>
+  <title>MemberSHPE UF</title>
 
-    <!-- STYLE CDNs - Bootstrap/Google Fonts/Font Awesome/Custom CSS/Animate -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/index-style.css">
+  <!-- STYLE CDNs - Bootstrap/Google Fonts/Font Awesome/Custom CSS/Animate -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/index-style.css">
 
-    <!-- ANGULAR/JQUERY CDNs  -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+  <!-- ANGULAR/JQUERY CDNs  -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
-    <!-- ANGULAR ROUTING -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.js"></script>
-    <script src="app/app.js"></script>
-    <script src="app/routes.js"></script>
+  <!-- ANGULAR ROUTING -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.js"></script>
+  <script src="app/app.js"></script>
+  <script src="app/routes.js"></script>
 
-    <!-- CONTROLLERS -->
-    <script src="app/controllers/userCtrl.js"></script>
-    <script src="app/controllers/mainCtrl.js"></script>
-    <script src="app/controllers/emailCtrl.js"></script>
-    <script src="app/controllers/adminCtrl.js"></script>
+  <!-- CONTROLLERS -->
+  <script src="app/controllers/userCtrl.js"></script>
+  <script src="app/controllers/mainCtrl.js"></script>
+  <script src="app/controllers/emailCtrl.js"></script>
+  <script src="app/controllers/adminCtrl.js"></script>
 
-    <!-- SERVICES -->
-    <script src="app/services/userServices.js"></script>
-    <script src="app/services/authServices.js"></script>
+  <!-- SERVICES -->
+  <script src="app/services/userServices.js"></script>
+  <script src="app/services/authServices.js"></script>
 </head>
 
 <body ng-app="userApp" ng-controller="mainCtrl as main" ng-show="main.loadme" ng-cloak>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="/">MEMBER<span>SHPE UF</span></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/register" ng-show="!main.isLoggedIn">Register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login" ng-show="!main.isLoggedIn">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" ng-show="main.isLoggedIn" ng-click="main.logout()">Logout</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link nav-name dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-show="main.isLoggedIn">{{ main.username }}</a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item admin-text" href="/admin" ng-show="main.authorized && main.isLoggedIn">Admin Panel</a>
-                            <a class="dropdown-item" href="/profile">My Profile</a>
-                            <a class="dropdown-item" href="/rewards">Rewards Program</a>
-                            <a class="dropdown-item" href="/alumni">Alumni Directory</a>
-                            <a class="dropdown-item" href="/resume">Résumé Repository</a>
-                        </div>
-                    </li>
-                </ul>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">MEMBER<span>SHPE UF</span></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/register" ng-show="!main.isLoggedIn">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/login" ng-show="!main.isLoggedIn">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" ng-show="main.isLoggedIn" ng-click="main.logout()">Logout</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link nav-name dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-show="main.isLoggedIn">{{ main.username }}</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item admin-text" href="/admin" ng-show="main.authorized && main.isLoggedIn">Admin Panel</a>
+              <a class="dropdown-item" href="/profile">My Profile</a>
+              <a class="dropdown-item" href="/rewards">Rewards Program</a>
+              <a class="dropdown-item" href="/alumni">Alumni Directory</a>
+              <a class="dropdown-item" href="/resume">Résumé Repository</a>
             </div>
-        </div>
-    </nav>
-
-    <div class="ng-view"></div>
-
-    <div class="modal fade" id="tokenExpire" aria-labelledby="tokenExpireLabel">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title" id="tokenExpireLabel">{{ main.modalHeader }}</h3>
-                </div>
-                <div class="modal-body">
-                    <p>{{ main.modalBody }}</p>
-                    <div ng-show="main.hideButton">
-                        <!-- <p>ANIMATION GOES HERE</p> -->
-                        <div class="sk-cube-grid">
-                            <div class="sk-cube sk-cube1"></div>
-                            <div class="sk-cube sk-cube2"></div>
-                            <div class="sk-cube sk-cube3"></div>
-                            <div class="sk-cube sk-cube4"></div>
-                            <div class="sk-cube sk-cube5"></div>
-                            <div class="sk-cube sk-cube6"></div>
-                            <div class="sk-cube sk-cube7"></div>
-                            <div class="sk-cube sk-cube8"></div>
-                            <div class="sk-cube sk-cube9"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" ng-click="main.endSession();" ng-hide="main.hideButton" class="btn btn-danger">No</button>
-                    <button type="button" ng-click="main.renewSession();" ng-hide="main.hideButton" class="btn btn-success">Yes</button>
-                </div>
-            </div>
-        </div>
+          </li>
+        </ul>
+      </div>
     </div>
+  </nav>
+
+  <div class="ng-view"></div>
+
+  <div class="modal fade" id="tokenExpire" aria-labelledby="tokenExpireLabel">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="tokenExpireLabel">{{ main.modalHeader }}</h3>
+        </div>
+        <div class="modal-body">
+          <p>{{ main.modalBody }}</p>
+          <div ng-show="main.hideButton">
+            <!-- <p>ANIMATION GOES HERE</p> -->
+            <div class="sk-cube-grid">
+              <div class="sk-cube sk-cube1"></div>
+              <div class="sk-cube sk-cube2"></div>
+              <div class="sk-cube sk-cube3"></div>
+              <div class="sk-cube sk-cube4"></div>
+              <div class="sk-cube sk-cube5"></div>
+              <div class="sk-cube sk-cube6"></div>
+              <div class="sk-cube sk-cube7"></div>
+              <div class="sk-cube sk-cube8"></div>
+              <div class="sk-cube sk-cube9"></div>
+            </div>
+          </div>
+          <button type="button" ng-click="main.endSession();" ng-hide="main.hideButton" class="btn btn-danger">No</button>
+          <button type="button" ng-click="main.renewSession();" ng-hide="main.hideButton" class="btn btn-success">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </body>
 

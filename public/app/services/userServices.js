@@ -35,8 +35,8 @@ angular.module('userServices', [])
             return $http.get('api/admin/');
         };
 
-        userFactory.createCode = function() {
-            return $http.post('api/codes/');
+        userFactory.createCode = function(eventData) {
+            return $http.post('api/codes/', eventData);
         };
 
         userFactory.getCodes = function() {

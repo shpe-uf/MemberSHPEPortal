@@ -538,8 +538,6 @@ module.exports = function(router) {
                                 message: 'Events not found'
                             });
                         } else {
-                            console.log("\nEVENTS");
-                            console.log(events);
                             res.json({
                                 success: true,
                                 message: events,

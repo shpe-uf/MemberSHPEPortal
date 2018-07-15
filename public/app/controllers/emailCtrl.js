@@ -78,6 +78,6 @@ angular.module('emailController', ['userServices'])
       } else {
         app.errorMsg = 'Please ensure the form is filled out properly';
       }
-    }
+    };
 
   });
