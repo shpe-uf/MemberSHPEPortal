@@ -5,6 +5,8 @@ angular.module('userControllers', ['userServices'])
     var app = this;
 
     this.regUser = function(regData) {
+      console.log("REG DATA");
+      console.log(app.regData);
       app.errorMsg = false;
 
       User.create(app.regData).then(function(data) {

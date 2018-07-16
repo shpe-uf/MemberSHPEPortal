@@ -1,7 +1,7 @@
 <div class="register-bg full-height">
   <div class="container">
     <div class="row">
-      <div class="offset-sm-1 col-sm-10 offset-md-3 col-md-6 register-container">
+      <div class="offset-sm-1 col-sm-10 offset-md-2 col-md-8 register-container">
         <h1 class="text-center">Register</h1>
 
         <hr>
@@ -15,19 +15,22 @@
         </div>
 
         <form name="regForm" ng-submit="register.regUser(regData);" novalidate>
-          <div class="form-group">
-            <label for="userFirst">First Name <span ng-show="(!regForm.firstName.$pristine && regForm.firstName.$error.required) || (regForm.$submitted && regForm.firstName.$error.required)"> (This field is required)</span></label>
-            <input type="text" class="form-control" name="firstName" id="userFirst" ng-model="register.regData.firstName" required>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="userFirst">First Name <span ng-show="(!regForm.firstName.$pristine && regForm.firstName.$error.required) || (regForm.$submitted && regForm.firstName.$error.required)"> (This field is required)</span></label>
+              <input type="text" class="form-control" name="firstName" id="userFirst" ng-model="register.regData.firstName" required>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="userLast">Last Name <span ng-show="(!regForm.lastName.$pristine && regForm.lastName.$error.required) || (regForm.$submitted && regForm.lastName.$error.required)"> (This field is required)</span></label>
+              <input type="text" class="form-control" name="lastName" id="userLast" ng-model="register.regData.lastName" required>
+            </div>
           </div>
 
-          <div class="form-group">
-            <label for="userLast">Last Name <span ng-show="(!regForm.lastName.$pristine && regForm.lastName.$error.required) || (regForm.$submitted && regForm.lastName.$error.required)"> (This field is required)</span></label>
-            <input type="text" class="form-control" name="lastName" id="userLast" ng-model="register.regData.lastName" required>
-          </div>
-
-          <div class="form-group">
-            <label for="userMajor">Major  <span ng-show="(!regForm.major.$pristine && regForm.major.$error.required) || (regForm.$submitted && regForm.major.$error.required)"> (This field is required)</span></label>
-            <select class="form-control" name="major" id="userMajor" ng-model="register.regData.major" required>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="userMajor">Major  <span ng-show="(!regForm.major.$pristine && regForm.major.$error.required) || (regForm.$submitted && regForm.major.$error.required)"> (This field is required)</span></label>
+              <select class="form-control" name="major" id="userMajor" ng-model="register.regData.major" required>
                 <option>Aerospace Engineering</option>
                 <option>Agricultural & Biological Engineering</option>
                 <option>Biomedical Engineering</option>
@@ -46,11 +49,11 @@
                 <option>Nuclear Engineering</option>
                 <option>Other</option>
               </select>
-          </div>
+            </div>
 
-          <div class="form-group">
-            <label for="userYear">Year <span ng-show="(!regForm.year.$pristine && regForm.year.$error.required) || (regForm.$submitted && regForm.year.$error.required)"> (This field is required)</span></label>
-            <select class="form-control" name="year" id="userYear" ng-model="register.regData.year" required>
+            <div class="form-group col-md-6">
+              <label for="userYear">Year <span ng-show="(!regForm.year.$pristine && regForm.year.$error.required) || (regForm.$submitted && regForm.year.$error.required)"> (This field is required)</span></label>
+              <select class="form-control" name="year" id="userYear" ng-model="register.regData.year" required>
                 <option>1st Year</option>
                 <option>2nd Year</option>
                 <option>3rd Year</option>
@@ -58,309 +61,325 @@
                 <option>5th Year or higher</option>
                 <option>Graduate Student</option>
               </select>
+            </div>
           </div>
 
-          <div class="form-group">
-            <label for="userNationality">Nationality or Country of Birth/Origin <span ng-show="(!regForm.nationality.$pristine && regForm.nationality.$error.required) || (regForm.$submitted && regForm.nationality.$error.required)"> (This is field is required)</span></label>
-            <select class="form-control" name="nationality" id="userNationality" ng-model="register.regData.nationality" required>
-              <option>Afghanistan</option>
-	            <option>Åland Islands</option>
-	            <option>Albania</option>
-	            <option>Algeria</option>
-	            <option>American Samoa</option>
-	            <option>Andorra</option>
-	            <option>Angola</option>
-	            <option>Anguilla</option>
-	            <option>Antarctica</option>
-	            <option>Antigua and Barbuda</option>
-	            <option>Argentina</option>
-	            <option>Armenia</option>
-	            <option>Aruba</option>
-	            <option>Australia</option>
-	            <option>Austria</option>
-	            <option>Azerbaijan</option>
-	            <option>Bahamas</option>
-	            <option>Bahrain</option>
-	            <option>Bangladesh</option>
-	            <option>Barbados</option>
-	            <option>Belarus</option>
-	            <option>Belgium</option>
-	            <option>Belize</option>
-	            <option>Benin</option>
-	            <option>Bermuda</option>
-	            <option>Bhutan</option>
-	            <option>Bolivia</option>
-	            <option>Bonaire, Sint Eustatius and Saba</option>
-	            <option>Bosnia and Herzegovina</option>
-	            <option>Botswana</option>
-	            <option>Bouvet Island</option>
-	            <option>Brazil</option>
-	            <option>British Indian Ocean Territory</option>
-	            <option>Brunei</option>
-	            <option>Bulgaria</option>
-	            <option>Burkina Faso</option>
-	            <option>Burundi</option>
-	            <option>Cambodia</option>
-	            <option>Cameroon</option>
-	            <option>Canada</option>
-	            <option>Cape Verde</option>
-	            <option>Cayman Islands</option>
-	            <option>Central African Republic</option>
-	            <option>Chad</option>
-	            <option>Chile</option>
-	            <option>China</option>
-	            <option>Christmas Island</option>
-	            <option>Cocos Islands</option>
-	            <option>Colombia</option>
-	            <option>Comoros</option>
-	            <option>Congo</option>
-	            <option>Cook Islands</option>
-	            <option>Costa Rica</option>
-	            <option>Côte d'Ivoire</option>
-	            <option>Croatia</option>
-	            <option>Cuba</option>
-	            <option>Curaçao</option>
-	            <option>Cyprus</option>
-	            <option>Czech Republic</option>
-              <option>Democratic Republic of the Congo</option>
-	            <option>Denmark</option>
-	            <option>Djibouti</option>
-	            <option>Dominica</option>
-	            <option>Dominican Republic</option>
-	            <option>Ecuador</option>
-	            <option>Egypt</option>
-	            <option>El Salvador</option>
-	            <option>Equatorial Guinea</option>
-	            <option>Eritrea</option>
-	            <option>Estonia</option>
-	            <option>Ethiopia</option>
-	            <option>Falkland Islands/Malvinas</option>
-	            <option>Faroe Islands</option>
-	            <option>Fiji</option>
-	            <option>Finland</option>
-	            <option>France</option>
-	            <option>French Guiana</option>
-	            <option>French Polynesia</option>
-	            <option>French Southern Territories</option>
-	            <option>Gabon</option>
-	            <option>Gambia</option>
-	            <option>Georgia</option>
-	            <option>Germany</option>
-	            <option>Ghana</option>
-	            <option>Gibraltar</option>
-	            <option>Greece</option>
-	            <option>Greenland</option>
-	            <option>Grenada</option>
-	            <option>Guadeloupe</option>
-	            <option>Guam</option>
-	            <option>Guatemala</option>
-	            <option>Guernsey</option>
-	            <option>Guinea</option>
-	            <option>Guinea-Bissau</option>
-	            <option>Guyana</option>
-	            <option>Haiti</option>
-	            <option>Heard Island and McDonald Islands</option>
-	            <option>Holy See</option>
-	            <option>Honduras</option>
-	            <option>Hong Kong</option>
-	            <option>Hungary</option>
-	            <option>Iceland</option>
-	            <option>India</option>
-	            <option>Indonesia</option>
-	            <option>Iran</option>
-	            <option>Iraq</option>
-	            <option>Ireland</option>
-	            <option>Isle of Man</option>
-	            <option>Israel</option>
-	            <option>Italy</option>
-	            <option>Jamaica</option>
-	            <option>Japan</option>
-	            <option>Jersey</option>
-	            <option>Jordan</option>
-	            <option>Kazakhstan</option>
-	            <option>Kenya</option>
-	            <option>Kiribati</option>
-	            <option>Kuwait</option>
-	            <option>Kyrgyzstan</option>
-	            <option>Lao</option>
-	            <option>Latvia</option>
-	            <option>Lebanon</option>
-	            <option>Lesotho</option>
-	            <option>Liberia</option>
-	            <option>Libya</option>
-	            <option>Liechtenstein</option>
-	            <option>Lithuania</option>
-	            <option>Luxembourg</option>
-	            <option>Macao</option>
-	            <option>Macedonia</option>
-	            <option>Madagascar</option>
-	            <option>Malawi</option>
-	            <option>Malaysia</option>
-	            <option>Maldives</option>
-	            <option>Mali</option>
-	            <option>Malta</option>
-	            <option>Marshall Islands</option>
-	            <option>Martinique</option>
-	            <option>Mauritania</option>
-	            <option>Mauritius</option>
-	            <option>Mayotte</option>
-	            <option>Mexico</option>
-	            <option>Micronesia</option>
-	            <option>Moldova</option>
-	            <option>Monaco</option>
-	            <option>Mongolia</option>
-	            <option>Montenegro</option>
-	            <option>Montserrat</option>
-	            <option>Morocco</option>
-              <option>North Korea</option>
-	            <option>Mozambique</option>
-	            <option>Myanmar</option>
-	            <option>Namibia</option>
-	            <option>Nauru</option>
-	            <option>Nepal</option>
-	            <option>Netherlands</option>
-	            <option>New Caledonia</option>
-	            <option>New Zealand</option>
-	            <option>Nicaragua</option>
-	            <option>Niger</option>
-	            <option>Nigeria</option>
-	            <option>Niue</option>
-	            <option>Norfolk Island</option>
-	            <option>Northern Mariana Islands</option>
-	            <option>Norway</option>
-	            <option>Oman</option>
-	            <option>Pakistan</option>
-	            <option>Palau</option>
-	            <option>Palestine</option>
-	            <option>Panama</option>
-	            <option>Papua New Guinea</option>
-	            <option>Paraguay</option>
-	            <option>Peru</option>
-	            <option>Philippines</option>
-	            <option>Pitcairn</option>
-	            <option>Poland</option>
-	            <option>Portugal</option>
-	            <option>Puerto Rico</option>
-	            <option>Qatar</option>
-	            <option>Réunion</option>
-	            <option>Romania</option>
-	            <option>Russia</option>
-	            <option>Rwanda</option>
-	            <option>Saint Barthélemy</option>
-	            <option>Saint Helena, Ascension and Tristan da Cunha</option>
-	            <option>Saint Kitts and Nevis</option>
-	            <option>Saint Lucia</option>
-	            <option>Saint Martin</option>
-	            <option>Saint Pierre and Miquelon</option>
-	            <option>Saint Vincent and the Grenadines</option>
-	            <option>Samoa</option>
-	            <option>San Marino</option>
-	            <option>Sao Tome and Principe</option>
-	            <option>Saudi Arabia</option>
-	            <option>Senegal</option>
-	            <option>Serbia</option>
-	            <option>Seychelles</option>
-	            <option>Sierra Leone</option>
-	            <option>Singapore</option>
-	            <option>Sint Maarten</option>
-	            <option>Slovakia</option>
-	            <option>Slovenia</option>
-	            <option>Solomon Islands</option>
-	            <option>Somalia</option>
-	            <option>South Africa</option>
-	            <option>South Georgia and the South Sandwich Islands</option>
-              <option>South Korea</option>
-	            <option>South Sudan</option>
-	            <option>Spain</option>
-	            <option>Sri Lanka</option>
-	            <option>Sudan</option>
-	            <option>Suriname</option>
-	            <option>Svalbard and Jan Mayen</option>
-	            <option>Swaziland</option>
-	            <option>Sweden</option>
-	            <option>Switzerland</option>
-	            <option>Syrian Arab Republic</option>
-	            <option>Taiwan</option>
-	            <option>Tajikistan</option>
-	            <option>Tanzania</option>
-	            <option>Thailand</option>
-	            <option>Timor-Leste</option>
-	            <option>Togo</option>
-	            <option>Tokelau</option>
-	            <option>Tonga</option>
-	            <option>Trinidad and Tobago</option>
-	            <option>Tunisia</option>
-	            <option>Turkey</option>
-	            <option>Turkmenistan</option>
-	            <option>Turks and Caicos Islands</option>
-	            <option>Tuvalu</option>
-	            <option>Uganda</option>
-	            <option>Ukraine</option>
-	            <option>United Arab Emirates</option>
-	            <option>United Kingdom</option>
-	            <option>United States</option>
-	            <option>United States Minor Outlying Islands</option>
-	            <option>Uruguay</option>
-	            <option>Uzbekistan</option>
-	            <option>Vanuatu</option>
-	            <option>Venezuela</option>
-	            <option>Vietnam</option>
-	            <option>Virgin Islands, British</option>
-	            <option>Virgin Islands, U.S.</option>
-	            <option>Wallis and Futuna</option>
-	            <option>Western Sahara</option>
-	            <option>Yemen</option>
-	            <option>Zambia</option>
-	            <option>Zimbabwe</option>
-              <option>Prefer not to answer</option>
-            </select>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="userNationality">Nationality or Country of Origin <span ng-show="(!regForm.nationality.$pristine && regForm.nationality.$error.required) || (regForm.$submitted && regForm.nationality.$error.required)"> (This is field is required)</span></label>
+              <select class="form-control" name="nationality" id="userNationality" ng-model="register.regData.nationality" required>
+                <option>Afghanistan</option>
+                <option>Åland Islands</option>
+                <option>Albania</option>
+                <option>Algeria</option>
+                <option>American Samoa</option>
+                <option>Andorra</option>
+                <option>Angola</option>
+                <option>Anguilla</option>
+                <option>Antarctica</option>
+                <option>Antigua and Barbuda</option>
+                <option>Argentina</option>
+                <option>Armenia</option>
+                <option>Aruba</option>
+                <option>Australia</option>
+                <option>Austria</option>
+                <option>Azerbaijan</option>
+                <option>Bahamas</option>
+                <option>Bahrain</option>
+                <option>Bangladesh</option>
+                <option>Barbados</option>
+                <option>Belarus</option>
+                <option>Belgium</option>
+                <option>Belize</option>
+                <option>Benin</option>
+                <option>Bermuda</option>
+                <option>Bhutan</option>
+                <option>Bolivia</option>
+                <option>Bonaire, Sint Eustatius and Saba</option>
+                <option>Bosnia and Herzegovina</option>
+                <option>Botswana</option>
+                <option>Bouvet Island</option>
+                <option>Brazil</option>
+                <option>British Indian Ocean Territory</option>
+                <option>Brunei</option>
+                <option>Bulgaria</option>
+                <option>Burkina Faso</option>
+                <option>Burundi</option>
+                <option>Cambodia</option>
+                <option>Cameroon</option>
+                <option>Canada</option>
+                <option>Cape Verde</option>
+                <option>Cayman Islands</option>
+                <option>Central African Republic</option>
+                <option>Chad</option>
+                <option>Chile</option>
+                <option>China</option>
+                <option>Christmas Island</option>
+                <option>Cocos Islands</option>
+                <option>Colombia</option>
+                <option>Comoros</option>
+                <option>Congo</option>
+                <option>Cook Islands</option>
+                <option>Costa Rica</option>
+                <option>Côte d'Ivoire</option>
+                <option>Croatia</option>
+                <option>Cuba</option>
+                <option>Curaçao</option>
+                <option>Cyprus</option>
+                <option>Czech Republic</option>
+                <option>Democratic Republic of the Congo</option>
+                <option>Denmark</option>
+                <option>Djibouti</option>
+                <option>Dominica</option>
+                <option>Dominican Republic</option>
+                <option>Ecuador</option>
+                <option>Egypt</option>
+                <option>El Salvador</option>
+                <option>Equatorial Guinea</option>
+                <option>Eritrea</option>
+                <option>Estonia</option>
+                <option>Ethiopia</option>
+                <option>Falkland Islands/Malvinas</option>
+                <option>Faroe Islands</option>
+                <option>Fiji</option>
+                <option>Finland</option>
+                <option>France</option>
+                <option>French Guiana</option>
+                <option>French Polynesia</option>
+                <option>French Southern Territories</option>
+                <option>Gabon</option>
+                <option>Gambia</option>
+                <option>Georgia</option>
+                <option>Germany</option>
+                <option>Ghana</option>
+                <option>Gibraltar</option>
+                <option>Greece</option>
+                <option>Greenland</option>
+                <option>Grenada</option>
+                <option>Guadeloupe</option>
+                <option>Guam</option>
+                <option>Guatemala</option>
+                <option>Guernsey</option>
+                <option>Guinea</option>
+                <option>Guinea-Bissau</option>
+                <option>Guyana</option>
+                <option>Haiti</option>
+                <option>Heard Island and McDonald Islands</option>
+                <option>Holy See</option>
+                <option>Honduras</option>
+                <option>Hong Kong</option>
+                <option>Hungary</option>
+                <option>Iceland</option>
+                <option>India</option>
+                <option>Indonesia</option>
+                <option>Iran</option>
+                <option>Iraq</option>
+                <option>Ireland</option>
+                <option>Isle of Man</option>
+                <option>Israel</option>
+                <option>Italy</option>
+                <option>Jamaica</option>
+                <option>Japan</option>
+                <option>Jersey</option>
+                <option>Jordan</option>
+                <option>Kazakhstan</option>
+                <option>Kenya</option>
+                <option>Kiribati</option>
+                <option>Kuwait</option>
+                <option>Kyrgyzstan</option>
+                <option>Lao</option>
+                <option>Latvia</option>
+                <option>Lebanon</option>
+                <option>Lesotho</option>
+                <option>Liberia</option>
+                <option>Libya</option>
+                <option>Liechtenstein</option>
+                <option>Lithuania</option>
+                <option>Luxembourg</option>
+                <option>Macao</option>
+                <option>Macedonia</option>
+                <option>Madagascar</option>
+                <option>Malawi</option>
+                <option>Malaysia</option>
+                <option>Maldives</option>
+                <option>Mali</option>
+                <option>Malta</option>
+                <option>Marshall Islands</option>
+                <option>Martinique</option>
+                <option>Mauritania</option>
+                <option>Mauritius</option>
+                <option>Mayotte</option>
+                <option>Mexico</option>
+                <option>Micronesia</option>
+                <option>Moldova</option>
+                <option>Monaco</option>
+                <option>Mongolia</option>
+                <option>Montenegro</option>
+                <option>Montserrat</option>
+                <option>Morocco</option>
+                <option>North Korea</option>
+                <option>Mozambique</option>
+                <option>Myanmar</option>
+                <option>Namibia</option>
+                <option>Nauru</option>
+                <option>Nepal</option>
+                <option>Netherlands</option>
+                <option>New Caledonia</option>
+                <option>New Zealand</option>
+                <option>Nicaragua</option>
+                <option>Niger</option>
+                <option>Nigeria</option>
+                <option>Niue</option>
+                <option>Norfolk Island</option>
+                <option>Northern Mariana Islands</option>
+                <option>Norway</option>
+                <option>Oman</option>
+                <option>Pakistan</option>
+                <option>Palau</option>
+                <option>Palestine</option>
+                <option>Panama</option>
+                <option>Papua New Guinea</option>
+                <option>Paraguay</option>
+                <option>Peru</option>
+                <option>Philippines</option>
+                <option>Pitcairn</option>
+                <option>Poland</option>
+                <option>Portugal</option>
+                <option>Puerto Rico</option>
+                <option>Qatar</option>
+                <option>Réunion</option>
+                <option>Romania</option>
+                <option>Russia</option>
+                <option>Rwanda</option>
+                <option>Saint Barthélemy</option>
+                <option>Saint Helena, Ascension and Tristan da Cunha</option>
+                <option>Saint Kitts and Nevis</option>
+                <option>Saint Lucia</option>
+                <option>Saint Martin</option>
+                <option>Saint Pierre and Miquelon</option>
+                <option>Saint Vincent and the Grenadines</option>
+                <option>Samoa</option>
+                <option>San Marino</option>
+                <option>Sao Tome and Principe</option>
+                <option>Saudi Arabia</option>
+                <option>Senegal</option>
+                <option>Serbia</option>
+                <option>Seychelles</option>
+                <option>Sierra Leone</option>
+                <option>Singapore</option>
+                <option>Sint Maarten</option>
+                <option>Slovakia</option>
+                <option>Slovenia</option>
+                <option>Solomon Islands</option>
+                <option>Somalia</option>
+                <option>South Africa</option>
+                <option>South Georgia and the South Sandwich Islands</option>
+                <option>South Korea</option>
+                <option>South Sudan</option>
+                <option>Spain</option>
+                <option>Sri Lanka</option>
+                <option>Sudan</option>
+                <option>Suriname</option>
+                <option>Svalbard and Jan Mayen</option>
+                <option>Swaziland</option>
+                <option>Sweden</option>
+                <option>Switzerland</option>
+                <option>Syrian Arab Republic</option>
+                <option>Taiwan</option>
+                <option>Tajikistan</option>
+                <option>Tanzania</option>
+                <option>Thailand</option>
+                <option>Timor-Leste</option>
+                <option>Togo</option>
+                <option>Tokelau</option>
+                <option>Tonga</option>
+                <option>Trinidad and Tobago</option>
+                <option>Tunisia</option>
+                <option>Turkey</option>
+                <option>Turkmenistan</option>
+                <option>Turks and Caicos Islands</option>
+                <option>Tuvalu</option>
+                <option>Uganda</option>
+                <option>Ukraine</option>
+                <option>United Arab Emirates</option>
+                <option>United Kingdom</option>
+                <option>United States</option>
+                <option>United States Minor Outlying Islands</option>
+                <option>Uruguay</option>
+                <option>Uzbekistan</option>
+                <option>Vanuatu</option>
+                <option>Venezuela</option>
+                <option>Vietnam</option>
+                <option>Virgin Islands, British</option>
+                <option>Virgin Islands, U.S.</option>
+                <option>Wallis and Futuna</option>
+                <option>Western Sahara</option>
+                <option>Yemen</option>
+                <option>Zambia</option>
+                <option>Zimbabwe</option>
+                <option>Prefer not to answer</option>
+              </select>
+            </div>
+
+            <div class="form-group col-md-4">
+              <label for="userEthnicity">Ethnicity<span ng-show="(!regForm.ethnicity.$pristine && regForm.ethnicity.$error.required) || (regForm.$submitted && regForm.ethnicity.$error.required)"> (This field is required)</span></label>
+              <select class="form-control" name="ethnicity" id="userEthnicity" ng-model="register.regData.ethnicity" required>
+                <option>American Indian or Alaska Native</option>
+                <option>Asian</option>
+                <option>Black or African American</option>
+                <option>Hispanic/Latino</option>
+                <option>Native Hawaiian or Other Pacific Islander</option>
+                <option>White</option>
+                <option>Two or more ethnicities</option>
+                <option>Prefer not to answer</option>
+              </select>
+            </div>
+
+            <div class="form-group col-md-4">
+              <label for="userSex">Sex<span ng-show="(!regForm.sex.$pristine && regForm.sex.$error.required) || (regForm.$submitted && regForm.sex.$error.required)"> (This field is required)</span></label>
+              <select class="form-control" name="sex" id="userSex" ng-model="register.regData.sex" required>
+                <option>Female</option>
+                <option>Male</option>
+                <option>Other</option>
+                <option>Prefer not to answer</option>
+              </select>
+            </div>
           </div>
 
-          <div class="form-group">
-            <label for="userEthnicity">Ethnicity<span ng-show="(!regForm.ethnicity.$pristine && regForm.ethnicity.$error.required) || (regForm.$submitted && regForm.ethnicity.$error.required)"> (This field is required)</span></label>
-            <select class="form-control" name="ethnicity" id="userEthnicity" ng-model="register.regData.ethnicity" required>
-              <option>American Indian or Alaska Native</option>
-              <option>Asian</option>
-              <option>Black or African American</option>
-              <option>Hispanic/Latino</option>
-              <option>Native Hawaiian or Other Pacific Islander</option>
-              <option>White</option>
-              <option>Two or more ethnicities</option>
-              <option>Prefer not to answer</option>
-            </select>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="userEmail">Email <span ng-show="(!regForm.email.$pristine && regForm.email.$error.required) || (regForm.$submitted && regForm.email.$error.required)"> (This field is required)</span></label>
+              <input type="email" class="form-control" name="email" id="userEmail" ng-model="register.regData.email" required>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="userUsername">Username <span ng-show="(!regForm.username.$pristine && regForm.username.$error.required) || (regForm.$submitted && regForm.username.$error.required)"> (This field is required)</span></label>
+              <input type="text" class="form-control" name="username" id="userUsername" ng-model="register.regData.username" required>
+            </div>
           </div>
 
-          <div class="form-group">
-            <label for="userSex">Sex<span ng-show="(!regForm.sex.$pristine && regForm.sex.$error.required) || (regForm.$submitted && regForm.sex.$error.required)"> (This field is required)</span></label>
-            <select class="form-control" name="sex" id="userSex" ng-model="register.regData.sex" required>
-              <option>Female</option>
-              <option>Male</option>
-              <option>Other</option>
-              <option>Prefer not to answer</option>
-            </select>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="userPassword">Password <span ng-show="(!regForm.firstPassword.$pristine && regForm.firstPassword.$error.required) || (regForm.$submitted && regForm.firstPassword.$error.required)"> (This field is required)</span></label>
+              <input type="password" class="form-control" name="firstPassword" id="userPassword" ng-model="firstPassword" required>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="userConfirmPassword">Confirm Password <span ng-show="!confirmed && !regForm.confirmPassword.$pristine && regForm.firstPassword.$valid"> (Passwords don't match)</span></label>
+              <input type="password" class="form-control" name="confirmPassword" id="userConfirmPassword" ng-model="confirm" match="{{[ firstPassword ]}}" ng-change="register.regData.password = confirm" required>
+            </div>
+
+            <div class="container">
+              <p class="text-muted">At least 8 characters. It must contain at least one lowercase character, one uppercase character, one number, and one special character.</p>
+            </div>
           </div>
 
-          <div class="form-group">
-            <label for="userEmail">Email <span ng-show="(!regForm.email.$pristine && regForm.email.$error.required) || (regForm.$submitted && regForm.email.$error.required)"> (This field is required)</span></label>
-            <input type="email" class="form-control" name="email" id="userEmail" ng-model="register.regData.email" required>
+          <div class="custom-control custom-checkbox my-1 mr-sm-2">
+            <input type="checkbox" class="custom-control-input" id="userListServ" ng-model="register.regData.listServ">
+            <label class="custom-control-label" for="userListServ">
+              Would you like to be added to the listserv to receive weekly emails?
+            </label>
           </div>
-
-          <div class="form-group">
-            <label for="userUsername">Username <span ng-show="(!regForm.username.$pristine && regForm.username.$error.required) || (regForm.$submitted && regForm.username.$error.required)"> (This field is required)</span></label>
-            <input type="text" class="form-control" name="username" id="userUsername" ng-model="register.regData.username" required>
-          </div>
-
-          <div class="form-group">
-            <label for="userPassword">Password <span ng-show="(!regForm.firstPassword.$pristine && regForm.firstPassword.$error.required) || (regForm.$submitted && regForm.firstPassword.$error.required)"> (This field is required)</span></label>
-            <input type="password" class="form-control" name="firstPassword" id="userPassword" ng-model="firstPassword" required>
-            <p class="text-muted">At least 8 characters. It must contain at least one lowercase character, one uppercase character, one number, and one special character.</p>
-          </div>
-
-          <div class="form-group">
-            <label for="userConfirmPassword">Confirm Password <span ng-show="!confirmed && !regForm.confirmPassword.$pristine && regForm.firstPassword.$valid"> (Passwords don't match)</span></label>
-            <input type="password" class="form-control" name="confirmPassword" id="userConfirmPassword" ng-model="confirm" match="{{[ firstPassword ]}}" ng-change="register.regData.password = confirm" required>
-          </div>
-
 
           <hr>
 

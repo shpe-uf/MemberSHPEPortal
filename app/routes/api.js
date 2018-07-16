@@ -23,11 +23,15 @@ module.exports = function(router) {
     user.lastName = req.body.lastName;
     user.major = req.body.major;
     user.year = req.body.year;
-    user.username = req.body.username;
+    user.nationality = req.body.nationality;
+    user.ethnicity = req.body.ethnicity;
+    user.sex = req.body.sex;
     user.email = req.body.email;
+    user.username = req.body.username;
     user.password = req.body.password;
+    user.listServ = req.body.listServ;
 
-    if (req.body.username == null || req.body.password == null || req.body.email == null || req.body.firstName == null || req.body.lastName == null || req.body.major == null || req.body.year == null || req.body.username == '' || req.body.password == '' || req.body.email == '' || req.body.firstName == '' || req.body.lastName == '' || req.body.major == '' || req.body.year == '') {
+    if (req.body.username == null || req.body.password == null || req.body.email == null || req.body.firstName == null || req.body.lastName == null || req.body.major == null || req.body.year == null || req.body.nationality == null || req.body.ethnicity == null || req.body.sex == null || req.body.year == null || req.body.username == '' || req.body.password == '' || req.body.email == '' || req.body.firstName == '' || req.body.lastName == '' || req.body.major == '' || req.body.year == '' || req.body.nationality == '' || req.body.ethnicity == '' || req.body.sex == '') {
       res.json({
         success: false,
         message: 'Make sure you filled out the entire form!'
@@ -434,7 +438,7 @@ module.exports = function(router) {
   router.post('/me', function(req, res) {
     User.findOne({
       username: req.decoded.username
-    }).select('firstName lastName username email major year points').exec(function(err, user) {
+    }).select('firstName lastName username email major year points nationality ethnicity sex').exec(function(err, user) {
       res.send(user);
     });
   });
