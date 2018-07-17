@@ -109,18 +109,13 @@ var UserSchema = new Schema({
   listServ: {
     type: Boolean,
     default: false
-  }
-  // events: [{
-  //   code: {
-  //     type: mongoose.Schema.Types.ObejectId,
-  //     ref: "Code"
-  //   },
-  //   approved: {
-  //     type: Boolean,
-  //     required: true,
-  //     default: false
-  //   }
-  // }]
+  },
+  events: [{
+    event: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Code'
+    }
+  }]
 });
 
 UserSchema.pre('save', function(next) {

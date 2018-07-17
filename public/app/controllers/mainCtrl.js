@@ -1,7 +1,32 @@
 angular.module('mainController', ['authServices', 'userServices'])
   .controller('mainCtrl', function($timeout, $location, $rootScope, $interval, $window, $route, Auth, User, AuthToken) {
+
     var app = this;
     app.loadme = false;
+    app.showModal = true;
+
+    this.openRequestModal = function() {
+      app.errorMsg = false;
+      app.successMsg = false;
+
+      $("#createRequestModal").modal({
+        backdrop: 'static',
+        keyboard: false
+      });
+
+      app.showModal = true;
+    };
+
+    this.closeModal = function(requestData) {
+      $('#createRequestModal').modal('toggle');
+      app.requestData.code = "";
+    };
+
+    this.createRequest = function(requestData) {
+      app.successMsg = false;
+      app.errorMsg = false;
+      console.log(app.requestData);
+    };
 
     app.checkSession = function() {
       if (Auth.isLoggedIn()) {

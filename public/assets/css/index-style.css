@@ -159,6 +159,18 @@ hr {
   color: rgb(235, 70, 22) !important;
 }
 
+.tab-pane {
+  padding: 30px 10px 30px 10px;
+}
+
+.btn-row {
+  height: 54px;
+}
+
+.password-text {
+  margin-bottom: 0px;
+}
+
 th, td {
   border-bottom: solid;
   border-color: rgb(221, 225, 230) !important;
@@ -182,6 +194,10 @@ th, td {
   color: rgb(45, 45, 45);
   font-family: "Avenir";
   text-transform: capitalize;
+}
+
+.col-margin {
+  margin-bottom: 30px;
 }
 
 iframe {
@@ -272,15 +288,3 @@ iframe {
   }
 }
 /* LOGOUT LOADER */
-
-.tab-pane {
-  padding: 30px 10px 30px 10px;
-}
-
-.btn-row {
-  height: 54px;
-}
-
-.password-text {
-  margin-bottom: 0px;
-}

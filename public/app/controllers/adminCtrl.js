@@ -10,6 +10,7 @@ angular.module('adminController', [])
       app.successMsg = false;
 
       $("#createEventModal").modal({
+        backdrop: 'static',
         keyboard: false
       });
 
