@@ -108,7 +108,6 @@ var UserSchema = new Schema({
   },
   listServ: {
     type: Boolean,
-    required: true,
     default: false
   }
   // events: [{

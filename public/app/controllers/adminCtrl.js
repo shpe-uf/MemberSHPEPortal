@@ -61,6 +61,51 @@ angular.module('adminController', [])
       });
     };
 
+    // this.nationalityChart = function() {
+    //   var nationalityLabels = [];
+    //   var nationalityDatasets = [];
+    //
+    //   User.getUsers().then(function(data) {
+    //     if (data.data.success) {
+    //       if (data.data.permission === 'admin') {
+    //         var usersNat = data.data.message;
+    //
+    //         for (var i = 0; i < usersNat.length; i++) {
+    //           nationalityLabels.push(usersNat[i].nationality);
+    //         }
+    //
+    //         console.log(nationalityLabels);
+    //
+    //         app.accessDenied = false;
+    //       } else {
+    //         app.errorMsg = 'Insufficient permission';
+    //       }
+    //     } else {
+    //       app.errorMsg = data.data.message;
+    //     }
+    //   });
+    //
+    //   var ctx = document.getElementById("nationalityChart").getContext('2d');
+    //   var myChart = new Chart(ctx, {
+    //     type: 'doughnut',
+    //     data: {
+    //       datasets: [{
+    //         data: [10, 20, 30]
+    //       }],
+    //       labels: [
+    //         'Red',
+    //         'Yellow',
+    //         'Blue'
+    //       ]
+    //     },
+    //     options: {
+    //       legend: {
+    //         position: 'bottom'
+    //       }
+    //     }
+    //   });
+    // };
+
     User.getUsers().then(function(data) {
       if (data.data.success) {
         if (data.data.permission === 'admin') {
