@@ -33,7 +33,7 @@ angular.module('emailController', ['userServices'])
           if (data.data.success) {
             app.successMsg = data.data.message;
             $timeout(function() {
-              $location.path('/path');
+              $location.path('/login');
             }, 1000);
           } else {
             app.errorMsg = data.data.message;

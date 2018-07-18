@@ -181,7 +181,7 @@ module.exports = function(router) {
   router.post('/authenticate', function(req, res) {
     User.findOne({
       username: req.body.username
-    }).select('email username password firstName lastName major year points').exec(function(err, user) {
+    }).select().exec(function(err, user) {
       if (err) throw err;
 
       if (!user) {
@@ -438,7 +438,7 @@ module.exports = function(router) {
   router.post('/me', function(req, res) {
     User.findOne({
       username: req.decoded.username
-    }).select('firstName lastName username email major year points nationality ethnicity sex').exec(function(err, user) {
+    }).select().exec(function(err, user) {
       res.send(user);
     });
   });
@@ -568,6 +568,47 @@ module.exports = function(router) {
           }
         }
       });
+    });
+  });
+
+  // ENDPOINT TO ADD A REQUEST
+  router.put('/addrequest', function(req, res) {
+    Code.findOne({
+      code: req.body.code
+    }).select().exec(function(err, code) {
+      if (err) throw err;
+
+      console.log("\nCODE: ");
+      console.log(code);
+
+      if (code == null || code == '') {
+        res.json({
+          success: false,
+          message: 'Event not found'
+        });
+      } else {
+        User.findOneAndUpdate({
+          username: req.decoded.username
+        }, {
+          $push: {
+            events: code
+          }
+        }, function(err, model) {
+          if (err) throw err;
+
+          if (!model) {
+            res.json({
+              success: false,
+              message: "Unable to add code to profile"
+            });
+          } else {
+            res.json({
+              success: true,
+              message: "Points redeemed!"
+            });
+          }
+        });
+      }
     });
   });
 

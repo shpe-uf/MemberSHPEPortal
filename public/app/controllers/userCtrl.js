@@ -5,10 +5,15 @@ angular.module('userControllers', ['userServices'])
     var app = this;
 
     this.regUser = function(regData) {
-      console.log("REG DATA");
-      console.log(app.regData);
       app.errorMsg = false;
 
+      if (!app.regData.listServ || app.regData.listServ == null || app.regData.listServ == '') {
+        app.regData.listServ = false;
+      }
+
+      console.log("REG DATA");
+      console.log(app.regData);
+      
       User.create(app.regData).then(function(data) {
         if (data.data.success) {
           app.successMsg = data.data.message;

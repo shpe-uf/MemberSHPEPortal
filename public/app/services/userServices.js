@@ -53,5 +53,10 @@ angular.module('userServices', [])
       return $http.get('api/getcodes/');
     };
 
+    // ADD A NEW REQUEST TO THE USER
+    userFactory.addRequest = function(requestData) {
+      return $http.put('api/addrequest/', requestData);
+    };
+
     return userFactory;
   });
