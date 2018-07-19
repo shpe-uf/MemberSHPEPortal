@@ -58,5 +58,10 @@ angular.module('userServices', [])
       return $http.put('api/addrequest/', requestData);
     };
 
+    // GRAB EVENT CODE INFORMATION FOR INDIVIDUAL USERS
+    userFactory.getCodeInfo = function(codeData) {
+      return $http.get('api/getcodeinfo/' + codeData._id);
+    };
+
     return userFactory;
   });

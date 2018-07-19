@@ -617,5 +617,19 @@ module.exports = function(router) {
     }
   });
 
+  // ENDPOINT TO GRAB EVENT CODE INFORMATION FOR INDIVIDUAL USERS
+  router.get('/getcodeinfo/:code', function(req, res) {
+    // console.log("\nGET CODE INFO ENDPOINT:");
+    // console.log(req.params.code);
+    Code.findOne({
+      _id: req.params.code
+    }).populate().exec(function(err, event) {
+      res.json({
+        success: true,
+        message: event
+      });
+    });
+  });
+
   return router;
 };

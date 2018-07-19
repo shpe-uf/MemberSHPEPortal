@@ -19,7 +19,7 @@
         <div class="card-group">
           <div class="card bg-points">
             <div class="card-body text-center">
-              <h1 class="card-text display-1">{{ main.points }}</h1>
+              <h1 class="card-text display-1">{{ main.totalPoints }}</h1>
               <p class="card-text">Points</p>
             </div>
           </div>
@@ -40,40 +40,14 @@
             <h3 class="subtitle">Points Record</h3>
             <table class="table table-responsive-lg table-striped">
               <tr>
-                <th>Date</th>
-                <th>Event</th>
-                <th>Category</th>
-                <th>Points</th>
+                <th>EVENT</th>
+                <th>TYPE</th>
+                <th>POINTS</th>
               </tr>
-              <tr>
-                <td>09/02/18</td>
-                <td>First Fall General Body Meeting</td>
-                <td>Meeting</td>
-                <td>1</td>
-              </tr>
-              <tr>
-                <td>09/02/18</td>
-                <td>First Fall General Body Meeting</td>
-                <td>Meeting</td>
-                <td>1</td>
-              </tr>
-              <tr>
-                <td>09/02/18</td>
-                <td>First Fall General Body Meeting</td>
-                <td>Meeting</td>
-                <td>1</td>
-              </tr>
-              <tr>
-                <td>09/02/18</td>
-                <td>First Fall General Body Meeting</td>
-                <td>Meeting</td>
-                <td>1</td>
-              </tr>
-              <tr>
-                <td>09/02/18</td>
-                <td>First Fall General Body Meeting</td>
-                <td>Meeting</td>
-                <td>1</td>
+              <tr ng-repeat="event in main.codeArray">
+                <td>{{ event.name }}</td>
+                <td>{{ event.type }}</td>
+                <td>{{ event.points }}</td>
               </tr>
             </table>
           </div>

@@ -19,6 +19,7 @@ angular.module('mainController', ['authServices', 'userServices'])
 
     this.closeModal = function(requestData) {
       $('#createRequestModal').modal('toggle');
+      app.requestData.code = '';
     };
 
     this.createRequest = function(requestData) {
@@ -28,6 +29,7 @@ angular.module('mainController', ['authServices', 'userServices'])
       User.addRequest(app.requestData).then(function(data) {
         if (data.data.success) {
           app.successMsg = data.data.message;
+          app.showModal = false;
         } else {
           app.errorMsg = data.data.message;
         }
@@ -138,6 +140,17 @@ angular.module('mainController', ['authServices', 'userServices'])
           app.ethnicity = data.data.ethnicity;
           app.sex = data.data.sex;
           app.points = data.data.points;
+          app.events = data.data.events;
+
+          app.codeArray = [];
+          app.totalPoints = 0;
+
+          for (var i = 0; i < app.events.length; i++) {
+            User.getCodeInfo(app.events[i]).then(function(codeData) {
+              app.codeArray.push(codeData.data.message);
+              app.totalPoints += codeData.data.message.points;
+            });
+          }
 
           User.getPermission().then(function(data) {
             if (data.data.message === 'admin') {
