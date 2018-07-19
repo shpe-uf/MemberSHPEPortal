@@ -99,7 +99,7 @@ module.exports = function(router) {
   router.post('/codes', function(req, res) {
     var code = new Code();
     code.name = req.body.name;
-    code.code = req.body.code;
+    code.code = req.body.code.toLowerCase();
     code.type = req.body.type;
 
     if ((code.type == "General Body Meeting") || (code.type == "Cabinet Meeting")) {
@@ -573,43 +573,48 @@ module.exports = function(router) {
 
   // ENDPOINT TO ADD A REQUEST
   router.put('/addrequest', function(req, res) {
-    Code.findOne({
-      code: req.body.code
-    }).select().exec(function(err, code) {
-      if (err) throw err;
 
-      console.log("\nCODE: ");
-      console.log(code);
+    if (req.body.code == null || req.body.code == '') {
+      res.json({
+        success: false,
+        message: 'No code was provided'
+      });
+    } else {
+      Code.findOne({
+        code: req.body.code.toLowerCase()
+      }).select().exec(function(err, code) {
+        if (err) throw err;
 
-      if (code == null || code == '') {
-        res.json({
-          success: false,
-          message: 'Event not found'
-        });
-      } else {
-        User.findOneAndUpdate({
-          username: req.decoded.username
-        }, {
-          $push: {
-            events: code
-          }
-        }, function(err, model) {
-          if (err) throw err;
+        if (code == null || code == '') {
+          res.json({
+            success: false,
+            message: 'Event not found'
+          });
+        } else {
+          User.findOneAndUpdate({
+            username: req.decoded.username
+          }, {
+            $push: {
+              events: code
+            }
+          }, function(err, model) {
+            if (err) throw err;
 
-          if (!model) {
-            res.json({
-              success: false,
-              message: "Unable to add code to profile"
-            });
-          } else {
-            res.json({
-              success: true,
-              message: "Points redeemed!"
-            });
-          }
-        });
-      }
-    });
+            if (!model) {
+              res.json({
+                success: false,
+                message: "Unable to add code to profile"
+              });
+            } else {
+              res.json({
+                success: true,
+                message: "Points redeemed!"
+              });
+            }
+          });
+        }
+      });
+    }
   });
 
   return router;

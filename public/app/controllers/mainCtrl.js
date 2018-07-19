@@ -25,20 +25,13 @@ angular.module('mainController', ['authServices', 'userServices'])
       app.successMsg = false;
       app.errorMsg = false;
 
-      if (app.requestData.code == undefined || app.requestData.code == null || app.requestData.code == '') {
-        app.errMsg = "No code was provided";
-      } else {
-        var lowerCaseCode = app.requestData.code.toLowerCase();
-        app.requestData.code = lowerCaseCode;
-
-        User.addRequest(app.requestData).then(function(data) {
-          if (data.data.success) {
-            app.successMsg = data.data.message;
-          } else {
-            app.errorMsg = data.data.message;
-          }
-        });
-      }
+      User.addRequest(app.requestData).then(function(data) {
+        if (data.data.success) {
+          app.successMsg = data.data.message;
+        } else {
+          app.errorMsg = data.data.message;
+        }
+      });
     };
 
     app.checkSession = function() {

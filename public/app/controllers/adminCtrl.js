@@ -28,9 +28,6 @@ angular.module('adminController', [])
       app.successMsg = false;
       app.errorMsg = false;
 
-      var lowerCaseCode = app.eventData.code.toLowerCase();
-      app.eventData.code = lowerCaseCode;
-
       User.createCode(app.eventData).then(function(data) {
         if (data.data.success) {
           app.successMsg = data.data.message;
@@ -51,7 +48,7 @@ angular.module('adminController', [])
 
           var newEvent = {
             name: app.eventData.name,
-            code: app.eventData.code,
+            code: app.eventData.code.toLowerCase(),
             type: app.eventData.type,
             expiration: Date.now() + (60 * 60 * 1000),
             points: newEventPoints

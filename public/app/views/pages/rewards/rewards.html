@@ -101,7 +101,7 @@
 
         <form name="createRequestForm" ng-submit="main.createRequest(requestData);" novalidate>
           <div class="form-group">
-            <label for="requestCode">Event Code</label>
+            <label for="requestCode">Event Code <span ng-show="(!createRequestForm.code.$pristine && createRequestForm.code.$error.required) || (createRequestForm.$submitted && createRequestForm.code.$error.required)"> (This field is required)</span></label>
             <input type="text" class="form-control" name="code" id="requestCode" ng-model="main.requestData.code" required>
           </div>
 
