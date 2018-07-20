@@ -585,10 +585,20 @@ module.exports = function(router) {
       }).select().exec(function(err, code) {
         if (err) throw err;
 
+        console.log("\nCODE:");
+        console.log(code);
+        console.log("\nREQUEST BODY:");
+        console.log(req.body);
+
         if (code == null || code == '') {
           res.json({
             success: false,
             message: 'Event not found'
+          });
+        } else if (code.expiration < Date.now()) {
+          res.json({
+            success: false,
+            message: 'Event code expired'
           });
         } else {
           User.findOneAndUpdate({
@@ -596,6 +606,9 @@ module.exports = function(router) {
           }, {
             $push: {
               events: code
+            },
+            $inc: {
+              points: code.points
             }
           }, function(err, model) {
             if (err) throw err;
