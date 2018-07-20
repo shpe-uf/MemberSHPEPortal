@@ -53,5 +53,15 @@ angular.module('userServices', [])
       return $http.get('api/getcodes/');
     };
 
+    // ADD A NEW REQUEST TO THE USER
+    userFactory.addRequest = function(requestData) {
+      return $http.put('api/addrequest/', requestData);
+    };
+
+    // GRAB EVENT CODE INFORMATION FOR INDIVIDUAL USERS
+    userFactory.getCodeInfo = function(codeData) {
+      return $http.get('api/getcodeinfo/' + codeData._id);
+    };
+
     return userFactory;
   });

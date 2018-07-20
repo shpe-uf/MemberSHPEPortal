@@ -1,7 +1,40 @@
 angular.module('mainController', ['authServices', 'userServices'])
   .controller('mainCtrl', function($timeout, $location, $rootScope, $interval, $window, $route, Auth, User, AuthToken) {
+
     var app = this;
     app.loadme = false;
+    app.showModal = true;
+
+    this.openRequestModal = function() {
+      app.errorMsg = false;
+      app.successMsg = false;
+
+      $("#createRequestModal").modal({
+        backdrop: 'static',
+        keyboard: false
+      });
+
+      app.showModal = true;
+    };
+
+    this.closeModal = function(requestData) {
+      $('#createRequestModal').modal('toggle');
+      app.requestData.code = '';
+    };
+
+    this.createRequest = function(requestData) {
+      app.successMsg = false;
+      app.errorMsg = false;
+
+      User.addRequest(app.requestData).then(function(data) {
+        if (data.data.success) {
+          app.successMsg = data.data.message;
+          app.showModal = false;
+        } else {
+          app.errorMsg = data.data.message;
+        }
+      });
+    };
 
     app.checkSession = function() {
       if (Auth.isLoggedIn()) {
@@ -103,7 +136,21 @@ angular.module('mainController', ['authServices', 'userServices'])
           app.email = data.data.email;
           app.major = data.data.major;
           app.year = data.data.year;
+          app.nationality = data.data.nationality;
+          app.ethnicity = data.data.ethnicity;
+          app.sex = data.data.sex;
           app.points = data.data.points;
+          app.events = data.data.events;
+
+          app.codeArray = [];
+          // app.totalPoints = 0;
+
+          for (var i = 0; i < app.events.length; i++) {
+            User.getCodeInfo(app.events[i]).then(function(codeData) {
+              app.codeArray.push(codeData.data.message);
+              // app.totalPoints += codeData.data.message.points;
+            });
+          }
 
           User.getPermission().then(function(data) {
             if (data.data.message === 'admin') {

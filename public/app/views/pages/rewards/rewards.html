@@ -5,14 +5,15 @@
     </div>
     <div class="col-2">
       <div class="float-right">
-        <button type="button" class="btn btn-submit">Redeem Points</button>
+        <button type="button" class="btn btn-submit" ng-click="main.openRequestModal()">Redeem Points</button>
       </div>
     </div>
   </div>
+
   <hr>
 
   <div class="row">
-    <div class="col-md-4 col-sm-12">
+    <div class="col-md-4 col-sm-12 col-margin">
       <div class="container">
         <h3 class="subtitle">Statistics</h3>
         <div class="card-group">
@@ -39,45 +40,54 @@
             <h3 class="subtitle">Points Record</h3>
             <table class="table table-responsive-lg table-striped">
               <tr>
-                <th>Date</th>
-                <th>Event</th>
-                <th>Category</th>
-                <th>Points</th>
+                <th>EVENT</th>
+                <th>TYPE</th>
+                <th>POINTS</th>
               </tr>
-              <tr>
-                <td>09/02/18</td>
-                <td>First Fall General Body Meeting</td>
-                <td>Meeting</td>
-                <td>1</td>
-              </tr>
-              <tr>
-                <td>09/02/18</td>
-                <td>First Fall General Body Meeting</td>
-                <td>Meeting</td>
-                <td>1</td>
-              </tr>
-              <tr>
-                <td>09/02/18</td>
-                <td>First Fall General Body Meeting</td>
-                <td>Meeting</td>
-                <td>1</td>
-              </tr>
-              <tr>
-                <td>09/02/18</td>
-                <td>First Fall General Body Meeting</td>
-                <td>Meeting</td>
-                <td>1</td>
-              </tr>
-              <tr>
-                <td>09/02/18</td>
-                <td>First Fall General Body Meeting</td>
-                <td>Meeting</td>
-                <td>1</td>
+              <tr ng-repeat="event in main.codeArray">
+                <td>{{ event.name }}</td>
+                <td>{{ event.type }}</td>
+                <td>{{ event.points }}</td>
               </tr>
             </table>
           </div>
         </div>
       </div>
     </div>
-
   </div>
+</div>
+
+<!-- CREATE EVENT MODAL -->
+<div class="modal fade" id="createRequestModal" aria-labelledby="createRequestLabel">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="createRequestLabel">Redeem Points</h3>
+      </div>
+      <div class="modal-body">
+        <div class="success-message" ng-show="main.successMsg">
+          <div class="alert alert-success">{{ main.successMsg }}</div>
+        </div>
+
+        <div class="error-message" ng-show="main.errorMsg">
+          <div class="alert alert-danger">{{ main.errorMsg }}</div>
+        </div>
+
+        <form name="createRequestForm" ng-submit="main.createRequest(requestData);" novalidate>
+          <div class="form-group">
+            <label for="requestCode">Event Code <span ng-show="(!createRequestForm.code.$pristine && createRequestForm.code.$error.required) || (createRequestForm.$submitted && createRequestForm.code.$error.required)"> (This field is required)</span></label>
+            <input type="text" class="form-control" name="code" id="requestCode" ng-model="main.requestData.code" required>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12">
+              <button type="submit" class="btn btn-success" ng-if="main.showModal">Submit</button>
+              <button type="reset" class="btn btn-danger" ng-click="main.closeModal(requestData)">Close</button>
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -13,6 +13,7 @@
           <a class="nav-item nav-link active" id="nav-member-tab" data-toggle="tab" data-target="#nav-member" role="tab" aria-controls="nav-member" aria-selected="true">Members</a>
           <a class="nav-item nav-link" id="nav-event-tab" data-toggle="tab" data-target="#nav-event" role="tab" aria-controls="nav-event" aria-selected="false">Events</a>
           <a class="nav-item nav-link" id="nav-request-tab" data-toggle="tab" data-target="#nav-request" role="tab" aria-controls="nav-request" aria-selected="false">Requests</a>
+          <!-- <a class="nav-item nav-link" id="nav-stats-tab" data-toggle="tab" data-target="#nav-stats" role="tab" aria-controls="nav-stats" aria-selected="false">Statistics</a> -->
         </div>
       </nav>
 
@@ -85,6 +86,28 @@
             </table>
           </div>
         </div>
+
+        <div class="tab-pane fade" id="nav-request" role="tabpanel" aria-labelledby="nav-request-tab">
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <p>Requests</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="tab-pane fade" id="nav-stats" role="tabpanel" aria-labelledby="nav-stats-tab">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-6">
+                <h4 class="text-center">Member Nationality</h4>
+                <canvas id="nationalityChart" width="400" height="400" ng-init="admin.nationalityChart()"></canvas>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
       </div>
 
     </div>
@@ -122,18 +145,18 @@
           <div class="form-group">
             <label for="eventType">Event Type</label>
             <select class="form-control" name="type" id="eventType" ng-model="admin.eventData.type" required>
-                <option>General Body Meeting</option>
-                <option>Cabinet Meeting</option>
-                <option>Social</option>
-                <option>Fundraiser</option>
-                <option>Volunteering</option>
-              </select>
+              <option>General Body Meeting</option>
+              <option>Cabinet Meeting</option>
+              <option>Social</option>
+              <option>Fundraiser</option>
+              <option>Volunteering</option>
+            </select>
           </div>
 
           <div class="row">
             <div class="col-sm-12">
               <button type="submit" class="btn btn-success" ng-if="admin.showModal">Submit</button>
-              <button type="submit" class="btn btn-danger" ng-click="admin.closeModal(eventData)">Close</button>
+              <button type="reset" class="btn btn-danger" ng-click="admin.closeModal(eventData)">Close</button>
             </div>
           </div>
         </form>

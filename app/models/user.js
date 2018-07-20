@@ -62,6 +62,18 @@ var UserSchema = new Schema({
     type: String,
     required: true
   },
+  nationality: {
+    type: String,
+    required: true
+  },
+  ethnicity: {
+    type: String,
+    required: true
+  },
+  sex: {
+    type: String,
+    required: true
+  },
   email: {
     type: String,
     lowercase: true,
@@ -83,7 +95,7 @@ var UserSchema = new Schema({
   },
   points: {
     type: Number,
-    default: 1
+    default: 0
   },
   resettoken: {
     type: String,
@@ -93,7 +105,22 @@ var UserSchema = new Schema({
     type: String,
     require: true,
     default: 'user'
-  }
+  },
+  listServ: {
+    type: Boolean,
+    default: false
+  },
+  events: [{
+    event: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Code'
+    },
+    approved: {
+      type: Boolean,
+      required: true,
+      default: false
+    }
+  }]
 });
 
 UserSchema.pre('save', function(next) {

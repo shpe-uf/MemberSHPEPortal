@@ -23,11 +23,15 @@ module.exports = function(router) {
     user.lastName = req.body.lastName;
     user.major = req.body.major;
     user.year = req.body.year;
-    user.username = req.body.username;
+    user.nationality = req.body.nationality;
+    user.ethnicity = req.body.ethnicity;
+    user.sex = req.body.sex;
     user.email = req.body.email;
+    user.username = req.body.username;
     user.password = req.body.password;
+    user.listServ = req.body.listServ;
 
-    if (req.body.username == null || req.body.password == null || req.body.email == null || req.body.firstName == null || req.body.lastName == null || req.body.major == null || req.body.year == null || req.body.username == '' || req.body.password == '' || req.body.email == '' || req.body.firstName == '' || req.body.lastName == '' || req.body.major == '' || req.body.year == '') {
+    if (req.body.username == null || req.body.password == null || req.body.email == null || req.body.firstName == null || req.body.lastName == null || req.body.major == null || req.body.year == null || req.body.nationality == null || req.body.ethnicity == null || req.body.sex == null || req.body.year == null || req.body.username == '' || req.body.password == '' || req.body.email == '' || req.body.firstName == '' || req.body.lastName == '' || req.body.major == '' || req.body.year == '' || req.body.nationality == '' || req.body.ethnicity == '' || req.body.sex == '') {
       res.json({
         success: false,
         message: 'Make sure you filled out the entire form!'
@@ -95,7 +99,7 @@ module.exports = function(router) {
   router.post('/codes', function(req, res) {
     var code = new Code();
     code.name = req.body.name;
-    code.code = req.body.code;
+    code.code = req.body.code.toLowerCase();
     code.type = req.body.type;
 
     if ((code.type == "General Body Meeting") || (code.type == "Cabinet Meeting")) {
@@ -177,7 +181,7 @@ module.exports = function(router) {
   router.post('/authenticate', function(req, res) {
     User.findOne({
       username: req.body.username
-    }).select('email username password firstName lastName major year points').exec(function(err, user) {
+    }).select().exec(function(err, user) {
       if (err) throw err;
 
       if (!user) {
@@ -434,7 +438,7 @@ module.exports = function(router) {
   router.post('/me', function(req, res) {
     User.findOne({
       username: req.decoded.username
-    }).select('firstName lastName username email major year points').exec(function(err, user) {
+    }).select().exec(function(err, user) {
       res.send(user);
     });
   });
@@ -563,6 +567,103 @@ module.exports = function(router) {
             });
           }
         }
+      });
+    });
+  });
+
+  // ENDPOINT TO ADD A REQUEST
+  router.put('/addrequest', function(req, res) {
+
+    if (req.body.code == null || req.body.code == '') {
+      res.json({
+        success: false,
+        message: 'No code was provided'
+      });
+    } else {
+      Code.findOne({
+        code: req.body.code.toLowerCase()
+      }).select().exec(function(err, code) {
+        if (err) throw err;
+
+        if (code == null || code == '') {
+          res.json({
+            success: false,
+            message: 'Event not found'
+          });
+        } else if (code.expiration < Date.now()) {
+          res.json({
+            success: false,
+            message: 'Event code expired'
+          });
+        } else {
+          User.findOne({
+            username: req.decoded.username
+          }, function(err, model) {
+            if (err) throw err;
+
+            var isDuplicate = false;
+
+            for (var i = 0; i < model.events.length; i++) {
+              if (model.events[i]._id.equals(code._id) ) {
+                res.json({
+                  success: false,
+                  message: 'Event code already redeemed'
+                });
+
+                isDuplicate = true;
+                break;
+              }
+            }
+
+            if (!isDuplicate) {
+              if (!model) {
+                res.json({
+                  success: false,
+                  message: 'Unable to add code to profile'
+                });
+              } else {
+                User.findOneAndUpdate({
+                  username: req.decoded.username
+                }, {
+                  $push: {
+                    events: code
+                  },
+                  $inc: {
+                    points: code.points
+                  }
+                }, function(err, user) {
+                  if (err) throw (err);
+
+                  if (!user) {
+                    res.json({
+                      success: false,
+                      message: 'Unable to add code to profile'
+                    });
+                  } else {
+                    res.json({
+                      success: true,
+                      message: "Points redeemed!"
+                    });
+                  }
+                });
+              }
+            }
+          });
+        }
+      });
+    }
+  });
+
+  // ENDPOINT TO GRAB EVENT CODE INFORMATION FOR INDIVIDUAL USERS
+  router.get('/getcodeinfo/:code', function(req, res) {
+    // console.log("\nGET CODE INFO ENDPOINT:");
+    // console.log(req.params.code);
+    Code.findOne({
+      _id: req.params.code
+    }).populate().exec(function(err, event) {
+      res.json({
+        success: true,
+        message: event
       });
     });
   });

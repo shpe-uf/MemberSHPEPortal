@@ -7,6 +7,10 @@ angular.module('userControllers', ['userServices'])
     this.regUser = function(regData) {
       app.errorMsg = false;
 
+      if (!app.regData.listServ || app.regData.listServ == null || app.regData.listServ == '') {
+        app.regData.listServ = false;
+      }
+
       User.create(app.regData).then(function(data) {
         if (data.data.success) {
           app.successMsg = data.data.message;
