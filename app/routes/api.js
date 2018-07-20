@@ -585,11 +585,6 @@ module.exports = function(router) {
       }).select().exec(function(err, code) {
         if (err) throw err;
 
-        console.log("\nCODE:");
-        console.log(code);
-        console.log("\nREQUEST BODY:");
-        console.log(req.body);
-
         if (code == null || code == '') {
           res.json({
             success: false,
@@ -601,28 +596,57 @@ module.exports = function(router) {
             message: 'Event code expired'
           });
         } else {
-          User.findOneAndUpdate({
+          User.findOne({
             username: req.decoded.username
-          }, {
-            $push: {
-              events: code
-            },
-            $inc: {
-              points: code.points
-            }
           }, function(err, model) {
             if (err) throw err;
 
-            if (!model) {
-              res.json({
-                success: false,
-                message: "Unable to add code to profile"
-              });
-            } else {
-              res.json({
-                success: true,
-                message: "Points redeemed!"
-              });
+            var isDuplicate = false;
+
+            for (var i = 0; i < model.events.length; i++) {
+              if (model.events[i]._id.equals(code._id) ) {
+                res.json({
+                  success: false,
+                  message: 'Event code already redeemed'
+                });
+
+                isDuplicate = true;
+                break;
+              }
+            }
+
+            if (!isDuplicate) {
+              if (!model) {
+                res.json({
+                  success: false,
+                  message: 'Unable to add code to profile'
+                });
+              } else {
+                User.findOneAndUpdate({
+                  username: req.decoded.username
+                }, {
+                  $push: {
+                    events: code
+                  },
+                  $inc: {
+                    points: code.points
+                  }
+                }, function(err, user) {
+                  if (err) throw (err);
+
+                  if (!user) {
+                    res.json({
+                      success: false,
+                      message: 'Unable to add code to profile'
+                    });
+                  } else {
+                    res.json({
+                      success: true,
+                      message: "Points redeemed!"
+                    });
+                  }
+                });
+              }
             }
           });
         }
