@@ -18,8 +18,9 @@ angular.module('mainController', ['authServices', 'userServices'])
     };
 
     this.closeModal = function(requestData) {
-      $('#createRequestModal').modal('toggle');
-      app.requestData.code = '';
+      $('#createRequestModal').modal('hide');
+      // app.requestData.code = ;
+      // $route.reload();
     };
 
     this.createRequest = function(requestData) {
@@ -53,10 +54,8 @@ angular.module('mainController', ['authServices', 'userServices'])
             var timeStamp = Math.floor(Date.now() / 1000);
 
             var timeCheck = expireTime.exp - timeStamp;
-            // console.log("TIME LEFT: " + timeCheck + " seconds");
 
             if (timeCheck <= 1) {
-              // console.log("SHOW MODAL");
               showModal(2);
               $interval.cancel(interval);
             }
@@ -150,7 +149,6 @@ angular.module('mainController', ['authServices', 'userServices'])
           for (var i = 0; i < app.events.length; i++) {
             User.getCodeInfo(app.events[i]).then(function(codeData) {
               app.codeArray.push(codeData.data.message);
-              // app.totalPoints += codeData.data.message.points;
             });
           }
 

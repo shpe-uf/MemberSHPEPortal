@@ -18,9 +18,9 @@ angular.module('adminController', [])
     };
 
     this.closeModal = function(eventData) {
-      $('#createEventModal').modal('toggle');
-      app.eventData.name = '';
-      app.eventData.code = '';
+      $('#createEventModal').modal('hide');
+      // app.eventData.name = '';
+      // app.eventData.code = '';
       app.eventData.type = '';
     };
 
