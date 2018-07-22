@@ -177,7 +177,7 @@ module.exports = function(router) {
     }
   });
 
-  // ENDPOINT TO AUTHENTICATE THAT THE USER EXISTS IN THE DATABASE
+  // ENDPOINT TO SIGN IN AND AUTHENTICATE USER
   router.post('/authenticate', function(req, res) {
     User.findOne({
       username: req.body.username
@@ -209,7 +209,7 @@ module.exports = function(router) {
               username: user.username,
               email: user.email
             }, secret, {
-              expiresIn: '1800s'
+              expiresIn: '1h'
             });
 
             res.json({
@@ -444,29 +444,29 @@ module.exports = function(router) {
   });
 
   // ENDPOINT TO RENEW THE USER TOKEN
-  router.get('/renewtoken/:username', function(req, res) {
-    User.findOne({
-      username: req.params.username
-    }).select().exec(function(err, user) {
-      if (!user) {
-        res.json({
-          success: false,
-          message: 'No user was found'
-        });
-      } else {
-        var newToken = jwt.sign({
-          username: user.username,
-          email: user.email
-        }, secret, {
-          expiresIn: '24h'
-        });
-        res.json({
-          success: true,
-          message: newToken
-        });
-      }
-    });
-  });
+  // router.get('/renewtoken/:username', function(req, res) {
+  //   User.findOne({
+  //     username: req.params.username
+  //   }).select().exec(function(err, user) {
+  //     if (!user) {
+  //       res.json({
+  //         success: false,
+  //         message: 'No user was found'
+  //       });
+  //     } else {
+  //       var newToken = jwt.sign({
+  //         username: user.username,
+  //         email: user.email
+  //       }, secret, {
+  //         expiresIn: '1hr'
+  //       });
+  //       res.json({
+  //         success: true,
+  //         message: newToken
+  //       });
+  //     }
+  //   });
+  // });
 
   // ENDPOINT TO DETERMINE USER PERMISSION
   router.get('/permission', function(req, res) {

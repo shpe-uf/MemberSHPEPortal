@@ -7,14 +7,16 @@ Official MemberSHPE UF website for the Society of Hispanic Professional Engineer
 - Résumé Repository
 
 ## To Do/Known Bugs:
-- Fix times for token renewal modal and renewing the token. (07/08/18)
-- Error message for non-matching passwords. (07/08/18)
-- Buttons will log user out after renewing session. (07/08/18)
-- Multiple errors in registering wrongfully shows password error message. (07/14/18)
-- Event codes should all be converted to lowercase. (07/15/18)
-- Add a new event type for miscellaneous events. (07/18/18)
+- [ ] Fix times for token renewal modal and renewing the token. (07/08/18)
+- [ ] Error message for non-matching passwords. (07/08/18)
+- [ ] Buttons will log user out after renewing session. (07/08/18)
+- [ ] Multiple errors in registering wrongfully shows password error message. (07/14/18)
+- [X] Event codes should all be converted to lowercase. (07/15/18)
+- [ ] Add a new event type for miscellaneous events. (07/18/18)
     - Event type: Custom
     - Points: user determined (?)
+- [ ] Registration wrongfully notifies user that password does not meet criteria. (07/20/18)
+- [ ] Redeem points errors appear on login page. (07/21/18)
 
 ## Road Map:
 1. Admin Panel
