@@ -146,10 +146,14 @@ angular.module('mainController', ['authServices', 'userServices'])
           app.codeArray = [];
           // app.totalPoints = 0;
 
+
           for (var i = 0; i < app.events.length; i++) {
-            User.getCodeInfo(app.events[i]).then(function(codeData) {
-              app.codeArray.push(codeData.data.message);
-            });
+
+            if (app.events[i].approved) {
+              User.getCodeInfo(app.events[i]).then(function(codeData) {
+                app.codeArray.push(codeData.data.message);
+              });
+            }
           }
 
           User.getPermission().then(function(data) {

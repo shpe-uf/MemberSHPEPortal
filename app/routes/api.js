@@ -622,14 +622,28 @@ module.exports = function(router) {
                   message: 'Unable to add code to profile'
                 });
               } else {
+
+                var isApproved = false;
+
+                if (code.points == 1) {
+                  isApproved = true;
+                  pointsToAdd = code.points;
+                } else {
+                  isApproved = false;
+                  pointsToAdd = 0;
+                }
+
                 User.findOneAndUpdate({
-                  username: req.decoded.username
+                  username: req.decoded.username,
                 }, {
                   $push: {
-                    events: code
+                    events: {
+                      approved: isApproved,
+                      _id: code
+                    }
                   },
                   $inc: {
-                    points: code.points
+                    points: pointsToAdd
                   }
                 }, function(err, user) {
                   if (err) throw (err);
