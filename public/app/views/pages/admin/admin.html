@@ -91,9 +91,36 @@
           <div class="container">
             <div class="row">
               <div class="col-12">
-                <p>Requests</p>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Search</span>
+                  </div>
+                  <input type="text" class="form-control" ng-model="searchText">
+                </div>
               </div>
             </div>
+            <table class="table table-responsive-lg table-striped">
+              <tr>
+                <th>MEMBER</th>
+                <th>EVENT</th>
+                <th>TYPE</th>
+                <th>POINTS</th>
+                <th class="text-center">ACCEPT</th>
+                <th class="text-center">REJECT</th>
+              </tr>
+              <tr>
+                <td class="align-middle">Gonzalez, Cesar</td>
+                <td class="align-middle">General Body Meeting Fall 1</td>
+                <td class="align-middle">GreenInflatableMan</td>
+                <td class="align-middle">1</td>
+                <td class="text-center">
+                  <button class="btn btn-success"><i class="fas fa-check"></i></button>
+                </td>
+                <td class="text-center">
+                  <button class="btn btn-danger"><i class="fas fa-times"></i></button>
+                </td>
+              </tr>
+            </table>
           </div>
         </div>
 
