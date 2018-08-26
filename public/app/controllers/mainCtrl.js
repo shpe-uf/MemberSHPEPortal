@@ -148,10 +148,13 @@ angular.module('mainController', ['authServices', 'userServices'])
           // app.totalPoints = 0;
 
           for (var i = 0; i < app.events.length; i++) {
-            User.getCodeInfo(app.events[i]).then(function(codeData) {
-              app.codeArray.push(codeData.data.message);
-              // app.totalPoints += codeData.data.message.points;
-            });
+            console.log(app.events);
+            if (app.events[i].approved) {
+              User.getCodeInfo(app.events[i]).then(function(codeData) {
+                app.codeArray.push(codeData.data.message);
+                // app.totalPoints += codeData.data.message.points;
+              });
+            }
           }
 
           User.getPermission().then(function(data) {

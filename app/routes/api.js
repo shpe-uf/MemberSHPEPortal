@@ -583,6 +583,7 @@ module.exports = function(router) {
       Code.findOne({
         code: req.body.code.toLowerCase()
       }).select().exec(function(err, code) {
+
         if (err) throw err;
 
         if (code == null || code == '') {
@@ -615,6 +616,14 @@ module.exports = function(router) {
               }
             }
 
+            var isApproved = false;
+            var pointsToAdd = 0;
+
+            if (code.points == 1) {
+              isApproved = true;
+              pointsToAdd = 1;
+            }
+
             if (!isDuplicate) {
               if (!model) {
                 res.json({
@@ -626,10 +635,13 @@ module.exports = function(router) {
                   username: req.decoded.username
                 }, {
                   $push: {
-                    events: code
+                    events: {
+                      _id: code,
+                      approved: isApproved
+                    }
                   },
                   $inc: {
-                    points: code.points
+                    points: pointsToAdd
                   }
                 }, function(err, user) {
                   if (err) throw (err);
