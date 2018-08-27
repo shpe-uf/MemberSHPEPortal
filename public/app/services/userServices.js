@@ -63,5 +63,10 @@ angular.module('userServices', [])
       return $http.get('api/getcodeinfo/' + codeData._id);
     };
 
+    // GRAB ALL THE REQUESTS
+    userFactory.getRequests = function() {
+      return $http.get('api/getrequests/');
+    };
+
     return userFactory;
   });

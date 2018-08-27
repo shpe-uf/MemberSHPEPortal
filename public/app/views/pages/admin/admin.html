@@ -104,13 +104,15 @@
                 <th>MEMBER</th>
                 <th>USERNAME</th>
                 <th>EVENT</th>
-                <th class="text-center">ACCEPT</th>
-                <th class="text-center">REJECT</th>
+                <th class="text-center">POINTS</th>
+                <th class="text-center">CONFIRM</th>
+                <th class="text-center">DENY</th>
               </tr>
               <tr ng-repeat="user in admin.users | orderBy: 'lastName' | filter: searchText">
                 <td>{{ user.lastName }}, {{ user.firstName }}</td>
                 <td>{{ user.username }}</td>
                 <td>{{ user.major }}</td>
+                <td class="text-center">0</td>
                 <td class="text-center">
                   <button type="button" class="btn btn-success" ng-click="admin.openCreateEventModal()">
                     <i class="fas fa-check"></i>

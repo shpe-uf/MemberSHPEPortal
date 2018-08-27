@@ -605,7 +605,7 @@ module.exports = function(router) {
             var isDuplicate = false;
 
             for (var i = 0; i < model.events.length; i++) {
-              if (model.events[i]._id.equals(code._id) ) {
+              if (model.events[i]._id.equals(code._id)) {
                 res.json({
                   success: false,
                   message: 'Event code already redeemed'
@@ -676,6 +676,72 @@ module.exports = function(router) {
       res.json({
         success: true,
         message: event
+      });
+    });
+  });
+
+  // ENDPOINT TO GRAB ALL OF THE REQUESTS
+  router.get('/getrequests', function(req, res) {
+    User.find({
+
+    }, function(err, users) {
+
+      if (err) throw err;
+
+      User.findOne({
+        username: req.decoded.username
+      }, function(err, mainUser) {
+        if (err) throw err;
+
+        if (!mainUser) {
+          res.json({
+            success: false,
+            message: 'No user found'
+          });
+        } else {
+          if (mainUser.permission === 'admin') {
+            if (!users) {
+              res.json({
+                success: false,
+                message: 'Users not found'
+              });
+            } else {
+              var usernames = [];
+
+              for (var i = 0; i < users.length; i++) {
+                usernames.push(users[i].username);
+              }
+
+              var requests = [];
+              var requestObject = {
+                name: new String,
+                username: new String,
+                event: new String,
+                points: new Number
+              }
+
+              for (var i = 0; i < usernames.length; i++) {
+                User.findOne({
+                  username: usernames[i]
+                }, function(err, userData) {
+                  if (err) throw err;
+
+                  console.log('\nUSER DATA: ' + userData.firstName + " " + userData.lastName);
+                  console.log(userData.events);
+
+                  if (userData.events.length > 0) {
+                    console.log("ADD TO REQUEST OBJECT ARRAY");
+                  }
+                });
+              }
+            }
+          } else {
+            res.json({
+              success: false,
+              message: 'Insufficient permission'
+            });
+          }
+        }
       });
     });
   });
