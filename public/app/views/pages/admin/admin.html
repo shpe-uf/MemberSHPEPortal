@@ -91,9 +91,38 @@
           <div class="container">
             <div class="row">
               <div class="col-12">
-                <p>Requests</p>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Search</span>
+                  </div>
+                  <input type="text" class="form-control" ng-model="searchText">
+                </div>
               </div>
             </div>
+            <table class="table table-responsive-lg table-striped">
+              <tr>
+                <th>MEMBER</th>
+                <th>USERNAME</th>
+                <th>EVENT</th>
+                <th class="text-center">ACCEPT</th>
+                <th class="text-center">REJECT</th>
+              </tr>
+              <tr ng-repeat="user in admin.users | orderBy: 'lastName' | filter: searchText">
+                <td>{{ user.lastName }}, {{ user.firstName }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.major }}</td>
+                <td class="text-center">
+                  <button type="button" class="btn btn-success" ng-click="admin.openCreateEventModal()">
+                    <i class="fas fa-check"></i>
+                  </button>
+                </td>
+                <td class="text-center">
+                  <button type="button" class="btn btn-danger" ng-click="admin.openCreateEventModal()">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </td>
+              </tr>
+            </table>
           </div>
         </div>
 
