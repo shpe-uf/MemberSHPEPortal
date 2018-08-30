@@ -687,7 +687,89 @@ module.exports = function(router) {
     this.points = points;
   };
 
-  var requestPromise = new Promise(function(resolve, reject) {
+  // var requestPromise = new Promise(function(resolve, reject) {
+  //   var requestArray = [];
+  //
+  //   User.find({}, function(err, users) {
+  //     if (err) throw err;
+  //
+  //     User.findOne({
+  //       username: 'cecrigope'
+  //     }, function(err, mainUser) {
+  //       if (err) throw err;
+  //
+  //       if (!mainUser) {
+  //         res.json({
+  //           success: false,
+  //           message: 'Your account was not found'
+  //         });
+  //       } else {
+  //         if (mainUser.permission === 'admin') {
+  //           if (!users) {
+  //             res.json({
+  //               success: false,
+  //               message: 'Users not found'
+  //             });
+  //           } else {
+  //
+  //             // CREATE AN ARRAY WITH EVERY USERNAME
+  //             var usernames = [];
+  //
+  //             for (var i = 0; i < users.length; i++) {
+  //               usernames.push(users[i].username);
+  //             }
+  //
+  //             // SEARCH INFORMATION OF EACH INDIVIDUAL USER
+  //             for (var i = 0; i < usernames.length; i++) {
+  //               User.findOne({
+  //                 username: usernames[i]
+  //               }, function(err, userData) {
+  //                 if (err) throw err;
+  //
+  //                 // IF THE USERS HAS ANY EVENTS ON THEIR ENTRY
+  //                 if (userData.events.length > 0) {
+  //                   for (var i = 0; i < userData.events.length; i++) {
+  //
+  //                     // FILTER OUT EVENTS THAT HAVE ALREADY BEEN APPROVED
+  //                     if (!userData.events[i].approved) {
+  //                       Code.findOne({
+  //                         _id: userData.events[i]._id
+  //                       }).populate().exec(function(err, eventData) {
+  //
+  //                         var newRequest = new Request(userData.firstName + " " + userData.lastName, userData.username, eventData.name, eventData.points);
+  //
+  //                         requestArray.push(newRequest);
+  //                       });
+  //                     }
+  //                   }
+  //                 }
+  //               });
+  //             }
+  //           }
+  //         } else {
+  //           res.json({
+  //             success: false,
+  //             message: 'Insufficient permission'
+  //           });
+  //         }
+  //       }
+  //     });
+  //   });
+  //
+  //   resolve(requestArray);
+  // });
+
+  // ENDPOINT TO GRAB ALL OF THE REQUESTS
+  router.get('/getrequests', function(req, res) {
+    // requestPromise.then(function(response) {
+    //
+    //   res.json({
+    //     success: true,
+    //     message: response
+    //   });
+    // });
+
+
     var requestArray = [];
 
     User.find({}, function(err, users) {
@@ -719,8 +801,6 @@ module.exports = function(router) {
                 usernames.push(users[i].username);
               }
 
-              console.log(usernames);
-
               // SEARCH INFORMATION OF EACH INDIVIDUAL USER
               for (var i = 0; i < usernames.length; i++) {
                 User.findOne({
@@ -747,6 +827,11 @@ module.exports = function(router) {
                   }
                 });
               }
+
+              res.json({
+                success: true,
+                message: requestArray
+              });
             }
           } else {
             res.json({
@@ -757,22 +842,6 @@ module.exports = function(router) {
         }
       });
     });
-
-    resolve(requestArray);
-  });
-
-  // ENDPOINT TO GRAB ALL OF THE REQUESTS
-  router.get('/getrequests', function(req, res) {
-    requestPromise.then(function(response) {
-
-      console.log("\nRESPONSE:");
-      console.log(response);
-      res.json({
-        success: true,
-        message: response
-      });
-    });
-
 
   });
 
