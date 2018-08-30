@@ -134,8 +134,9 @@ angular.module('adminController', [])
     });
 
     User.getRequests().then(function(data) {
-      console.log("ADMIN CTRL - LINE 137");
-      console.log(data.data.message);
+      if (data.data.success) {
+        app.requests = data.data.message;
+      }
     });
 
   });

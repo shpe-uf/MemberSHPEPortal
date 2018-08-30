@@ -680,23 +680,28 @@ module.exports = function(router) {
     });
   });
 
-  // ENDPOINT TO GRAB ALL OF THE REQUESTS
-  router.get('/getrequests', function(req, res) {
-    User.find({
+  function Request(name, username, event, points) {
+    this.name = name;
+    this.username = username;
+    this.event = event;
+    this.points = points;
+  };
 
-    }, function(err, users) {
+  var requestPromise = new Promise(function(resolve, reject) {
+    var requestArray = [];
 
+    User.find({}, function(err, users) {
       if (err) throw err;
 
       User.findOne({
-        username: req.decoded.username
+        username: 'cecrigope'
       }, function(err, mainUser) {
         if (err) throw err;
 
         if (!mainUser) {
           res.json({
             success: false,
-            message: 'No user found'
+            message: 'Your account was not found'
           });
         } else {
           if (mainUser.permission === 'admin') {
@@ -706,31 +711,39 @@ module.exports = function(router) {
                 message: 'Users not found'
               });
             } else {
+
+              // CREATE AN ARRAY WITH EVERY USERNAME
               var usernames = [];
 
               for (var i = 0; i < users.length; i++) {
                 usernames.push(users[i].username);
               }
 
-              var requests = [];
-              var requestObject = {
-                name: new String,
-                username: new String,
-                event: new String,
-                points: new Number
-              }
+              console.log(usernames);
 
+              // SEARCH INFORMATION OF EACH INDIVIDUAL USER
               for (var i = 0; i < usernames.length; i++) {
                 User.findOne({
                   username: usernames[i]
                 }, function(err, userData) {
                   if (err) throw err;
 
-                  console.log('\nUSER DATA: ' + userData.firstName + " " + userData.lastName);
-                  console.log(userData.events);
-
+                  // IF THE USERS HAS ANY EVENTS ON THEIR ENTRY
                   if (userData.events.length > 0) {
-                    console.log("ADD TO REQUEST OBJECT ARRAY");
+                    for (var i = 0; i < userData.events.length; i++) {
+
+                      // FILTER OUT EVENTS THAT HAVE ALREADY BEEN APPROVED
+                      if (!userData.events[i].approved) {
+                        Code.findOne({
+                          _id: userData.events[i]._id
+                        }).populate().exec(function(err, eventData) {
+
+                          var newRequest = new Request(userData.firstName + " " + userData.lastName, userData.username, eventData.name, eventData.points);
+
+                          requestArray.push(newRequest);
+                        });
+                      }
+                    }
                   }
                 });
               }
@@ -744,6 +757,23 @@ module.exports = function(router) {
         }
       });
     });
+
+    resolve(requestArray);
+  });
+
+  // ENDPOINT TO GRAB ALL OF THE REQUESTS
+  router.get('/getrequests', function(req, res) {
+    requestPromise.then(function(response) {
+
+      console.log("\nRESPONSE:");
+      console.log(response);
+      res.json({
+        success: true,
+        message: response
+      });
+    });
+
+
   });
 
   return router;
