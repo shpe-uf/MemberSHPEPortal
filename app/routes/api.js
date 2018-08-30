@@ -2,6 +2,7 @@ require('dotenv').config();
 
 var User = require('../models/user');
 var Code = require('../models/code');
+var Request = require('../models/request');
 var jwt = require('jsonwebtoken');
 var secret = 'loremipsum';
 var nodemailer = require('nodemailer');
@@ -571,7 +572,7 @@ module.exports = function(router) {
     });
   });
 
-  // ENDPOINT TO ADD A REQUEST
+  // ENDPOINT TO ADD A REQUEST (*)
   router.put('/addrequest', function(req, res) {
 
     if (req.body.code == null || req.body.code == '') {
@@ -616,11 +617,9 @@ module.exports = function(router) {
               }
             }
 
-            var isApproved = false;
             var pointsToAdd = 0;
 
             if (code.points == 1) {
-              isApproved = true;
               pointsToAdd = 1;
             }
 
@@ -636,8 +635,7 @@ module.exports = function(router) {
                 }, {
                   $push: {
                     events: {
-                      _id: code,
-                      approved: isApproved
+                      _id: code
                     }
                   },
                   $inc: {
@@ -687,88 +685,8 @@ module.exports = function(router) {
     this.points = points;
   };
 
-  // var requestPromise = new Promise(function(resolve, reject) {
-  //   var requestArray = [];
-  //
-  //   User.find({}, function(err, users) {
-  //     if (err) throw err;
-  //
-  //     User.findOne({
-  //       username: 'cecrigope'
-  //     }, function(err, mainUser) {
-  //       if (err) throw err;
-  //
-  //       if (!mainUser) {
-  //         res.json({
-  //           success: false,
-  //           message: 'Your account was not found'
-  //         });
-  //       } else {
-  //         if (mainUser.permission === 'admin') {
-  //           if (!users) {
-  //             res.json({
-  //               success: false,
-  //               message: 'Users not found'
-  //             });
-  //           } else {
-  //
-  //             // CREATE AN ARRAY WITH EVERY USERNAME
-  //             var usernames = [];
-  //
-  //             for (var i = 0; i < users.length; i++) {
-  //               usernames.push(users[i].username);
-  //             }
-  //
-  //             // SEARCH INFORMATION OF EACH INDIVIDUAL USER
-  //             for (var i = 0; i < usernames.length; i++) {
-  //               User.findOne({
-  //                 username: usernames[i]
-  //               }, function(err, userData) {
-  //                 if (err) throw err;
-  //
-  //                 // IF THE USERS HAS ANY EVENTS ON THEIR ENTRY
-  //                 if (userData.events.length > 0) {
-  //                   for (var i = 0; i < userData.events.length; i++) {
-  //
-  //                     // FILTER OUT EVENTS THAT HAVE ALREADY BEEN APPROVED
-  //                     if (!userData.events[i].approved) {
-  //                       Code.findOne({
-  //                         _id: userData.events[i]._id
-  //                       }).populate().exec(function(err, eventData) {
-  //
-  //                         var newRequest = new Request(userData.firstName + " " + userData.lastName, userData.username, eventData.name, eventData.points);
-  //
-  //                         requestArray.push(newRequest);
-  //                       });
-  //                     }
-  //                   }
-  //                 }
-  //               });
-  //             }
-  //           }
-  //         } else {
-  //           res.json({
-  //             success: false,
-  //             message: 'Insufficient permission'
-  //           });
-  //         }
-  //       }
-  //     });
-  //   });
-  //
-  //   resolve(requestArray);
-  // });
-
-  // ENDPOINT TO GRAB ALL OF THE REQUESTS
+  // ENDPOINT TO GRAB ALL OF THE REQUESTS (*)
   router.get('/getrequests', function(req, res) {
-    // requestPromise.then(function(response) {
-    //
-    //   res.json({
-    //     success: true,
-    //     message: response
-    //   });
-    // });
-
 
     var requestArray = [];
 
