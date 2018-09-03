@@ -107,6 +107,20 @@ angular.module('adminController', [])
     //   });
     // };
 
+    this.acceptRequest = function(approveData) {
+      console.log(approveData);
+      User.approveRequest(approveData).then(function(data) {
+
+      });
+    };
+
+    this.denyRequest = function(denyData) {
+      console.log(denyData);
+      User.denyRequest(denyData).then(function(data) {
+
+      });
+    };
+
     User.getUsers().then(function(data) {
       if (data.data.success) {
         if (data.data.permission === 'admin') {
@@ -134,10 +148,8 @@ angular.module('adminController', [])
     });
 
     User.getRequests().then(function(data) {
-
       if (data.data.success) {
         app.requests = data.data.message;
       }
     });
-
   });

@@ -762,5 +762,50 @@ module.exports = function(router) {
     });
   });
 
+  // ENDPOINT TO APPROVE REQUESTS
+  router.put('/approverequest', function(req, res) {
+    User.findOneAndUpdate({
+      username: req.body.username,
+    }, {
+      $push: {
+        events: {
+          _id: req.body.eventId
+        }
+      },
+      $inc: {
+        points: req.body.points
+      }
+    }, function(err, user) {
+      if (err) throw (err);
+
+      if (!user) {
+        res.json({
+          success: false,
+          message: 'Unable to add code to profile'
+        });
+      } else {
+        res.json({
+          success: true,
+          message: "Points redeemed!"
+        });
+      }
+    });
+
+    Request.deleteOne({
+      _id:req.body._id
+    }, function(err, deletedRequest) {
+      if (err) throw (err);
+    });
+  });
+
+  // ENDPOINT TO DENY REQUESTS
+  router.put('/denyrequest', function(req, res) {
+    Request.deleteOne({
+      _id:req.body._id
+    }, function(err, deletedRequest) {
+      if (err) throw (err);
+    });
+  });
+
   return router;
 };

@@ -67,6 +67,14 @@ angular.module('userServices', [])
     userFactory.getRequests = function() {
       return $http.get('api/getrequests/');
     };
-    
+
+    userFactory.approveRequest = function(approveData) {
+      return $http.put('api/approverequest/', approveData);
+    };
+
+    userFactory.denyRequest = function(denyData) {
+      return $http.put('api/denyrequest/', denyData);
+    };
+
     return userFactory;
   });
