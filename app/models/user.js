@@ -114,11 +114,6 @@ var UserSchema = new Schema({
     event: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Code'
-    },
-    approved: {
-      type: Boolean,
-      required: true,
-      default: false
     }
   }]
 });

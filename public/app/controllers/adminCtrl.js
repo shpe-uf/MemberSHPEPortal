@@ -18,9 +18,9 @@ angular.module('adminController', [])
     };
 
     this.closeModal = function(eventData) {
-      $('#createEventModal').modal('toggle');
-      app.eventData.name = '';
-      app.eventData.code = '';
+      $('#createEventModal').modal('hide');
+      // app.eventData.name = '';
+      // app.eventData.code = '';
       app.eventData.type = '';
     };
 
@@ -107,6 +107,20 @@ angular.module('adminController', [])
     //   });
     // };
 
+    this.acceptRequest = function(approveData) {
+      console.log(approveData);
+      User.approveRequest(approveData).then(function(data) {
+
+      });
+    };
+
+    this.denyRequest = function(denyData) {
+      console.log(denyData);
+      User.denyRequest(denyData).then(function(data) {
+
+      });
+    };
+
     User.getUsers().then(function(data) {
       if (data.data.success) {
         if (data.data.permission === 'admin') {
@@ -138,5 +152,4 @@ angular.module('adminController', [])
         app.requests = data.data.message;
       }
     });
-
   });
