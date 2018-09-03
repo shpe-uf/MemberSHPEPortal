@@ -134,6 +134,7 @@ angular.module('adminController', [])
     });
 
     User.getRequests().then(function(data) {
+
       if (data.data.success) {
         app.requests = data.data.message;
       }

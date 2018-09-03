@@ -19,8 +19,6 @@ angular.module('mainController', ['authServices', 'userServices'])
 
     this.closeModal = function(requestData) {
       $('#createRequestModal').modal('hide');
-      // app.requestData.code = ;
-      // $route.reload();
     };
 
     this.createRequest = function(requestData) {
@@ -144,16 +142,13 @@ angular.module('mainController', ['authServices', 'userServices'])
           app.events = data.data.events;
 
           app.codeArray = [];
-          // app.totalPoints = 0;
 
-
-          for (var i = 0; i < app.events.length; i++) {
-            // if (app.events[i].approved) {
+          if (app.events.length > 0) {
+            for (var i = 0; i < app.events.length; i++) {
               User.getCodeInfo(app.events[i]).then(function(codeData) {
                 app.codeArray.push(codeData.data.message);
-                // app.totalPoints += codeData.data.message.points;
               });
-            // }
+            }
           }
 
           User.getPermission().then(function(data) {

@@ -600,75 +600,101 @@ module.exports = function(router) {
         } else {
           User.findOne({
             username: req.decoded.username
-          }, function(err, model) {
+          }, function(err, user) {
             if (err) throw err;
 
             var isDuplicate = false;
 
-            for (var i = 0; i < model.events.length; i++) {
-              if (model.events[i]._id.equals(code._id)) {
-                res.json({
-                  success: false,
-                  message: 'Event code already redeemed'
-                });
-
+            for (var i = 0; i < user.events.length; i++) {
+              if (user.events[i]._id.equals(code._id)) {
                 isDuplicate = true;
                 break;
               }
             }
 
-            var pointsToAdd = 0;
-
-            if (code.points == 1) {
-              pointsToAdd = 1;
-            }
-
-            if (!isDuplicate) {
-              if (!model) {
+            if (isDuplicate) {
+              res.json({
+                success: false,
+                message: 'Event code already redeemed'
+              });
+            } else {
+              if (!user) {
                 res.json({
                   success: false,
                   message: 'Unable to add code to profile'
                 });
               } else {
 
-                var isApproved = false;
-
                 if (code.points == 1) {
-                  isApproved = true;
-                  pointsToAdd = code.points;
-                } else {
-                  isApproved = false;
-                  pointsToAdd = 0;
-                }
-
-                User.findOneAndUpdate({
-                  username: req.decoded.username,
-                }, {
-                  $push: {
-                    events: {
-                      _id: code
+                  User.findOneAndUpdate({
+                    username: req.decoded.username,
+                  }, {
+                    $push: {
+                      events: {
+                        _id: code
+                      }
+                    },
+                    $inc: {
+                      points: code.points
                     }
-                  },
-                  $inc: {
-                    points: pointsToAdd
-                  }
-                }, function(err, user) {
-                  if (err) throw (err);
+                  }, function(err, user) {
+                    if (err) throw (err);
 
-                  if (!user) {
-                    res.json({
-                      success: false,
-                      message: 'Unable to add code to profile'
-                    });
-                  } else {
-                    res.json({
-                      success: true,
-                      message: "Points redeemed!"
-                    });
-                  }
-                });
+                    if (!user) {
+                      res.json({
+                        success: false,
+                        message: 'Unable to add code to profile'
+                      });
+                    } else {
+                      res.json({
+                        success: true,
+                        message: "Points redeemed!"
+                      });
+                    }
+                  });
+                } else {
+                  var newRequest = new Request();
+                  newRequest.userId = user._id;
+                  newRequest.eventId = code._id;
+                  newRequest.firstName = user.firstName;
+                  newRequest.lastName = user.lastName;
+                  newRequest.username = user.username;
+                  newRequest.eventName = code.name;
+                  newRequest.type = code.type;
+                  newRequest.points = code.points;
+                  newRequest.status = 0;
+
+                  Request.findOne({
+                    user: user._id,
+                    event: code._id
+                  }).select().exec(function(err, request) {
+                    if (err) throw err;
+
+                    if (request) {
+                      res.json({
+                        success: false,
+                        message: 'Request has already been submitted.'
+                      });
+                    } else {
+                      newRequest.save(function(err) {
+                        if (err) {
+                          res.json({
+                            success: false,
+                            message: err
+                          });
+                        } else {
+                          res.json({
+                            success: true,
+                            message: 'Your request has been sent for approval.'
+                          });
+                        }
+                      });
+                    }
+                  });
+                }
               }
             }
+
           });
         }
       });
@@ -677,8 +703,6 @@ module.exports = function(router) {
 
   // ENDPOINT TO GRAB EVENT CODE INFORMATION FOR INDIVIDUAL USERS
   router.get('/getcodeinfo/:code', function(req, res) {
-    // console.log("\nGET CODE INFO ENDPOINT:");
-    // console.log(req.params.code);
     Code.findOne({
       _id: req.params.code
     }).populate().exec(function(err, event) {
@@ -689,8 +713,9 @@ module.exports = function(router) {
     });
   });
 
-  function Request(name, username, event, points) {
-    this.name = name;
+  function createRequest(firstName, lastName, username, event, points) {
+    this.firstName = firstName;
+    this.lastName = lastName;
     this.username = username;
     this.event = event;
     this.points = points;
@@ -698,68 +723,32 @@ module.exports = function(router) {
 
   // ENDPOINT TO GRAB ALL OF THE REQUESTS (*)
   router.get('/getrequests', function(req, res) {
+    Request.find({
 
-    var requestArray = [];
-
-    User.find({}, function(err, users) {
+    }, function(err, requests) {
       if (err) throw err;
-
       User.findOne({
-        username: 'cecrigope'
+        username: req.decoded.username
       }, function(err, mainUser) {
         if (err) throw err;
 
         if (!mainUser) {
           res.json({
             success: false,
-            message: 'Your account was not found'
+            message: 'No user found'
           });
         } else {
           if (mainUser.permission === 'admin') {
-            if (!users) {
+            if (!requests) {
               res.json({
                 success: false,
-                message: 'Users not found'
+                message: 'Requests not found'
               });
             } else {
-
-              // CREATE AN ARRAY WITH EVERY USERNAME
-              var usernames = [];
-
-              for (var i = 0; i < users.length; i++) {
-                usernames.push(users[i].username);
-              }
-
-              // SEARCH INFORMATION OF EACH INDIVIDUAL USER
-              for (var i = 0; i < usernames.length; i++) {
-                User.findOne({
-                  username: usernames[i]
-                }, function(err, userData) {
-                  if (err) throw err;
-
-                  // IF THE USERS HAS ANY EVENTS ON THEIR ENTRY
-                  if (userData.events.length > 0) {
-                    for (var i = 0; i < userData.events.length; i++) {
-
-                      // FILTER OUT EVENTS THAT HAVE ALREADY BEEN APPROVED
-                      if (!userData.events[i].approved) {
-                        Code.findOne({
-                          _id: userData.events[i]._id
-                        }).populate().exec(function(err, eventData) {
-
-                          var newRequest = new Request(userData.firstName + " " + userData.lastName, userData.username, eventData.name, eventData.points);
-
-                          requestArray.push(newRequest);
-                        });
-                      }
-                    }
-                  }
-                });
-              }
-
               res.json({
                 success: true,
-                message: requestArray
+                message: requests,
+                permission: mainUser.permission
               });
             }
           } else {
@@ -771,7 +760,6 @@ module.exports = function(router) {
         }
       });
     });
-
   });
 
   return router;

@@ -104,14 +104,16 @@
                 <th>MEMBER</th>
                 <th>USERNAME</th>
                 <th>EVENT</th>
+                <th>TYPE</th>
                 <th class="text-center">POINTS</th>
-                <th class="text-center">CONFIRM</th>
+                <th class="text-center">APPROVE</th>
                 <th class="text-center">DENY</th>
               </tr>
               <tr ng-repeat="request in admin.requests | orderBy: 'name' | filter: searchText">
-                <td>{{ request.name }}</td>
+                <td>{{ request.lastName }}, {{ request.firstName }}</td>
                 <td>{{ request.username }}</td>
-                <td>{{ request.event }}</td>
+                <td>{{ request.eventName }}</td>
+                <td>{{ request.type }}</td>
                 <td class="text-center">{{ request.points }}</td>
                 <td class="text-center">
                   <button type="button" class="btn btn-success" ng-click="admin.openCreateEventModal()">

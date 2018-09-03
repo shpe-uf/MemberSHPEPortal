@@ -2,17 +2,37 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var RequestSchema = new Schema({
-  user: {
+  userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
-  event: {
+  eventId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Code'
   },
-  status: {
+  firstName: {
+    type: String,
+    required: true
+  },
+  lastName: {
+    type: String,
+    required: true
+  },
+  username: {
+    type: String,
+    required: true
+  },
+  eventName: {
+    type: String,
+    required: true
+  },
+  type: {
+    type: String,
+    required: true
+  },
+  points: {
     type: Number,
-    default: 0
+    required: true
   }
 });
 

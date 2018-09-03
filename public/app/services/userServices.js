@@ -67,6 +67,6 @@ angular.module('userServices', [])
     userFactory.getRequests = function() {
       return $http.get('api/getrequests/');
     };
-
+    
     return userFactory;
   });
