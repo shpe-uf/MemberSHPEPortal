@@ -171,7 +171,7 @@ angular.module('mainController', ['authServices', 'userServices'])
                 }
               }
 
-              app.percentile = (((belowUsers + 0.5)/ totalUsers) * 100);
+              app.percentile = Math.trunc((((belowUsers + 0.5)/ totalUsers) * 100));
             }
           });
         });
