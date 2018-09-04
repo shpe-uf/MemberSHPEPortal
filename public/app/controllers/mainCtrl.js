@@ -132,6 +132,8 @@ angular.module('mainController', ['authServices', 'userServices'])
       if (Auth.isLoggedIn()) {
         app.isLoggedIn = true;
 
+
+
         Auth.getUser().then(function(data) {
           app.firstName = data.data.firstName;
           app.lastName = data.data.lastName;
@@ -164,7 +166,26 @@ angular.module('mainController', ['authServices', 'userServices'])
               app.loadme = true;
             }
           });
+
+          User.getPercentile(app.username).then(function(data) {
+            if (data.data.success) {
+              var pointsArray = data.data.message;
+              var userPoints = app.points;
+              var totalUsers = pointsArray.length;
+              var belowUsers = 0;
+
+              for (var i = 0; i < pointsArray.length; i++) {
+                if (userPoints > pointsArray[i].points) {
+                  belowUsers += 1;
+                }
+              }
+
+              app.percentile = (((belowUsers + 0.5)/ totalUsers) * 100);
+            }
+          });
         });
+
+
       } else {
         app.isLoggedIn = false;
         app.username = '';

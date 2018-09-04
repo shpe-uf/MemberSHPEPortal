@@ -792,7 +792,7 @@ module.exports = function(router) {
     });
 
     Request.deleteOne({
-      _id:req.body._id
+      _id: req.body._id
     }, function(err, deletedRequest) {
       if (err) throw (err);
     });
@@ -801,9 +801,33 @@ module.exports = function(router) {
   // ENDPOINT TO DENY REQUESTS
   router.put('/denyrequest', function(req, res) {
     Request.deleteOne({
-      _id:req.body._id
+      _id: req.body._id
     }, function(err, deletedRequest) {
       if (err) throw (err);
+    });
+  });
+
+  router.get('/getpercentile/:username', function(req, res) {
+
+    var userPoints;
+    var totalUsers;
+    var belowUsers = 0;
+
+    User.findOne({
+      username: req.decoded.username
+    }).populate().exec(function(err, user) {
+      userPoints = user.points;
+    });
+
+    User.find({
+
+    }).select('points').exec(function(err, userArray) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: userArray
+      });
     });
   });
 

@@ -76,5 +76,9 @@ angular.module('userServices', [])
       return $http.put('api/denyrequest/', denyData);
     };
 
+    userFactory.getPercentile = function(userData) {
+      return $http.get('api/getpercentile/' + userData);
+    }
+
     return userFactory;
   });
