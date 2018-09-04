@@ -114,6 +114,7 @@ hr {
   background-color: rgb(255, 255, 255);
   border-color: rgb(235, 70, 22);
   color: rgb(235, 70, 22);
+  /* margin-bottom: 16px; */
 }
 
 .btn-submit:hover {
@@ -214,6 +215,16 @@ iframe {
   white-space: nowrap;
   font-size: 5rem;
   margin-bottom: 0px;
+}
+
+.a {
+  text-decoration: none !important;
+  color: rgb(235, 70, 22);
+}
+
+.a:hover {
+  text-decoration: none !important;
+  color: rgb(235, 70, 22);
 }
 
 /* LOGOUT LOADER */

@@ -4,6 +4,7 @@ angular.module('mainController', ['authServices', 'userServices'])
     var app = this;
     app.loadme = false;
     app.showModal = true;
+    app.events;
 
     this.openRequestModal = function() {
       app.errorMsg = false;
@@ -132,8 +133,6 @@ angular.module('mainController', ['authServices', 'userServices'])
       if (Auth.isLoggedIn()) {
         app.isLoggedIn = true;
 
-
-
         Auth.getUser().then(function(data) {
           app.firstName = data.data.firstName;
           app.lastName = data.data.lastName;
@@ -147,15 +146,7 @@ angular.module('mainController', ['authServices', 'userServices'])
           app.points = data.data.points;
           app.events = data.data.events;
 
-          app.codeArray = [];
-
-          if (app.events.length > 0) {
-            for (var i = 0; i < app.events.length; i++) {
-              User.getCodeInfo(app.events[i]).then(function(codeData) {
-                app.codeArray.push(codeData.data.message);
-              });
-            }
-          }
+          app.showEvents(app.events);
 
           User.getPermission().then(function(data) {
             if (data.data.message === 'admin') {
@@ -221,5 +212,19 @@ angular.module('mainController', ['authServices', 'userServices'])
         backdrop: "static"
       });
     };
+
+    app.showEvents = function(eventIds) {
+
+      app.codeArray = [];
+
+      if (eventIds.length > 0) {
+        for (var i = 0; i < eventIds.length; i++) {
+          User.getCodeInfo(eventIds[i]).then(function(codeData) {
+            app.codeArray.push(codeData.data.message);
+          });
+        }
+      }
+
+    }
 
   });
