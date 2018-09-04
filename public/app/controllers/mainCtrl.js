@@ -40,25 +40,30 @@ angular.module('mainController', ['authServices', 'userServices'])
         app.checkInSession = true;
         var interval = $interval(function() {
           var token = $window.localStorage.getItem('token');
+
           if (token === null) {
             $interval.cancel(interval);
           } else {
+
             self.parseJwt = function(token) {
               var base64url = token.split('.')[1];
               var base64 = base64url.replace('-', '+').replace('_', '/');
               return JSON.parse($window.atob(base64));
             };
+
             var expireTime = self.parseJwt(token);
             var timeStamp = Math.floor(Date.now() / 1000);
 
             var timeCheck = expireTime.exp - timeStamp;
 
-            if (timeCheck <= 1) {
-              showModal(2);
+            console.log("TIME REMAINING: " + timeCheck);
+
+            if (timeCheck <= 600) {
+              showModal(1);
               $interval.cancel(interval);
             }
           }
-        }, 600000);
+        }, 30000);
       }
     };
 
@@ -70,18 +75,16 @@ angular.module('mainController', ['authServices', 'userServices'])
       app.modalBody = undefined;
       app.hideButton = false;
 
-      // if (option === 1) {
-      //   app.modalHeader = 'Timeout Warning';
-      //   app.modalBody = 'Your session will expire in 10 minutes. Would you like to renew your session?';
-      //   $("#tokenExpire").modal({
-      //     backdrop: "static"
-      //   });
-      //   $timeout(function() {
-      //     if (!app.choiceMade) app.endSession();
-      //   }, 10000);
-      // } else if (option === 2) {
-
-      if (option === 2) {
+      if (option === 1) {
+        app.modalHeader = 'Timeout Warning';
+        app.modalBody = 'Your session will expire in 10 minutes. Would you like to renew your session?';
+        $("#tokenExpire").modal({
+          backdrop: "static"
+        });
+        $timeout(function() {
+          if (!app.choiceMade) app.endSession();
+        }, 10000);
+      } else if (option === 2) {
         app.hideButton = true;
         app.modalHeader = 'Logging out';
         $("#tokenExpire").modal({
@@ -96,26 +99,27 @@ angular.module('mainController', ['authServices', 'userServices'])
       }
     };
 
-    // app.renewSession = function() {
-    //   app.choiceMade = true;
-    //   User.renewSession(app.username).then(function(data) {
-    //     if (data.data.success) {
-    //       AuthToken.setToken(data.data.message);
-    //       app.checkSession();
-    //     } else {
-    //       app.modalBody = data.data.message;
-    //     }
-    //   });
-    //   hideModal();
-    // };
+    app.renewSession = function() {
+      app.choiceMade = true;
 
-    // app.endSession = function() {
-    //   app.choiceMade = true;
-    //   hideModal();
-    //   $timeout(function() {
-    //     showModal(2);
-    //   }, 1000);
-    // };
+      User.renewSession(app.username).then(function(data) {
+        if (data.data.success) {
+          AuthToken.setToken(data.data.message);
+          app.checkSession();
+        } else {
+          app.modalBody = data.data.message;
+        }
+      });
+      hideModal();
+    };
+
+    app.endSession = function() {
+      app.choiceMade = true;
+      hideModal();
+      $timeout(function() {
+        showModal(2);
+      }, 1000);
+    };
 
     var hideModal = function() {
       $("#tokenExpire").modal('hide');
