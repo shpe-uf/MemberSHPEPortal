@@ -189,6 +189,17 @@
             </select>
           </div>
 
+          <div class="form-group">
+            <label for="eventExpiration">Expire After</label>
+            <select class="form-control" name="expiration" id="eventExpiration" ng-model="admin.eventData.expiration" required>
+              <option value="1">1 hour</option>
+              <option value="2">2 hours</option>
+              <option value="3">3 hours</option>
+              <option value="4">4 hours</option>
+              <option value="5">5 hours</option>
+            </select>
+          </div>
+
           <div class="row">
             <div class="col-sm-12">
               <button type="submit" class="btn btn-success" ng-if="admin.showModal">Submit</button>

@@ -117,9 +117,9 @@ module.exports = function(router) {
       code.points = 0;
     }
 
-    code.expiration = Date.now() + (60 * 60 * 1000);
+    code.expiration = Date.now() + (req.body.expiration * 60 * 60 * 1000);
 
-    if (req.body.name == null || req.body.code == null || req.body.type == null || req.body.name == '' || req.body.code == '' || req.body.type == '') {
+    if (req.body.name == null || req.body.code == null || req.body.type == null || req.body.expiration == null || req.body.name == '' || req.body.code == '' || req.body.type == '' || req.body.expiration == '') {
       res.json({
         success: false,
         message: 'Make sure you filled out the entire form!'
@@ -629,7 +629,7 @@ module.exports = function(router) {
                 });
               } else {
 
-                if (code.points == 1) {
+                if (code.points == 1 && code.type !== 'Form/Survey') {
                   User.findOneAndUpdate({
                     username: req.decoded.username,
                   }, {
@@ -698,7 +698,6 @@ module.exports = function(router) {
                 }
               }
             }
-
           });
         }
       });
@@ -785,7 +784,7 @@ module.exports = function(router) {
       if (!user) {
         res.json({
           success: false,
-          message: 'Unable to add code to profile'
+          message: 'Unable to accept request'
         });
       } else {
         res.json({
@@ -795,19 +794,37 @@ module.exports = function(router) {
       }
     });
 
+    var deletedRequest = req.body._id;
+
     Request.deleteOne({
       _id: req.body._id
     }, function(err, deletedRequest) {
       if (err) throw (err);
+
+      else {
+        res.json({
+          success: true,
+          message: deletedRequest
+        });
+      }
     });
   });
 
   // ENDPOINT TO DENY REQUESTS
   router.put('/denyrequest', function(req, res) {
+    var deletedRequest = req.body._id;
+
     Request.deleteOne({
       _id: req.body._id
     }, function(err, deletedRequest) {
       if (err) throw (err);
+
+      else {
+        res.json({
+          success: true,
+          message: deletedRequest
+        });
+      }
     });
   });
 

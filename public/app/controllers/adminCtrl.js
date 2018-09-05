@@ -28,6 +28,8 @@ angular.module('adminController', [])
       app.successMsg = false;
       app.errorMsg = false;
 
+      console.log(eventData);
+
       User.createCode(app.eventData).then(function(data) {
 
         if (data.data.success) {
@@ -53,7 +55,7 @@ angular.module('adminController', [])
             name: app.eventData.name,
             code: app.eventData.code.toLowerCase(),
             type: app.eventData.type,
-            expiration: Date.now() + (60 * 60 * 1000),
+            expiration: Date.now() + (app.eventData.expiration * 60 * 60 * 1000),
             points: newEventPoints
           };
 
@@ -113,14 +115,14 @@ angular.module('adminController', [])
     this.acceptRequest = function(approveData) {
       console.log(approveData);
       User.approveRequest(approveData).then(function(data) {
-
+        console.log("APPROVE DATA: " + data);
       });
     };
 
     this.denyRequest = function(denyData) {
       console.log(denyData);
       User.denyRequest(denyData).then(function(data) {
-
+        console.log("DENY DATA: " + data);
       });
     };
 
