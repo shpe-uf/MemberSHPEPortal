@@ -657,6 +657,7 @@ module.exports = function(router) {
                     }
                   });
                 } else {
+
                   var newRequest = new Request();
                   newRequest.userId = user._id;
                   newRequest.eventId = code._id;
@@ -669,8 +670,8 @@ module.exports = function(router) {
                   newRequest.status = 0;
 
                   Request.findOne({
-                    user: user._id,
-                    event: code._id
+                    userId: user._id,
+                    eventId: code._id
                   }).select().exec(function(err, request) {
                     if (err) throw err;
 
@@ -794,37 +795,20 @@ module.exports = function(router) {
       }
     });
 
-    var deletedRequest = req.body._id;
 
     Request.deleteOne({
       _id: req.body._id
     }, function(err, deletedRequest) {
       if (err) throw (err);
-
-      else {
-        res.json({
-          success: true,
-          message: deletedRequest
-        });
-      }
     });
   });
 
   // ENDPOINT TO DENY REQUESTS
   router.put('/denyrequest', function(req, res) {
-    var deletedRequest = req.body._id;
-
     Request.deleteOne({
       _id: req.body._id
     }, function(err, deletedRequest) {
       if (err) throw (err);
-
-      else {
-        res.json({
-          success: true,
-          message: deletedRequest
-        });
-      }
     });
   });
 
