@@ -35,11 +35,14 @@ angular.module('mainController', ['authServices', 'userServices'])
         }
       });
 
-      $timeout(function() {
+
+      // $timeout(function() {
         hideModal();
         $('.modal-backdrop').remove();
-        $route.reload();
-      }, 3000);
+        $window.location.reload();
+      // }, 500);
+
+      app.requestData = '';
     };
 
     app.checkSession = function() {
@@ -101,7 +104,7 @@ angular.module('mainController', ['authServices', 'userServices'])
           Auth.logout();
           $location.path('/');
           hideModal();
-          $route.reload();
+          $window.location.reload();
         }, 2000);
       }
     };

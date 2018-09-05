@@ -1,5 +1,5 @@
 angular.module('adminController', [])
-  .controller('adminCtrl', function(User) {
+  .controller('adminCtrl', function($timeout, $route, $window, User) {
 
     var app = this;
     app.accessDenied = true;
@@ -117,6 +117,10 @@ angular.module('adminController', [])
       User.approveRequest(approveData).then(function(data) {
         console.log("APPROVE DATA: " + data);
       });
+
+      $timeout(function() {
+        $window.location.reload();
+      }, 1500);
     };
 
     this.denyRequest = function(denyData) {
@@ -124,6 +128,10 @@ angular.module('adminController', [])
       User.denyRequest(denyData).then(function(data) {
         console.log("DENY DATA: " + data);
       });
+
+      $timeout(function() {
+        $window.location.reload();
+      }, 1500);
     };
 
     User.getUsers().then(function(data) {
