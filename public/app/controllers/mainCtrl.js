@@ -34,6 +34,12 @@ angular.module('mainController', ['authServices', 'userServices'])
           app.errorMsg = data.data.message;
         }
       });
+
+      $timeout(function() {
+        hideModal();
+        $('.modal-backdrop').remove();
+        $route.reload();
+      }, 3000);
     };
 
     app.checkSession = function() {
