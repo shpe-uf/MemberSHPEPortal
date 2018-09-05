@@ -4,6 +4,7 @@ angular.module('adminController', [])
     var app = this;
     app.accessDenied = true;
     app.showModal = true;
+    app.isClicked = false;
 
     this.openCreateEventModal = function() {
       app.errorMsg = false;
@@ -114,24 +115,26 @@ angular.module('adminController', [])
 
     this.acceptRequest = function(approveData) {
       console.log(approveData);
+      app.isClicked = true;
       User.approveRequest(approveData).then(function(data) {
         console.log("APPROVE DATA: " + data);
       });
 
-      $timeout(function() {
+      // $timeout(function() {
         $window.location.reload();
-      }, 1500);
+      // }, 1500);
     };
 
     this.denyRequest = function(denyData) {
       console.log(denyData);
+      app.isClicked = true;
       User.denyRequest(denyData).then(function(data) {
         console.log("DENY DATA: " + data);
       });
 
-      $timeout(function() {
+      // $timeout(function() {
         $window.location.reload();
-      }, 1500);
+      // }, 1500);
     };
 
     User.getUsers().then(function(data) {
