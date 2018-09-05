@@ -29,8 +29,6 @@ angular.module('adminController', [])
       app.successMsg = false;
       app.errorMsg = false;
 
-      console.log(eventData);
-
       User.createCode(app.eventData).then(function(data) {
 
         if (data.data.success) {
@@ -114,10 +112,8 @@ angular.module('adminController', [])
     // };
 
     this.acceptRequest = function(approveData) {
-      console.log(approveData);
       app.isClicked = true;
       User.approveRequest(approveData).then(function(data) {
-        console.log("APPROVE DATA: " + data);
       });
 
       // $timeout(function() {
@@ -126,10 +122,8 @@ angular.module('adminController', [])
     };
 
     this.denyRequest = function(denyData) {
-      console.log(denyData);
       app.isClicked = true;
       User.denyRequest(denyData).then(function(data) {
-        console.log("DENY DATA: " + data);
       });
 
       // $timeout(function() {

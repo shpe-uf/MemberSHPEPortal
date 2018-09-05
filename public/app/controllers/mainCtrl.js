@@ -155,7 +155,9 @@ angular.module('mainController', ['authServices', 'userServices'])
           app.points = data.data.points;
           app.events = data.data.events;
 
-          app.showEvents(app.events);
+          if (app.events.length > 0) {
+            app.showEvents(app.events);
+          }
 
           User.getPermission().then(function(data) {
             if (data.data.message === 'admin') {
