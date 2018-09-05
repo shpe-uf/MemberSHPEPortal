@@ -103,14 +103,18 @@ module.exports = function(router) {
     code.code = req.body.code.toLowerCase();
     code.type = req.body.type;
 
-    if ((code.type == "General Body Meeting") || (code.type == "Cabinet Meeting")) {
+    if (code.type == 'General Body Meeting' || code.type == 'Cabinet Meeting' || code.type == 'Social' || code.type == 'Form/Survey') {
       code.points = 1;
-    } else if (code.type == "Social") {
+    } else if (code.type == 'Corporate Event') {
       code.points = 2;
-    } else if (code.type == "Fundraiser") {
+    } else if (code.type == 'Fundraiser') {
       code.points = 3;
-    } else if (code.type == "Volunteering") {
+    } else if (code.type == 'Volunteering') {
       code.points = 4;
+    } else if (code.type == 'Miscellaneous') {
+      code.points = 5;
+    } else {
+      code.points = 0;
     }
 
     code.expiration = Date.now() + (60 * 60 * 1000);

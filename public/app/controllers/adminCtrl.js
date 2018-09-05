@@ -29,19 +29,22 @@ angular.module('adminController', [])
       app.errorMsg = false;
 
       User.createCode(app.eventData).then(function(data) {
+
         if (data.data.success) {
           app.successMsg = data.data.message;
 
           var newEventPoints = 0;
 
-          if (app.eventData.type == 'General Body Meeting' || app.eventData.type == 'Cabinet Meeting') {
+          if (app.eventData.type == 'General Body Meeting' || app.eventData.type == 'Cabinet Meeting' || app.eventData.type == 'Social' || app.eventData.type == 'Form/Survey') {
             newEventPoints = 1;
-          } else if (app.eventData.type == 'Social') {
+          } else if (app.eventData.type == 'Corporate Event') {
             newEventPoints = 2;
           } else if (app.eventData.type == 'Fundraiser') {
             newEventPoints = 3;
           } else if (app.eventData.type == 'Volunteering') {
             newEventPoints = 4;
+          } else if (app.eventData.type == 'Miscellaneous') {
+            newEventPoints = 5;
           } else {
             newEventPoints = 0;
           }
