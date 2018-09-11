@@ -1,10 +1,12 @@
 angular.module('adminController', [])
-  .controller('adminCtrl', function($timeout, $route, $window, User) {
+  .controller('adminCtrl', function($timeout, $route, $window, $scope, $filter, User) {
 
     var app = this;
     app.accessDenied = true;
     app.showModal = true;
     app.isClicked = false;
+
+    var orderBy = $filter('orderBy');
 
     this.openCreateEventModal = function() {
       app.errorMsg = false;
@@ -113,21 +115,19 @@ angular.module('adminController', [])
 
     this.acceptRequest = function(approveData) {
       app.isClicked = true;
-      User.approveRequest(approveData).then(function(data) {
-      });
+      User.approveRequest(approveData).then(function(data) {});
 
       // $timeout(function() {
-        $window.location.reload();
+      $window.location.reload();
       // }, 1500);
     };
 
     this.denyRequest = function(denyData) {
       app.isClicked = true;
-      User.denyRequest(denyData).then(function(data) {
-      });
+      User.denyRequest(denyData).then(function(data) {});
 
       // $timeout(function() {
-        $window.location.reload();
+      $window.location.reload();
       // }, 1500);
     };
 
@@ -162,4 +162,14 @@ angular.module('adminController', [])
         app.requests = data.data.message;
       }
     });
+
+    this.sortBy = function(propertyName, array) {
+      console.log("hello");
+      $scope.reverse = (propertyName !== null && $scope.propertyName === propertyName) ?
+        !$scope.reverse : false;
+      $scope.propertyName = propertyName;
+      app.users = orderBy(array, $scope.propertyName, $scope.reverse);
+      // console.log(array);
+    };
+
   });

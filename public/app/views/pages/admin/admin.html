@@ -33,14 +33,14 @@
             </div>
             <table class="table table-responsive-lg table-striped">
               <tr>
-                <th>NAME</th>
-                <th>USERNAME</th>
-                <th>MAJOR</th>
-                <th>YEAR</th>
-                <th>EMAIL</th>
-                <th>POINTS</th>
+                <th ng-click="admin.sortBy('lastName', admin.users)">NAME</th>
+                <th ng-click="admin.sortBy('username', admin.users)">USERNAME</th>
+                <th ng-click="admin.sortBy('major', admin.users)">MAJOR</th>
+                <th ng-click="admin.sortBy('year', admin.users)">YEAR</th>
+                <th ng-click="admin.sortBy('email', admin.users)">EMAIL</th>
+                <th ng-click="admin.sortBy('points', admin.users)">POINTS</th>
               </tr>
-              <tr ng-repeat="user in admin.users | orderBy: 'lastName' | filter: searchText">
+              <tr ng-repeat="user in admin.users | filter: searchText">
                 <td>{{ user.lastName }}, {{ user.firstName }}</td>
                 <td>{{ user.username }}</td>
                 <td>{{ user.major }}</td>

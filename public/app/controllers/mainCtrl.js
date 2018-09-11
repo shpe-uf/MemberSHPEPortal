@@ -42,9 +42,6 @@ angular.module('mainController', ['authServices', 'userServices'])
         }
       });
 
-
-
-
       app.requestData = '';
     };
 
