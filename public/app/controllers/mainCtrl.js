@@ -20,6 +20,13 @@ angular.module('mainController', ['authServices', 'userServices'])
 
     this.closeModal = function(requestData) {
       $('#createRequestModal').modal('hide');
+      $window.location.reload();
+
+      // $timeout(function() {
+        // hideModal();
+        // $('.modal-backdrop').remove();
+      // }, 2000);
+
     };
 
     this.createRequest = function(requestData) {
@@ -36,11 +43,7 @@ angular.module('mainController', ['authServices', 'userServices'])
       });
 
 
-      // $timeout(function() {
-        hideModal();
-        $('.modal-backdrop').remove();
-        $window.location.reload();
-      // }, 500);
+
 
       app.requestData = '';
     };
