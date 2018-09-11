@@ -164,12 +164,10 @@ angular.module('adminController', [])
     });
 
     this.sortBy = function(propertyName, array) {
-      console.log("hello");
       $scope.reverse = (propertyName !== null && $scope.propertyName === propertyName) ?
         !$scope.reverse : false;
       $scope.propertyName = propertyName;
       app.users = orderBy(array, $scope.propertyName, $scope.reverse);
-      // console.log(array);
     };
 
   });
