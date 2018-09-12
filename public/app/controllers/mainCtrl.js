@@ -143,6 +143,7 @@ angular.module('mainController', ['authServices', 'userServices'])
         app.isLoggedIn = true;
 
         Auth.getUser().then(function(data) {
+
           app.firstName = data.data.firstName;
           app.lastName = data.data.lastName;
           app.username = data.data.username;
@@ -155,9 +156,7 @@ angular.module('mainController', ['authServices', 'userServices'])
           app.points = data.data.points;
           app.events = data.data.events;
 
-          if (app.events.length > 0) {
-            app.showEvents(app.events);
-          }
+          app.showEvents(app.events);
 
           User.getPermission().then(function(data) {
             if (data.data.message === 'admin') {
