@@ -836,5 +836,20 @@ module.exports = function(router) {
     });
   });
 
+  router.get('/getattendance/:eventid', function(req, res) {
+    User.find({
+      events: {
+        _id: req.params.eventid
+      }
+    }).populate().exec(function(err, users) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: users
+      });
+    });
+  });
+
   return router;
 };

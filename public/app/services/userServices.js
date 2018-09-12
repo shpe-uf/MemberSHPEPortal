@@ -78,7 +78,11 @@ angular.module('userServices', [])
 
     userFactory.getPercentile = function(userData) {
       return $http.get('api/getpercentile/' + userData);
-    }
+    };
+
+    userFactory.getAttendance = function(eventId) {
+      return $http.get('api/getattendance/' + eventId);
+    };
 
     return userFactory;
   });

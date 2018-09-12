@@ -131,6 +131,13 @@ angular.module('adminController', [])
       // }, 1500);
     };
 
+    this.getAttendance = function(eventId) {
+      console.log("eventId");
+      User.getAttendance(eventId).then(function(data) {
+        console.log(data.data.message);
+      });
+    };
+
     User.getUsers().then(function(data) {
       if (data.data.success) {
         if (data.data.permission === 'admin') {
