@@ -3,8 +3,10 @@ angular.module('adminController', [])
 
     var app = this;
     app.accessDenied = true;
-    app.showModal = true;
+    app.showCreateEventModal = true;
+    app.showAttendanceModal = true;
     app.isClicked = false;
+    app.eventName;
 
     var orderBy = $filter('orderBy');
 
@@ -17,10 +19,10 @@ angular.module('adminController', [])
         keyboard: false
       });
 
-      app.showModal = true;
+      app.showCreateEventModal = true;
     };
 
-    this.closeModal = function(eventData) {
+    this.closeCreateEventModal = function(eventData) {
       $('#createEventModal').modal('hide');
       // app.eventData.name = '';
       // app.eventData.code = '';
@@ -61,11 +63,30 @@ angular.module('adminController', [])
           };
 
           app.codes.push(newEvent);
-          app.showModal = false;
+          app.showCreateEventModal = false;
         } else {
           app.errorMsg = data.data.message;
         }
       });
+    };
+
+    this.openAttendanceModal = function(eventData) {
+      $("#attendanceModal").modal({
+        backdrop: 'static'
+      });
+
+      app.eventName = eventData.name;
+
+      User.getAttendance(eventData._id).then(function(data) {
+        app.attendance = data.data.message;
+      });
+
+
+      app.showAttendanceModal = true;
+    };
+
+    this.closeAttendanceModal = function() {
+      $('#attendanceModal').modal('hide');
     };
 
     // this.nationalityChart = function() {
@@ -129,13 +150,6 @@ angular.module('adminController', [])
       // $timeout(function() {
       $window.location.reload();
       // }, 1500);
-    };
-
-    this.getAttendance = function(eventId) {
-      console.log("eventId");
-      User.getAttendance(eventId).then(function(data) {
-        console.log(data.data.message);
-      });
     };
 
     User.getUsers().then(function(data) {

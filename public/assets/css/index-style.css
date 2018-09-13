@@ -227,6 +227,12 @@ iframe {
   color: rgb(235, 70, 22);
 }
 
+.attendance-table {
+  display: block;
+  max-height: 500px;
+  overflow-y: scroll;
+}
+
 /* LOGOUT LOADER */
 .sk-cube-grid {
   height: 80px;
