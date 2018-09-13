@@ -18,7 +18,7 @@ angular.module('mainController', ['authServices', 'userServices'])
       app.showModal = true;
     };
 
-    this.closeModal = function(requestData) {
+    this.closeRequestModal = function() {
       $('#createRequestModal').modal('hide');
       $window.location.reload();
 
@@ -44,6 +44,18 @@ angular.module('mainController', ['authServices', 'userServices'])
 
       app.requestData = '';
     };
+
+    this.openPointsSystemModal = function() {
+      console.log("HELLO");
+      $("#pointsSystemModal").modal({
+        backdrop: 'static',
+        keyboard: false
+      });
+    }
+
+    this.closePointsSystemModal = function() {
+      $('#pointsSystemModal').modal('hide');
+    }
 
     app.checkSession = function() {
       if (Auth.isLoggedIn()) {
