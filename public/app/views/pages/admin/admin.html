@@ -27,7 +27,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text">Search</span>
                   </div>
-                  <input type="text" class="form-control" ng-model="searchText">
+                  <input type="text" class="form-control" ng-model="membersSearchText">
 
                 </div>
               </div>
@@ -41,7 +41,7 @@
                 <th ng-click="admin.sortBy('email', admin.users)">EMAIL</th>
                 <th ng-click="admin.sortBy('points', admin.users)">POINTS</th>
               </tr>
-              <tr ng-repeat="user in admin.users | filter: searchText">
+              <tr ng-repeat="user in admin.users | filter: membersSearchText">
                 <td>{{ user.lastName }}, {{ user.firstName }}</td>
                 <td>{{ user.username }}</td>
                 <td>{{ user.major }}</td>
@@ -61,7 +61,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text">Search</span>
                   </div>
-                  <input type="text" class="form-control" ng-model="searchText">
+                  <input type="text" class="form-control" ng-model="eventSearchText">
 
                 </div>
               </div>
@@ -80,7 +80,7 @@
                 <th class="text-center">ATTENDANCE</th>
                 <!-- <th class="text-center">STATISTICS</th> -->
               </tr>
-              <tr ng-repeat="code in admin.codes | orderBy: 'lastName' | filter: searchText">
+              <tr ng-repeat="code in admin.codes | orderBy: 'lastName' | filter: eventSearchText">
                 <td>{{ code.name }}</td>
                 <td>{{ code.code }}</td>
                 <td>{{ code.type }}</td>
@@ -109,7 +109,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text">Search</span>
                   </div>
-                  <input type="text" class="form-control" ng-model="searchText">
+                  <input type="text" class="form-control" ng-model="requestSearchText">
 
                 </div>
               </div>
@@ -124,7 +124,7 @@
                 <th class="text-center">APPROVE</th>
                 <th class="text-center">DENY</th>
               </tr>
-              <tr ng-repeat="request in admin.requests | orderBy: 'name' | filter: searchText">
+              <tr ng-repeat="request in admin.requests | orderBy: 'name' | filter: requestSearchText">
                 <td>{{ request.lastName }}, {{ request.firstName }}</td>
                 <td>{{ request.username }}</td>
                 <td>{{ request.eventName }}</td>
