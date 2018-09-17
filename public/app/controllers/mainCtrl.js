@@ -18,7 +18,7 @@ angular.module('mainController', ['authServices', 'userServices'])
       app.showModal = true;
     };
 
-    this.closeRequestModal = function() {
+    this.closeRequestModal = function(requestData) {
       $('#createRequestModal').modal('hide');
       $window.location.reload();
 
@@ -167,6 +167,8 @@ angular.module('mainController', ['authServices', 'userServices'])
           app.points = data.data.points;
           app.events = data.data.events;
 
+          app.showEvents(app.events);
+
           User.getPermission().then(function(data) {
             if (data.data.message === 'admin') {
               app.authorized = true;
@@ -193,8 +195,6 @@ angular.module('mainController', ['authServices', 'userServices'])
               app.percentile = Math.trunc(((belowUsers/totalUsers) * 100));
             }
           });
-
-          app.showEvents(app.events);
         });
 
       } else {
