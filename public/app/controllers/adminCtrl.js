@@ -66,6 +66,7 @@ angular.module('adminController', [])
           app.showCreateEventModal = false;
         } else {
           app.errorMsg = data.data.message;
+          console.log(data.data.message);
         }
       });
     };
@@ -101,9 +102,12 @@ angular.module('adminController', [])
       app.errorMsg = false;
 
       var manualInput = {
-        member: app.member,
-        eventId: app.eventName._id
+        member: null,
+        eventId: null
       };
+
+      manualInput.member = app.member;
+      manualInput.eventId = app.eventName._id;
 
       console.log(manualInput);
 

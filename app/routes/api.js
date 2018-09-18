@@ -98,33 +98,34 @@ module.exports = function(router) {
 
   // ENDPOINT TO CREATE EVENT CODES
   router.post('/codes', function(req, res) {
-    var code = new Code();
-    code.name = req.body.name;
-    code.code = req.body.code.toLowerCase();
-    code.type = req.body.type;
-
-    if (code.type == 'General Body Meeting' || code.type == 'Cabinet Meeting' || code.type == 'Social' || code.type == 'Form/Survey') {
-      code.points = 1;
-    } else if (code.type == 'Corporate Event') {
-      code.points = 2;
-    } else if (code.type == 'Fundraiser') {
-      code.points = 3;
-    } else if (code.type == 'Volunteering') {
-      code.points = 4;
-    } else if (code.type == 'Miscellaneous') {
-      code.points = 5;
-    } else {
-      code.points = 0;
-    }
-
-    code.expiration = Date.now() + (req.body.expiration * 60 * 60 * 1000);
-
+    
     if (req.body.name == null || req.body.code == null || req.body.type == null || req.body.expiration == null || req.body.name == '' || req.body.code == '' || req.body.type == '' || req.body.expiration == '') {
       res.json({
         success: false,
         message: 'Make sure you filled out the entire form!'
       });
     } else {
+      var code = new Code();
+      code.name = req.body.name;
+      code.code = req.body.code.toLowerCase();
+      code.type = req.body.type;
+
+      if (code.type == 'General Body Meeting' || code.type == 'Cabinet Meeting' || code.type == 'Social' || code.type == 'Form/Survey') {
+        code.points = 1;
+      } else if (code.type == 'Corporate Event') {
+        code.points = 2;
+      } else if (code.type == 'Fundraiser') {
+        code.points = 3;
+      } else if (code.type == 'Volunteering') {
+        code.points = 4;
+      } else if (code.type == 'Miscellaneous') {
+        code.points = 5;
+      } else {
+        code.points = 0;
+      }
+
+      code.expiration = Date.now() + (req.body.expiration * 60 * 60 * 1000);
+
       code.save(function(err) {
         if (err) {
           if (err.errors != null) {
@@ -858,22 +859,26 @@ module.exports = function(router) {
     console.log("MANUAL INPUT ENDPOINT:");
     console.log(req.body);
 
-    if (req.body.member.userName == null || req.body.member.userName == '' || req.body.userName == undefined) {
-      res.json({
-        success: false,
-        message: 'No username was provided.'
-      });
-    } else {
-      User.findOne({
-        username: req.body.member.userName
-      }).select().exec(function(err, user) {
-        console.log("USER INFO:");
-        console.log(user);
-
-        if (err) throw err;
-
-      });
+    if (req.body.member == null || req.body.member == "" || req.body.member == undefined) {
+      console.log("NO USERNAME WAS PROVIDED");
     }
+
+    // if (req.body.member.userName == null || req.body.member.userName == '' || req.body.member.userName == undefined || req.body.member == null || req.body.member == '' || req.body.member == undefined) {
+    //   res.json({
+    //     success: false,
+    //     message: 'No username was provided.'
+    //   });
+    // } else {
+    //   User.findOne({
+    //     username: req.body.member.userName
+    //   }).select().exec(function(err, user) {
+    //     console.log("USER INFO:");
+    //     console.log(user);
+    //
+    //     if (err) throw err;
+    //
+    //   });
+    // }
   });
 
   return router;
