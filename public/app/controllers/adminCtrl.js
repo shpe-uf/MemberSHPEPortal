@@ -81,13 +81,45 @@ angular.module('adminController', [])
         app.attendance = data.data.message;
       });
 
-
       app.showAttendanceModal = true;
     };
 
     this.closeAttendanceModal = function() {
       $('#attendanceModal').modal('hide');
     };
+
+    this.openManualInputModal = function(eventData) {
+      $("#manualInputModal").modal({
+        backdrop: 'static'
+      });
+
+      app.eventName = eventData
+    }
+
+    this.manualInput = function(member) {
+      app.successMsg = false;
+      app.errorMsg = false;
+
+      var manualInput = {
+        member: app.member,
+        eventId: app.eventName._id
+      };
+
+      console.log(manualInput);
+
+      User.manualInput(manualInput).then(function(data) {
+        if (data.data.success) {
+
+        } else {
+          app.errorMsg = data.data.message;
+        }
+      });
+    };
+
+    this.closeManualInputModal = function() {
+      $('#manualInputModal').modal('hide');
+    };
+
 
     // this.nationalityChart = function() {
     //   var nationalityLabels = [];

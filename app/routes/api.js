@@ -375,7 +375,7 @@ module.exports = function(router) {
       if (req.body.password == null || req.body.password == '') {
         res.json({
           success: false,
-          message: 'Password not provided'
+          message: 'Password not provided.'
         });
       } else {
         user.password = req.body.password;
@@ -812,6 +812,7 @@ module.exports = function(router) {
     });
   });
 
+  // ENDPOINT TO CALCULATE USER POINT PERCENTILE
   router.get('/getpercentile/:username', function(req, res) {
 
     var userPoints;
@@ -836,6 +837,7 @@ module.exports = function(router) {
     });
   });
 
+  // ENDPOINT TO GRAB EVENT ATTENDANCE
   router.get('/getattendance/:eventid', function(req, res) {
     User.find({
       events: {
@@ -849,6 +851,29 @@ module.exports = function(router) {
         message: users
       });
     });
+  });
+
+  // ENDPOINT TO MANUALLY INPUT POINTS FOR MEMBERS
+  router.put('/manualinput', function(req, res) {
+    console.log("MANUAL INPUT ENDPOINT:");
+    console.log(req.body);
+
+    if (req.body.member.userName == null || req.body.member.userName == '' || req.body.userName == undefined) {
+      res.json({
+        success: false,
+        message: 'No username was provided.'
+      });
+    } else {
+      User.findOne({
+        username: req.body.member.userName
+      }).select().exec(function(err, user) {
+        console.log("USER INFO:");
+        console.log(user);
+
+        if (err) throw err;
+
+      });
+    }
   });
 
   return router;

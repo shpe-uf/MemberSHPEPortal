@@ -84,5 +84,9 @@ angular.module('userServices', [])
       return $http.get('api/getattendance/' + eventId);
     };
 
+    userFactory.manualInput = function(manualInputData) {
+      return $http.put('api/manualinput/', manualInputData);
+    };
+
     return userFactory;
   });
