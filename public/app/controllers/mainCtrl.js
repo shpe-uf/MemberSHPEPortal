@@ -155,6 +155,9 @@ angular.module('mainController', ['authServices', 'userServices'])
 
         Auth.getUser().then(function(data) {
 
+          console.log("AUTH GET USER DATA:");
+          console.log(data.data);
+
           app.firstName = data.data.firstName;
           app.lastName = data.data.lastName;
           app.username = data.data.username;
