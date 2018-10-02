@@ -90,6 +90,9 @@ angular.module('adminController', [])
     };
 
     this.openManualInputModal = function(eventData) {
+      app.successMsg = false;
+      app.errorMsg = false;
+
       $("#manualInputModal").modal({
         backdrop: 'static'
       });
@@ -98,8 +101,9 @@ angular.module('adminController', [])
     }
 
     this.manualInput = function(member) {
-      app.successMsg = false;
-      app.errorMsg = false;
+      app.successMsg = '';
+      app.errorMsg = '';
+
 
       var manualInput = {
         member: null,
@@ -113,15 +117,17 @@ angular.module('adminController', [])
 
       User.manualInput(manualInput).then(function(data) {
         if (data.data.success) {
-
+          app.successMsg = data.data.message;
         } else {
           app.errorMsg = data.data.message;
         }
       });
     };
 
-    this.closeManualInputModal = function() {
+    this.closeManualInputModal = function(member) {
       $('#manualInputModal').modal('hide');
+      app.member.userName = '';
+      app.errorMsg
     };
 
 

@@ -98,7 +98,6 @@ module.exports = function(router) {
 
   // ENDPOINT TO CREATE EVENT CODES
   router.post('/codes', function(req, res) {
-    
     if (req.body.name == null || req.body.code == null || req.body.type == null || req.body.expiration == null || req.body.name == '' || req.body.code == '' || req.body.type == '' || req.body.expiration == '') {
       res.json({
         success: false,
@@ -856,29 +855,81 @@ module.exports = function(router) {
 
   // ENDPOINT TO MANUALLY INPUT POINTS FOR MEMBERS
   router.put('/manualinput', function(req, res) {
-    console.log("MANUAL INPUT ENDPOINT:");
+
     console.log(req.body);
 
-    if (req.body.member == null || req.body.member == "" || req.body.member == undefined) {
-      console.log("NO USERNAME WAS PROVIDED");
-    }
+    if (req.body.member == null || req.body.member == "" || req.body.member == undefined || req.body.member.userName == null || req.body.member.userName == '' || req.body.member.userName == undefined) {
+      res.json({
+        success: false,
+        message: 'No username was provided.'
+      });
+    } else {
+      User.findOne({
+        username: req.body.member.userName
+      }).select().exec(function(err, user) {
+        if (err) throw err;
 
-    // if (req.body.member.userName == null || req.body.member.userName == '' || req.body.member.userName == undefined || req.body.member == null || req.body.member == '' || req.body.member == undefined) {
-    //   res.json({
-    //     success: false,
-    //     message: 'No username was provided.'
-    //   });
-    // } else {
-    //   User.findOne({
-    //     username: req.body.member.userName
-    //   }).select().exec(function(err, user) {
-    //     console.log("USER INFO:");
-    //     console.log(user);
-    //
-    //     if (err) throw err;
-    //
-    //   });
-    // }
+        if (!user) {
+          res.json({
+            success: false,
+            message: 'User not found'
+          });
+        } else {
+
+          var isDuplicate = false;
+
+          for (var i = 0; i < user.events.length; i++) {
+            if (user.events[i]._id.equals(req.body.eventId)) {
+              isDuplicate = true;
+              break;
+            }
+          }
+
+          if (isDuplicate) {
+            res.json({
+              success: false,
+              message: 'Event code already redeemed by the user.'
+            });
+          } else {
+
+            Code.findOne({
+              _id: req.body.eventId
+            }).select().exec(function(err, code) {
+              console.log(code);
+              console.log(user);
+
+              User.findOneAndUpdate({
+                username: user.username
+              }, {
+                $push: {
+                  events: {
+                    _id: code._id
+                  }
+                },
+                $inc: {
+                  points: code.points
+                }
+              }, function(err, newUser) {
+                if (err) throw err;
+
+                if (!newUser) {
+                  res.json({
+                    success: false,
+                    message: "Unable to add event to user"
+                  });
+                } else {
+                  res.json({
+                    success: true,
+                    message: "Points added to user"
+                  });
+                }
+              });
+            });
+          }
+        }
+
+      });
+    }
   });
 
   return router;
