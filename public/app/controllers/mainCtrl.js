@@ -234,7 +234,6 @@ angular.module('mainController', ['authServices', 'userServices'])
     };
 
     app.showEvents = function(eventIds) {
-      console.log(eventIds);
       app.codeArray = [];
 
       if (eventIds.length > 0) {

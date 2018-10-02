@@ -66,6 +66,7 @@ angular.module('adminController', [])
           app.showCreateEventModal = false;
         } else {
           app.errorMsg = data.data.message;
+          console.log(data.data.message);
         }
       });
     };
@@ -81,13 +82,54 @@ angular.module('adminController', [])
         app.attendance = data.data.message;
       });
 
-
       app.showAttendanceModal = true;
     };
 
     this.closeAttendanceModal = function() {
       $('#attendanceModal').modal('hide');
     };
+
+    this.openManualInputModal = function(eventData) {
+      app.successMsg = false;
+      app.errorMsg = false;
+
+      $("#manualInputModal").modal({
+        backdrop: 'static'
+      });
+
+      app.eventName = eventData
+    }
+
+    this.manualInput = function(member) {
+      app.successMsg = '';
+      app.errorMsg = '';
+
+
+      var manualInput = {
+        member: null,
+        eventId: null
+      };
+
+      manualInput.member = app.member;
+      manualInput.eventId = app.eventName._id;
+
+      console.log(manualInput);
+
+      User.manualInput(manualInput).then(function(data) {
+        if (data.data.success) {
+          app.successMsg = data.data.message;
+        } else {
+          app.errorMsg = data.data.message;
+        }
+      });
+    };
+
+    this.closeManualInputModal = function(member) {
+      $('#manualInputModal').modal('hide');
+      app.member.userName = '';
+      app.errorMsg
+    };
+
 
     // this.nationalityChart = function() {
     //   var nationalityLabels = [];

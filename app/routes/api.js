@@ -98,33 +98,33 @@ module.exports = function(router) {
 
   // ENDPOINT TO CREATE EVENT CODES
   router.post('/codes', function(req, res) {
-    var code = new Code();
-    code.name = req.body.name;
-    code.code = req.body.code.toLowerCase();
-    code.type = req.body.type;
-
-    if (code.type == 'General Body Meeting' || code.type == 'Cabinet Meeting' || code.type == 'Social' || code.type == 'Form/Survey') {
-      code.points = 1;
-    } else if (code.type == 'Corporate Event') {
-      code.points = 2;
-    } else if (code.type == 'Fundraiser') {
-      code.points = 3;
-    } else if (code.type == 'Volunteering') {
-      code.points = 4;
-    } else if (code.type == 'Miscellaneous') {
-      code.points = 5;
-    } else {
-      code.points = 0;
-    }
-
-    code.expiration = Date.now() + (req.body.expiration * 60 * 60 * 1000);
-
     if (req.body.name == null || req.body.code == null || req.body.type == null || req.body.expiration == null || req.body.name == '' || req.body.code == '' || req.body.type == '' || req.body.expiration == '') {
       res.json({
         success: false,
         message: 'Make sure you filled out the entire form!'
       });
     } else {
+      var code = new Code();
+      code.name = req.body.name;
+      code.code = req.body.code.toLowerCase();
+      code.type = req.body.type;
+
+      if (code.type == 'General Body Meeting' || code.type == 'Cabinet Meeting' || code.type == 'Social' || code.type == 'Form/Survey') {
+        code.points = 1;
+      } else if (code.type == 'Corporate Event') {
+        code.points = 2;
+      } else if (code.type == 'Fundraiser') {
+        code.points = 3;
+      } else if (code.type == 'Volunteering') {
+        code.points = 4;
+      } else if (code.type == 'Miscellaneous') {
+        code.points = 5;
+      } else {
+        code.points = 0;
+      }
+
+      code.expiration = Date.now() + (req.body.expiration * 60 * 60 * 1000);
+
       code.save(function(err) {
         if (err) {
           if (err.errors != null) {
@@ -375,7 +375,7 @@ module.exports = function(router) {
       if (req.body.password == null || req.body.password == '') {
         res.json({
           success: false,
-          message: 'Password not provided'
+          message: 'Password not provided.'
         });
       } else {
         user.password = req.body.password;
@@ -812,6 +812,7 @@ module.exports = function(router) {
     });
   });
 
+  // ENDPOINT TO CALCULATE USER POINT PERCENTILE
   router.get('/getpercentile/:username', function(req, res) {
 
     var userPoints;
@@ -836,6 +837,7 @@ module.exports = function(router) {
     });
   });
 
+  // ENDPOINT TO GRAB EVENT ATTENDANCE
   router.get('/getattendance/:eventid', function(req, res) {
     User.find({
       events: {
@@ -849,6 +851,85 @@ module.exports = function(router) {
         message: users
       });
     });
+  });
+
+  // ENDPOINT TO MANUALLY INPUT POINTS FOR MEMBERS
+  router.put('/manualinput', function(req, res) {
+
+    console.log(req.body);
+
+    if (req.body.member == null || req.body.member == "" || req.body.member == undefined || req.body.member.userName == null || req.body.member.userName == '' || req.body.member.userName == undefined) {
+      res.json({
+        success: false,
+        message: 'No username was provided.'
+      });
+    } else {
+      User.findOne({
+        username: req.body.member.userName
+      }).select().exec(function(err, user) {
+        if (err) throw err;
+
+        if (!user) {
+          res.json({
+            success: false,
+            message: 'User not found'
+          });
+        } else {
+
+          var isDuplicate = false;
+
+          for (var i = 0; i < user.events.length; i++) {
+            if (user.events[i]._id.equals(req.body.eventId)) {
+              isDuplicate = true;
+              break;
+            }
+          }
+
+          if (isDuplicate) {
+            res.json({
+              success: false,
+              message: 'Event code already redeemed by the user.'
+            });
+          } else {
+
+            Code.findOne({
+              _id: req.body.eventId
+            }).select().exec(function(err, code) {
+              console.log(code);
+              console.log(user);
+
+              User.findOneAndUpdate({
+                username: user.username
+              }, {
+                $push: {
+                  events: {
+                    _id: code._id
+                  }
+                },
+                $inc: {
+                  points: code.points
+                }
+              }, function(err, newUser) {
+                if (err) throw err;
+
+                if (!newUser) {
+                  res.json({
+                    success: false,
+                    message: "Unable to add event to user"
+                  });
+                } else {
+                  res.json({
+                    success: true,
+                    message: "Points added to user"
+                  });
+                }
+              });
+            });
+          }
+        }
+
+      });
+    }
   });
 
   return router;
