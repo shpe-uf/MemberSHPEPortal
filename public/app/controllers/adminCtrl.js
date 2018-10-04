@@ -242,6 +242,78 @@ angular.module('adminController', [])
       console.log(labels);
       console.log(labelsData);
 
+      var ctx = document.getElementById("majorChart").getContext('2d');
+      var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          datasets: [{
+            data: labelsData
+          }],
+          labels: labels
+        },
+        options: {
+          responsive: true,
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Major'
+          },
+          animation: {
+            animateScale: true,
+            animateRotate: true
+          }
+        }
+      });
+    });
+
+    User.getMemberYearStat().then(function(data) {
+      dataArray = data.data.message;
+      var labels = [];
+      var labelsData = [];
+
+      for (var i = 0; i < dataArray.length; i++) {
+        labels.push(dataArray[i]._id);
+        labelsData.push(dataArray[i].count);
+      }
+
+      var ctx = document.getElementById("yearChart").getContext('2d');
+      var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          datasets: [{
+            data: labelsData
+          }],
+          labels: labels
+        },
+        options: {
+          responsive: true,
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Year'
+          },
+          animation: {
+            animateScale: true,
+            animateRotate: true
+          }
+        }
+      });
+    });
+
+    User.getMemberNationalityStat().then(function(data) {
+      dataArray = data.data.message;
+      var labels = [];
+      var labelsData = [];
+
+      for (var i = 0; i < dataArray.length; i++) {
+        labels.push(dataArray[i]._id);
+        labelsData.push(dataArray[i].count);
+      }
+
       var ctx = document.getElementById("nationalityChart").getContext('2d');
       var myChart = new Chart(ctx, {
         type: 'doughnut',
@@ -252,21 +324,92 @@ angular.module('adminController', [])
           labels: labels
         },
         options: {
-				responsive: true,
-				legend: {
-					position: 'top',
-				},
-				title: {
-					display: true,
-					text: 'Major'
-				},
-				animation: {
-					animateScale: true,
-					animateRotate: true
-				}
-			}
+          responsive: true,
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Nationality'
+          },
+          animation: {
+            animateScale: true,
+            animateRotate: true
+          }
+        }
       });
+    });
 
+    User.getMemberSexStat().then(function(data) {
+      dataArray = data.data.message;
+      var labels = [];
+      var labelsData = [];
+
+      for (var i = 0; i < dataArray.length; i++) {
+        labels.push(dataArray[i]._id);
+        labelsData.push(dataArray[i].count);
+      }
+
+      var ctx = document.getElementById("sexChart").getContext('2d');
+      var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          datasets: [{
+            data: labelsData
+          }],
+          labels: labels
+        },
+        options: {
+          responsive: true,
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Sex'
+          },
+          animation: {
+            animateScale: true,
+            animateRotate: true
+          }
+        }
+      });
+    });
+
+    User.getMemberEthnicityStat().then(function(data) {
+      dataArray = data.data.message;
+      var labels = [];
+      var labelsData = [];
+
+      for (var i = 0; i < dataArray.length; i++) {
+        labels.push(dataArray[i]._id);
+        labelsData.push(dataArray[i].count);
+      }
+
+      var ctx = document.getElementById("ethnicityChart").getContext('2d');
+      var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          datasets: [{
+            data: labelsData
+          }],
+          labels: labels
+        },
+        options: {
+          responsive: true,
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Ethnicity'
+          },
+          animation: {
+            animateScale: true,
+            animateRotate: true
+          }
+        }
+      });
     });
 
     this.sortBy = function(propertyName, array) {

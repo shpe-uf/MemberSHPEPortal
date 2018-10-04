@@ -92,5 +92,20 @@ angular.module('userServices', [])
       return $http.get('api/getmembermajorstat/');
     };
 
+    userFactory.getMemberYearStat = function() {
+      return $http.get('api/getmemberyearstat/');
+    };
+
+    userFactory.getMemberNationalityStat = function() {
+      return $http.get('api/getmembernationalitystat/');
+    };
+    userFactory.getMemberSexStat = function() {
+      return $http.get('api/getmembersexstat/');
+    };
+    userFactory.getMemberEthnicityStat = function() {
+      return $http.get('api/getmemberethnicitystat/');
+    };
+
+
     return userFactory;
   });
