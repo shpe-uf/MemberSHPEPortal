@@ -88,5 +88,9 @@ angular.module('userServices', [])
       return $http.put('api/manualinput/', manualInputData);
     };
 
+    userFactory.getMemberMajorStat = function() {
+      return $http.get('api/getmembermajorstat/');
+    };
+
     return userFactory;
   });

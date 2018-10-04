@@ -226,6 +226,49 @@ angular.module('adminController', [])
       }
     });
 
+    User.getMemberMajorStat().then(function(data) {
+
+      dataArray = data.data.message;
+      var labels = [];
+      var labelsData = [];
+
+      console.log(data.data.message);
+
+      for (var i = 0; i < dataArray.length; i++) {
+        labels.push(dataArray[i]._id);
+        labelsData.push(dataArray[i].count);
+      }
+
+      console.log(labels);
+      console.log(labelsData);
+
+      var ctx = document.getElementById("nationalityChart").getContext('2d');
+      var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          datasets: [{
+            data: labelsData
+          }],
+          labels: labels
+        },
+        options: {
+				responsive: true,
+				legend: {
+					position: 'top',
+				},
+				title: {
+					display: true,
+					text: 'Major'
+				},
+				animation: {
+					animateScale: true,
+					animateRotate: true
+				}
+			}
+      });
+
+    });
+
     this.sortBy = function(propertyName, array) {
       $scope.reverse = (propertyName !== null && $scope.propertyName === propertyName) ?
         !$scope.reverse : false;

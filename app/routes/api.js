@@ -932,5 +932,24 @@ module.exports = function(router) {
     }
   });
 
+  router.get('/getmembermajorstat', function(req, res) {
+    User.aggregate([{
+      $group: {
+        _id: '$major',
+        count: {
+          $sum: 1
+        }
+      }
+    }], function(err, result) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: result
+      });
+    });
+
+  });
+
   return router;
 };
