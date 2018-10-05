@@ -10,6 +10,12 @@ angular.module('adminController', [])
 
     var orderBy = $filter('orderBy');
 
+    app.showMajor = false;
+    app.showYear = false;
+    app.showNationality = false;
+    app.showSex = false;
+    app.showEthnicity = false;
+
     this.openCreateEventModal = function() {
       app.errorMsg = false;
       app.successMsg = false;
@@ -231,35 +237,36 @@ angular.module('adminController', [])
       dataArray = data.data.message;
       var labels = [];
       var labelsData = [];
-
-      console.log(data.data.message);
+      var colors = [];
 
       for (var i = 0; i < dataArray.length; i++) {
         labels.push(dataArray[i]._id);
         labelsData.push(dataArray[i].count);
       }
 
-      console.log(labels);
-      console.log(labelsData);
+      while (colors.length < dataArray.length) {
+        do {
+          var color = Math.floor((Math.random() * 1000000) + 1);
+        } while (colors.indexOf(color) >= 0);
+        colors.push("#" + ("000000" + color.toString(16)).slice(-6));
+      }
 
       var ctx = document.getElementById("majorChart").getContext('2d');
       var myChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
           datasets: [{
-            data: labelsData
+            data: labelsData,
+            // backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"]
+            backgroundColor: colors
           }],
           labels: labels
         },
         options: {
           responsive: true,
-          legend: {
-            position: 'top',
-          },
-          title: {
-            display: true,
-            text: 'Major'
-          },
+          // legend: {
+          //   position: 'bottom',
+          // },
           animation: {
             animateScale: true,
             animateRotate: true
@@ -290,11 +297,7 @@ angular.module('adminController', [])
         options: {
           responsive: true,
           legend: {
-            position: 'top',
-          },
-          title: {
-            display: true,
-            text: 'Year'
+            position: 'bottom',
           },
           animation: {
             animateScale: true,
@@ -326,11 +329,7 @@ angular.module('adminController', [])
         options: {
           responsive: true,
           legend: {
-            position: 'top',
-          },
-          title: {
-            display: true,
-            text: 'Nationality'
+            position: 'bottom',
           },
           animation: {
             animateScale: true,
@@ -362,11 +361,7 @@ angular.module('adminController', [])
         options: {
           responsive: true,
           legend: {
-            position: 'top',
-          },
-          title: {
-            display: true,
-            text: 'Sex'
+            position: 'bottom',
           },
           animation: {
             animateScale: true,
@@ -398,11 +393,7 @@ angular.module('adminController', [])
         options: {
           responsive: true,
           legend: {
-            position: 'top',
-          },
-          title: {
-            display: true,
-            text: 'Ethnicity'
+            position: 'bottom',
           },
           animation: {
             animateScale: true,
@@ -411,6 +402,44 @@ angular.module('adminController', [])
         }
       });
     });
+
+    this.showStat = function(stat) {
+      if (stat == 'major') {
+        app.showMajor = true;
+        app.showYear = false;
+        app.showNationality = false;
+        app.showSex = false;
+        app.showEthnicity = false;
+      }
+      if (stat == 'year') {
+        app.showMajor = false;
+        app.showYear = true;
+        app.showNationality = false;
+        app.showSex = false;
+        app.showEthnicity = false;
+      }
+      if (stat == 'nationality') {
+        app.showMajor = false;
+        app.showYear = false;
+        app.showNationality = true;
+        app.showSex = false;
+        app.showEthnicity = false;
+      }
+      if (stat == 'sex') {
+        app.showMajor = false;
+        app.showYear = false;
+        app.showNationality = false;
+        app.showSex = true;
+        app.showEthnicity = false;
+      }
+      if (stat == 'ethnicity') {
+        app.showMajor = false;
+        app.showYear = false;
+        app.showNationality = false;
+        app.showSex = false;
+        app.showEthnicity = true;
+      }
+    };
 
     this.sortBy = function(propertyName, array) {
       $scope.reverse = (propertyName !== null && $scope.propertyName === propertyName) ?
