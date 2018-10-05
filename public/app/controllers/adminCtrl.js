@@ -257,16 +257,15 @@ angular.module('adminController', [])
         data: {
           datasets: [{
             data: labelsData,
-            // backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"]
             backgroundColor: colors
           }],
           labels: labels
         },
         options: {
           responsive: true,
-          // legend: {
-          //   position: 'bottom',
-          // },
+          legend: {
+            position: 'bottom',
+          },
           animation: {
             animateScale: true,
             animateRotate: true
@@ -279,10 +278,18 @@ angular.module('adminController', [])
       dataArray = data.data.message;
       var labels = [];
       var labelsData = [];
+      var colors = [];
 
       for (var i = 0; i < dataArray.length; i++) {
         labels.push(dataArray[i]._id);
         labelsData.push(dataArray[i].count);
+      }
+
+      while (colors.length < dataArray.length) {
+        do {
+          var color = Math.floor((Math.random() * 1000000) + 1);
+        } while (colors.indexOf(color) >= 0);
+        colors.push("#" + ("000000" + color.toString(16)).slice(-6));
       }
 
       var ctx = document.getElementById("yearChart").getContext('2d');
@@ -290,7 +297,8 @@ angular.module('adminController', [])
         type: 'doughnut',
         data: {
           datasets: [{
-            data: labelsData
+            data: labelsData,
+            backgroundColor: colors
           }],
           labels: labels
         },
@@ -311,10 +319,18 @@ angular.module('adminController', [])
       dataArray = data.data.message;
       var labels = [];
       var labelsData = [];
+      var colors = [];
 
       for (var i = 0; i < dataArray.length; i++) {
         labels.push(dataArray[i]._id);
         labelsData.push(dataArray[i].count);
+      }
+
+      while (colors.length < dataArray.length) {
+        do {
+          var color = Math.floor((Math.random() * 1000000) + 1);
+        } while (colors.indexOf(color) >= 0);
+        colors.push("#" + ("000000" + color.toString(16)).slice(-6));
       }
 
       var ctx = document.getElementById("nationalityChart").getContext('2d');
@@ -322,7 +338,8 @@ angular.module('adminController', [])
         type: 'doughnut',
         data: {
           datasets: [{
-            data: labelsData
+            data: labelsData,
+            backgroundColor: colors
           }],
           labels: labels
         },
@@ -343,10 +360,18 @@ angular.module('adminController', [])
       dataArray = data.data.message;
       var labels = [];
       var labelsData = [];
+      var colors = [];
 
       for (var i = 0; i < dataArray.length; i++) {
         labels.push(dataArray[i]._id);
         labelsData.push(dataArray[i].count);
+      }
+
+      while (colors.length < dataArray.length) {
+        do {
+          var color = Math.floor((Math.random() * 1000000) + 1);
+        } while (colors.indexOf(color) >= 0);
+        colors.push("#" + ("000000" + color.toString(16)).slice(-6));
       }
 
       var ctx = document.getElementById("sexChart").getContext('2d');
@@ -354,7 +379,8 @@ angular.module('adminController', [])
         type: 'doughnut',
         data: {
           datasets: [{
-            data: labelsData
+            data: labelsData,
+            backgroundColor: colors
           }],
           labels: labels
         },
@@ -375,10 +401,18 @@ angular.module('adminController', [])
       dataArray = data.data.message;
       var labels = [];
       var labelsData = [];
+      var colors = [];
 
       for (var i = 0; i < dataArray.length; i++) {
         labels.push(dataArray[i]._id);
         labelsData.push(dataArray[i].count);
+      }
+
+      while (colors.length < dataArray.length) {
+        do {
+          var color = Math.floor((Math.random() * 1000000) + 1);
+        } while (colors.indexOf(color) >= 0);
+        colors.push("#" + ("000000" + color.toString(16)).slice(-6));
       }
 
       var ctx = document.getElementById("ethnicityChart").getContext('2d');
@@ -386,7 +420,8 @@ angular.module('adminController', [])
         type: 'doughnut',
         data: {
           datasets: [{
-            data: labelsData
+            data: labelsData,
+            backgroundColor: colors
           }],
           labels: labels
         },
