@@ -934,13 +934,19 @@ module.exports = function(router) {
 
   router.get('/getmembermajorstat', function(req, res) {
     User.aggregate([{
-      $group: {
-        _id: '$major',
-        count: {
-          $sum: 1
+        $group: {
+          _id: '$major',
+          count: {
+            $sum: 1
+          }
+        }
+      },
+      {
+        $sort: {
+          count: -1
         }
       }
-    }], function(err, result) {
+    ], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -957,6 +963,11 @@ module.exports = function(router) {
         count: {
           $sum: 1
         }
+      }
+    },
+    {
+      $sort: {
+        count: -1
       }
     }], function(err, result) {
       if (err) throw err;
@@ -976,6 +987,11 @@ module.exports = function(router) {
           $sum: 1
         }
       }
+    },
+    {
+      $sort: {
+        count: -1
+      }
     }], function(err, result) {
       if (err) throw err;
 
@@ -994,6 +1010,11 @@ module.exports = function(router) {
           $sum: 1
         }
       }
+    },
+    {
+      $sort: {
+        count: -1
+      }
     }], function(err, result) {
       if (err) throw err;
 
@@ -1011,6 +1032,11 @@ module.exports = function(router) {
         count: {
           $sum: 1
         }
+      }
+    },
+    {
+      $sort: {
+        count: -1
       }
     }], function(err, result) {
       if (err) throw err;

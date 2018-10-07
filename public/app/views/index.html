@@ -15,7 +15,6 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-  <link rel="stylesheet" type="text/css" href="assets/css/index-style.css">
 
   <!-- ANGULAR/JQUERY CDNs  -->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
@@ -23,8 +22,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
+  <!-- NODE JS LIBRARIES AND FRAMEWORKS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.1.0/echarts.min.js"></script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/modules/export-data.js"></script>
 
   <!-- ANGULAR ROUTING -->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.js"></script>
@@ -36,10 +38,14 @@
   <script src="app/controllers/mainCtrl.js"></script>
   <script src="app/controllers/emailCtrl.js"></script>
   <script src="app/controllers/adminCtrl.js"></script>
+  <script src="app/controllers/statsCtrl.js"></script>
 
   <!-- SERVICES -->
   <script src="app/services/userServices.js"></script>
   <script src="app/services/authServices.js"></script>
+
+  <!-- CUSTOM CSS -->
+  <link rel="stylesheet" type="text/css" href="assets/css/index-style.css">
 </head>
 
 <body ng-app="userApp" ng-controller="mainCtrl as main" ng-show="main.loadme" ng-cloak>
@@ -65,6 +71,7 @@
             <a class="nav-link nav-name dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-show="main.isLoggedIn">{{ main.firstName }} {{ main.lastName }}</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <a class="dropdown-item admin-text" href="/admin" ng-show="main.authorized && main.isLoggedIn">Admin Panel</a>
+              <a class="dropdown-item admin-text" href="/statistics" ng-show="main.authorized && main.isLoggedIn">Statistics</a>
               <a class="dropdown-item" href="/profile">My Profile</a>
               <a class="dropdown-item" href="/rewards">Rewards Program</a>
               <a class="dropdown-item" href="/alumni">Alumni Directory</a>

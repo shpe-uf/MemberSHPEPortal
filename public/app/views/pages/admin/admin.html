@@ -13,7 +13,6 @@
           <a class="nav-item nav-link active" id="nav-request-tab" data-toggle="tab" data-target="#nav-request" role="tab" aria-controls="nav-request" aria-selected="false">Requests</a>
           <a class="nav-item nav-link" id="nav-member-tab" data-toggle="tab" data-target="#nav-member" role="tab" aria-controls="nav-member" aria-selected="true">Members</a>
           <a class="nav-item nav-link" id="nav-event-tab" data-toggle="tab" data-target="#nav-event" role="tab" aria-controls="nav-event" aria-selected="false">Events</a>
-          <a class="nav-item nav-link" id="nav-stats-tab" data-toggle="tab" data-target="#nav-stats" role="tab" aria-controls="nav-stats" aria-selected="false">Statistics</a>
         </div>
       </nav>
 
@@ -146,49 +145,6 @@
                 </td> -->
               </tr>
             </table>
-          </div>
-        </div>
-
-        <div class="tab-pane fade" id="nav-stats" role="tabpanel" aria-labelledby="nav-stats-tab">
-          <div class="container">
-            <!-- <div class="row">
-              <div class="col-sm-6">
-                <h5 class="text-center">Major</h5>
-                <canvas id="majorChart" class="stat-canvas"></canvas>
-              </div>
-              <div class="col-sm-6">
-                <h5 class="text-center">Year</h5>
-              </div>
-              <div class="col-sm-6">
-                <h5 class="text-center">Nationality</h5>
-              </div>
-              <div class="col-sm-6">
-                <h5 class="text-center">Sex</h5>
-              </div>
-              <div class="col-sm-6">
-                <h5 class="text-center">Ethnicity</h5>
-              </div>
-            </div> -->
-
-            <div class="row">
-              <div class="col-sm-2 col-12">
-                <button type="button" class="btn btn-submit btn-block" ng-click="admin.showStat('major')">Major</button>
-                <button type="button" class="btn btn-submit btn-block" ng-click="admin.showStat('year')">Year</button>
-                <button type="button" class="btn btn-submit btn-block" ng-click="admin.showStat('nationality')">Nationality</button>
-                <button type="button" class="btn btn-submit btn-block" ng-click="admin.showStat('sex')">Sex</button>
-                <button type="button" class="btn btn-submit btn-block" ng-click="admin.showStat('ethnicity')">Ethnicity</button>
-              </div>
-              <div class="col-sm-10 col-12">
-                <div class="jumbotron">
-                  <canvas id="majorChart" ng-show="admin.showMajor"></canvas>
-                  <canvas id="yearChart" ng-show="admin.showYear"></canvas>
-                  <canvas id="nationalityChart" ng-show="admin.showNationality"></canvas>
-                  <canvas id="sexChart" ng-show="admin.showSex"></canvas>
-                  <canvas id="ethnicityChart" ng-show="admin.showEthnicity"></canvas>
-                </div>
-
-              </div>
-            </div>
           </div>
         </div>
 
