@@ -17,14 +17,13 @@ angular.module('statsController', [])
 
       app.majorArray = data.data.message;
 
-      var majorData = [];
+      var labels = [];
+      var labelsData = [];
       var total = 0;
 
       for (var i = 0; i < app.majorArray.length; i++) {
-        majorData.push({
-          name: app.majorArray[i]._id,
-          y: app.majorArray[i].count
-        });
+        labels.push(app.majorArray[i]._id);
+        labelsData.push(app.majorArray[i].count);
 
         total = total + app.majorArray[i].count;
       }
@@ -33,34 +32,42 @@ angular.module('statsController', [])
         app.majorArray[i].percentage = Number((app.majorArray[i].count / total) * 100).toFixed(2);
       }
 
-      Highcharts.chart('majorStat', {
-        chart: {
-          plotBackgroundColor: null,
-          plotBorderWidth: null,
-          plotShadow: false,
-          type: 'pie'
-        },
-        title: {
-          text: ''
-        },
-        tooltip: {
-          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
-        plotOptions: {
-          pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-              enabled: false
-            }
+      var colors = palette('tol-rainbow', app.majorArray.length);
+
+      for (var i = 0; i < colors.length; i++) {
+        var hashtag = '#';
+        colors[i] = hashtag.concat(colors[i]);
+      }
+
+      var donutOptions = {
+        cutoutPercentage: 85,
+        legend: {
+          position: 'bottom',
+          padding: 5,
+          labels: {
+            pointStyle: 'circle',
+            usePointStyle: true
           }
-        },
-        series: [{
-          name: 'Brands',
-          colorByPoint: true,
-          data: majorData
+        }
+      };
+
+      var chartData = {
+        labels: labels,
+        datasets: [{
+          backgroundColor: colors,
+          borderWidth: 0,
+          data: labelsData
         }]
-      });
+      };
+
+      var majorChart = document.getElementById("majorChart");
+      if (majorChart) {
+        new Chart(majorChart, {
+          type: 'pie',
+          data: chartData,
+          options: donutOptions
+        });
+      }
     });
 
     User.getMemberYearStat().then(function(data) {
@@ -69,8 +76,6 @@ angular.module('statsController', [])
 
       var labels = [];
       var labelsData = [];
-      var colors = [];
-
       var total = 0;
 
       for (var i = 0; i < app.yearArray.length; i++) {
@@ -84,42 +89,48 @@ angular.module('statsController', [])
         app.yearArray[i].percentage = Number((app.yearArray[i].count / total) * 100).toFixed(2);
       }
 
-      while (colors.length < app.yearArray.length) {
-        do {
-          var color = Math.floor((Math.random() * 1000000) + 1);
-        } while (colors.indexOf(color) >= 0);
-        colors.push("#" + ("000000" + color.toString(16)).slice(-6));
+      var colors = palette('tol-rainbow', app.yearArray.length);
+
+      for (var i = 0; i < colors.length; i++) {
+        var hashtag = '#';
+        colors[i] = hashtag.concat(colors[i]);
       }
 
-      var ctx = document.getElementById("yearChart").getContext('2d');
-      var myChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-          datasets: [{
-            data: labelsData,
-            backgroundColor: colors
-          }],
-          labels: labels
-        },
-        options: {
-          responsive: true,
-          legend: {
-            position: 'bottom',
-          },
-          animation: {
-            animateScale: true,
-            animateRotate: true
+      var donutOptions = {
+        cutoutPercentage: 85,
+        legend: {
+          position: 'bottom',
+          padding: 5,
+          labels: {
+            pointStyle: 'circle',
+            usePointStyle: true
           }
         }
-      });
+      };
+
+      var chartData = {
+        labels: labels,
+        datasets: [{
+          backgroundColor: colors,
+          borderWidth: 0,
+          data: labelsData
+        }]
+      };
+
+      var yearChart = document.getElementById("yearChart");
+      if (yearChart) {
+        new Chart(yearChart, {
+          type: 'pie',
+          data: chartData,
+          options: donutOptions
+        });
+      }
     });
 
     User.getMemberNationalityStat().then(function(data) {
       app.nationalityArray = data.data.message;
       var labels = [];
       var labelsData = [];
-      var colors = [];
-
       var total = 0;
 
       for (var i = 0; i < app.nationalityArray.length; i++) {
@@ -133,34 +144,42 @@ angular.module('statsController', [])
         app.nationalityArray[i].percentage = Number((app.nationalityArray[i].count / total) * 100).toFixed(2);
       }
 
-      while (colors.length < app.nationalityArray.length) {
-        do {
-          var color = Math.floor((Math.random() * 1000000) + 1);
-        } while (colors.indexOf(color) >= 0);
-        colors.push("#" + ("000000" + color.toString(16)).slice(-6));
+      var colors = palette('tol-rainbow', app.nationalityArray.length);
+
+      for (var i = 0; i < colors.length; i++) {
+        var hashtag = '#';
+        colors[i] = hashtag.concat(colors[i]);
       }
 
-      var ctx = document.getElementById("nationalityChart").getContext('2d');
-      var myChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-          datasets: [{
-            data: labelsData,
-            backgroundColor: colors
-          }],
-          labels: labels
-        },
-        options: {
-          responsive: true,
-          legend: {
-            position: 'bottom',
-          },
-          animation: {
-            animateScale: true,
-            animateRotate: true
+      var donutOptions = {
+        cutoutPercentage: 85,
+        legend: {
+          position: 'bottom',
+          padding: 5,
+          labels: {
+            pointStyle: 'circle',
+            usePointStyle: true
           }
         }
-      });
+      };
+
+      var chartData = {
+        labels: labels,
+        datasets: [{
+          backgroundColor: colors,
+          borderWidth: 0,
+          data: labelsData
+        }]
+      };
+
+      var nationalityChart = document.getElementById("nationalityChart");
+      if (nationalityChart) {
+        new Chart(nationalityChart, {
+          type: 'pie',
+          data: chartData,
+          options: donutOptions
+        });
+      }
     });
 
     User.getMemberSexStat().then(function(data) {
@@ -182,34 +201,42 @@ angular.module('statsController', [])
         app.sexArray[i].percentage = Number((app.sexArray[i].count / total) * 100).toFixed(2);
       }
 
-      while (colors.length < app.sexArray.length) {
-        do {
-          var color = Math.floor((Math.random() * 1000000) + 1);
-        } while (colors.indexOf(color) >= 0);
-        colors.push("#" + ("000000" + color.toString(16)).slice(-6));
+      var colors = palette('tol-rainbow', app.sexArray.length);
+
+      for (var i = 0; i < colors.length; i++) {
+        var hashtag = '#';
+        colors[i] = hashtag.concat(colors[i]);
       }
 
-      var ctx = document.getElementById("sexChart").getContext('2d');
-      var myChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-          datasets: [{
-            data: labelsData,
-            backgroundColor: colors
-          }],
-          labels: labels
-        },
-        options: {
-          responsive: true,
-          legend: {
-            position: 'bottom',
-          },
-          animation: {
-            animateScale: true,
-            animateRotate: true
+      var donutOptions = {
+        cutoutPercentage: 85,
+        legend: {
+          position: 'bottom',
+          padding: 5,
+          labels: {
+            pointStyle: 'circle',
+            usePointStyle: true
           }
         }
-      });
+      };
+
+      var chartData = {
+        labels: labels,
+        datasets: [{
+          backgroundColor: colors,
+          borderWidth: 0,
+          data: labelsData
+        }]
+      };
+
+      var sexChart = document.getElementById("sexChart");
+      if (sexChart) {
+        new Chart(sexChart, {
+          type: 'pie',
+          data: chartData,
+          options: donutOptions
+        });
+      }
     });
 
     User.getMemberEthnicityStat().then(function(data) {
@@ -231,33 +258,41 @@ angular.module('statsController', [])
         app.ethnicityArray[i].percentage = Number((app.ethnicityArray[i].count / total) * 100).toFixed(2);
       }
 
-      while (colors.length < app.ethnicityArray.length) {
-        do {
-          var color = Math.floor((Math.random() * 1000000) + 1);
-        } while (colors.indexOf(color) >= 0);
-        colors.push("#" + ("000000" + color.toString(16)).slice(-6));
+      var colors = palette('tol-rainbow', app.ethnicityArray.length);
+
+      for (var i = 0; i < colors.length; i++) {
+        var hashtag = '#';
+        colors[i] = hashtag.concat(colors[i]);
       }
 
-      var ctx = document.getElementById("ethnicityChart").getContext('2d');
-      var myChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-          datasets: [{
-            data: labelsData,
-            backgroundColor: colors
-          }],
-          labels: labels
-        },
-        options: {
-          responsive: true,
-          legend: {
-            position: 'bottom',
-          },
-          animation: {
-            animateScale: true,
-            animateRotate: true
+      var donutOptions = {
+        cutoutPercentage: 85,
+        legend: {
+          position: 'bottom',
+          padding: 5,
+          labels: {
+            pointStyle: 'circle',
+            usePointStyle: true
           }
         }
-      });
+      };
+
+      var chartData = {
+        labels: labels,
+        datasets: [{
+          backgroundColor: colors,
+          borderWidth: 0,
+          data: labelsData
+        }]
+      };
+
+      var ethnicityChart = document.getElementById("ethnicityChart");
+      if (ethnicityChart) {
+        new Chart(ethnicityChart, {
+          type: 'pie',
+          data: chartData,
+          options: donutOptions
+        });
+      }
     });
   });
