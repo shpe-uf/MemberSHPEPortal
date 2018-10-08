@@ -932,5 +932,121 @@ module.exports = function(router) {
     }
   });
 
+  router.get('/getmembermajorstat', function(req, res) {
+    User.aggregate([{
+        $group: {
+          _id: '$major',
+          count: {
+            $sum: 1
+          }
+        }
+      },
+      {
+        $sort: {
+          count: -1
+        }
+      }
+    ], function(err, result) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: result
+      });
+    });
+  });
+
+  router.get('/getmemberyearstat', function(req, res) {
+    User.aggregate([{
+      $group: {
+        _id: '$year',
+        count: {
+          $sum: 1
+        }
+      }
+    },
+    {
+      $sort: {
+        count: -1
+      }
+    }], function(err, result) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: result
+      });
+    });
+  });
+
+  router.get('/getmembernationalitystat', function(req, res) {
+    User.aggregate([{
+      $group: {
+        _id: '$nationality',
+        count: {
+          $sum: 1
+        }
+      }
+    },
+    {
+      $sort: {
+        count: -1
+      }
+    }], function(err, result) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: result
+      });
+    });
+  });
+
+  router.get('/getmembersexstat', function(req, res) {
+    User.aggregate([{
+      $group: {
+        _id: '$sex',
+        count: {
+          $sum: 1
+        }
+      }
+    },
+    {
+      $sort: {
+        count: -1
+      }
+    }], function(err, result) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: result
+      });
+    });
+  });
+
+  router.get('/getmemberethnicitystat', function(req, res) {
+    User.aggregate([{
+      $group: {
+        _id: '$ethnicity',
+        count: {
+          $sum: 1
+        }
+      }
+    },
+    {
+      $sort: {
+        count: -1
+      }
+    }], function(err, result) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: result
+      });
+    });
+  });
+
   return router;
 };

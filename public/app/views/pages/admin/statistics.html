@@ -1,0 +1,145 @@
+<div class="container custom-container">
+  <div class="row">
+    <div class="col-sm-12">
+      <h2>Statistics</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+
+      <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          <a class="nav-item nav-link active" id="nav-major-tab" data-toggle="tab" data-target="#nav-major" role="tab" aria-controls="nav-major" aria-selected="false">Major</a>
+          <a class="nav-item nav-link" id="nav-year-tab" data-toggle="tab" data-target="#nav-year" role="tab" aria-controls="nav-year" aria-selected="true">Year</a>
+          <a class="nav-item nav-link" id="nav-nationality-tab" data-toggle="tab" data-target="#nav-nationality" role="tab" aria-controls="nav-nationality" aria-selected="false">Nationality</a>
+          <a class="nav-item nav-link" id="nav-sex-tab" data-toggle="tab" data-target="#nav-sex" role="tab" aria-controls="nav-sex" aria-selected="false">Sex</a>
+          <a class="nav-item nav-link" id="nav-ethnicity-tab" data-toggle="tab" data-target="#nav-ethnicity" role="tab" aria-controls="nav-ethnicity" aria-selected="false">Ethnicity</a>
+        </div>
+      </nav>
+
+      <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-major" role="tabpanel" aria-labelledby="nav-major-tab">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-6">
+                <canvas id="majorChart" style="height:500px; width:400px"></canvas>
+              </div>
+              <div class="col-sm-6">
+                <table class="table table-responsive-lg table-striped">
+                  <tr>
+                    <th>MAJOR</th>
+                    <th>COUNT</th>
+                    <th>PERCENTAGE</th>
+                  </tr>
+                  <tr ng-repeat="major in stats.majorArray">
+                    <td>{{ major._id }}</td>
+                    <td>{{ major.count }}</td>
+                    <td>{{ major.percentage }}%</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="nav-year" role="tabpanel" aria-labelledby="nav-year-tab">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-6">
+                <canvas id="yearChart" style="height:500px; width:400px"></canvas>
+              </div>
+              <div class="col-sm-6">
+                <table class="table table-responsive-lg table-striped">
+                  <tr>
+                    <th>YEAR</th>
+                    <th>COUNT</th>
+                    <th>PERCENTAGE</th>
+                  </tr>
+                  <tr ng-repeat="year in stats.yearArray">
+                    <td>{{ year._id }}</td>
+                    <td>{{ year.count }}</td>
+                    <td>{{ year.percentage }}%</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="nav-nationality" role="tabpanel" aria-labelledby="nav-nationality-tab">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-6">
+                <canvas id="nationalityChart" style="height:500px; width:400px"></canvas>
+              </div>
+              <div class="col-sm-6">
+                <table class="table table-responsive-lg table-striped">
+                  <tr>
+                    <th>NATIONALITY</th>
+                    <th>COUNT</th>
+                    <th>PERCENTAGE</th>
+                  </tr>
+                  <tr ng-repeat="nationality in stats.nationalityArray">
+                    <td>{{ nationality._id }}</td>
+                    <td>{{ nationality.count }}</td>
+                    <td>{{ nationality.percentage }}%</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="nav-sex" role="tabpanel" aria-labelledby="nav-sex-tab">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-6">
+                <canvas id="sexChart" style="height:500px; width:400px"></canvas>
+              </div>
+              <div class="col-sm-6">
+                <table class="table table-responsive-lg table-striped">
+                  <tr>
+                    <th>SEX</th>
+                    <th>COUNT</th>
+                    <th>PERCENTAGE</th>
+                  </tr>
+                  <tr ng-repeat="sex in stats.sexArray">
+                    <td>{{ sex._id }}</td>
+                    <td>{{ sex.count }}</td>
+                    <td>{{ sex.percentage }}%</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="nav-ethnicity" role="tabpanel" aria-labelledby="nav-ethnicity-tab">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-6">
+                <canvas id="ethnicityChart" style="height:500px; width:400px"></canvas>
+              </div>
+              <div class="col-sm-6">
+                <table class="table table-responsive-lg table-striped">
+                  <tr>
+                    <th>ETHNICITY</th>
+                    <th>COUNT</th>
+                    <td>PERCENTAGE</td>
+                  </tr>
+                  <tr ng-repeat="ethnicity in stats.ethnicityArray">
+                    <td>{{ ethnicity._id }}</td>
+                    <td>{{ ethnicity.count }}</td>
+                    <td>{{ ethnicity.percentage }}%</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
