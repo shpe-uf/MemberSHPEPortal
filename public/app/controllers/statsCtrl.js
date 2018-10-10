@@ -20,6 +20,7 @@ angular.module('statsController', [])
       var labels = [];
       var labelsData = [];
       var total = 0;
+      var borderColor = [];
 
       for (var i = 0; i < app.majorArray.length; i++) {
         labels.push(app.majorArray[i]._id);
@@ -37,6 +38,7 @@ angular.module('statsController', [])
       for (var i = 0; i < colors.length; i++) {
         var hashtag = '#';
         colors[i] = hashtag.concat(colors[i]);
+        borderColor.push('#ffffff');
       }
 
       var donutOptions = {
@@ -55,7 +57,8 @@ angular.module('statsController', [])
         labels: labels,
         datasets: [{
           backgroundColor: colors,
-          borderWidth: 0,
+          borderColor: borderColor,
+          borderWidth: 2,
           data: labelsData
         }]
       };
@@ -77,6 +80,7 @@ angular.module('statsController', [])
       var labels = [];
       var labelsData = [];
       var total = 0;
+      var borderColor = [];
 
       for (var i = 0; i < app.yearArray.length; i++) {
         labels.push(app.yearArray[i]._id);
@@ -94,6 +98,7 @@ angular.module('statsController', [])
       for (var i = 0; i < colors.length; i++) {
         var hashtag = '#';
         colors[i] = hashtag.concat(colors[i]);
+        borderColor.push('#ffffff');
       }
 
       var donutOptions = {
@@ -112,7 +117,8 @@ angular.module('statsController', [])
         labels: labels,
         datasets: [{
           backgroundColor: colors,
-          borderWidth: 0,
+          borderColor: borderColor,
+          borderWidth: 2,
           data: labelsData
         }]
       };
@@ -132,6 +138,7 @@ angular.module('statsController', [])
       var labels = [];
       var labelsData = [];
       var total = 0;
+      var borderColor = [];
 
       for (var i = 0; i < app.nationalityArray.length; i++) {
         labels.push(app.nationalityArray[i]._id);
@@ -149,6 +156,7 @@ angular.module('statsController', [])
       for (var i = 0; i < colors.length; i++) {
         var hashtag = '#';
         colors[i] = hashtag.concat(colors[i]);
+        borderColor.push('#ffffff');
       }
 
       var donutOptions = {
@@ -167,7 +175,8 @@ angular.module('statsController', [])
         labels: labels,
         datasets: [{
           backgroundColor: colors,
-          borderWidth: 0,
+          borderColor: borderColor,
+          borderWidth: 2,
           data: labelsData
         }]
       };
@@ -187,6 +196,7 @@ angular.module('statsController', [])
       var labels = [];
       var labelsData = [];
       var colors = [];
+      var borderColor = [];
 
       var total = 0;
 
@@ -206,6 +216,7 @@ angular.module('statsController', [])
       for (var i = 0; i < colors.length; i++) {
         var hashtag = '#';
         colors[i] = hashtag.concat(colors[i]);
+        borderColor.push('#ffffff');
       }
 
       var donutOptions = {
@@ -224,7 +235,8 @@ angular.module('statsController', [])
         labels: labels,
         datasets: [{
           backgroundColor: colors,
-          borderWidth: 0,
+          borderColor: borderColor,
+          borderWidth: 2,
           data: labelsData
         }]
       };
@@ -244,6 +256,7 @@ angular.module('statsController', [])
       var labels = [];
       var labelsData = [];
       var colors = [];
+      var borderColor = [];
 
       var total = 0;
 
@@ -263,6 +276,7 @@ angular.module('statsController', [])
       for (var i = 0; i < colors.length; i++) {
         var hashtag = '#';
         colors[i] = hashtag.concat(colors[i]);
+        borderColor.push('#ffffff');
       }
 
       var donutOptions = {
@@ -281,7 +295,8 @@ angular.module('statsController', [])
         labels: labels,
         datasets: [{
           backgroundColor: colors,
-          borderWidth: 0,
+          borderColor: borderColor,
+          borderWidth: 2,
           data: labelsData
         }]
       };
