@@ -40,7 +40,7 @@ angular.module('adminController', [])
 
           var newEventPoints = 0;
 
-          if (app.eventData.type == 'General Body Meeting' || app.eventData.type == 'Cabinet Meeting' || app.eventData.type == 'Social' || app.eventData.type == 'Form/Survey') {
+          if (app.eventData.type == 'General Body Meeting' || app.eventData.type == 'Cabinet Meeting' || app.eventData.type == 'Workshop' || app.eventData.type == 'Social' || app.eventData.type == 'Form/Survey') {
             newEventPoints = 1;
           } else if (app.eventData.type == 'Corporate Event') {
             newEventPoints = 2;
@@ -66,7 +66,6 @@ angular.module('adminController', [])
           app.showCreateEventModal = false;
         } else {
           app.errorMsg = data.data.message;
-          console.log(data.data.message);
         }
       });
     };
