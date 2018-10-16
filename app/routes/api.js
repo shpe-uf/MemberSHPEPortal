@@ -109,7 +109,7 @@ module.exports = function(router) {
       code.code = req.body.code.toLowerCase();
       code.type = req.body.type;
 
-      if (code.type == 'General Body Meeting' || code.type == 'Cabinet Meeting' || code.type == 'Social' || code.type == 'Form/Survey') {
+      if (code.type == 'General Body Meeting' || code.type == 'Cabinet Meeting' || code.type == 'Workshop' || code.type == 'Social' || code.type == 'Form/Survey') {
         code.points = 1;
       } else if (code.type == 'Corporate Event') {
         code.points = 2;
@@ -629,7 +629,7 @@ module.exports = function(router) {
                 });
               } else {
 
-                if (code.points == 1 && code.type !== 'Form/Survey') {
+                if (code.points == 1 && code.type == 'General Body Meeting') {
                   User.findOneAndUpdate({
                     username: req.decoded.username,
                   }, {
