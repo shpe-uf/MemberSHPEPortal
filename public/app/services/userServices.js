@@ -105,7 +105,9 @@ angular.module('userServices', [])
     userFactory.getMemberEthnicityStat = function() {
       return $http.get('api/getmemberethnicitystat/');
     };
-
+    userFactory.uploadResume = function(uploadData){
+      return $http.post('api/uploadResume/');
+    };
 
     return userFactory;
   });

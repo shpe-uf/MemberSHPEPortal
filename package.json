@@ -28,6 +28,7 @@
     "body-parser": "^1.18.3",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
+    "googleapis": "^34.0.0",
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.1.7",
     "mongoose-validator": "^2.0.2",

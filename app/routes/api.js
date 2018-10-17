@@ -7,6 +7,7 @@ var jwt = require('jsonwebtoken');
 var secret = 'loremipsum';
 var nodemailer = require('nodemailer');
 
+
 module.exports = function(router) {
 
   var transporter = nodemailer.createTransport({
@@ -15,6 +16,114 @@ module.exports = function(router) {
       user: process.env.USER,
       pass: process.env.PASS
     }
+  });
+
+
+
+
+  router.post('/uploadResume', function(req, res) {
+
+    /********GOOGLE**********/
+
+    const fs = require('fs');
+    const readline = require('readline');
+    const {
+      google
+    } = require('googleapis');
+
+    // If modifying these scopes, delete token.json.
+    const SCOPES = ['https://www.googleapis.com/auth/drive'];
+    const TOKEN_PATH = 'token.json';
+
+    /**
+     * Create an OAuth2 client with the given credentials, and then execute the
+     * given callback function.
+     * @param {Object} credentials The authorization client credentials.
+     * @param {function} callback The callback to call with the authorized client.
+     */
+    function authorize(credentials, callback) {
+      const {
+        client_secret,
+        client_id,
+        redirect_uris
+      } = credentials.installed;
+      const oAuth2Client = new google.auth.OAuth2(
+        client_id, client_secret, redirect_uris[0]);
+
+      // Check if we have previously stored a token.
+      fs.readFile(TOKEN_PATH, (err, token) => {
+        if (err) return getAccessToken(oAuth2Client, callback);
+        oAuth2Client.setCredentials(JSON.parse(token));
+        callback(oAuth2Client);
+      });
+    }
+
+    /**
+     * Get and store new token after prompting for user authorization, and then
+     * execute the given callback with the authorized OAuth2 client.
+     * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.
+     * @param {getEventsCallback} callback The callback for the authorized client.
+     */
+    function getAccessToken(oAuth2Client, callback) {
+      const authUrl = oAuth2Client.generateAuthUrl({
+        access_type: 'offline',
+        scope: SCOPES,
+      });
+      console.log('Authorize this app by visiting this url:', authUrl);
+      const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout,
+      });
+      rl.question('Enter the code from that page here: ', (code) => {
+        rl.close();
+        oAuth2Client.getToken(code, (err, token) => {
+          if (err) return console.error('Error retrieving access token', err);
+          oAuth2Client.setCredentials(token);
+          // Store the token to disk for later program executions
+          fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
+            if (err) console.error(err);
+            console.log('Token stored to', TOKEN_PATH);
+          });
+          callback(oAuth2Client);
+        });
+      });
+    }
+
+    /**
+     * Lists the names and IDs of up to 10 files.
+     * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
+     */
+
+
+    // Load client secrets from a local file.
+    fs.readFile('credentials.json', (err, content) => {
+      if (err) return console.log('Error loading client secret file:', err);
+      // Authorize a client with credentials, then call the Google Drive API.
+      authorize(JSON.parse(content), function(auth) {
+        const drive = google.drive({
+          version: 'v3',
+          auth
+        });
+        var fileMetadata = {
+          'name': 'test.pdf',
+        };
+        var media = {
+          body: req.body
+        };
+        drive.files.create({
+          resource: fileMetadata,
+          media: media,
+          fields: 'id'
+        }, function(err, file) {
+          if (err) {
+            // Handle error
+            console.error(err);
+          } else {
+            console.log('File Id: ', file.id);
+          }
+        });
+      });
+    });
   });
 
   // ENDPOINT TO CREATE/REGISTER USERS
@@ -958,18 +1067,19 @@ module.exports = function(router) {
 
   router.get('/getmemberyearstat', function(req, res) {
     User.aggregate([{
-      $group: {
-        _id: '$year',
-        count: {
-          $sum: 1
+        $group: {
+          _id: '$year',
+          count: {
+            $sum: 1
+          }
+        }
+      },
+      {
+        $sort: {
+          count: -1
         }
       }
-    },
-    {
-      $sort: {
-        count: -1
-      }
-    }], function(err, result) {
+    ], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -981,18 +1091,19 @@ module.exports = function(router) {
 
   router.get('/getmembernationalitystat', function(req, res) {
     User.aggregate([{
-      $group: {
-        _id: '$nationality',
-        count: {
-          $sum: 1
+        $group: {
+          _id: '$nationality',
+          count: {
+            $sum: 1
+          }
+        }
+      },
+      {
+        $sort: {
+          count: -1
         }
       }
-    },
-    {
-      $sort: {
-        count: -1
-      }
-    }], function(err, result) {
+    ], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -1004,18 +1115,19 @@ module.exports = function(router) {
 
   router.get('/getmembersexstat', function(req, res) {
     User.aggregate([{
-      $group: {
-        _id: '$sex',
-        count: {
-          $sum: 1
+        $group: {
+          _id: '$sex',
+          count: {
+            $sum: 1
+          }
+        }
+      },
+      {
+        $sort: {
+          count: -1
         }
       }
-    },
-    {
-      $sort: {
-        count: -1
-      }
-    }], function(err, result) {
+    ], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -1027,18 +1139,19 @@ module.exports = function(router) {
 
   router.get('/getmemberethnicitystat', function(req, res) {
     User.aggregate([{
-      $group: {
-        _id: '$ethnicity',
-        count: {
-          $sum: 1
+        $group: {
+          _id: '$ethnicity',
+          count: {
+            $sum: 1
+          }
+        }
+      },
+      {
+        $sort: {
+          count: -1
         }
       }
-    },
-    {
-      $sort: {
-        count: -1
-      }
-    }], function(err, result) {
+    ], function(err, result) {
       if (err) throw err;
 
       res.json({
