@@ -1,4 +1,4 @@
-angular.module('resumeController', [])
+angular.module('resumeController', ['authServices'])
 
   .directive('demoFileModel', function($parse) {
     return {
@@ -53,7 +53,16 @@ angular.module('resumeController', [])
     }
   })
 
-.controller('resumeCtrl', function($scope, fileUploadService) {
+.controller('resumeCtrl', function($scope, Auth, fileUploadService) {
+
+
+  $scope.$on('$viewContentLoaded', function() {
+    Auth.getUser().then(function(data) {
+      //console.log(data.data);
+      var iframe = document.getElementById('myResume');
+      iframe.src = "https://drive.google.com/file/d/" + data.data.ResumeID + "/preview";
+    });
+  });
 
   $scope.uploadFile = function(username) {
     //console.log(username);
@@ -68,4 +77,7 @@ angular.module('resumeController', [])
       $scope.serverResponse = 'An error has occurred';
     })
   };
+
+
+
 })

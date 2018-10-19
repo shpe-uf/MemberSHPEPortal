@@ -6,7 +6,7 @@ var Request = require('../models/request');
 var jwt = require('jsonwebtoken');
 var secret = 'loremipsum';
 var nodemailer = require('nodemailer');
-
+var bcrypt = require('bcrypt-nodejs');
 /******************************REQUIRES FOR RESUME REPO**********************/
 
 //multer is a module needed to make files available in the req.file variable
@@ -129,6 +129,8 @@ module.exports = function(router) {
     //checks if user has already uploaded file, if so delete
     CheckIfAlreadyUploaded(username, drive);
 
+    var newID;
+
     //file size of file being uploaded in bytes
     var fileSize = inputFile.size;
     console.log("FILE SIZE: " + fileSize + " BYTES");
@@ -151,9 +153,60 @@ module.exports = function(router) {
     f.on("close", function() {
       console.log("BYTES READ: " + f.bytesRead);
     });
+
+
+
+    drive.files.generateIds({
+      count: 1,
+      space: 'drive'
+    }, (err, res) => {
+      if (err) {
+        console.error('ERROR - Unable to generate ID for folder', err);
+        res.json({
+          success: false,
+          message: 'ERROR - Unable to generate ID for folder'
+        });
+      }
+
+      //searching for user that posted resume
+      User.findOne({
+        username: username
+      }).select('ResumeID').exec(function(err, user) {
+
+        if (err) throw err;
+
+        if (!user) {
+          res.json({
+            success: false,
+            message: 'User not found'
+          });
+        } else {
+          user.ResumeID = res.data.ids;
+          newID = res.data.ids;
+          console.log("---------- FOUND USER ---------- ");
+          user.save(function(err) {
+            if (err) {
+              respo = {
+                success: false,
+                message: err
+              };
+            } else {
+              console.log("---------- UPDATING USER RESUMEID ---------- ");
+              console.log("RESUMEID: " + user.ResumeID);
+              respo = {
+                success: true,
+                message: 'Your resume has been uploaded successfully'
+              };
+            }
+          });
+        }
+      });
+    });
+
     var fileMetadata = {
       'name': username,
       'mimeType': 'application/pdf',
+      'id': newID,
       parents: [folderID]
     };
     var media = {
@@ -163,12 +216,12 @@ module.exports = function(router) {
     drive.files.create({
       //requestBody: f,
       resource: fileMetadata,
-      media: media,
-      fields: 'id'
+      media: media
     }, function(err, file) {
       if (err) {
         return console.error('ERROR - Unable to upload file', err);
       } else {
+        console.log("NEWID" + newID);
         fs.unlink(inputFile.path, (err) => {
           if (err) throw err;
           console.log("TEMP FILE " + inputFile.path + ' DELETED');
@@ -248,7 +301,6 @@ module.exports = function(router) {
             createdFile = uploadResumeFile(req.file, drive, folderID, username, function(err) {
               if (err) return console.error(err);
             });
-
           });
         }
         //not found
@@ -302,55 +354,6 @@ module.exports = function(router) {
         }
       });
 
-      drive.files.list({
-        q: "name = '" + username + "' and mimeType = 'application/pdf' and trashed != true"
-      }, (err, res) => {
-        if (err) return console.error('ERROR - The API returned an error when searching for this file: ', err);
-        const files = res.data.files;
-        //file found
-        if (files.length) {
-          console.log("---------- CREATED FILE LOCATED ---------- ");
-          files.map((file) => {
-            createdFileID = file.id;
-            console.log("CREATED FILE ID: " + createdFileID);
-
-            //searching for user that posted resume
-            User.findOne({
-              username: username
-            }).select('ResumeID').exec(function(err, user) {
-
-              if (err) throw err;
-
-              if (!user) {
-                res.json({
-                  success: false,
-                  message: 'User not found'
-                });
-              } else {
-                user.ResumeID = createdFileID;
-                console.log("---------- FOUND USER ---------- ");
-                user.save(function(err) {
-                  if (err) {
-                    respo = {
-                      success: false,
-                      message: err
-                    };
-                  } else {
-                    console.log("---------- UPDATING USER RESUMEID ---------- ");
-                    console.log("RESUMEID: " + createdFileID);
-                    respo = {
-                      success: true,
-                      message: 'Your resume has been uploaded successfully'
-                    };
-                  }
-                });
-              }
-            });
-          });
-        } else {
-          console.log("---------- CREATED FILE NOT FOUND ---------- ");
-        }
-      });
     });
 
 
@@ -371,6 +374,10 @@ module.exports = function(router) {
     user.email = req.body.email;
     user.username = req.body.username;
     user.password = req.body.password;
+    bcrypt.hash(user.password, null, null, function(err, hash) {
+      if (err) return next(err);
+      user.password = hash;
+    });
     user.listServ = req.body.listServ;
 
     if (req.body.username == null || req.body.password == null || req.body.email == null || req.body.firstName == null || req.body.lastName == null || req.body.major == null || req.body.year == null || req.body.nationality == null || req.body.ethnicity == null || req.body.sex == null || req.body.year == null || req.body.username == '' || req.body.password == '' || req.body.email == '' || req.body.firstName == '' || req.body.lastName == '' || req.body.major == '' || req.body.year == '' || req.body.nationality == '' || req.body.ethnicity == '' || req.body.sex == '') {
@@ -651,8 +658,8 @@ module.exports = function(router) {
               from: process.env.USER,
               to: user.email,
               subject: 'MemberSHPE UF Password Reset Link Request',
-              text: 'Hello ' + user.firstName + ', You recently requested a password reset link. Please click on the link below to reset your password: https://membershpeuf.herokuapp.com/reset/' + user.resettoken,
-              html: 'Hello<strong> ' + user.firstName + '</strong>,<br><br>You recently requested a password reset link. Please click on the link below to reset your password:<br><br><a href="http://membershpeuf.herokuapp.com/reset/' + user.resettoken + '">Password Reset Link</a>'
+              text: 'Hello ' + user.firstName + ', You recently requested a password reset link. Please click on the link below to reset your password: http://localhost:3000/reset/' + user.resettoken,
+              html: 'Hello<strong> ' + user.firstName + '</strong>,<br><br>You recently requested a password reset link. Please click on the link below to reset your password:<br><br><a href="http://localhost:3000/reset/' + user.resettoken + '">Password Reset Link</a>'
             };
 
             transporter.sendMail(email, function(err, info) {
@@ -721,6 +728,11 @@ module.exports = function(router) {
       } else {
         user.password = req.body.password;
         user.resettoken = false;
+
+        bcrypt.hash(user.password, null, null, function(err, hash) {
+          if (err) return next(err);
+          user.password = hash;
+        });
 
         user.save(function(err) {
           if (err) {
