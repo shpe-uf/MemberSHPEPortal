@@ -110,6 +110,10 @@ var UserSchema = new Schema({
     type: Boolean,
     default: false
   },
+  ResumeID:{
+    type: String,
+    require: false
+  },
   events: [{
     event: {
       type: mongoose.Schema.Types.ObjectId,

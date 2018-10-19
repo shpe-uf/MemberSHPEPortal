@@ -100,7 +100,7 @@ module.exports = function(router) {
   function CheckIfAlreadyUploaded(username, drive) {
     console.log("SEARCHING FILE NAME: " + username);
     drive.files.list({
-      q: "name = '"+ username + "' and mimeType = 'application/pdf' and trashed != true"
+      q: "name = '" + username + "' and mimeType = 'application/pdf' and trashed != true"
     }, (err, res) => {
       if (err) return console.error('ERROR - The API returned an error when searching for this file: ', err);
       const files = res.data.files;
@@ -109,12 +109,12 @@ module.exports = function(router) {
         console.log("---------- PREVIOUS VERSION OF RESUME FOUND ---------- ");
         files.map((file) => {
           console.log("DUPLICATE ID: " + file.id);
-            drive.files.delete({
-              'fileId': file.id
-            }, function(err) {
-              if (err) return console.error('ERROR - Unable to delete previous version of Resume', err);
-              console.log("---------- PREVIOUS VERSION OF RESUME DELETED ---------- ");
-            });
+          drive.files.delete({
+            'fileId': file.id
+          }, function(err) {
+            if (err) return console.error('ERROR - Unable to delete previous version of Resume', err);
+            console.log("---------- PREVIOUS VERSION OF RESUME DELETED ---------- ");
+          });
         });
       } else {
         console.log("---------- UPLOADING NEW RESUME ---------- ");
@@ -126,9 +126,8 @@ module.exports = function(router) {
   //this functions uploads the given file to the given folder
   function uploadResumeFile(inputFile, drive, folderID, username, callback) {
 
+    //checks if user has already uploaded file, if so delete
     CheckIfAlreadyUploaded(username, drive);
-
-
 
     //file size of file being uploaded in bytes
     var fileSize = inputFile.size;
@@ -187,9 +186,13 @@ module.exports = function(router) {
   //in uploads folder. req.files.path returns path to that file.
   router.post('/uploadResume/:username', upload.single('test'), function(req, res) {
 
-    var createdFile;
+    //will store the cratedFileID which will be stored by the user
+    var createdFileID;
+    //username used to name resume when uploaded to google drive
     var username = req.params.username;
-    console.log(username);
+
+    var respo;
+
     console.log('---------- ATTEMPTING UPLOAD ----------');
 
     //credentials JSON to authenicate use of Google Drive API
@@ -225,7 +228,7 @@ module.exports = function(router) {
       drive.files.list({
         q: "name = 'ResumeRepo' and mimeType = 'application/vnd.google-apps.folder' and trashed != true"
       }, (err, res) => {
-        if (err){
+        if (err) {
           res.json({
             success: false,
             message: 'ERROR - Unable to generate ID for folder'
@@ -257,7 +260,7 @@ module.exports = function(router) {
             count: 1,
             space: 'drive'
           }, (err, res) => {
-            if (err){
+            if (err) {
               console.error('ERROR - Unable to generate ID for folder', err);
               res.json({
                 success: false,
@@ -298,11 +301,60 @@ module.exports = function(router) {
           });
         }
       });
+
+      drive.files.list({
+        q: "name = '" + username + "' and mimeType = 'application/pdf' and trashed != true"
+      }, (err, res) => {
+        if (err) return console.error('ERROR - The API returned an error when searching for this file: ', err);
+        const files = res.data.files;
+        //file found
+        if (files.length) {
+          console.log("---------- CREATED FILE LOCATED ---------- ");
+          files.map((file) => {
+            createdFileID = file.id;
+            console.log("CREATED FILE ID: " + createdFileID);
+
+            //searching for user that posted resume
+            User.findOne({
+              username: username
+            }).select('ResumeID').exec(function(err, user) {
+
+              if (err) throw err;
+
+              if (!user) {
+                res.json({
+                  success: false,
+                  message: 'User not found'
+                });
+              } else {
+                user.ResumeID = createdFileID;
+                console.log("---------- FOUND USER ---------- ");
+                user.save(function(err) {
+                  if (err) {
+                    respo = {
+                      success: false,
+                      message: err
+                    };
+                  } else {
+                    console.log("---------- UPDATING USER RESUMEID ---------- ");
+                    console.log("RESUMEID: " + createdFileID);
+                    respo = {
+                      success: true,
+                      message: 'Your resume has been uploaded successfully'
+                    };
+                  }
+                });
+              }
+            });
+          });
+        } else {
+          console.log("---------- CREATED FILE NOT FOUND ---------- ");
+        }
+      });
     });
-    res.json({
-      success: true,
-      message: 'Your resume has been uploaded successfully'
-    });
+
+
+    res.json(respo);
 
   });
 
