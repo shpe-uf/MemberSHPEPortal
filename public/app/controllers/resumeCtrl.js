@@ -31,15 +31,17 @@ angular.module('resumeController', [])
     this.uploadFileToUrl = function(file, uploadUrl) {
       //FormData, object of key/value pair for form fields and values
       var fileFormData = new FormData();
-      fileFormData.append('file', file);
-
+      fileFormData.append('test', file);
+      //console.log("FileData in service: " + file.name);
+      // for (var value of fileFormData.values()) {
+      //   console.log(value);
+      // }
       var deffered = $q.defer();
       $http.post(uploadUrl, fileFormData, {
         transformRequest: angular.identity,
         headers: {
           'Content-Type': undefined
         }
-
       }).success(function(response) {
         deffered.resolve(response);
 
@@ -55,6 +57,7 @@ angular.module('resumeController', [])
 
   $scope.uploadFile = function() {
     var file = $scope.myFile;
+    //console.log("FileData in controller: " + file.name + file.type + file.size);
     var uploadUrl = "api/uploadResume", //Url of webservice/api/server
       promise = fileUploadService.uploadFileToUrl(file, uploadUrl);
 

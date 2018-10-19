@@ -7,6 +7,27 @@ var jwt = require('jsonwebtoken');
 var secret = 'loremipsum';
 var nodemailer = require('nodemailer');
 
+/******************************REQUIRES FOR RESUME REPO**********************/
+
+//multer is a module needed to make files available in the req.file variable
+//used when handling api post request for /uploadResume
+var multer = require('multer');
+const upload = multer({
+  dest: './uploads/'
+}); // multer configuration
+
+//The following requires are used to download/upload files to google drive
+//file system (fs) to
+const fs = require('fs');
+const readline = require('readline');
+const {
+  google
+} = require('googleapis');
+// If modifying these scopes, delete token.json.
+const SCOPES = ['https://www.googleapis.com/auth/drive'];
+const TOKEN_PATH = 'token.json';
+
+/****************************************************************************/
 
 module.exports = function(router) {
 
@@ -18,110 +39,247 @@ module.exports = function(router) {
     }
   });
 
+  /******************************RESUME REPO*********************************/
 
+  // GOOGLE DRIVE API AUTHENTICATION -------------------------------------------
 
+  /**
+   * Create an OAuth2 client with the given credentials, and then execute the
+   * given callback function.
+   * @param {Object} credentials The authorization client credentials.
+   * @param {function} callback The callback to call with the authorized client.
+   */
 
-  router.post('/uploadResume', function(req, res) {
-
-    /********GOOGLE**********/
-
-    const fs = require('fs');
-    const readline = require('readline');
+  function authorize(credentials, callback) {
     const {
-      google
-    } = require('googleapis');
+      client_secret,
+      client_id,
+      redirect_uris
+    } = credentials.installed;
+    const oAuth2Client = new google.auth.OAuth2(
+      client_id, client_secret, redirect_uris[0]);
 
-    // If modifying these scopes, delete token.json.
-    const SCOPES = ['https://www.googleapis.com/auth/drive'];
-    const TOKEN_PATH = 'token.json';
-
-    /**
-     * Create an OAuth2 client with the given credentials, and then execute the
-     * given callback function.
-     * @param {Object} credentials The authorization client credentials.
-     * @param {function} callback The callback to call with the authorized client.
-     */
-    function authorize(credentials, callback) {
-      const {
-        client_secret,
-        client_id,
-        redirect_uris
-      } = credentials.installed;
-      const oAuth2Client = new google.auth.OAuth2(
-        client_id, client_secret, redirect_uris[0]);
-
-      // Check if we have previously stored a token.
-      fs.readFile(TOKEN_PATH, (err, token) => {
-        if (err) return getAccessToken(oAuth2Client, callback);
-        oAuth2Client.setCredentials(JSON.parse(token));
+    // Check if we have previously stored a token.
+    fs.readFile(TOKEN_PATH, (err, token) => {
+      if (err) return getAccessToken(oAuth2Client, callback);
+      oAuth2Client.setCredentials(JSON.parse(token));
+      callback(oAuth2Client);
+    });
+  }
+  /**
+   * Get and store new token after prompting for user authorization, and then
+   * execute the given callback with the authorized OAuth2 client.
+   * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.
+   * @param {getEventsCallback} callback The callback for the authorized client.
+   */
+  function getAccessToken(oAuth2Client, callback) {
+    const authUrl = oAuth2Client.generateAuthUrl({
+      access_type: 'offline',
+      scope: SCOPES,
+    });
+    console.log('Authorize this app by visiting this url:', authUrl);
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
+    rl.question('Enter the code from that page here: ', (code) => {
+      rl.close();
+      oAuth2Client.getToken(code, (err, token) => {
+        if (err) return console.error('Error retrieving access token', err);
+        oAuth2Client.setCredentials(token);
+        // Store the token to disk for later program executions
+        fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
+          if (err) console.error(err);
+          console.log('Token stored to', TOKEN_PATH);
+        });
         callback(oAuth2Client);
       });
+    });
+  }
+
+  function CheckIfAlreadyUploaded(username, drive) {
+    console.log("SEARCHING FILE NAME: " + username);
+    drive.files.list({
+      q: "name = '"+ username + "' and mimeType = 'application/pdf' and trashed != true"
+    }, (err, res) => {
+      if (err) return console.error('ERROR - The API returned an error when searching for this file: ', err);
+      const files = res.data.files;
+      //file found
+      if (files.length) {
+        console.log("---------- PREVIOUS VERSION OF RESUME FOUND ---------- ");
+        files.map((file) => {
+          console.log("DUPLICATE ID: " + file.id);
+            drive.files.delete({
+              'fileId': file.id
+            }, function(err) {
+              if (err) return console.error('ERROR - Unable to delete previous version of Resume', err);
+              console.log("---------- PREVIOUS VERSION OF RESUME DELETED ---------- ");
+            });
+        });
+      } else {
+        console.log("---------- UPLOADING NEW RESUME ---------- ");
+      }
+    });
+  }
+  //Helping function that takes a file from multer, the google.drive authenticated
+  //object, and the id of the generated/located folder
+  //this functions uploads the given file to the given folder
+  function uploadResumeFile(inputFile, drive, folderID, username, callback) {
+
+    CheckIfAlreadyUploaded(username, drive);
+
+
+
+    //file size of file being uploaded in bytes
+    var fileSize = inputFile.size;
+    console.log("FILE SIZE: " + fileSize + " BYTES");
+
+    //creating a readStream that google uses to upload file in the
+    //files.create function. Takes in the path to the file being uploaded.
+    var f = fs.createReadStream(inputFile.path, {
+
+      //tells createReadStream from what BYTE to start from
+      //and until which BYTE to stream
+      start: 0,
+      end: fileSize,
+
+      //this setting must be set to excactly this value, if not certain pdfs
+      //become corrupted when uploaded to the drive
+      highWaterMark: 16 * 1024
+    });
+
+    //logging how many BYTES are read successfully for debugging purposes
+    f.on("close", function() {
+      console.log("BYTES READ: " + f.bytesRead);
+    });
+    var fileMetadata = {
+      'name': username,
+      'mimeType': 'application/pdf',
+      parents: [folderID]
+    };
+    var media = {
+      mimeType: 'application/pdf',
+      body: f
+    };
+    drive.files.create({
+      //requestBody: f,
+      resource: fileMetadata,
+      media: media,
+      fields: 'id'
+    }, function(err, file) {
+      if (err) {
+        return console.error('ERROR - Unable to upload file', err);
+      } else {
+        fs.unlink(inputFile.path, (err) => {
+          if (err) throw err;
+          console.log("TEMP FILE " + inputFile.path + ' DELETED');
+        });
+        console.log('---------- UPLOAD SUCCESSFUL ----------');
+      }
+    });
+  }
+
+  //UPLOAD RESUME POST REQUEST HANDLER------------------------------------------
+
+  //Utlizes multer upload() to get the file from the req body and makes it
+  //accessable in the req.file variable. Copy of file is also stored serverside
+  //in uploads folder. req.files.path returns path to that file.
+  router.post('/uploadResume', upload.single('test'), function(req, res) {
+
+    console.log('---------- ATTEMPTING UPLOAD ----------');
+
+    //credentials JSON to authenicate use of Google Drive API
+    var credentials = {
+      "installed": {
+        "client_id": process.env.GDRIVE_CLIENT_ID,
+        "project_id": process.env.GDRIVE_PROJECT_ID,
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://www.googleapis.com/oauth2/v3/token",
+        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+        "client_secret": process.env.GDRIVE_CLIENT_SECRET,
+        "redirect_uris": ["urn:ietf:wg:oauth:2.0:oob", "http://localhost"]
+      }
     }
 
-    /**
-     * Get and store new token after prompting for user authorization, and then
-     * execute the given callback with the authorized OAuth2 client.
-     * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.
-     * @param {getEventsCallback} callback The callback for the authorized client.
-     */
-    function getAccessToken(oAuth2Client, callback) {
-      const authUrl = oAuth2Client.generateAuthUrl({
-        access_type: 'offline',
-        scope: SCOPES,
+    //authorize is called to authenticate the user, if successfully
+    //authenticated then execute calleback function
+    authorize(credentials, function(auth) {
+      console.log('---------- GOOGLE API AUTHORIZATION SUCCESSFUL ----------');
+
+      const drive = google.drive({
+        version: 'v3',
+        auth
       });
-      console.log('Authorize this app by visiting this url:', authUrl);
-      const rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout,
-      });
-      rl.question('Enter the code from that page here: ', (code) => {
-        rl.close();
-        oAuth2Client.getToken(code, (err, token) => {
-          if (err) return console.error('Error retrieving access token', err);
-          oAuth2Client.setCredentials(token);
-          // Store the token to disk for later program executions
-          fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
-            if (err) console.error(err);
-            console.log('Token stored to', TOKEN_PATH);
+
+      //used to store destination folder google drive id
+      var folderID;
+
+      //checking if destination folder already exists using search queries defined in paramter q:
+      //name = name of the folder
+      //mimeType = file type, in this case a application/vnd.google-apps.folder
+      //trashed = is the folder in the trash?
+      drive.files.list({
+        q: "name = 'ResumeRepo' and mimeType = 'application/vnd.google-apps.folder' and trashed != true"
+      }, (err, res) => {
+        if (err) return console.error('ERROR - The API returned an error when searching for destination folder: ', err);
+        const files = res.data.files;
+        //file found
+        if (files.length) {
+          console.log("---------- DESTINATION FOLDER FOUND ---------- ");
+          files.map((file) => {
+
+            folderID = file.id;
+            console.log("FOLDER ID: " + folderID);
+
+            //uploading file to destination folder
+            uploadResumeFile(req.file, drive, folderID, 'jairoarivas', function(err) {
+              if (err) return console.error(err);
+            });
           });
-          callback(oAuth2Client);
-        });
-      });
-    }
+        }
+        //not found
+        else {
+          console.log("---------- DESTINATION FOLDER NOT FOUND ---------- ");
+          console.log("---------- CREATING DESTINATION FOLDER ---------- ");
 
-    /**
-     * Lists the names and IDs of up to 10 files.
-     * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
-     */
+          drive.files.generateIds({
+            count: 1,
+            space: 'drive'
+          }, (err, res) => {
+            if (err) return console.error('ERROR - Unable to generate ID for folder', err);
+
+            //console.log(res.data.ids);
 
 
-    // Load client secrets from a local file.
-    fs.readFile('credentials.json', (err, content) => {
-      if (err) return console.log('Error loading client secret file:', err);
-      // Authorize a client with credentials, then call the Google Drive API.
-      authorize(JSON.parse(content), function(auth) {
-        const drive = google.drive({
-          version: 'v3',
-          auth
-        });
-        var fileMetadata = {
-          'name': 'test.pdf',
-        };
-        var media = {
-          body: req.body
-        };
-        drive.files.create({
-          resource: fileMetadata,
-          media: media,
-          fields: 'id'
-        }, function(err, file) {
-          if (err) {
-            // Handle error
-            console.error(err);
-          } else {
-            console.log('File Id: ', file.id);
-          }
-        });
+            folderID = res.data.ids;
+          });
+
+
+          console.log("Folder ID: " + folderID);
+          var folderMetadata = {
+            'name': 'ResumeRepo',
+            'mimeType': 'application/vnd.google-apps.folder',
+            'id': folderID
+          };
+
+          //creating new destination folder
+          drive.files.create({
+            resource: folderMetadata,
+            field: 'id'
+          }, function(err, file) {
+            if (err) {
+              // Handle error
+              return console.error('ERROR - Unable to create destination folder', err);
+            } else {
+
+              console.log("---------- DESTINATION FOLDER CREATED ---------- ");
+              //uploading resume
+              uploadResumeFile(req.file, drive, folderID, 'jairoarivas', function(err, res) {
+                if (err) return console.error(err);
+              });
+            }
+          });
+        }
       });
     });
   });

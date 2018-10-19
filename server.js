@@ -11,6 +11,10 @@ var path = require('path');
 var router = express.Router();
 var appRoutes = require('./app/routes/api')(router);
 
+//for parsing multipart/form data such as a file
+var multer = require('multer');
+var upload = multer();
+
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
