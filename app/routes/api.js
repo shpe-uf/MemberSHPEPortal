@@ -174,6 +174,7 @@ module.exports = function(router) {
           if (err) throw err;
           console.log("TEMP FILE " + inputFile.path + ' DELETED');
         });
+        return file;
         console.log('---------- UPLOAD SUCCESSFUL ----------');
       }
     });
@@ -184,8 +185,11 @@ module.exports = function(router) {
   //Utlizes multer upload() to get the file from the req body and makes it
   //accessable in the req.file variable. Copy of file is also stored serverside
   //in uploads folder. req.files.path returns path to that file.
-  router.post('/uploadResume', upload.single('test'), function(req, res) {
+  router.post('/uploadResume/:username', upload.single('test'), function(req, res) {
 
+    var createdFile;
+    var username = req.params.username;
+    console.log(username);
     console.log('---------- ATTEMPTING UPLOAD ----------');
 
     //credentials JSON to authenicate use of Google Drive API
@@ -221,7 +225,13 @@ module.exports = function(router) {
       drive.files.list({
         q: "name = 'ResumeRepo' and mimeType = 'application/vnd.google-apps.folder' and trashed != true"
       }, (err, res) => {
-        if (err) return console.error('ERROR - The API returned an error when searching for destination folder: ', err);
+        if (err){
+          res.json({
+            success: false,
+            message: 'ERROR - Unable to generate ID for folder'
+          });
+          console.error('ERROR - The API returned an error when searching for destination folder: ', err);
+        }
         const files = res.data.files;
         //file found
         if (files.length) {
@@ -232,9 +242,10 @@ module.exports = function(router) {
             console.log("FOLDER ID: " + folderID);
 
             //uploading file to destination folder
-            uploadResumeFile(req.file, drive, folderID, 'jairoarivas', function(err) {
+            createdFile = uploadResumeFile(req.file, drive, folderID, username, function(err) {
               if (err) return console.error(err);
             });
+
           });
         }
         //not found
@@ -246,11 +257,13 @@ module.exports = function(router) {
             count: 1,
             space: 'drive'
           }, (err, res) => {
-            if (err) return console.error('ERROR - Unable to generate ID for folder', err);
-
-            //console.log(res.data.ids);
-
-
+            if (err){
+              console.error('ERROR - Unable to generate ID for folder', err);
+              res.json({
+                success: false,
+                message: 'ERROR - Unable to generate ID for folder'
+              });
+            }
             folderID = res.data.ids;
           });
 
@@ -269,12 +282,16 @@ module.exports = function(router) {
           }, function(err, file) {
             if (err) {
               // Handle error
-              return console.error('ERROR - Unable to create destination folder', err);
+              console.error('ERROR - Unable to create destination folder', err);
+              res.json({
+                success: false,
+                message: 'ERROR - Unable to create destination folder'
+              });
             } else {
 
               console.log("---------- DESTINATION FOLDER CREATED ---------- ");
               //uploading resume
-              uploadResumeFile(req.file, drive, folderID, 'jairoarivas', function(err, res) {
+              createdFile = uploadResumeFile(req.file, drive, folderID, username, function(err, res) {
                 if (err) return console.error(err);
               });
             }
@@ -282,6 +299,11 @@ module.exports = function(router) {
         }
       });
     });
+    res.json({
+      success: true,
+      message: 'Your resume has been uploaded successfully'
+    });
+
   });
 
   // ENDPOINT TO CREATE/REGISTER USERS

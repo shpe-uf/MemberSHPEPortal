@@ -55,10 +55,11 @@ angular.module('resumeController', [])
 
 .controller('resumeCtrl', function($scope, fileUploadService) {
 
-  $scope.uploadFile = function() {
+  $scope.uploadFile = function(username) {
+    //console.log(username);
     var file = $scope.myFile;
     //console.log("FileData in controller: " + file.name + file.type + file.size);
-    var uploadUrl = "api/uploadResume", //Url of webservice/api/server
+    var uploadUrl = "api/uploadResume/" + username, //Url of webservice/api/server
       promise = fileUploadService.uploadFileToUrl(file, uploadUrl);
 
     promise.then(function(response) {
