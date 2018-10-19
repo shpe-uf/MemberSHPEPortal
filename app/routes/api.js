@@ -109,7 +109,7 @@ module.exports = function(router) {
       code.code = req.body.code.toLowerCase();
       code.type = req.body.type;
 
-      if (code.type == 'General Body Meeting' || code.type == 'Cabinet Meeting' || code.type == 'Social' || code.type == 'Form/Survey') {
+      if (code.type == 'General Body Meeting' || code.type == 'Cabinet Meeting' || code.type == 'Workshop' || code.type == 'Social' || code.type == 'Form/Survey') {
         code.points = 1;
       } else if (code.type == 'Corporate Event') {
         code.points = 2;
@@ -629,7 +629,7 @@ module.exports = function(router) {
                 });
               } else {
 
-                if (code.points == 1 && code.type !== 'Form/Survey') {
+                if (code.points == 1 && code.type == 'General Body Meeting') {
                   User.findOneAndUpdate({
                     username: req.decoded.username,
                   }, {
@@ -930,6 +930,122 @@ module.exports = function(router) {
 
       });
     }
+  });
+
+  router.get('/getmembermajorstat', function(req, res) {
+    User.aggregate([{
+        $group: {
+          _id: '$major',
+          count: {
+            $sum: 1
+          }
+        }
+      },
+      {
+        $sort: {
+          count: -1
+        }
+      }
+    ], function(err, result) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: result
+      });
+    });
+  });
+
+  router.get('/getmemberyearstat', function(req, res) {
+    User.aggregate([{
+      $group: {
+        _id: '$year',
+        count: {
+          $sum: 1
+        }
+      }
+    },
+    {
+      $sort: {
+        count: -1
+      }
+    }], function(err, result) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: result
+      });
+    });
+  });
+
+  router.get('/getmembernationalitystat', function(req, res) {
+    User.aggregate([{
+      $group: {
+        _id: '$nationality',
+        count: {
+          $sum: 1
+        }
+      }
+    },
+    {
+      $sort: {
+        count: -1
+      }
+    }], function(err, result) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: result
+      });
+    });
+  });
+
+  router.get('/getmembersexstat', function(req, res) {
+    User.aggregate([{
+      $group: {
+        _id: '$sex',
+        count: {
+          $sum: 1
+        }
+      }
+    },
+    {
+      $sort: {
+        count: -1
+      }
+    }], function(err, result) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: result
+      });
+    });
+  });
+
+  router.get('/getmemberethnicitystat', function(req, res) {
+    User.aggregate([{
+      $group: {
+        _id: '$ethnicity',
+        count: {
+          $sum: 1
+        }
+      }
+    },
+    {
+      $sort: {
+        count: -1
+      }
+    }], function(err, result) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: result
+      });
+    });
   });
 
   return router;

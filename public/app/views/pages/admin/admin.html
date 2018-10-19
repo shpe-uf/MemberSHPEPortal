@@ -13,11 +13,53 @@
           <a class="nav-item nav-link active" id="nav-request-tab" data-toggle="tab" data-target="#nav-request" role="tab" aria-controls="nav-request" aria-selected="false">Requests</a>
           <a class="nav-item nav-link" id="nav-member-tab" data-toggle="tab" data-target="#nav-member" role="tab" aria-controls="nav-member" aria-selected="true">Members</a>
           <a class="nav-item nav-link" id="nav-event-tab" data-toggle="tab" data-target="#nav-event" role="tab" aria-controls="nav-event" aria-selected="false">Events</a>
-          <!-- <a class="nav-item nav-link" id="nav-stats-tab" data-toggle="tab" data-target="#nav-stats" role="tab" aria-controls="nav-stats" aria-selected="false">Statistics</a> -->
         </div>
       </nav>
 
       <div class="tab-content" id="nav-tabContent">
+
+        <div class="tab-pane fade show active" id="nav-request" role="tabpanel" aria-labelledby="nav-request-tab">
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Search</span>
+                  </div>
+                  <input type="text" class="form-control" ng-model="requestSearchText">
+                </div>
+              </div>
+            </div>
+            <table class="table table-responsive-lg table-striped">
+              <tr>
+                <th>MEMBER</th>
+                <th>USERNAME</th>
+                <th>EVENT</th>
+                <th>TYPE</th>
+                <th class="text-center">POINTS</th>
+                <th class="text-center">APPROVE</th>
+                <th class="text-center">DENY</th>
+              </tr>
+              <tr ng-repeat="request in admin.requests | orderBy: 'name' | filter: requestSearchText">
+                <td>{{ request.lastName }}, {{ request.firstName }}</td>
+                <td>{{ request.username }}</td>
+                <td>{{ request.eventName }}</td>
+                <td>{{ request.type }}</td>
+                <td class="text-center">{{ request.points }}</td>
+                <td class="text-center">
+                  <button type="button" class="btn btn-success" ng-click="admin.acceptRequest(request)" ng-if="!admin.isClicked">
+                    <i class="fas fa-check"></i>
+                  </button>
+                </td>
+                <td class="text-center">
+                  <button type="button" class="btn btn-danger" ng-click="admin.denyRequest(request)" ng-if="!admin.isClicked">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
 
         <div class="tab-pane fade" id="nav-member" role="tabpanel" aria-labelledby="nav-member-tab">
           <div class="container">
@@ -106,60 +148,6 @@
           </div>
         </div>
 
-        <div class="tab-pane fade show active" id="nav-request" role="tabpanel" aria-labelledby="nav-request-tab">
-          <div class="container">
-            <div class="row">
-              <div class="col-12">
-                <div class="input-group mb-3">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">Search</span>
-                  </div>
-                  <input type="text" class="form-control" ng-model="requestSearchText">
-                </div>
-              </div>
-            </div>
-            <table class="table table-responsive-lg table-striped">
-              <tr>
-                <th>MEMBER</th>
-                <th>USERNAME</th>
-                <th>EVENT</th>
-                <th>TYPE</th>
-                <th class="text-center">POINTS</th>
-                <th class="text-center">APPROVE</th>
-                <th class="text-center">DENY</th>
-              </tr>
-              <tr ng-repeat="request in admin.requests | orderBy: 'name' | filter: requestSearchText">
-                <td>{{ request.lastName }}, {{ request.firstName }}</td>
-                <td>{{ request.username }}</td>
-                <td>{{ request.eventName }}</td>
-                <td>{{ request.type }}</td>
-                <td class="text-center">{{ request.points }}</td>
-                <td class="text-center">
-                  <button type="button" class="btn btn-success" ng-click="admin.acceptRequest(request)" ng-if="!admin.isClicked">
-                    <i class="fas fa-check"></i>
-                  </button>
-                </td>
-                <td class="text-center">
-                  <button type="button" class="btn btn-danger" ng-click="admin.denyRequest(request)" ng-if="!admin.isClicked">
-                    <i class="fas fa-times"></i>
-                  </button>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
-
-        <!-- <div class="tab-pane fade" id="nav-stats" role="tabpanel" aria-labelledby="nav-stats-tab">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-6">
-                <h4 class="text-center">Member Nationality</h4>
-                <canvas id="nationalityChart" width="400" height="400" ng-init="admin.nationalityChart()"></canvas>
-              </div>
-            </div>
-          </div>
-        </div> -->
-
       </div>
 
     </div>
@@ -199,6 +187,7 @@
             <select class="form-control" name="type" id="eventType" ng-model="admin.eventData.type" required>
               <option>General Body Meeting</option>
               <option>Cabinet Meeting</option>
+              <option>Workshop</option>
               <option>Social</option>
               <option>Form/Survey</option>
               <option>Corporate Event</option>
