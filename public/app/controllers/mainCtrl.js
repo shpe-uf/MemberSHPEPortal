@@ -23,8 +23,8 @@ angular.module('mainController', ['authServices', 'userServices'])
       $window.location.reload();
 
       // $timeout(function() {
-        // hideModal();
-        // $('.modal-backdrop').remove();
+      // hideModal();
+      // $('.modal-backdrop').remove();
       // }, 2000);
 
     };
@@ -154,7 +154,7 @@ angular.module('mainController', ['authServices', 'userServices'])
         app.isLoggedIn = true;
 
         Auth.getUser().then(function(data) {
-
+          console.log("USER IS LOGGED IN AND GETTING THE USER'S DATA");
           app.firstName = data.data.firstName;
           app.lastName = data.data.lastName;
           app.username = data.data.username;
@@ -166,8 +166,6 @@ angular.module('mainController', ['authServices', 'userServices'])
           app.sex = data.data.sex;
           app.points = data.data.points;
           app.events = data.data.events;
-
-          app.showEvents(app.events);
 
           User.getPermission().then(function(data) {
             if (data.data.message === 'admin') {
@@ -192,12 +190,21 @@ angular.module('mainController', ['authServices', 'userServices'])
                 }
               }
 
-              app.percentile = Math.trunc(((belowUsers/totalUsers) * 100));
+              app.percentile = Math.trunc(((belowUsers / totalUsers) * 100));
             }
           });
+
+          app.codeArray = [];
+
+          for (var i = 0; i < app.events.length; i++) {
+            User.getCodeInfo(app.events[i]).then(function(codeData) {
+              app.codeArray.push(codeData.data.message);
+            });
+          }
         });
 
       } else {
+        console.log("USER IS NOT LOGGED IN!");
         app.isLoggedIn = false;
         app.username = '';
         app.email = '';
@@ -232,18 +239,5 @@ angular.module('mainController', ['authServices', 'userServices'])
         backdrop: "static"
       });
     };
-
-    app.showEvents = function(eventIds) {
-      app.codeArray = [];
-
-      if (eventIds.length > 0) {
-        for (var i = 0; i < eventIds.length; i++) {
-          User.getCodeInfo(eventIds[i]).then(function(codeData) {
-            app.codeArray.push(codeData.data.message);
-          });
-        }
-      }
-
-    }
 
   });
