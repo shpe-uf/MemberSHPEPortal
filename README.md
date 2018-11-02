@@ -38,3 +38,9 @@ Official MemberSHPE UF website for the Society of Hispanic Professional Engineer
     - [ ] Link to Google Drive
     - [ ] Link résumé to the user
     - [ ] Update résumé
+
+## Team Members:
+- César González (Scrum Master)
+- Jairo Rivas
+- Ashley Conrado
+- Jonathan Morales
