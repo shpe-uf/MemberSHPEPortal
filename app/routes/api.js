@@ -3,6 +3,7 @@ require('dotenv').config();
 var User = require('../models/user');
 var Code = require('../models/code');
 var Request = require('../models/request');
+var Alumni = require('../models/alumni');
 var jwt = require('jsonwebtoken');
 var secret = 'loremipsum';
 var nodemailer = require('nodemailer');
@@ -932,6 +933,7 @@ module.exports = function(router) {
     }
   });
 
+  // ENDPOINT TO RETRIEVE TABLE WITH COUNT OF MEMBER MAJORS
   router.get('/getmembermajorstat', function(req, res) {
     User.aggregate([{
         $group: {
@@ -956,6 +958,7 @@ module.exports = function(router) {
     });
   });
 
+  // ENDPOINT TO RETRIEVE TABLE WITH COUNT OF MEMBER YEARS
   router.get('/getmemberyearstat', function(req, res) {
     User.aggregate([{
       $group: {
@@ -979,6 +982,7 @@ module.exports = function(router) {
     });
   });
 
+  // ENDPOINT TO RETRIEVE TABLE WITH COUNT OF MEMBER NATIONALITIES
   router.get('/getmembernationalitystat', function(req, res) {
     User.aggregate([{
       $group: {
@@ -1002,6 +1006,7 @@ module.exports = function(router) {
     });
   });
 
+  // ENDPOINT TO RETRIEVE TABLE WITH COUNT OF MEMBER SEXES
   router.get('/getmembersexstat', function(req, res) {
     User.aggregate([{
       $group: {
@@ -1025,6 +1030,7 @@ module.exports = function(router) {
     });
   });
 
+  // ENDPOINT TO RETRIEVE TABLE WITH COUNT OF MEMBER ETHNICITIES
   router.get('/getmemberethnicitystat', function(req, res) {
     User.aggregate([{
       $group: {
@@ -1046,6 +1052,17 @@ module.exports = function(router) {
         message: result
       });
     });
+  });
+
+  // ENDPOINT TO RETRIEVE ALUMNI COLLECTION
+  router.get('/getalumni', function(req, res) {
+    Alumni.find({
+
+    }, function(err, alumni) {
+      if (err) throw err;
+
+      console.log(alumni);
+    })
   });
 
   return router;

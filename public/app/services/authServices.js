@@ -26,7 +26,7 @@ angular.module('authServices', [])
         return $http.post('/api/me');
       } else {
         $q.reject({
-          message: 'User has no token'
+          message: 'Please log out and log back in!'
         });
       }
     };
