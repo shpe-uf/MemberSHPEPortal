@@ -319,3 +319,7 @@ iframe {
 }
 
 /* LOGOUT LOADER */
+.map {
+  height: 400px;
+  width: 100%;
+}
