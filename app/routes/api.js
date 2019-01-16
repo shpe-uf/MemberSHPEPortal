@@ -1062,7 +1062,12 @@ module.exports = function(router) {
       if (err) throw err;
 
       console.log(alumni);
-    })
+
+      res.json({
+        message: alumni,
+        success: true
+      });
+    });
   });
 
   return router;

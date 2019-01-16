@@ -106,6 +106,9 @@ angular.module('userServices', [])
       return $http.get('api/getmemberethnicitystat/');
     };
 
+    userFactory.getAlumni = function() {
+      return $http.get('api/getalumni/');
+    };
 
     return userFactory;
   });
