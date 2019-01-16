@@ -320,6 +320,7 @@ iframe {
 
 /* LOGOUT LOADER */
 .map {
-  height: 600px;
+  height: 530px;
   width: 100%;
+  margin-bottom: 30px;
 }
