@@ -17,8 +17,8 @@ angular.module('alumniController', [])
         })
       ],
       view: new ol.View({
-        center: ol.proj.fromLonLat([37.41, 8.82]),
-        zoom: 4
+        center: ol.proj.fromLonLat([-98.5795, 39.8283]),
+        zoom: 4.5
       })
     });
 
