@@ -320,8 +320,14 @@ iframe {
 
 /* LOGOUT LOADER */
 
-.map {
-  height: 530px;
+#mapid {
+  height: 540px;
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 15px !important;
+}
+
+.all-caps {
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  color: rgb(235, 70, 22);
 }

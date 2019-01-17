@@ -7,6 +7,7 @@ var Alumni = require('../models/alumni');
 var jwt = require('jsonwebtoken');
 var secret = process.env.SECRET;
 var nodemailer = require('nodemailer');
+var nodeGeocoder = require('node-geocoder');
 
 module.exports = function(router) {
 
@@ -17,6 +18,13 @@ module.exports = function(router) {
       pass: process.env.PASS
     }
   });
+
+  var options = {
+    provider: 'mapquest',
+    httpAdapter: 'https',
+    apiKey: process.env.MQ_KEY,
+    formatter: null
+  };
 
   // ENDPOINT TO CREATE/REGISTER USERS
   router.post('/users', function(req, res) {
@@ -1064,23 +1072,34 @@ module.exports = function(router) {
     });
   });
 
-  router.get('/getcitycoordinates', function(req, res) {
+  router.get('/getcoordinates', function(req, res) {
     Alumni.find({
 
     }).select('city state country').exec(function(err, alumni) {
       if (err) throw err;
 
       var locations = [];
+      var coordinates = [];
 
       for (var i = 0; i < alumni.length; i++) {
         locations.push(alumni[i].city + ", " + alumni[i].state);
       }
 
-      res.json({
-        message: locations,
-        success: true
-      });
+      var geocoder = nodeGeocoder(options);
 
+      geocoder.batchGeocode(locations, function(err, results) {
+        for (var i = 0; i < results.length; i++) {
+          var temp = [];
+          temp.push(results[i].value[0].latitude);
+          temp.push(results[i].value[0].longitude);
+          coordinates.push(temp);
+        }
+
+        res.json({
+          message: coordinates,
+          success: true
+        });
+      });
     });
   });
 

@@ -3,53 +3,30 @@ angular.module('alumniController', [])
     var app = this;
 
     app.alumniArray = [];
-    app.locations = [];
+    app.coordinates = [];
 
     User.getAlumni().then(function(data) {
       app.alumniArray = data.data.message;
     });
 
-    User.getCityCoordinates().then(function(data) {
-      app.locations = data.data.message;
+    User.getCoordinates().then(function(data) {
+      app.coordinates = data.data.message;
 
-      window.onload = function() {
+      var mymap = L.map('mapid').setView([39.8283, -98.5795], 4);
 
-        L.mapquest.key = '1tEn5h8WXS6UGGviUKM2COVxkm3r7TJQ';
+      L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+        maxZoom: 18,
+        id: 'mapbox.emerald'
+      }).addTo(mymap);
 
-        L.mapquest.geocoding().geocode(app.locations, createMap);
-
-        function createMap(error, response) {
-          var map = L.mapquest.map('map', {
-            layers: L.mapquest.tileLayer('map'),
-            center: [39.8283, -98.5795],
-            zoom: 4.4
-          });
-
-          var featureGroup = generateMarkers(response, app.alumniArray);
-          featureGroup.addTo(map);
-        }
-
-        function generateMarkers(response, alumniArray) {
-          var group = [];
-
-          console.log(alumniArray);
-
-          for (var i = 0; i < response.results.length; i++) {
-            var location = response.results[i].locations[0];
-            var locationLatLng = location.latLng;
-
-            // Create a marker for each location
-            var marker = L.marker(locationLatLng, {
-                icon: L.mapquest.icons.marker()
-              })
-              .bindPopup("<p>" + alumniArray[i].name + "</p>");
-
-            group.push(marker);
-          }
-          return L.featureGroup(group);
-        }
+      for (var i = 0; i < app.coordinates.length; i++) {
+        marker = new L.marker(app.coordinates[i])
+          .bindPopup("<strong class='all-caps'>" + app.alumniArray[i].name + "</strong> <br> <strong>Employer:</strong> " + app.alumniArray[i].employer + "<br> <strong>Position/Title:</strong> " + app.alumniArray[i].position + "<br> <strong>Undergrad. Degree:</strong> " + app.alumniArray[i].undergrad + "<br> <strong>Grad. Degree:</strong> " + app.alumniArray[i].grad + "</strong> <br> <strong>Country of Origin:</strong> " + app.alumniArray[i].nationality + "</strong> <br> <strong>LinkedIn Profile:</strong> " + "<a href='" + app.alumniArray[i].linkedIn + "' target='_blank'> View Profile </a>")
+          .addTo(mymap);
       }
-
     });
+
+
+
 
   });
