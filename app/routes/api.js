@@ -5,7 +5,7 @@ var Code = require('../models/code');
 var Request = require('../models/request');
 var Alumni = require('../models/alumni');
 var jwt = require('jsonwebtoken');
-var secret = 'loremipsum';
+var secret = process.env.SECRET;
 var nodemailer = require('nodemailer');
 
 module.exports = function(router) {
@@ -718,14 +718,6 @@ module.exports = function(router) {
     });
   });
 
-  function createRequest(firstName, lastName, username, event, points) {
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.username = username;
-    this.event = event;
-    this.points = points;
-  };
-
   // ENDPOINT TO GRAB ALL OF THE REQUESTS (*)
   router.get('/getrequests', function(req, res) {
     Request.find({
@@ -961,18 +953,19 @@ module.exports = function(router) {
   // ENDPOINT TO RETRIEVE TABLE WITH COUNT OF MEMBER YEARS
   router.get('/getmemberyearstat', function(req, res) {
     User.aggregate([{
-      $group: {
-        _id: '$year',
-        count: {
-          $sum: 1
+        $group: {
+          _id: '$year',
+          count: {
+            $sum: 1
+          }
+        }
+      },
+      {
+        $sort: {
+          count: -1
         }
       }
-    },
-    {
-      $sort: {
-        count: -1
-      }
-    }], function(err, result) {
+    ], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -985,18 +978,19 @@ module.exports = function(router) {
   // ENDPOINT TO RETRIEVE TABLE WITH COUNT OF MEMBER NATIONALITIES
   router.get('/getmembernationalitystat', function(req, res) {
     User.aggregate([{
-      $group: {
-        _id: '$nationality',
-        count: {
-          $sum: 1
+        $group: {
+          _id: '$nationality',
+          count: {
+            $sum: 1
+          }
+        }
+      },
+      {
+        $sort: {
+          count: -1
         }
       }
-    },
-    {
-      $sort: {
-        count: -1
-      }
-    }], function(err, result) {
+    ], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -1009,18 +1003,19 @@ module.exports = function(router) {
   // ENDPOINT TO RETRIEVE TABLE WITH COUNT OF MEMBER SEXES
   router.get('/getmembersexstat', function(req, res) {
     User.aggregate([{
-      $group: {
-        _id: '$sex',
-        count: {
-          $sum: 1
+        $group: {
+          _id: '$sex',
+          count: {
+            $sum: 1
+          }
+        }
+      },
+      {
+        $sort: {
+          count: -1
         }
       }
-    },
-    {
-      $sort: {
-        count: -1
-      }
-    }], function(err, result) {
+    ], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -1033,18 +1028,19 @@ module.exports = function(router) {
   // ENDPOINT TO RETRIEVE TABLE WITH COUNT OF MEMBER ETHNICITIES
   router.get('/getmemberethnicitystat', function(req, res) {
     User.aggregate([{
-      $group: {
-        _id: '$ethnicity',
-        count: {
-          $sum: 1
+        $group: {
+          _id: '$ethnicity',
+          count: {
+            $sum: 1
+          }
+        }
+      },
+      {
+        $sort: {
+          count: -1
         }
       }
-    },
-    {
-      $sort: {
-        count: -1
-      }
-    }], function(err, result) {
+    ], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -1061,12 +1057,30 @@ module.exports = function(router) {
     }, function(err, alumni) {
       if (err) throw err;
 
-      console.log(alumni);
-
       res.json({
         message: alumni,
         success: true
       });
+    });
+  });
+
+  router.get('/getcitycoordinates', function(req, res) {
+    Alumni.find({
+
+    }).select('city state country').exec(function(err, alumni) {
+      if (err) throw err;
+
+      var locations = [];
+
+      for (var i = 0; i < alumni.length; i++) {
+        locations.push(alumni[i].city + ", " + alumni[i].state);
+      }
+
+      res.json({
+        message: locations,
+        success: true
+      });
+
     });
   });
 
