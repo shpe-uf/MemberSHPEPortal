@@ -21,16 +21,19 @@ angular.module('alumniController', [])
         function createMap(error, response) {
           var map = L.mapquest.map('map', {
             layers: L.mapquest.tileLayer('map'),
-            center: [39.50, -98.35],
+            center: [39.8283, -98.5795],
             zoom: 4.4
           });
 
-          var featureGroup = generateMarkers(response);
+          var featureGroup = generateMarkers(response, app.alumniArray);
           featureGroup.addTo(map);
         }
 
-        function generateMarkers(response) {
+        function generateMarkers(response, alumniArray) {
           var group = [];
+
+          console.log(alumniArray);
+
           for (var i = 0; i < response.results.length; i++) {
             var location = response.results[i].locations[0];
             var locationLatLng = location.latLng;
@@ -39,7 +42,7 @@ angular.module('alumniController', [])
             var marker = L.marker(locationLatLng, {
                 icon: L.mapquest.icons.marker()
               })
-              .bindPopup(location.adminArea5 + ', ' + location.adminArea3);
+              .bindPopup("<p>" + alumniArray[i].name + "</p>");
 
             group.push(marker);
           }
@@ -48,4 +51,5 @@ angular.module('alumniController', [])
       }
 
     });
+
   });
