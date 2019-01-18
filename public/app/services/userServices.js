@@ -110,5 +110,9 @@ angular.module('userServices', [])
       return $http.get('api/getalumni/');
     };
 
+    userFactory.getCoordinates = function() {
+      return $http.get('api/getcoordinates/');
+    };
+
     return userFactory;
   });

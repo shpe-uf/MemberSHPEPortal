@@ -7,6 +7,7 @@ var Alumni = require('../models/alumni');
 var jwt = require('jsonwebtoken');
 var secret = 'loremipsum';
 var nodemailer = require('nodemailer');
+var nodeGeocoder = require('node-geocoder');
 
 module.exports = function(router) {
 
@@ -17,6 +18,13 @@ module.exports = function(router) {
       pass: process.env.PASS
     }
   });
+
+  var options = {
+    provider: 'mapquest',
+    httpAdapter: 'https',
+    apiKey: process.env.MQ_KEY,
+    formatter: null
+  };
 
   // ENDPOINT TO CREATE/REGISTER USERS
   router.post('/users', function(req, res) {
@@ -961,18 +969,19 @@ module.exports = function(router) {
   // ENDPOINT TO RETRIEVE TABLE WITH COUNT OF MEMBER YEARS
   router.get('/getmemberyearstat', function(req, res) {
     User.aggregate([{
-      $group: {
-        _id: '$year',
-        count: {
-          $sum: 1
+        $group: {
+          _id: '$year',
+          count: {
+            $sum: 1
+          }
+        }
+      },
+      {
+        $sort: {
+          count: -1
         }
       }
-    },
-    {
-      $sort: {
-        count: -1
-      }
-    }], function(err, result) {
+    ], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -985,18 +994,19 @@ module.exports = function(router) {
   // ENDPOINT TO RETRIEVE TABLE WITH COUNT OF MEMBER NATIONALITIES
   router.get('/getmembernationalitystat', function(req, res) {
     User.aggregate([{
-      $group: {
-        _id: '$nationality',
-        count: {
-          $sum: 1
+        $group: {
+          _id: '$nationality',
+          count: {
+            $sum: 1
+          }
+        }
+      },
+      {
+        $sort: {
+          count: -1
         }
       }
-    },
-    {
-      $sort: {
-        count: -1
-      }
-    }], function(err, result) {
+    ], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -1009,18 +1019,19 @@ module.exports = function(router) {
   // ENDPOINT TO RETRIEVE TABLE WITH COUNT OF MEMBER SEXES
   router.get('/getmembersexstat', function(req, res) {
     User.aggregate([{
-      $group: {
-        _id: '$sex',
-        count: {
-          $sum: 1
+        $group: {
+          _id: '$sex',
+          count: {
+            $sum: 1
+          }
+        }
+      },
+      {
+        $sort: {
+          count: -1
         }
       }
-    },
-    {
-      $sort: {
-        count: -1
-      }
-    }], function(err, result) {
+    ], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -1033,18 +1044,19 @@ module.exports = function(router) {
   // ENDPOINT TO RETRIEVE TABLE WITH COUNT OF MEMBER ETHNICITIES
   router.get('/getmemberethnicitystat', function(req, res) {
     User.aggregate([{
-      $group: {
-        _id: '$ethnicity',
-        count: {
-          $sum: 1
+        $group: {
+          _id: '$ethnicity',
+          count: {
+            $sum: 1
+          }
+        }
+      },
+      {
+        $sort: {
+          count: -1
         }
       }
-    },
-    {
-      $sort: {
-        count: -1
-      }
-    }], function(err, result) {
+    ], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -1060,10 +1072,43 @@ module.exports = function(router) {
 
     }, function(err, alumni) {
       if (err) throw err;
-      
+
       res.json({
         message: alumni,
         success: true
+      });
+    });
+  });
+
+  router.get('/getcoordinates', function(req, res) {
+    Alumni.find({
+
+    }).select('city state country').exec(function(err, alumni) {
+      if (err) throw err;
+
+      var locations = [];
+      var coordinates = [];
+
+      for (var i = 0; i < alumni.length; i++) {
+        locations.push(alumni[i].city + ", " + alumni[i].state);
+      }
+
+      var geocoder = nodeGeocoder(options);
+
+      geocoder.batchGeocode(locations, function(err, results) {
+        if (results) {
+          for (var i = 0; i < results.length; i++) {
+            var temp = [];
+            temp.push(results[i].value[0].latitude);
+            temp.push(results[i].value[0].longitude);
+            coordinates.push(temp);
+          }
+
+          res.json({
+            message: coordinates,
+            success: true
+          });
+        }
       });
     });
   });
