@@ -8,6 +8,10 @@
   src: url(../fonts/Avenir-Book.otf);
 }
 
+* {
+  font-family: 'Avenir';
+}
+
 body {
   color: rgb(45, 45, 45);
   font-family: 'Avenir';
@@ -30,6 +34,7 @@ h1, h2, h3, h4, h5 {
 
 span {
   color: rgb(235, 70, 22);
+  font-family: 'Uni Neue';
 }
 
 hr {
@@ -317,8 +322,8 @@ iframe {
     transform: scale3D(0, 0, 1);
   }
 }
-/* LOGOUT LOADER */
 
+/* LOGOUT LOADER */
 #mapid {
   height: 540px;
   width: 100%;
@@ -329,4 +334,5 @@ iframe {
   text-transform: uppercase;
   font-size: 1.2rem;
   color: rgb(235, 70, 22);
+  font-family: 'Avenir';
 }

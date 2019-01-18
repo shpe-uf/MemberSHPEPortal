@@ -21,7 +21,7 @@ angular.module('alumniController', [])
 
       for (var i = 0; i < app.coordinates.length; i++) {
         marker = new L.marker(app.coordinates[i])
-          .bindPopup("<strong class='all-caps'>" + app.alumniArray[i].name + "</strong> <br> <strong>Employer:</strong> " + app.alumniArray[i].employer + "<br> <strong>Position/Title:</strong> " + app.alumniArray[i].position + "<br> <strong>Undergrad. Degree:</strong> " + app.alumniArray[i].undergrad + "<br> <strong>Grad. Degree:</strong> " + app.alumniArray[i].grad + "</strong> <br> <strong>Country of Origin:</strong> " + app.alumniArray[i].nationality + "</strong> <br> <strong>LinkedIn Profile:</strong> " + "<a href='" + app.alumniArray[i].linkedIn + "' target='_blank'> View Profile </a>")
+          .bindPopup("<strong class='all-caps'>" + app.alumniArray[i].name + "</strong> <br> <strong>Location:</strong> " + app.alumniArray[i].city + ", " + app.alumniArray[i].state + "<br> <strong>Employer:</strong> " + app.alumniArray[i].employer + "<br> <strong>Position/Title:</strong> " + app.alumniArray[i].position + "<br> <strong>Undergrad. Degree:</strong> " + app.alumniArray[i].undergrad + "<br> <strong>Grad. Degree:</strong> " + app.alumniArray[i].grad + "</strong> <br> <strong>Country of Origin:</strong> " + app.alumniArray[i].nationality + "</strong> <br> <strong>LinkedIn Profile:</strong> " + "<a href='" + app.alumniArray[i].linkedIn + "' target='_blank'> View Profile </a>")
           .addTo(mymap);
       }
     });
