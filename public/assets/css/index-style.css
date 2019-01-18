@@ -317,10 +317,4 @@ iframe {
     transform: scale3D(0, 0, 1);
   }
 }
-
 /* LOGOUT LOADER */
-.map {
-  height: 600px;
-  width: 100%;
-  margin-bottom: 30px;
-}

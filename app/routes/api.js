@@ -1060,9 +1060,7 @@ module.exports = function(router) {
 
     }, function(err, alumni) {
       if (err) throw err;
-
-      console.log(alumni);
-
+      
       res.json({
         message: alumni,
         success: true
