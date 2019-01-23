@@ -53,6 +53,14 @@ var AlumniSchema = new Schema({
   linkedIn: {
     type: String,
     required: true
+  },
+  coordinates: {
+    longitude: {
+      type: Number
+    },
+    latitude: {
+      type: Number
+    }
   }
 });
 
