@@ -26,6 +26,56 @@ module.exports = function(router) {
     formatter: null
   };
 
+  // ENDPOINT TO ADD ALUMNI COORDINATES
+  router.get('/alumnicoordinates', function(req, res) {
+    Alumni.find({
+
+    }).select('id city state country').exec(function(err, alumni) {
+      if (err) throw err;
+
+      var locations = [];
+      var coordinates = [];
+
+      for (var i = 0; i < alumni.length; i++) {
+        locations.push(alumni[i].city + ", " + alumni[i].state + ", " + alumni[i].country);
+      }
+
+      var geocoder = nodeGeocoder(options);
+
+      geocoder.batchGeocode(locations, function(err, results) {
+        if (err) throw err;
+
+        if (results) {
+          for (var i = 0; i < results.length; i++) {
+            var temp = [];
+            var north = Math.random() * 0.007;
+            var south = -1 * Math.random() * 0.007;
+            var east = Math.random() * 0.007;
+            var west = -1 * Math.random() * 0.007;
+            temp.push(results[i].value[0].latitude + east + west);
+            temp.push(results[i].value[0].longitude + north + south);
+            coordinates.push(temp);
+          }
+
+          for (var i = 0; i < coordinates.length; i++) {
+            Alumni.update({
+              _id: alumni[i].id
+            }, {
+              coordinates: {
+                latitude: coordinates[i][0],
+                longitude: coordinates[i][1]
+              },
+            }, {
+              multi: true
+            }, function(err, updatedAlumni) {
+              if (err) throw err;
+            });
+          }
+        }
+      });
+    });
+  });
+
   // ENDPOINT TO CREATE/REGISTER USERS
   router.post('/users', function(req, res) {
     var user = new User();
@@ -1080,35 +1130,25 @@ module.exports = function(router) {
     });
   });
 
+  // ENDPOINT TO GENERATE ALUMNI COORDINATES
   router.get('/getcoordinates', function(req, res) {
     Alumni.find({
 
-    }).select('city state country').exec(function(err, alumni) {
+    }).select('coordinates').exec(function(err, alumni) {
       if (err) throw err;
 
-      var locations = [];
-      var coordinates = [];
+      var coordinatesArray = [];
 
       for (var i = 0; i < alumni.length; i++) {
-        locations.push(alumni[i].city + ", " + alumni[i].state);
+        var temp = [];
+        temp.push(alumni[i].coordinates.latitude);
+        temp.push(alumni[i].coordinates.longitude);
+        coordinatesArray.push(temp);
       }
 
-      var geocoder = nodeGeocoder(options);
-
-      geocoder.batchGeocode(locations, function(err, results) {
-        if (results) {
-          for (var i = 0; i < results.length; i++) {
-            var temp = [];
-            temp.push(results[i].value[0].latitude);
-            temp.push(results[i].value[0].longitude);
-            coordinates.push(temp);
-          }
-
-          res.json({
-            message: coordinates,
-            success: true
-          });
-        }
+      res.json({
+        message: coordinatesArray,
+        success: true
       });
     });
   });
