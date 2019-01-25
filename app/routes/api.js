@@ -1146,9 +1146,6 @@ module.exports = function(router) {
         coordinatesArray.push(temp);
       }
 
-      console.log("\n\n\nCOORDINATES:");
-      console.log(coordinatesArray);
-
       res.json({
         message: coordinatesArray,
         success: true
