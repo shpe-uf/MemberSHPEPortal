@@ -7,23 +7,26 @@ angular.module('alumniController', [])
 
     User.getAlumni().then(function(data) {
       app.alumniArray = data.data.message;
-    });
 
-    User.getCoordinates().then(function(data) {
-      app.coordinates = data.data.message;
+      User.getCoordinates().then(function(data) {
+        app.coordinates = data.data.message;
+        console.log(app.coordinates);
 
-      var mymap = L.map('mapid').setView([39.8283, -98.5795], 4);
+        var mymap = L.map('mapid').setView([39.8283, -98.5795], 4);
 
-      L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-        maxZoom: 18,
-        id: 'mapbox.emerald'
-      }).addTo(mymap);
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+          maxZoom: 18,
+          id: 'mapbox.emerald'
+        }).addTo(mymap);
 
-      for (var i = 0; i < app.coordinates.length; i++) {
-        marker = new L.marker(app.coordinates[i])
+        for (var i = 0; i < app.coordinates.length; i++) {
+          marker = new L.marker(app.coordinates[i])
+          // .bindPopup("HELLO WORLD")
+          // .addTo(mymap);
           .bindPopup("<strong class='all-caps'>" + app.alumniArray[i].name + "</strong> <br> <strong>Location:</strong> " + app.alumniArray[i].city + ", " + app.alumniArray[i].state + "<br> <strong>Employer:</strong> " + app.alumniArray[i].employer + "<br> <strong>Position/Title:</strong> " + app.alumniArray[i].position + "<br> <strong>Undergrad. Degree:</strong> " + app.alumniArray[i].undergrad + "<br> <strong>Grad. Degree:</strong> " + app.alumniArray[i].grad + "</strong> <br> <strong>Country of Origin:</strong> " + app.alumniArray[i].nationality + "</strong> <br> <strong>LinkedIn Profile:</strong> " + "<a href='" + app.alumniArray[i].linkedIn + "' target='_blank'> View Profile </a>")
           .addTo(mymap);
-      }
+        }
+      });
     });
 
   });

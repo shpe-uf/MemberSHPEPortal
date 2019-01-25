@@ -43,6 +43,8 @@ module.exports = function(router) {
       var geocoder = nodeGeocoder(options);
 
       geocoder.batchGeocode(locations, function(err, results) {
+        if (err) throw err;
+
         if (results) {
           for (var i = 0; i < results.length; i++) {
             var temp = [];
@@ -56,9 +58,6 @@ module.exports = function(router) {
           }
 
           for (var i = 0; i < coordinates.length; i++) {
-            console.log("id: \t\t" + alumni[i].id);
-            console.log("coordinates: \t" + coordinates[i]);
-
             Alumni.update({
               _id: alumni[i].id
             }, {
@@ -70,9 +69,6 @@ module.exports = function(router) {
               multi: true
             }, function(err, updatedAlumni) {
               if (err) throw err;
-
-              console.log(updatedAlumni);
-
             });
           }
         }
@@ -1138,32 +1134,24 @@ module.exports = function(router) {
   router.get('/getcoordinates', function(req, res) {
     Alumni.find({
 
-    }).select('city state country').exec(function(err, alumni) {
+    }).select('coordinates').exec(function(err, alumni) {
       if (err) throw err;
 
-      var locations = [];
-      var coordinates = [];
+      var coordinatesArray = [];
 
       for (var i = 0; i < alumni.length; i++) {
-        locations.push(alumni[i].city + ", " + alumni[i].state);
+        var temp = [];
+        temp.push(alumni[i].coordinates.latitude);
+        temp.push(alumni[i].coordinates.longitude);
+        coordinatesArray.push(temp);
       }
 
-      var geocoder = nodeGeocoder(options);
+      console.log("\n\n\nCOORDINATES:");
+      console.log(coordinatesArray);
 
-      geocoder.batchGeocode(locations, function(err, results) {
-        if (results) {
-          for (var i = 0; i < results.length; i++) {
-            var temp = [];
-            temp.push(results[i].value[0].latitude);
-            temp.push(results[i].value[0].longitude);
-            coordinates.push(temp);
-          }
-
-          res.json({
-            message: coordinates,
-            success: true
-          });
-        }
+      res.json({
+        message: coordinatesArray,
+        success: true
       });
     });
   });
