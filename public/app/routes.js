@@ -82,8 +82,8 @@ var app = angular.module('appRoutes', ['ngRoute'])
         authenticated: false
       })
 
-      .when('/loaderio-213b0a5c28f06dc325df2ec296c22171', {
-        templateUrl: 'app/views/pages/loaderTest/loaderio-213b0a5c28f06dc325df2ec296c22171.html'
+      .when('/zohoverify/verifyforzoho.html', {
+        templateUrl: 'app/views/pages/verifyforzoho.html'
       })
 
       .when('/privacy', {
