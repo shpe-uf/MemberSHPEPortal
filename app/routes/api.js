@@ -7,19 +7,17 @@ var Alumni = require('../models/alumni');
 var jwt = require('jsonwebtoken');
 var secret = process.env.SECRET;
 var nodemailer = require('nodemailer');
-var sgTransport = require('nodemailer-sendgrid-transport');
 var nodeGeocoder = require('node-geocoder');
 
 module.exports = function(router) {
 
-  var sgOptions = {
+  var transporter = nodemailer.createTransport({
+    service: process.env.SERVICE,
     auth: {
-      api_user: process.env.SG_USER,
-      api_key: process.env.SG_PASS
+      user: process.env.USER,
+      pass: process.env.PASS
     }
-  }
-
-  var sgClient = nodemailer.createTransport(sgTransport(sgOptions));
+  });
 
   var ngcOptions = {
     provider: 'mapquest',
@@ -331,14 +329,15 @@ module.exports = function(router) {
               to: user.email,
               subject: 'MemberSHPE UF Username Request',
               text: 'Hello ' + user.firstName + ', \n\nYou have requested the username for your MemberSHPE UF account.\n\n Your username is: ' + user.username + '\n\nIf you think it was sent incorrectly, please contact an officer.\n\nMemberSHPE Team',
-              html: 'Hello<strong> ' + user.firstName + '</strong>,<br><br>You have requested the username for your MemberSHPE UF account.<br><br> Your username is: <strong>' + user.username + '</strong><br><br>If you think it was sent incorrectly, please contact an officer.<br><br><strong>MemberSHPE Team</strong>'
+              html: 'Hello<strong> ' + user.firstName + '</strong>,<br><br>You have requested the username for your MemberSHPE UF account.<br><br> Your username is: <strong>' + user.username + '</strong><br><br>If you think it was sent incorrectly, please contact a SHPE UF officer.<br><br><strong>MemberSHPE Team</strong>'
             };
 
-            sgClient.sendMail(email, function(err, info) {
+            transporter.sendMail(email, function(err, info) {
               if (err) {
                 console.log(err);
+                throw err;
               } else {
-                console.log('EMAIL SENT: ' + info.message);
+                console.log("EMAIL SENT");
                 res.json({
                   success: true,
                   message: 'Username has been sent to email.'
@@ -387,18 +386,18 @@ module.exports = function(router) {
               html: 'Hello<strong> ' + user.firstName + '</strong>,<br><br>You recently requested a password reset link. Please click on the link below to reset your password:<br><br><a href="http://membershpeuf.herokuapp.com/reset/' + user.resettoken + '">Password Reset Link</a>'
             };
 
-            sgClient.sendMail(email, function(err, info) {
+            transporter.sendMail(email, function(err, info) {
               if (err) {
                 console.log(err);
+                throw err;
               } else {
-                console.log('EMAIL SENT: ' + info.message);
+                console.log("EMAIL SENT");
                 res.json({
                   success: true,
-                  message: 'Please check your email for password reset link'
+                  message: 'Reset link has been sent to your email.'
                 });
               }
             });
-
           }
         });
       }
@@ -470,14 +469,15 @@ module.exports = function(router) {
               html: 'Hello<strong> ' + user.firstName + '</strong>,<br><br>This email is to notify you that your password was reset at MemberSHPE UF'
             };
 
-            sgClient.sendMail(email, function(err, info) {
+            transporter.sendMail(email, function(err, info) {
               if (err) {
                 console.log(err);
+                throw err;
               } else {
-                console.log('EMAIL SENT: ' + info.message);
+                console.log("EMAIL SENT");
                 res.json({
                   success: true,
-                  message: 'Password has been reset'
+                  message: 'Password has been reset.'
                 });
               }
             });
