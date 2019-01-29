@@ -5,7 +5,7 @@ var Code = require('../models/code');
 var Request = require('../models/request');
 var Alumni = require('../models/alumni');
 var jwt = require('jsonwebtoken');
-var secret = 'loremipsum';
+var secret = process.env.SECRET;
 var nodemailer = require('nodemailer');
 var nodeGeocoder = require('node-geocoder');
 
@@ -19,7 +19,7 @@ module.exports = function(router) {
     }
   });
 
-  var options = {
+  var ngcOptions = {
     provider: 'mapquest',
     httpAdapter: 'https',
     apiKey: process.env.MQ_KEY,
@@ -40,7 +40,7 @@ module.exports = function(router) {
         locations.push(alumni[i].city + ", " + alumni[i].state + ", " + alumni[i].country);
       }
 
-      var geocoder = nodeGeocoder(options);
+      var geocoder = nodeGeocoder(ngcOptions);
 
       geocoder.batchGeocode(locations, function(err, results) {
         if (err) throw err;
@@ -73,6 +73,20 @@ module.exports = function(router) {
           }
         }
       });
+    });
+  });
+
+  // ENDPOINT TO GET LISTSERV
+  router.get('/listServ', function(req, res) {
+    User.find({
+      listServ: true
+    }).select('firstName lastName email').exec(function(err, members) {
+      if (err) throw err;
+
+      res.json({
+        message: members,
+        success: true
+      })
     });
   });
 
@@ -314,21 +328,21 @@ module.exports = function(router) {
               from: process.env.USER,
               to: user.email,
               subject: 'MemberSHPE UF Username Request',
-              text: 'Hello ' + user.firstName + ', \n\nYou recently requested your username. Please save it in your files: ' + user.username,
-              html: 'Hello<strong> ' + user.firstName + '</strong>,<br><br>You recently requested your username. Please save it in your files: <strong>' + user.username + '</strong>.'
+              text: 'Hello ' + user.firstName + ', \n\nYou have requested the username for your MemberSHPE UF account.\n\n Your username is: ' + user.username + '\n\nIf you think it was sent incorrectly, please contact an officer.\n\nMemberSHPE Team',
+              html: 'Hello<strong> ' + user.firstName + '</strong>,<br><br>You have requested the username for your MemberSHPE UF account.<br><br> Your username is: <strong>' + user.username + '</strong><br><br>If you think it was sent incorrectly, please contact a SHPE UF officer.<br><br><strong>MemberSHPE Team</strong>'
             };
 
             transporter.sendMail(email, function(err, info) {
               if (err) {
                 console.log(err);
+                throw err;
               } else {
-                console.log('Email sent: ' + info.response);
+                console.log("EMAIL SENT");
+                res.json({
+                  success: true,
+                  message: 'Username has been sent to email.'
+                });
               }
-            });
-
-            res.json({
-              success: true,
-              message: 'Username has been sent to email.'
             });
           }
         }
@@ -364,7 +378,6 @@ module.exports = function(router) {
               message: err
             });
           } else {
-
             var email = {
               from: process.env.USER,
               to: user.email,
@@ -376,14 +389,14 @@ module.exports = function(router) {
             transporter.sendMail(email, function(err, info) {
               if (err) {
                 console.log(err);
+                throw err;
               } else {
-                console.log('Email sent: ' + info.response);
+                console.log("EMAIL SENT");
+                res.json({
+                  success: true,
+                  message: 'Reset link has been sent to your email.'
+                });
               }
-            });
-
-            res.json({
-              success: true,
-              message: 'Please check your email for password reset link'
             });
           }
         });
@@ -459,14 +472,14 @@ module.exports = function(router) {
             transporter.sendMail(email, function(err, info) {
               if (err) {
                 console.log(err);
+                throw err;
               } else {
-                console.log('Email sent: ' + info.response);
+                console.log("EMAIL SENT");
+                res.json({
+                  success: true,
+                  message: 'Password has been reset.'
+                });
               }
-            });
-
-            res.json({
-              success: true,
-              message: 'Password has been reset'
             });
           }
         });
