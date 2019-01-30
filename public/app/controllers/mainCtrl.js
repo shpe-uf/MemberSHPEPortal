@@ -240,5 +240,4 @@ angular.module('mainController', ['authServices', 'userServices'])
         backdrop: "static"
       });
     };
-
   });
