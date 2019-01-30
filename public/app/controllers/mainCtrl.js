@@ -21,12 +21,6 @@ angular.module('mainController', ['authServices', 'userServices'])
     this.closeRequestModal = function(requestData) {
       $('#createRequestModal').modal('hide');
       $window.location.reload();
-
-      // $timeout(function() {
-      // hideModal();
-      // $('.modal-backdrop').remove();
-      // }, 2000);
-
     };
 
     this.createRequest = function(requestData) {
@@ -99,24 +93,29 @@ angular.module('mainController', ['authServices', 'userServices'])
       if (option === 1) {
         app.modalHeader = 'Timeout Warning';
         app.modalBody = 'Your session will expire in 10 minutes. Would you like to renew your session?';
+
         $("#tokenExpire").modal({
           backdrop: "static"
         });
+
         $timeout(function() {
           if (!app.choiceMade) app.endSession();
         }, 10000);
+
       } else if (option === 2) {
         app.hideButton = true;
         app.modalHeader = 'Logging out';
+
         $("#tokenExpire").modal({
           backdrop: "static"
         });
+
         $timeout(function() {
           Auth.logout();
           $location.path('/');
           hideModal();
           $window.location.reload();
-        }, 2000);
+        }, 1000);
       }
     };
 
@@ -196,10 +195,12 @@ angular.module('mainController', ['authServices', 'userServices'])
 
           app.codeArray = [];
 
-          for (var i = 0; i < app.events.length; i++) {
-            User.getCodeInfo(app.events[i]).then(function(codeData) {
-              app.codeArray.push(codeData.data.message);
-            });
+          if (app.events) {
+            for (var i = 0; i < app.events.length; i++) {
+              User.getCodeInfo(app.events[i]).then(function(codeData) {
+                app.codeArray.push(codeData.data.message);
+              });
+            }
           }
         });
 
