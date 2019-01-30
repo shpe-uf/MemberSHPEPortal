@@ -8,50 +8,67 @@
   src: url(../fonts/Avenir-Book.otf);
 }
 
+@font-face {
+  font-family: "Brandon Grotesque";
+  src: url(../fonts/brandon-grotesque.otf);
+}
+
 * {
   font-family: 'Avenir';
 }
 
 body {
-  color: rgb(45, 45, 45);
+  color: #2D2D2D;
   font-family: 'Avenir';
 }
 
+.navbar {
+  border-image: linear-gradient(to right, #EB4616 40%, #00BCE4 60%);
+  border-image-slice: 1;
+  border-width: 3px;
+  border-right-width: 0px;
+  border-left-width: 0px;
+  border-top-width: 0px;
+  border-style: solid;
+}
+
 .navbar-dark, .bg-dark {
-  background-color: rgb(0, 51, 80) !important;
+  background-color: #003350 !important;
 }
 
 .navbar-brand {
-  font-family: 'Uni Neue';
-  font-size: 1.6rem;
+  font-family: 'Brandon Grotesque';
+  font-size: 1.2rem;
+  vertical-align: text-bottom;
 }
 
 .navbar-caps {
-  font-family: 'Uni Neue';
+  font-family: 'Brandon Grotesque';
 }
 
 h1, h2, h3, h4, h5 {
-  color: rgb(235, 70, 22);
-  font-family: 'Uni Neue';
+  color: #EB4616;
+  font-family: 'Brandon Grotesque';
   text-transform: uppercase;
 }
 
-span {
-  color: rgb(235, 70, 22);
+.blue-text {
+  color: #00BCE4;
+  font-family: 'Brandon Grotesque';
 }
 
 hr {
-  background-color: rgb(0, 64, 101);
+  background-color: #004065;
 }
 
 .home-jumbotron {
   background-image: url(../images/home-bg.jpg);
-  background-position: 0% 50%;
+  background-position: 50% 50%;
   background-repeat: no-repeat;
   background-size: cover;
   border-radius: 0px;
-  padding-bottom: 10rem;
-  padding-top: 10rem;
+  padding-bottom: 12rem;
+  padding-top: 12rem;
 }
 
 .jumbotron {
@@ -59,13 +76,11 @@ hr {
 }
 
 .white-text {
-  color: rgb(255, 255, 255);
+  color: #FFFFFF;
 }
 
 .fas-feature {
-  color: rgb(235, 70, 22);
-  padding-bottom: 24px;
-  padding-top: 24px;
+  color: #FFFFFF;
 }
 
 .carousel {
@@ -73,7 +88,7 @@ hr {
 }
 
 .register-container, .login-container, .username-container, .password-container, .reset-container {
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.85);
   padding: 24px 24px 24px 24px;
 }
 
@@ -91,9 +106,6 @@ hr {
 
 .register-bg {
   background-image: url(../images/register-bg.jpg);
-  /* background-position: 0% 50%;
-  background-size: cover;
-  height: 1500px; */
 }
 
 .login-bg {
@@ -119,16 +131,15 @@ hr {
 }
 
 .btn-submit {
-  background-color: rgb(255, 255, 255);
-  border-color: rgb(235, 70, 22);
-  color: rgb(235, 70, 22);
-  /* margin-bottom: 16px; */
+  background-color: #FFFFFF;
+  border-color: #EB4616;
+  color: #EB4616;
 }
 
 .btn-submit:hover {
-  background-color: rgb(235, 70, 22);
-  border-color: rgb(235, 70, 22);
-  color: rgb(255, 255, 255);
+  background-color: #EB4616;
+  border-color: #EB4616;
+  color: #FFFFFF;
 }
 
 .alert {
@@ -152,20 +163,20 @@ hr {
 }
 
 .nav-name {
-  color: rgb(255, 116, 75) !important;
+  color: #00BCE4 !important;
   text-transform: uppercase;
 }
 
 .nav-name:hover {
-  color: rgb(235, 70, 22) !important;
+  color: #0098B9 !important;
 }
 
 .admin-text {
-  color: rgb(255, 116, 75) !important;
+  color: #00BCE4 !important;
 }
 
 .admin-text:hover {
-  color: rgb(235, 70, 22) !important;
+  color: #0098B9 !important;
 }
 
 .tab-pane {
@@ -182,25 +193,25 @@ hr {
 
 th, td {
   border-bottom: solid;
-  border-color: rgb(221, 225, 230) !important;
+  border-color: #DCE0E6 !important;
   border-width: 1px 1px 1px 1px !important;
 }
 
 .card-text {
-  color: rgb(255, 255, 255);
+  color: #FFFFFF;
   font-family: "Avenir";
 }
 
 .bg-points {
-  background-color: #28a745;
+  background-color: #28A745;
 }
 
 .bg-percentile {
-  background-color: #ffc107;
+  background-color: #FFC107;
 }
 
 .bg-stat-1 {
-  background-color: #dc3545;
+  background-color: #DC3545;
 }
 
 .subtitle {
@@ -227,12 +238,12 @@ iframe {
 
 .a {
   text-decoration: none !important;
-  color: rgb(235, 70, 22);
+  color: #EB4616;
 }
 
 .a:hover {
   text-decoration: none !important;
-  color: rgb(235, 70, 22);
+  color: #EB4616;
 }
 
 .attendance-table {
@@ -251,7 +262,7 @@ iframe {
 .sk-cube-grid .sk-cube {
   -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
   animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
-  background-color: rgb(235, 70, 22);
+  background-color: #EB4616;
   float: left;
   height: 33%;
   width: 33%;
@@ -327,6 +338,7 @@ iframe {
 }
 
 /* LOGOUT LOADER */
+
 #mapid {
   height: 540px;
   width: 100%;
@@ -336,6 +348,32 @@ iframe {
 .all-caps {
   text-transform: uppercase;
   font-size: 1.2rem;
-  color: rgb(235, 70, 22);
+  color: #EB4616;
   font-family: 'Avenir';
+}
+
+.white-stroke {
+  color: #EB4616;
+    text-shadow:
+    -1px -1px 0 #FFFFFF,
+    1px -1px 0 #FFFFFF,
+    -1px 1px 0 #FFFFFF,
+    1px 1px 0 #FFFFFF;
+}
+
+.row-rewards, .row-alumni, .row-resume {
+  padding-top: 36px;
+  padding-bottom: 36px
+}
+
+.row-rewards {
+  background-color: #f39174;
+}
+
+.row-alumni {
+  background-color: #f07855;
+}
+
+.row-resume {
+  background-color: #ee5f35;
 }
