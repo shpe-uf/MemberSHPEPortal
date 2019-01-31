@@ -52,11 +52,6 @@ h1, h2, h3, h4, h5 {
   text-transform: uppercase;
 }
 
-.blue-text {
-  color: #00BCE4;
-  font-family: 'Brandon Grotesque';
-}
-
 hr {
   background-color: #004065;
 }
@@ -80,7 +75,6 @@ hr {
 }
 
 .fas-feature {
-  color: #FFFFFF;
   margin-top: 24px;
   margin-bottom: 24px;
 }
@@ -340,7 +334,6 @@ iframe {
 }
 
 /* LOGOUT LOADER */
-
 #mapid {
   height: 540px;
   width: 100%;
@@ -354,28 +347,36 @@ iframe {
   font-family: 'Avenir';
 }
 
-.white-stroke {
-  color: #EB4616;
-    text-shadow:
-    -1px -1px 0 #FFFFFF,
-    1px -1px 0 #FFFFFF,
-    -1px 1px 0 #FFFFFF,
-    1px 1px 0 #FFFFFF;
-}
-
 .row-rewards, .row-alumni, .row-resume {
-  padding-top: 36px;
-  padding-bottom: 36px
+  padding-top: 12px;
+  padding-bottom: 12px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  border-style: solid;
+  border-radius: 10px;
+  border-width: 3px;
 }
 
 .row-rewards {
-  background-color: #f39174;
+  border-color: #003050;
 }
 
 .row-alumni {
-  background-color: #f07855;
+  border-color: #EB4616;
 }
 
 .row-resume {
-  background-color: #ee5f35;
+  border-color: #00BCE4;
+}
+
+.navy {
+  color: #003050;
+}
+
+.orange {
+  color: #EB4616;
+}
+
+.turquoise {
+  color: #00BCE4;
 }
