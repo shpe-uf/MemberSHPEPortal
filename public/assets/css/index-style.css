@@ -86,6 +86,7 @@ hr {
 .register-container, .login-container, .username-container, .password-container, .reset-container {
   background-color: rgba(255, 255, 255, 0.85);
   padding: 24px 24px 24px 24px;
+  border-radius: 12px;
 }
 
 .custom-container {
@@ -211,7 +212,7 @@ th, td {
 }
 
 .subtitle {
-  color: rgb(45, 45, 45);
+  color: #2D2D2D;
   font-family: "Avenir";
   text-transform: capitalize;
 }
@@ -353,7 +354,7 @@ iframe {
   margin-top: 6px;
   margin-bottom: 6px;
   border-style: solid;
-  border-radius: 10px;
+  border-radius: 12px;
   border-width: 3px;
 }
 
@@ -379,4 +380,20 @@ iframe {
 
 .turquoise {
   color: #00BCE4;
+}
+
+.custom-control-label::after {
+  position: absolute;
+  top: .25rem;
+  left: -1.5rem;
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  content: "";
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50% 50%;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #2D2D2D;
 }

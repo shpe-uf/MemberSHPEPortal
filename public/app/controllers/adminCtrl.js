@@ -24,8 +24,6 @@ angular.module('adminController', [])
 
     this.closeCreateEventModal = function(eventData) {
       $('#createEventModal').modal('hide');
-      // app.eventData.name = '';
-      // app.eventData.code = '';
       app.eventData.type = '';
     };
 
@@ -132,19 +130,13 @@ angular.module('adminController', [])
     this.acceptRequest = function(approveData) {
       app.isClicked = true;
       User.approveRequest(approveData).then(function(data) {});
-
-      // $timeout(function() {
       $window.location.reload();
-      // }, 1500);
     };
 
     this.denyRequest = function(denyData) {
       app.isClicked = true;
       User.denyRequest(denyData).then(function(data) {});
-
-      // $timeout(function() {
       $window.location.reload();
-      // }, 1500);
     };
 
     User.getUsers().then(function(data) {
