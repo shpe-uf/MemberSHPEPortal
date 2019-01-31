@@ -29,7 +29,15 @@
               <p class="card-text">PERCENTILE</p>
             </div>
           </div>
-          <div class="card bg-stat-1" ng-click="main.openPointsSystemModal()">
+          <div class="card bg-medals" ng-click="main.openMedalsModal()">
+            <div class="card-body text-center">
+              <h1 class="card-text stat-text">
+                <i class="fas fa-medal"></i>
+              </h1>
+              <p class="card-text">MEDALS</p>
+            </div>
+          </div>
+          <div class="card bg-system" ng-click="main.openPointsSystemModal()">
             <div class="card-body text-center">
               <h1 class="card-text stat-text">
                 <i class="fas fa-trophy"></i>
@@ -91,11 +99,67 @@
           <div class="row">
             <div class="col-sm-12">
               <button type="submit" class="btn btn-success" ng-if="main.showModal">Submit</button>
-              <button type="reset" class="btn btn-danger"  ng-click="main.closeRequestModal(requestData)">Close</button>
+              <button type="reset" class="btn btn-danger" ng-click="main.closeRequestModal(requestData)">Close</button>
             </div>
           </div>
         </form>
 
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MEDALS MODAL -->
+<div class="modal fade" id="medalsModal" aria-labelledby="medalsModalLabel">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="medalsModalLabel">Medals</h3>
+      </div>
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="col-4">
+            <div ng-show="main.points >= 25">
+              <img class="img-fluid medal" src="../../../../assets/images/medals/points_bronze.png">
+              <figcaption class="figure-caption text-center">Get 25 points</figcaption>
+            </div>
+            <div ng-hide="main.points >= 25">
+              <img class="img-fluid medal" src="../../../../assets/images/medals/blank_medal.png">
+              <figcaption class="figure-caption text-center">Description hidden</figcaption>
+            </div>
+          </div>
+
+          <div class="col-4">
+            <div ng-show="main.points >= 50">
+              <img class="img-fluid medal" src="../../../../assets/images/medals/points_silver.png">
+              <figcaption class="figure-caption text-center">Get 50 points</figcaption>
+            </div>
+            <div ng-hide="main.points >= 50">
+              <img class="img-fluid medal" src="../../../../assets/images/medals/blank_medal.png">
+              <figcaption class="figure-caption text-center">Description hidden</figcaption>
+            </div>
+          </div>
+
+          <div class="col-4">
+            <div ng-show="main.points >= 100">
+              <img class="img-fluid medal" src="../../../../assets/images/medals/points_gold.png">
+              <figcaption class="figure-caption text-center">Get 100 points</figcaption>
+            </div>
+            <div ng-hide="main.points >= 100">
+              <img class="img-fluid medal" src="../../../../assets/images/medals/blank_medal.png">
+              <figcaption class="figure-caption text-center">Description hidden</figcaption>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <button type="reset" class="btn btn-danger float-right" ng-click="main.closeMedalsModal()">Close</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -152,6 +216,7 @@
           </tr>
         </table>
         <p>* These points must be approved by an officer.</p>
+
         <div class="row">
           <div class="col-sm-12">
             <button type="reset" class="btn btn-danger float-right" ng-click="main.closePointsSystemModal()">Close</button>

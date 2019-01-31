@@ -39,6 +39,17 @@ angular.module('mainController', ['authServices', 'userServices'])
       app.requestData = '';
     };
 
+    this.openMedalsModal = function() {
+      $("#medalsModal").modal({
+        backdrop: 'static',
+        keyboard: false
+      });
+    }
+
+    this.closeMedalsModal = function() {
+      $('#medalsModal').modal('hide');
+    }
+
     this.openPointsSystemModal = function() {
       $("#pointsSystemModal").modal({
         backdrop: 'static',

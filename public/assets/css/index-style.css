@@ -207,8 +207,12 @@ th, td {
   background-color: #FFC107;
 }
 
-.bg-stat-1 {
+.bg-medals {
   background-color: #DC3545;
+}
+
+.bg-system {
+  background-color: #7D3F98;
 }
 
 .subtitle {
@@ -396,4 +400,8 @@ iframe {
   border-width: 2px;
   border-style: solid;
   border-color: #2D2D2D;
+}
+
+.medal {
+  margin-bottom: 12px;
 }
