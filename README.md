@@ -32,8 +32,8 @@ Official MemberSHPE UF website for the Society of Hispanic Professional Engineer
     - [x] Send request for points (#)
     - [X] View points redeemed and approved (#)
 4. Alumni Directory
-    - [ ] Integrate Google Maps API
-    - [ ] Email and collect alumni information
+    - [X] Provide map view of alumni locations
+    - [X] Email and collect alumni information
 5. Résumé Repository
     - [ ] Link to Google Drive
     - [ ] Link résumé to the user
@@ -41,6 +41,6 @@ Official MemberSHPE UF website for the Society of Hispanic Professional Engineer
 
 ## Team Members:
 - César González (Scrum Master)
-- Jairo Rivas
 - Ashley Conrado
+- Eduardo Graziano
 - Jonathan Morales
