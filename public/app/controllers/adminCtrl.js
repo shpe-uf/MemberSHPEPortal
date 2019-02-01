@@ -139,14 +139,16 @@ angular.module('adminController', [])
 
     this.acceptRequest = function(approveData) {
       app.isClicked = true;
-      User.approveRequest(approveData).then(function(data) {});
-      $window.location.reload();
+      User.approveRequest(approveData).then(function(data) {
+        $window.location.reload();
+      });
     };
 
     this.denyRequest = function(denyData) {
       app.isClicked = true;
-      User.denyRequest(denyData).then(function(data) {});
-      $window.location.reload();
+      User.denyRequest(denyData).then(function(data) {
+        $window.location.reload();
+      });
     };
 
     User.getUsers().then(function(data) {
