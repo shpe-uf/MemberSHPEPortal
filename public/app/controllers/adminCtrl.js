@@ -32,37 +32,8 @@ angular.module('adminController', [])
       app.errorMsg = false;
 
       User.createCode(app.eventData).then(function(data) {
-
-        console.log("RECEIVED FROM BACKEND:");
-        console.log(data.data.message);
-
         if (data.data.success) {
           app.successMsg = "Success! Event created!";
-
-          // var newEventPoints = 0;
-          //
-          // if (app.eventData.type == 'General Body Meeting' || app.eventData.type == 'Cabinet Meeting' || app.eventData.type == 'Workshop' || app.eventData.type == 'Social' || app.eventData.type == 'Form/Survey') {
-          //   newEventPoints = 1;
-          // } else if (app.eventData.type == 'Corporate Event') {
-          //   newEventPoints = 2;
-          // } else if (app.eventData.type == 'Fundraiser') {
-          //   newEventPoints = 3;
-          // } else if (app.eventData.type == 'Volunteering') {
-          //   newEventPoints = 4;
-          // } else if (app.eventData.type == 'Miscellaneous') {
-          //   newEventPoints = 5;
-          // } else {
-          //   newEventPoints = 0;
-          // }
-          //
-          // var newEvent = {
-          //   name: app.eventData.name,
-          //   code: app.eventData.code.toLowerCase(),
-          //   type: app.eventData.type,
-          //   expiration: Date.now() + (app.eventData.expiration * 60 * 60 * 1000),
-          //   points: newEventPoints
-          // };
-
           app.codes.push(data.data.message);
           app.showCreateEventModal = false;
         } else {
