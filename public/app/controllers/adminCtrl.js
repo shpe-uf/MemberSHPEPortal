@@ -32,35 +32,9 @@ angular.module('adminController', [])
       app.errorMsg = false;
 
       User.createCode(app.eventData).then(function(data) {
-
         if (data.data.success) {
-          app.successMsg = data.data.message;
-
-          var newEventPoints = 0;
-
-          if (app.eventData.type == 'General Body Meeting' || app.eventData.type == 'Cabinet Meeting' || app.eventData.type == 'Workshop' || app.eventData.type == 'Social' || app.eventData.type == 'Form/Survey') {
-            newEventPoints = 1;
-          } else if (app.eventData.type == 'Corporate Event') {
-            newEventPoints = 2;
-          } else if (app.eventData.type == 'Fundraiser') {
-            newEventPoints = 3;
-          } else if (app.eventData.type == 'Volunteering') {
-            newEventPoints = 4;
-          } else if (app.eventData.type == 'Miscellaneous') {
-            newEventPoints = 5;
-          } else {
-            newEventPoints = 0;
-          }
-
-          var newEvent = {
-            name: app.eventData.name,
-            code: app.eventData.code.toLowerCase(),
-            type: app.eventData.type,
-            expiration: Date.now() + (app.eventData.expiration * 60 * 60 * 1000),
-            points: newEventPoints
-          };
-
-          app.codes.push(newEvent);
+          app.successMsg = "Success! Event created!";
+          app.codes.push(data.data.message);
           app.showCreateEventModal = false;
         } else {
           app.errorMsg = data.data.message;
@@ -123,20 +97,29 @@ angular.module('adminController', [])
 
     this.closeManualInputModal = function(member) {
       $('#manualInputModal').modal('hide');
-      app.member.userName = '';
-      app.errorMsg
+
+      console.log(app.member.userName);
+
+      if (app.member) {
+        app.member.userName = '';
+      }
+
+      app.errorMsg = false;
+      app.successMsg = false;
     };
 
     this.acceptRequest = function(approveData) {
       app.isClicked = true;
-      User.approveRequest(approveData).then(function(data) {});
-      $window.location.reload();
+      User.approveRequest(approveData).then(function(data) {
+        $window.location.reload();
+      });
     };
 
     this.denyRequest = function(denyData) {
       app.isClicked = true;
-      User.denyRequest(denyData).then(function(data) {});
-      $window.location.reload();
+      User.denyRequest(denyData).then(function(data) {
+        $window.location.reload();
+      });
     };
 
     User.getUsers().then(function(data) {
