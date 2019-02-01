@@ -248,7 +248,7 @@ module.exports = function(router) {
         } else {
           res.json({
             success: true,
-            message: "Success! Event created!"
+            message: code
           });
         }
       });
@@ -927,9 +927,6 @@ module.exports = function(router) {
 
   // ENDPOINT TO MANUALLY INPUT POINTS FOR MEMBERS
   router.put('/manualinput', function(req, res) {
-
-    console.log(req.body);
-
     if (req.body.member == null || req.body.member == "" || req.body.member == undefined || req.body.member.userName == null || req.body.member.userName == '' || req.body.member.userName == undefined) {
       res.json({
         success: false,
