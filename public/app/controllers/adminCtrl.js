@@ -68,7 +68,7 @@ angular.module('adminController', [])
         backdrop: 'static'
       });
 
-      app.eventName = eventData
+      app.eventName = eventData;
     }
 
     this.manualInput = function(member) {
