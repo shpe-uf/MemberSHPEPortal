@@ -42,6 +42,10 @@ var CodeSchema = new Schema({
   expiration: {
     type: Date,
     required: true
+  },
+  semester: {
+    type: String,
+    required: ["Spring", "Fall"]
   }
 });
 

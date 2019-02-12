@@ -90,6 +90,43 @@ module.exports = function(router) {
     });
   });
 
+  // ENDPOINT TO ADD SEMESTER FIELD TO CODES MODEL
+  router.put('/addsemester', function(req, res) {
+    Code.find({
+
+    }, function(err, events) {
+      if (err) throw err;
+
+      for (var i = 0; i < events.length; i++) {
+        Code.find({
+          code: events[i].code
+        }, function(err, event) {
+          var eventSemester = "";
+
+          if (event[0].expiration.getMonth() >= 0 && event[0].expiration.getMonth() <= 3) {
+            eventSemester = "Spring";
+          } else if (event[0].expiration.getMonth() >= 4 && event[0].expiration.getMonth() <= 6) {
+            eventSemester = "Summer";
+          } else {
+            eventSemester = "Fall";
+          }
+
+          Code.findOneAndUpdate({
+            code: event[0].code
+          }, {
+            $set: {
+              semester: eventSemester
+            }
+          }, function(err, newEvent) {
+            if (err) throw err;
+          });
+        });
+      };
+
+      res.send("Events updated!");
+    });
+  });
+
   // ENDPOINT TO CREATE/REGISTER USERS
   router.post('/users', function(req, res) {
     var user = new User();
@@ -788,14 +825,6 @@ module.exports = function(router) {
       });
     });
   });
-
-  function createRequest(firstName, lastName, username, event, points) {
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.username = username;
-    this.event = event;
-    this.points = points;
-  };
 
   // ENDPOINT TO GRAB ALL OF THE REQUESTS (*)
   router.get('/getrequests', function(req, res) {
