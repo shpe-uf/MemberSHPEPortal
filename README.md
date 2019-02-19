@@ -26,7 +26,7 @@ Official MemberSHPE UF website for the Society of Hispanic Professional Engineer
     - [X] Create Event table on database (#)
 2. My Profile
     - [X] Display user information (#)
-    - [ ] Edit user information
+    - [ ] Edit user information (Jonathan Morales)
 3. Rewards Program
     - [X] Redeem points code (#)
     - [x] Send request for points (#)
