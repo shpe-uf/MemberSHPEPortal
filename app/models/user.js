@@ -97,6 +97,18 @@ var UserSchema = new Schema({
     type: Number,
     default: 0
   },
+  fallPoints: {
+    type: Number,
+    default: 0
+  },
+  springPoints: {
+    type: Number,
+    default: 0
+  },
+  summerPoints: {
+    type: Number,
+    default: 0
+  },
   resettoken: {
     type: String,
     required: false

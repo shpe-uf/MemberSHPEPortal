@@ -45,7 +45,7 @@ var CodeSchema = new Schema({
   },
   semester: {
     type: String,
-    required: ["Spring", "Fall"]
+    required: ["Spring", "Fall", "Summer"]
   }
 });
 

@@ -127,6 +127,69 @@ module.exports = function(router) {
     });
   });
 
+  // ENDPOINT TO RETROACTIVELY SPLIT FALL AND SPRING SEMESTER POINTS
+  router.put('/split', async function(req, res) {
+    User.find({
+
+    }, function(err, users) {
+      if (err) throw err;
+
+      if (users[302].events.length == 0) {
+        User.findOneAndUpdate({
+          username: users[302].username
+        }, {
+          $set: {
+            fallPoints: 0,
+            springPoints: 0,
+            summerPoints: 0
+          }
+        }, function(err, newUser) {
+          if (err) throw err;
+        });
+      } else {
+        var fall = 0;
+        var spring = 0;
+        var summer = 0;
+
+        console.log("USERNAME: " + users[302].username);
+        for (var j = 0; j < users[302].events.length; j++) {
+          Code.findOne({
+            _id: users[302].events[j]._id
+          }, function(err, code) {
+            if (err) throw err;
+
+            if (code.semester == "Fall") {
+              fall += code.points;
+              console.log("FALL: " + fall);
+            } else if (code.semester == "Spring") {
+              spring += code.points;
+              console.log("SPRING: " + spring);
+            } else if (code.semester == "Summer") {
+              summer += code.points;
+              console.log("SUMMER: " + summer);
+            }
+          });
+        }
+
+        setTimeout(function() {
+          User.findOneAndUpdate({
+            username: users[302].username
+          }, {
+            $set: {
+              fallPoints: fall,
+              springPoints: spring,
+              summerPoints: summer
+            }
+          }, function(err, newUser) {
+            if (err) throw err;
+          });
+        }, 10000);
+      }
+
+      res.send(users[302]);
+    });
+  });
+
   // ENDPOINT TO CREATE/REGISTER USERS
   router.post('/users', function(req, res) {
     var user = new User();
@@ -234,6 +297,14 @@ module.exports = function(router) {
       }
 
       code.expiration = Date.now() + (req.body.expiration * 60 * 60 * 1000);
+
+      if (code.expiration.getMonth() >= 0 && code.expiration.getMonth() <= 3) {
+        code.semester = "Spring";
+      } else if (code.expiration.getMonth() >= 4 && code.expiration.getMonth() <= 6) {
+        code.semester = "Summer";
+      } else {
+        code.semester = "Fall";
+      }
 
       code.save(function(err) {
         if (err) {
