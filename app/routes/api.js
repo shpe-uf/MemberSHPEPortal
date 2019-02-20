@@ -184,7 +184,7 @@ module.exports = function(router) {
             if (err) throw err;
             res.send(users[userNum]);
           });
-        }, 2000);
+        }, 1000);
       }
     });
   });
@@ -807,34 +807,92 @@ module.exports = function(router) {
                   message: 'Unable to add code to profile'
                 });
               } else {
-
                 if (code.points == 1 && code.type == 'General Body Meeting') {
-                  User.findOneAndUpdate({
-                    username: req.decoded.username,
-                  }, {
-                    $push: {
-                      events: {
-                        _id: code
+                  if (code.semester == "Fall") {
+                    User.findOneAndUpdate({
+                      username: req.decoded.username,
+                    }, {
+                      $push: {
+                        events: {
+                          _id: code
+                        }
+                      },
+                      $inc: {
+                        points: code.points,
+                        fallPoints: code.points
                       }
-                    },
-                    $inc: {
-                      points: code.points
-                    }
-                  }, function(err, user) {
-                    if (err) throw (err);
+                    }, function(err, user) {
+                      if (err) throw (err);
 
-                    if (!user) {
-                      res.json({
-                        success: false,
-                        message: 'Unable to add code to profile'
-                      });
-                    } else {
-                      res.json({
-                        success: true,
-                        message: "Points redeemed!"
-                      });
-                    }
-                  });
+                      if (!user) {
+                        res.json({
+                          success: false,
+                          message: 'Unable to add code to profile'
+                        });
+                      } else {
+                        res.json({
+                          success: true,
+                          message: "Points redeemed!"
+                        });
+                      }
+                    });
+                  } else if (code.semester == "Spring") {
+                    User.findOneAndUpdate({
+                      username: req.decoded.username,
+                    }, {
+                      $push: {
+                        events: {
+                          _id: code
+                        }
+                      },
+                      $inc: {
+                        points: code.points,
+                        springPoints: code.points
+                      }
+                    }, function(err, user) {
+                      if (err) throw (err);
+
+                      if (!user) {
+                        res.json({
+                          success: false,
+                          message: 'Unable to add code to profile'
+                        });
+                      } else {
+                        res.json({
+                          success: true,
+                          message: "Points redeemed!"
+                        });
+                      }
+                    });
+                  } else if (code.semester == "Summer") {
+                    User.findOneAndUpdate({
+                      username: req.decoded.username,
+                    }, {
+                      $push: {
+                        events: {
+                          _id: code
+                        }
+                      },
+                      $inc: {
+                        points: code.points,
+                        summer: code.points
+                      }
+                    }, function(err, user) {
+                      if (err) throw (err);
+
+                      if (!user) {
+                        res.json({
+                          success: false,
+                          message: 'Unable to add code to profile'
+                        });
+                      } else {
+                        res.json({
+                          success: true,
+                          message: "Points redeemed!"
+                        });
+                      }
+                    });
+                  }
                 } else {
 
                   var newRequest = new Request();
@@ -847,6 +905,7 @@ module.exports = function(router) {
                   newRequest.type = code.type;
                   newRequest.points = code.points;
                   newRequest.status = 0;
+                  newRequest.semester = code.semester;
 
                   Request.findOne({
                     userId: user._id,
@@ -939,39 +998,111 @@ module.exports = function(router) {
 
   // ENDPOINT TO APPROVE REQUESTS
   router.put('/approverequest', function(req, res) {
-    User.findOneAndUpdate({
-      username: req.body.username,
-    }, {
-      $push: {
-        events: {
-          _id: req.body.eventId
+    console.log(req.body);
+
+    if (req.body.semester == "Fall") {
+      User.findOneAndUpdate({
+        username: req.body.username,
+      }, {
+        $push: {
+          events: {
+            _id: req.body.eventId
+          }
+        },
+        $inc: {
+          points: req.body.points,
+          fallPoints: req.body.points
         }
-      },
-      $inc: {
-        points: req.body.points
-      }
-    }, function(err, user) {
-      if (err) throw (err);
+      }, function(err, user) {
+        if (err) throw (err);
 
-      if (!user) {
-        res.json({
-          success: false,
-          message: 'Unable to accept request'
-        });
-      } else {
-        res.json({
-          success: true,
-          message: "Points redeemed!"
-        });
-      }
-    });
+        if (!user) {
+          res.json({
+            success: false,
+            message: 'Unable to accept request'
+          });
+        } else {
+          Request.deleteOne({
+            _id: req.body._id
+          }, function(err, deletedRequest) {
+            if (err) throw (err);
 
+            res.json({
+              success: true,
+              message: "Request accepted!"
+            });
+          });
+        }
+      });
+    } else if (req.body.semester == "Spring") {
+      User.findOneAndUpdate({
+        username: req.body.username,
+      }, {
+        $push: {
+          events: {
+            _id: req.body.eventId
+          }
+        },
+        $inc: {
+          points: req.body.points,
+          springPoints: req.body.points
+        }
+      }, function(err, user) {
+        if (err) throw (err);
 
-    Request.deleteOne({
-      _id: req.body._id
-    }, function(err, deletedRequest) {
-      if (err) throw (err);
-    });
+        if (!user) {
+          res.json({
+            success: false,
+            message: 'Unable to accept request'
+          });
+        } else {
+          Request.deleteOne({
+            _id: req.body._id
+          }, function(err, deletedRequest) {
+            if (err) throw (err);
+
+            res.json({
+              success: true,
+              message: "Request accepted!"
+            });
+          });
+        }
+      });
+    } else if (req.body.semester == "Summer") {
+      User.findOneAndUpdate({
+        username: req.body.username,
+      }, {
+        $push: {
+          events: {
+            _id: req.body.eventId
+          }
+        },
+        $inc: {
+          points: req.body.points,
+          summerPoints: req.body.points
+        }
+      }, function(err, user) {
+        if (err) throw (err);
+
+        if (!user) {
+          res.json({
+            success: false,
+            message: 'Unable to accept request'
+          });
+        } else {
+          Request.deleteOne({
+            _id: req.body._id
+          }, function(err, deletedRequest) {
+            if (err) throw (err);
+
+            res.json({
+              success: true,
+              message: "Request accepted!"
+            });
+          });
+        }
+      });
+    }
   });
 
   // ENDPOINT TO DENY REQUESTS
@@ -980,6 +1111,11 @@ module.exports = function(router) {
       _id: req.body._id
     }, function(err, deletedRequest) {
       if (err) throw (err);
+
+      res.json({
+        success: true,
+        message: "Request denied"
+      });
     });
   });
 
@@ -1059,43 +1195,100 @@ module.exports = function(router) {
               message: 'Event code already redeemed by the user.'
             });
           } else {
-
             Code.findOne({
               _id: req.body.eventId
             }).select().exec(function(err, code) {
               console.log(code);
               console.log(user);
 
-              User.findOneAndUpdate({
-                username: user.username
-              }, {
-                $push: {
-                  events: {
-                    _id: code._id
+              if (code.semester == "Fall") {
+                User.findOneAndUpdate({
+                  username: user.username
+                }, {
+                  $push: {
+                    events: {
+                      _id: code._id
+                    }
+                  },
+                  $inc: {
+                    points: code.points,
+                    fallPoints: code.points
                   }
-                },
-                $inc: {
-                  points: code.points
-                }
-              }, function(err, newUser) {
-                if (err) throw err;
+                }, function(err, newUser) {
+                  if (err) throw err;
 
-                if (!newUser) {
-                  res.json({
-                    success: false,
-                    message: "Unable to add event to user"
-                  });
-                } else {
-                  res.json({
-                    success: true,
-                    message: "Points added to user"
-                  });
-                }
-              });
+                  if (!newUser) {
+                    res.json({
+                      success: false,
+                      message: "Unable to add event to user"
+                    });
+                  } else {
+                    res.json({
+                      success: true,
+                      message: "Points added to user"
+                    });
+                  }
+                });
+              } else if (code.semester == "Spring") {
+                User.findOneAndUpdate({
+                  username: user.username
+                }, {
+                  $push: {
+                    events: {
+                      _id: code._id
+                    }
+                  },
+                  $inc: {
+                    points: code.points,
+                    springPoints: code.points
+                  }
+                }, function(err, newUser) {
+                  if (err) throw err;
+
+                  if (!newUser) {
+                    res.json({
+                      success: false,
+                      message: "Unable to add event to user"
+                    });
+                  } else {
+                    res.json({
+                      success: true,
+                      message: "Points added to user"
+                    });
+                  }
+                });
+              } else if (code.semester == "Summer") {
+                User.findOneAndUpdate({
+                  username: user.username
+                }, {
+                  $push: {
+                    events: {
+                      _id: code._id
+                    }
+                  },
+                  $inc: {
+                    points: code.points,
+                    summerPoints: code.points
+                  }
+                }, function(err, newUser) {
+                  if (err) throw err;
+
+                  if (!newUser) {
+                    res.json({
+                      success: false,
+                      message: "Unable to add event to user"
+                    });
+                  } else {
+                    res.json({
+                      success: true,
+                      message: "Points added to user"
+                    });
+                  }
+                });
+              }
             });
           }
         }
-
       });
     }
   });

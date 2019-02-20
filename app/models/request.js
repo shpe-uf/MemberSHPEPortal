@@ -33,6 +33,10 @@ var RequestSchema = new Schema({
   points: {
     type: Number,
     required: true
+  },
+  semester: {
+    type: String,
+    required: ["Spring", "Fall", "Summer"]
   }
 });
 
