@@ -28,13 +28,13 @@
           </div>
         </div>
         <table class="table table-responsive-lg table-striped">
-          <tr>
-            <th ng-click="alumni.sortBy('name', alumni.alumniArray)">Name</th>
-            <th ng-click="alumni.sortBy('undergrad', alumni.alumniArray)">Undegraduate Major</th>
-            <th ng-click="alumni.sortBy('employer', alumni.alumniArray)">Employer</th>
-            <th ng-click="alumni.sortBy('position', alumni.alumniArray)">Title/Position</th>
-            <th ng-click="alumni.sortBy('city', alumni.alumniArray)">Location</th>
-            <th class="text-center">LinkedIn</th>
+          <tr class="table-head">
+            <th ng-click="alumni.sortBy('name', alumni.alumniArray)">NAME</th>
+            <th ng-click="alumni.sortBy('undergrad', alumni.alumniArray)">UNDERGRAD. DEGREE</th>
+            <th ng-click="alumni.sortBy('employer', alumni.alumniArray)">EMPLOYER</th>
+            <th ng-click="alumni.sortBy('position', alumni.alumniArray)">TITLE/POSITION</th>
+            <th ng-click="alumni.sortBy('city', alumni.alumniArray)">LOCATION</th>
+            <th class="text-center">LINKEDIN</th>
           </tr>
           <tr ng-repeat="alumni in alumni.alumniArray | filter: alumniSearchText">
             <td>{{ alumni.name }}</td>
