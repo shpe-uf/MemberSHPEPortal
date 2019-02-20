@@ -184,7 +184,7 @@ module.exports = function(router) {
             if (err) throw err;
             res.send(users[userNum]);
           });
-        }, 1000);
+        }, 5000);
       }
     });
   });
@@ -1121,26 +1121,50 @@ module.exports = function(router) {
 
   // ENDPOINT TO CALCULATE USER POINT PERCENTILE
   router.get('/getpercentile/:username', function(req, res) {
-
-    var userPoints;
-    var totalUsers;
-    var belowUsers = 0;
+    var fallPercentile = 0;
+    var springPercentile = 0;
+    var summerPercentile = 0;
+    var fallBelow = 0;
+    var springBelow = 0;
+    var summerBelow = 0;
 
     User.findOne({
       username: req.decoded.username
-    }).populate().exec(function(err, user) {
-      userPoints = user.points;
-    });
-
-    User.find({
-
-    }).select('points').exec(function(err, userArray) {
+    }, function(err, user) {
       if (err) throw err;
 
-      res.json({
-        success: true,
-        message: userArray
-      });
+      User.find({
+
+     }).select('fallPoints springPoints summerPoints ').exec(function(err, userArray) {
+       if (err) throw err;
+
+       for (var i = 0; i < userArray.length; i++) {
+         if (user.fallPoints > userArray[i].fallPoints) {
+           fallBelow++;
+         }
+         if (user.springPoints > userArray[i].springPoints) {
+           springBelow++;
+         }
+         if (user.summerPoints > userArray[i].summerPoints) {
+           summerBelow++;
+         }
+       }
+
+       fallPercentile = Math.trunc((fallBelow/userArray.length) * 100);
+       springPercentile = Math.trunc((springBelow/userArray.length) * 100);
+       summerPercentile = Math.trunc((summerBelow/userArray.length) * 100);
+       
+       var percentile = {
+         fall: fallPercentile,
+         spring: springPercentile,
+         summer: summerPercentile
+       }
+
+       res.json({
+         success: true,
+         message: percentile
+       });
+     });
     });
   });
 

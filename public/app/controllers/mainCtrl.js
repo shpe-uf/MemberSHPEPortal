@@ -181,18 +181,9 @@ angular.module('mainController', ['authServices', 'userServices'])
 
           User.getPercentile(app.username).then(function(data) {
             if (data.data.success) {
-              var pointsArray = data.data.message;
-              var userPoints = app.points;
-              var totalUsers = pointsArray.length;
-              var belowUsers = 0;
-
-              for (var i = 0; i < pointsArray.length; i++) {
-                if (userPoints > pointsArray[i].points) {
-                  belowUsers += 1;
-                }
-              }
-
-              app.percentile = Math.trunc(((belowUsers / totalUsers) * 100));
+              app.fallPercentile = data.data.message.fall;
+              app.springPercentile = data.data.message.spring;
+              app.summerPercentile = data.data.message.summer;
             }
           });
 

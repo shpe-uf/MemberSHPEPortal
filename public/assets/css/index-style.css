@@ -197,6 +197,8 @@ th, td {
 .card-text {
   color: #FFFFFF;
   font-family: "Avenir";
+  font-size: 1.2rem;
+  margin-bottom: 0px;
 }
 
 .bg-fall {
@@ -211,8 +213,14 @@ th, td {
   background-color: #FFC845;
 }
 
+.card-header {
+  color: #FFFFFF;
+  font-size: 1.5rem;
+}
+
 .card-footer {
   color: #FFFFFF;
+  font-size: 1.2rem;
 }
 
 .subtitle {
@@ -233,7 +241,7 @@ iframe {
 .stat-text {
   overflow: hidden;
   white-space: nowrap;
-  font-size: 5rem;
+  font-size: 6rem;
   margin-bottom: 0px;
 }
 
