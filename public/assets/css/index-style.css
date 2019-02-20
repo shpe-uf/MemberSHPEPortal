@@ -199,16 +199,20 @@ th, td {
   font-family: "Avenir";
 }
 
-.bg-points {
-  background-color: #28A745;
+.bg-fall {
+  background-color: #ED1B2E;
 }
 
-.bg-percentile {
-  background-color: #FFC107;
+.bg-spring {
+  background-color: #49A942;
 }
 
-.bg-stat-1 {
-  background-color: #DC3545;
+.bg-summer {
+  background-color: #FFC845;
+}
+
+.card-footer {
+  color: #FFFFFF;
 }
 
 .subtitle {
@@ -396,4 +400,8 @@ iframe {
   border-width: 2px;
   border-style: solid;
   border-color: #2D2D2D;
+}
+
+.table-head {
+  background-color: #D9D9D9 !important;
 }

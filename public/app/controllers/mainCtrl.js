@@ -164,6 +164,9 @@ angular.module('mainController', ['authServices', 'userServices'])
           app.ethnicity = data.data.ethnicity;
           app.sex = data.data.sex;
           app.points = data.data.points;
+          app.fallPoints = data.data.fallPoints
+          app.springPoints = data.data.springPoints
+          app.summerPoints = data.data.summerPoints
           app.events = data.data.events;
 
           User.getPermission().then(function(data) {

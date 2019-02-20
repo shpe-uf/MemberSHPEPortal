@@ -17,7 +17,34 @@
       <div class="container">
         <h3 class="subtitle">Statistics</h3>
         <div class="card-group">
-          <div class="card bg-points">
+          <div class="card bg-fall">
+            <div class="card-body text-center">
+              <h1 class="card-text stat-text">{{ main.fallPoints }}</h1>
+              <p class="card-text">FALL POINTS</p>
+            </div>
+            <div class="card-footer text-center">
+              FALL PERCENTILE:
+            </div>
+          </div>
+          <div class="card bg-spring">
+            <div class="card-body text-center">
+              <h1 class="card-text stat-text">{{ main.springPoints }}</h1>
+              <p class="card-text">SPRING POINTS</p>
+            </div>
+            <div class="card-footer text-center">
+              SPRING PERCENTILE:
+            </div>
+          </div>
+          <div class="card bg-summer">
+            <div class="card-body text-center">
+              <h1 class="card-text stat-text">{{ main.summerPoints }}</h1>
+              <p class="card-text">SUMMER POINTS</p>
+            </div>
+            <div class="card-footer text-center">
+              SUMMER PERCENTILE:
+            </div>
+          </div>
+          <!-- <div class="card bg-points">
             <div class="card-body text-center">
               <h1 class="card-text stat-text">{{ main.points }}</h1>
               <p class="card-text">POINTS</p>
@@ -36,7 +63,7 @@
               </h1>
               <p class="card-text">POINTS SYSTEM</p>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -47,7 +74,7 @@
           <div class="col-sm-12">
             <h3 class="subtitle">Points Record</h3>
             <table class="table table-responsive-lg table-striped">
-              <tr>
+              <tr class="table-head">
                 <th>EVENT</th>
                 <th>TYPE</th>
                 <th>SEMESTER</th>
@@ -58,6 +85,12 @@
                 <td>{{ event.type }}</td>
                 <td>{{ event.semester }}</td>
                 <td class="text-center">{{ event.points }}</td>
+              </tr>
+              <tr class="table-head">
+                <th>TOTAL POINTS</th>
+                <th></th>
+                <th></th>
+                <th class="text-center">{{ main.points }}</th>
               </tr>
             </table>
           </div>
@@ -93,7 +126,7 @@
           <div class="row">
             <div class="col-sm-12">
               <button type="submit" class="btn btn-success" ng-if="main.showModal">Submit</button>
-              <button type="reset" class="btn btn-danger"  ng-click="main.closeRequestModal(requestData)">Close</button>
+              <button type="reset" class="btn btn-danger" ng-click="main.closeRequestModal(requestData)">Close</button>
             </div>
           </div>
         </form>
