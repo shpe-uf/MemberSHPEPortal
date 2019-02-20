@@ -134,9 +134,11 @@ module.exports = function(router) {
     }, function(err, users) {
       if (err) throw err;
 
-      if (users[302].events.length == 0) {
+      var userNum = req.body.number;
+
+      if (users[userNum].events.length == 0) {
         User.findOneAndUpdate({
-          username: users[302].username
+          username: users[userNum].username
         }, {
           $set: {
             fallPoints: 0,
@@ -151,29 +153,27 @@ module.exports = function(router) {
         var spring = 0;
         var summer = 0;
 
-        console.log("USERNAME: " + users[302].username);
-        for (var j = 0; j < users[302].events.length; j++) {
+        for (var j = 0; j < users[userNum].events.length; j++) {
           Code.findOne({
-            _id: users[302].events[j]._id
+            _id: users[userNum].events[j]._id
           }, function(err, code) {
             if (err) throw err;
 
             if (code.semester == "Fall") {
               fall += code.points;
-              console.log("FALL: " + fall);
             } else if (code.semester == "Spring") {
               spring += code.points;
-              console.log("SPRING: " + spring);
             } else if (code.semester == "Summer") {
               summer += code.points;
-              console.log("SUMMER: " + summer);
             }
           });
         }
 
+        console.log("USERNAME: " + users[userNum].username);
+
         setTimeout(function() {
           User.findOneAndUpdate({
-            username: users[302].username
+            username: users[userNum].username
           }, {
             $set: {
               fallPoints: fall,
@@ -182,11 +182,10 @@ module.exports = function(router) {
             }
           }, function(err, newUser) {
             if (err) throw err;
+            res.send(users[userNum]);
           });
-        }, 10000);
+        }, 2000);
       }
-
-      res.send(users[302]);
     });
   });
 
