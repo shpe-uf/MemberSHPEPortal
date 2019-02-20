@@ -79,17 +79,19 @@
               <tr>
                 <th ng-click="admin.sortBy('lastName', admin.users)">NAME</th>
                 <th ng-click="admin.sortBy('username', admin.users)">USERNAME</th>
-                <th ng-click="admin.sortBy('major', admin.users)">MAJOR</th>
-                <th ng-click="admin.sortBy('year', admin.users)">YEAR</th>
                 <th ng-click="admin.sortBy('email', admin.users)">EMAIL</th>
-                <th ng-click="admin.sortBy('points', admin.users)">POINTS</th>
+                <th class="text-center" ng-click="admin.sortBy('fallPoints', admin.users)">FALL POINTS</th>
+                <th class="text-center" ng-click="admin.sortBy('springPoints', admin.users)">SPRING POINTS</th>
+                <th class="text-center" ng-click="admin.sortBy('summerPoints', admin.users)">SUMMER POINTS</th>
+                <th class="text-center" ng-click="admin.sortBy('points', admin.users)">TOTAL POINTS</th>
               </tr>
               <tr ng-repeat="user in admin.users | filter: membersSearchText">
                 <td>{{ user.lastName }}, {{ user.firstName }}</td>
                 <td>{{ user.username }}</td>
-                <td>{{ user.major }}</td>
-                <td>{{ user.year }}</td>
                 <td>{{ user.email }}</td>
+                <td class="text-center">{{ user.fallPoints }}</td>
+                <td class="text-center">{{ user.springPoints }}</td>
+                <td class="text-center">{{ user.summerPoints }}</td>
                 <td class="text-center">{{ user.points }}</td>
               </tr>
             </table>
@@ -124,7 +126,7 @@
                 <th class="text-center">ATTENDANCE</th>
                 <th class="text-center">MANUAL INPUT</th>
               </tr>
-              <tr ng-repeat="code in admin.codes | filter: eventSearchText">
+              <tr ng-repeat="code in admin.codes | filter: eventSearchText | orderBy: 'expiration'">
                 <td>{{ code.name }}</td>
                 <td>{{ code.code }}</td>
                 <td>{{ code.type }}</td>
