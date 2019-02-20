@@ -99,11 +99,17 @@ angular.module('userServices', [])
     userFactory.getMemberNationalityStat = function() {
       return $http.get('api/getmembernationalitystat/');
     };
+
     userFactory.getMemberSexStat = function() {
       return $http.get('api/getmembersexstat/');
     };
+
     userFactory.getMemberEthnicityStat = function() {
       return $http.get('api/getmemberethnicitystat/');
+    };
+
+    userFactory.getPointDistribution = function() {
+      return $http.get('api/getpointdistribution/');
     };
 
     userFactory.getAlumni = function() {

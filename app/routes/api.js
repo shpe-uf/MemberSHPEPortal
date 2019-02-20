@@ -1153,7 +1153,7 @@ module.exports = function(router) {
        fallPercentile = Math.trunc((fallBelow/userArray.length) * 100);
        springPercentile = Math.trunc((springBelow/userArray.length) * 100);
        summerPercentile = Math.trunc((summerBelow/userArray.length) * 100);
-       
+
        var percentile = {
          fall: fallPercentile,
          spring: springPercentile,
@@ -1331,8 +1331,7 @@ module.exports = function(router) {
         $sort: {
           count: -1
         }
-      }
-    ], function(err, result) {
+      }], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -1356,8 +1355,7 @@ module.exports = function(router) {
         $sort: {
           count: -1
         }
-      }
-    ], function(err, result) {
+      }], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -1381,8 +1379,7 @@ module.exports = function(router) {
         $sort: {
           count: -1
         }
-      }
-    ], function(err, result) {
+      }], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -1406,8 +1403,7 @@ module.exports = function(router) {
         $sort: {
           count: -1
         }
-      }
-    ], function(err, result) {
+      }], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -1431,8 +1427,30 @@ module.exports = function(router) {
         $sort: {
           count: -1
         }
+      }], function(err, result) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: result
+      });
+    });
+  });
+
+  // ENDPOINT TO RETRIVE POINT DISTRIBUTION
+  router.get('/getpointdistribution', function(req, res) {
+    User.aggregate([{
+      $group: {
+        _id: '$points',
+        count: {
+          $sum: 1
+        }
       }
-    ], function(err, result) {
+    }, {
+      $sort: {
+        _id: -1
+      }
+    }], function(err, result) {
       if (err) throw err;
 
       res.json({
