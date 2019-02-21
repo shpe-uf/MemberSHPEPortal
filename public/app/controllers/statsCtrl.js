@@ -311,36 +311,130 @@ angular.module('statsController', [])
       }
     });
 
-    User.getPointDistribution().then(function(data) {
-      console.log(data.data.message);
+    var pointDistributionArray = {};
+
+    User.getTotalPointDistribution().then(function(data) {
+      pointDistributionArray.total = data.data.message;
     });
 
-    var scatterChart = document.getElementById("scatterChart");
+    User.getFallPointDistribution().then(function(data) {
+      pointDistributionArray.fall = data.data.message;
+    });
 
-    new Chart(scatterChart, {
-      type: 'scatter',
-      data: {
-        datasets: [{
-          label: 'Scatter Dataset',
-          data: [{
-            x: -10,
-            y: 0
-          }, {
-            x: 0,
-            y: 10
-          }, {
-            x: 10,
-            y: 5
-          }]
-        }]
-      },
-      options: {
-        scales: {
-          xAxes: [{
-            type: 'linear',
-            position: 'bottom'
-          }]
+    User.getSpringPointDistribution().then(function(data) {
+      pointDistributionArray.spring = data.data.message;
+    });
+
+    User.getSummerPointDistribution().then(function(data) {
+      pointDistributionArray.summer = data.data.message;
+    });
+
+    app.pointDistribution = function() {
+      console.log(pointDistributionArray);
+      var totalData = [];
+      var fallData = [];
+      var springData = [];
+      var summerData = [];
+
+      for (var i = 0; i < pointDistributionArray.total.length; i++) {
+        if (pointDistributionArray.total[i]._id != null) {
+          var point = {
+            x: pointDistributionArray.total[i]._id,
+            y: pointDistributionArray.total[i].count
+          };
+          totalData.push(point);
         }
       }
-    });
+
+      for (var i = 0; i < pointDistributionArray.fall.length; i++) {
+        if (pointDistributionArray.fall[i]._id != null) {
+          var point = {
+            x: pointDistributionArray.fall[i]._id,
+            y: pointDistributionArray.fall[i].count
+          };
+          fallData.push(point);
+        }
+      }
+
+      for (var i = 0; i < pointDistributionArray.spring.length; i++) {
+        if (pointDistributionArray.spring[i]._id != null) {
+          var point = {
+            x: pointDistributionArray.spring[i]._id,
+            y: pointDistributionArray.spring[i].count
+          };
+          springData.push(point);
+        }
+      }
+
+      for (var i = 0; i < pointDistributionArray.summer.length; i++) {
+        if (pointDistributionArray.summer[i]._id != null) {
+          var point = {
+            x: pointDistributionArray.summer[i]._id,
+            y: pointDistributionArray.summer[i].count
+          };
+          summerData.push(point);
+        }
+      }
+
+      var pointDistributionChart = document.getElementById("pointDistributionChart");
+      if (pointDistributionChart) {
+        new Chart(pointDistributionChart, {
+          type: "scatter",
+          data: {
+            datasets: [{
+                label: 'Total',
+                borderColor: "rgba(0, 48, 80, 1)",
+                backgroundColor: "rgba(0, 48, 80, 0.2)",
+                data: totalData,
+                pointRadius: 7
+              },
+              {
+                label: 'Fall',
+                borderColor: "rgba(220, 53, 69, 1)",
+                backgroundColor: "rgba(220, 53, 69, 0.2)",
+                data: fallData,
+                pointRadius: 7
+              },
+              {
+                label: 'Spring',
+                borderColor: "rgba(40, 167, 69, 1)",
+                backgroundColor: "rgba(40, 167, 69, 0.2)",
+                data: springData,
+                pointRadius: 7
+              },
+              {
+                label: 'Summer',
+                borderColor: "rgba(255, 193, 7, 1)",
+                backgroundColor: "rgba(255, 193, 7, 0.2)",
+                data: summerData,
+                pointRadius: 7
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            legend: {
+              display: true,
+              position: 'bottom'
+            },
+            scales: {
+              xAxes: [{
+                display: true,
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Points'
+                }
+              }],
+              yAxes: [{
+                display: true,
+                scaleLabel: {
+                  display: true,
+                  labelString: '# of Members'
+                }
+              }]
+            }
+          }
+        });
+      }
+    }
   });

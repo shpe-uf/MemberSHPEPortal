@@ -1437,8 +1437,8 @@ module.exports = function(router) {
     });
   });
 
-  // ENDPOINT TO RETRIVE POINT DISTRIBUTION
-  router.get('/getpointdistribution', function(req, res) {
+  // ENDPOINT TO RETRIVE TOTAL POINT DISTRIBUTION
+  router.get('/gettotalpointdistribution', function(req, res) {
     User.aggregate([{
       $group: {
         _id: '$points',
@@ -1448,7 +1448,76 @@ module.exports = function(router) {
       }
     }, {
       $sort: {
-        _id: -1
+        _id: 1
+      }
+    }], function(err, result) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: result
+      });
+    });
+  });
+
+  // ENDPOINT TO RETRIVE FALL POINT DISTRIBUTION
+  router.get('/getfallpointdistribution', function(req, res) {
+    User.aggregate([{
+      $group: {
+        _id: '$fallPoints',
+        count: {
+          $sum: 1
+        }
+      }
+    }, {
+      $sort: {
+        _id: 1
+      }
+    }], function(err, result) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: result
+      });
+    });
+  });
+
+  // ENDPOINT TO RETRIVE SPRING POINT DISTRIBUTION
+  router.get('/getspringpointdistribution', function(req, res) {
+    User.aggregate([{
+      $group: {
+        _id: '$springPoints',
+        count: {
+          $sum: 1
+        }
+      }
+    }, {
+      $sort: {
+        _id: 1
+      }
+    }], function(err, result) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: result
+      });
+    });
+  });
+
+  // ENDPOINT TO RETRIVE SPRING POINT DISTRIBUTION
+  router.get('/getsummerpointdistribution', function(req, res) {
+    User.aggregate([{
+      $group: {
+        _id: '$summerPoints',
+        count: {
+          $sum: 1
+        }
+      }
+    }, {
+      $sort: {
+        _id: 1
       }
     }], function(err, result) {
       if (err) throw err;

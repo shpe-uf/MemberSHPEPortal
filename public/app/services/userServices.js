@@ -108,8 +108,20 @@ angular.module('userServices', [])
       return $http.get('api/getmemberethnicitystat/');
     };
 
-    userFactory.getPointDistribution = function() {
-      return $http.get('api/getpointdistribution/');
+    userFactory.getTotalPointDistribution = function() {
+      return $http.get('api/gettotalpointdistribution/');
+    };
+
+    userFactory.getFallPointDistribution = function() {
+      return $http.get('api/getfallpointdistribution/');
+    };
+
+    userFactory.getSpringPointDistribution = function() {
+      return $http.get('api/getspringpointdistribution/');
+    };
+
+    userFactory.getSummerPointDistribution = function() {
+      return $http.get('api/getsummerpointdistribution/');
     };
 
     userFactory.getAlumni = function() {
