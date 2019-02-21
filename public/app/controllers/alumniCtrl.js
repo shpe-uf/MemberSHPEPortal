@@ -33,6 +33,5 @@ angular.module('alumniController', [])
         !$scope.reverse : false;
       $scope.propertyName = propertyName;
       app.alumniArray = orderBy(array, $scope.propertyName, $scope.reverse);
-      console.log(app.alumniArray);
     };
   });

@@ -169,8 +169,6 @@ module.exports = function(router) {
           });
         }
 
-        console.log("USERNAME: " + users[userNum].username);
-
         setTimeout(function() {
           User.findOneAndUpdate({
             username: users[userNum].username
@@ -182,9 +180,10 @@ module.exports = function(router) {
             }
           }, function(err, newUser) {
             if (err) throw err;
-            res.send(users[userNum]);
+
+            res.send(newUser);
           });
-        }, 5000);
+        }, 1500);
       }
     });
   });
@@ -444,7 +443,6 @@ module.exports = function(router) {
                 console.log(err);
                 throw err;
               } else {
-                console.log("EMAIL SENT");
                 res.json({
                   success: true,
                   message: 'Username has been sent to email.'
@@ -498,7 +496,6 @@ module.exports = function(router) {
                 console.log(err);
                 throw err;
               } else {
-                console.log("EMAIL SENT");
                 res.json({
                   success: true,
                   message: 'Reset link has been sent to your email.'
@@ -581,7 +578,6 @@ module.exports = function(router) {
                 console.log(err);
                 throw err;
               } else {
-                console.log("EMAIL SENT");
                 res.json({
                   success: true,
                   message: 'Password has been reset.'
@@ -998,8 +994,6 @@ module.exports = function(router) {
 
   // ENDPOINT TO APPROVE REQUESTS
   router.put('/approverequest', function(req, res) {
-    console.log(req.body);
-
     if (req.body.semester == "Fall") {
       User.findOneAndUpdate({
         username: req.body.username,
@@ -1222,9 +1216,6 @@ module.exports = function(router) {
             Code.findOne({
               _id: req.body.eventId
             }).select().exec(function(err, code) {
-              console.log(code);
-              console.log(user);
-
               if (code.semester == "Fall") {
                 User.findOneAndUpdate({
                   username: user.username

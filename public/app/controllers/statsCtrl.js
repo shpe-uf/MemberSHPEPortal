@@ -330,7 +330,6 @@ angular.module('statsController', [])
     });
 
     app.pointDistribution = function() {
-      console.log(pointDistributionArray);
       var totalData = [];
       var fallData = [];
       var springData = [];

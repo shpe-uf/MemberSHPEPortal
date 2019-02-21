@@ -84,8 +84,6 @@ angular.module('adminController', [])
       manualInput.member = app.member;
       manualInput.eventId = app.eventName._id;
 
-      console.log(manualInput);
-
       User.manualInput(manualInput).then(function(data) {
         if (data.data.success) {
           app.successMsg = data.data.message;
@@ -97,8 +95,6 @@ angular.module('adminController', [])
 
     this.closeManualInputModal = function(member) {
       $('#manualInputModal').modal('hide');
-
-      console.log(app.member.userName);
 
       if (app.member) {
         app.member.userName = '';

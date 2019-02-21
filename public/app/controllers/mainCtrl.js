@@ -71,8 +71,6 @@ angular.module('mainController', ['authServices', 'userServices'])
 
             var timeCheck = expireTime.exp - timeStamp;
 
-            console.log("TIME REMAINING: " + timeCheck);
-
             if (timeCheck <= 600) {
               showModal(1);
               $interval.cancel(interval);
@@ -153,7 +151,6 @@ angular.module('mainController', ['authServices', 'userServices'])
         app.isLoggedIn = true;
 
         Auth.getUser().then(function(data) {
-          console.log("USER IS LOGGED IN AND GETTING THE USER'S DATA");
           app.firstName = data.data.firstName;
           app.lastName = data.data.lastName;
           app.username = data.data.username;
@@ -199,7 +196,6 @@ angular.module('mainController', ['authServices', 'userServices'])
         });
 
       } else {
-        console.log("USER IS NOT LOGGED IN!");
         app.isLoggedIn = false;
         app.username = '';
         app.email = '';
