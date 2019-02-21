@@ -70,13 +70,13 @@
               <tr class="table-head">
                 <th>EVENT</th>
                 <th>TYPE</th>
-                <th>SEMESTER</th>
+                <th class="text-center">SEMESTER</th>
                 <th class="text-center">POINTS</th>
               </tr>
               <tr ng-repeat="event in main.codeArray | orderBy: 'expiration'">
                 <td>{{ event.name }}</td>
                 <td>{{ event.type }}</td>
-                <td>{{ event.semester }}</td>
+                <td class="text-center">{{ event.semester }}</td>
                 <td class="text-center">{{ event.points }}</td>
               </tr>
               <tr class="table-head">
