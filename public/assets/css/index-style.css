@@ -197,18 +197,18 @@ th, td {
 .card-text {
   color: #FFFFFF;
   font-family: "Avenir";
+  font-size: 1.2rem;
+  margin-bottom: 0px;
 }
 
-.bg-points {
-  background-color: #28A745;
+.card-header {
+  color: #FFFFFF;
+  font-size: 1.5rem;
 }
 
-.bg-percentile {
-  background-color: #FFC107;
-}
-
-.bg-stat-1 {
-  background-color: #DC3545;
+.card-footer {
+  color: #FFFFFF;
+  font-size: 1.2rem;
 }
 
 .subtitle {
@@ -229,7 +229,7 @@ iframe {
 .stat-text {
   overflow: hidden;
   white-space: nowrap;
-  font-size: 5rem;
+  font-size: 6rem;
   margin-bottom: 0px;
 }
 
@@ -396,4 +396,8 @@ iframe {
   border-width: 2px;
   border-style: solid;
   border-color: #2D2D2D;
+}
+
+.table-head {
+  background-color: #D9D9D9 !important;
 }

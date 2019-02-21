@@ -99,11 +99,29 @@ angular.module('userServices', [])
     userFactory.getMemberNationalityStat = function() {
       return $http.get('api/getmembernationalitystat/');
     };
+
     userFactory.getMemberSexStat = function() {
       return $http.get('api/getmembersexstat/');
     };
+
     userFactory.getMemberEthnicityStat = function() {
       return $http.get('api/getmemberethnicitystat/');
+    };
+
+    userFactory.getTotalPointDistribution = function() {
+      return $http.get('api/gettotalpointdistribution/');
+    };
+
+    userFactory.getFallPointDistribution = function() {
+      return $http.get('api/getfallpointdistribution/');
+    };
+
+    userFactory.getSpringPointDistribution = function() {
+      return $http.get('api/getspringpointdistribution/');
+    };
+
+    userFactory.getSummerPointDistribution = function() {
+      return $http.get('api/getsummerpointdistribution/');
     };
 
     userFactory.getAlumni = function() {

@@ -15,6 +15,7 @@
           <a class="nav-item nav-link" id="nav-nationality-tab" data-toggle="tab" data-target="#nav-nationality" role="tab" aria-controls="nav-nationality" aria-selected="false">Nationality</a>
           <a class="nav-item nav-link" id="nav-sex-tab" data-toggle="tab" data-target="#nav-sex" role="tab" aria-controls="nav-sex" aria-selected="false">Sex</a>
           <a class="nav-item nav-link" id="nav-ethnicity-tab" data-toggle="tab" data-target="#nav-ethnicity" role="tab" aria-controls="nav-ethnicity" aria-selected="false">Ethnicity</a>
+          <a class="nav-item nav-link" id="nav-point-distribution-tab" data-toggle="tab" data-target="#nav-point-distribution" role="tab" aria-controls="nav-point-distribution" aria-selected="false" ng-click="stats.pointDistribution();">Point Distribution</a>
         </div>
       </nav>
 
@@ -27,7 +28,7 @@
               </div>
               <div class="col-sm-6">
                 <table class="table table-responsive-lg table-striped">
-                  <tr>
+                  <tr class="table-head">
                     <th>MAJOR</th>
                     <th>COUNT</th>
                     <th>PERCENTAGE</th>
@@ -51,7 +52,7 @@
               </div>
               <div class="col-sm-6">
                 <table class="table table-responsive-lg table-striped">
-                  <tr>
+                  <tr class="table-head">
                     <th>YEAR</th>
                     <th>COUNT</th>
                     <th>PERCENTAGE</th>
@@ -75,7 +76,7 @@
               </div>
               <div class="col-sm-6">
                 <table class="table table-responsive-lg table-striped">
-                  <tr>
+                  <tr class="table-head">
                     <th>NATIONALITY</th>
                     <th>COUNT</th>
                     <th>PERCENTAGE</th>
@@ -99,7 +100,7 @@
               </div>
               <div class="col-sm-6">
                 <table class="table table-responsive-lg table-striped">
-                  <tr>
+                  <tr class="table-head">
                     <th>SEX</th>
                     <th>COUNT</th>
                     <th>PERCENTAGE</th>
@@ -123,10 +124,10 @@
               </div>
               <div class="col-sm-6">
                 <table class="table table-responsive-lg table-striped">
-                  <tr>
+                  <tr class="table-head">
                     <th>ETHNICITY</th>
                     <th>COUNT</th>
-                    <td>PERCENTAGE</td>
+                    <th>PERCENTAGE</th>
                   </tr>
                   <tr ng-repeat="ethnicity in stats.ethnicityArray">
                     <td>{{ ethnicity._id }}</td>
@@ -134,6 +135,16 @@
                     <td>{{ ethnicity.percentage }}%</td>
                   </tr>
                 </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="nav-point-distribution" role="tabpanel" aria-labelledby="nav-point-distribution-tab">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-12">
+                <canvas id="pointDistributionChart"></canvas>
               </div>
             </div>
           </div>
