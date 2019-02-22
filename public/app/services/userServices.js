@@ -132,5 +132,9 @@ angular.module('userServices', [])
       return $http.get('api/getcoordinates/');
     };
 
+    userFactory.getExcelDoc = function(eventId) {
+      return $http.get('api/getexceldoc/' + eventId);
+    };
+
     return userFactory;
   });

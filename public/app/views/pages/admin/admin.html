@@ -123,8 +123,7 @@
                 <th>TYPE</th>
                 <th>EXPIRATION</th>
                 <th class="text-center">POINTS</th>
-                <th class="text-center">ATTENDANCE</th>
-                <th class="text-center">MANUAL INPUT</th>
+                <th></th>
               </tr>
               <tr ng-repeat="code in admin.codes | filter: eventSearchText | orderBy: 'expiration'">
                 <td>{{ code.name }}</td>
@@ -133,15 +132,15 @@
                 <td>{{ code.expiration | date:'MM/dd/yyyy @ hh:mm a' }}</td>
                 <td class="text-center">{{ code.points }}</td>
                 <td class="text-center">
-                  <button type="button" class="btn btn-submit" ng-click="admin.openAttendanceModal(code)">
-                    <i class="fas fa-users"></i>
+                  <button type="button" class="btn btn-submit" ng-click="admin.openMoreModal(code)">
+                    <i class="fas fa-cog"></i>
                   </button>
                 </td>
-                <td class="text-center">
+                <!-- <td class="text-center">
                   <button type="button" class="btn btn-submit" ng-click="admin.openManualInputModal(code)">
                     <i class="fas fa-pencil-alt"></i>
                   </button>
-                </td>
+                </td> -->
               </tr>
             </table>
           </div>
@@ -220,30 +219,36 @@
 </div>
 
 <!-- EVENT ATTENDANCE TABLE -->
-<div class="modal fade" id="attendanceModal" aria-labelledby="attendanceModalLabel">
-  <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="moreModal" aria-labelledby="moreModalLabel">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title" id="attendanceModalLabel">Event Attendance</h3>
+        <h3 class="modal-title" id="moreModalLabel">Event Options & Information</h3>
       </div>
       <div class="modal-body">
+        <h4>Event Options</h4>
+        <hr>
+        <h4>Attendance Record</h4>
         <p style="text-transform: uppercase"><b>EVENT:</b> {{ admin.eventName }} </br>
           <b>ATTENDANCE:</b> {{ admin.attendance.length }}</p>
-        <table class="table table-responsive-lg table-striped attendance-table">
-          <tr>
+        <div class="attendance-table">
+          <table class="table table-responsive-lg table-striped" style="margin-bottom: 0px;">
             <th>NAME</th>
             <th>USERNAME</th>
             <th>EMAIL</th>
-          </tr>
-          <tr ng-repeat="user in admin.attendance | orderBy: 'lastName'">
-            <td>{{ user.lastName }}, {{ user.firstName }}</td>
-            <td>{{ user.username }}</td>
-            <td>{{ user.email }}</td>
-          </tr>
-        </table>
+            <tr ng-repeat="user in admin.attendance | orderBy: 'lastName'">
+              <td>{{ user.lastName }}, {{ user.firstName }}</td>
+              <td>{{ user.username }}</td>
+              <td>{{ user.email }}</td>
+            </tr>
+          </table>
+        </div>
         <div class="row">
           <div class="col-sm-12">
-            <button type="reset" class="btn btn-danger float-right" ng-click="admin.closeAttendanceModal(eventData)">Close</button>
+            <button type="button" class="btn btn-excel" ng-click="admin.excel(admin.eventId);">
+              <i class="far fa-file-excel"></i> Download
+            </button>
+            <button type="reset" class="btn btn-danger float-right" ng-click="admin.closeMoreModal()">Close</button>
           </div>
         </div>
       </div>

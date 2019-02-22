@@ -86,6 +86,8 @@ hr {
 .register-container, .login-container, .username-container, .password-container, .reset-container {
   background-color: rgba(255, 255, 255, 0.85);
   padding: 24px 24px 24px 24px;
+  margin-top: 36px;
+  margin-bottom: 36px;
   border-radius: 12px;
 }
 
@@ -136,6 +138,18 @@ hr {
 .btn-submit:hover {
   background-color: #EB4616;
   border-color: #EB4616;
+  color: #FFFFFF;
+}
+
+.btn-excel {
+  background-color: #FFFFFF;
+  border-color: #1F6F43;
+  color: #1F6F43;
+}
+
+.btn-excel:hover {
+  background-color: #1F6F43;
+  border-color: #1F6F43;
   color: #FFFFFF;
 }
 
@@ -244,9 +258,9 @@ iframe {
 }
 
 .attendance-table {
-  display: block;
   max-height: 500px;
   overflow-y: scroll;
+  margin-bottom: 15px;
 }
 
 /* LOGOUT LOADER */

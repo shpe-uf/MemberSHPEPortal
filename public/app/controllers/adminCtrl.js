@@ -4,9 +4,10 @@ angular.module('adminController', [])
     var app = this;
     app.accessDenied = true;
     app.showCreateEventModal = true;
-    app.showAttendanceModal = true;
+    app.showMoreModal = true;
     app.isClicked = false;
     app.eventName;
+    app.eventId;
 
     var orderBy = $filter('orderBy');
 
@@ -42,22 +43,23 @@ angular.module('adminController', [])
       });
     };
 
-    this.openAttendanceModal = function(eventData) {
-      $("#attendanceModal").modal({
+    this.openMoreModal = function(eventData) {
+      $("#moreModal").modal({
         backdrop: 'static'
       });
 
       app.eventName = eventData.name;
+      app.eventId = eventData._id;
 
       User.getAttendance(eventData._id).then(function(data) {
         app.attendance = data.data.message;
       });
 
-      app.showAttendanceModal = true;
+      app.showMoreModal = true;
     };
 
-    this.closeAttendanceModal = function() {
-      $('#attendanceModal').modal('hide');
+    this.closeMoreModal = function() {
+      $('#moreModal').modal('hide');
     };
 
     this.openManualInputModal = function(eventData) {
@@ -115,6 +117,11 @@ angular.module('adminController', [])
       app.isClicked = true;
       User.denyRequest(denyData).then(function(data) {
         $window.location.reload();
+      });
+    };
+
+    this.excel = function(eventData) {
+      User.getExcelDoc(eventData).then(function(data) {
       });
     };
 

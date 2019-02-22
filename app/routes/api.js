@@ -1129,36 +1129,36 @@ module.exports = function(router) {
 
       User.find({
 
-     }).select('fallPoints springPoints summerPoints ').exec(function(err, userArray) {
-       if (err) throw err;
+      }).select('fallPoints springPoints summerPoints ').exec(function(err, userArray) {
+        if (err) throw err;
 
-       for (var i = 0; i < userArray.length; i++) {
-         if (user.fallPoints > userArray[i].fallPoints) {
-           fallBelow++;
-         }
-         if (user.springPoints > userArray[i].springPoints) {
-           springBelow++;
-         }
-         if (user.summerPoints > userArray[i].summerPoints) {
-           summerBelow++;
-         }
-       }
+        for (var i = 0; i < userArray.length; i++) {
+          if (user.fallPoints > userArray[i].fallPoints) {
+            fallBelow++;
+          }
+          if (user.springPoints > userArray[i].springPoints) {
+            springBelow++;
+          }
+          if (user.summerPoints > userArray[i].summerPoints) {
+            summerBelow++;
+          }
+        }
 
-       fallPercentile = Math.trunc((fallBelow/userArray.length) * 100);
-       springPercentile = Math.trunc((springBelow/userArray.length) * 100);
-       summerPercentile = Math.trunc((summerBelow/userArray.length) * 100);
+        fallPercentile = Math.trunc((fallBelow / userArray.length) * 100);
+        springPercentile = Math.trunc((springBelow / userArray.length) * 100);
+        summerPercentile = Math.trunc((summerBelow / userArray.length) * 100);
 
-       var percentile = {
-         fall: fallPercentile,
-         spring: springPercentile,
-         summer: summerPercentile
-       }
+        var percentile = {
+          fall: fallPercentile,
+          spring: springPercentile,
+          summer: summerPercentile
+        }
 
-       res.json({
-         success: true,
-         message: percentile
-       });
-     });
+        res.json({
+          success: true,
+          message: percentile
+        });
+      });
     });
   });
 
@@ -1322,7 +1322,8 @@ module.exports = function(router) {
         $sort: {
           count: -1
         }
-      }], function(err, result) {
+      }
+    ], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -1346,7 +1347,8 @@ module.exports = function(router) {
         $sort: {
           count: -1
         }
-      }], function(err, result) {
+      }
+    ], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -1370,7 +1372,8 @@ module.exports = function(router) {
         $sort: {
           count: -1
         }
-      }], function(err, result) {
+      }
+    ], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -1394,7 +1397,8 @@ module.exports = function(router) {
         $sort: {
           count: -1
         }
-      }], function(err, result) {
+      }
+    ], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -1418,7 +1422,8 @@ module.exports = function(router) {
         $sort: {
           count: -1
         }
-      }], function(err, result) {
+      }
+    ], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -1554,6 +1559,21 @@ module.exports = function(router) {
         message: coordinatesArray,
         success: true
       });
+    });
+  });
+
+  router.get('/getexceldoc/:eventId', function(req, res) {
+    User.find({
+      events: {
+        _id: req.params.eventId
+      }
+    }).select('firstName lastName email major year').exec(function(err, users) {
+      if (err) throw err;
+
+      console.log(users);
+
+      
+
     });
   });
 
