@@ -122,8 +122,12 @@ angular.module('adminController', [])
 
     this.excel = function(eventData) {
       User.getExcelDoc(eventData).then(function(data) {
-
-        console.log(data.data);
+        if (data.data.success) {
+          const Json2csvParser = require('json2csv').Parser;
+          var parser = new Json2csvParser;
+          var result = parser.parse(data.data.message);
+          console.log(result);
+        }
       });
     };
 

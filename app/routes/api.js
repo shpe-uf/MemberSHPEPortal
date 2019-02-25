@@ -1533,8 +1533,8 @@ module.exports = function(router) {
       if (err) throw err;
 
       res.json({
-        message: alumni,
-        success: true
+        success: true,
+        message: alumni
       });
     });
   });
@@ -1556,8 +1556,8 @@ module.exports = function(router) {
       }
 
       res.json({
-        message: coordinatesArray,
-        success: true
+        success: true,
+        message: coordinatesArray
       });
     });
   });
@@ -1570,6 +1570,10 @@ module.exports = function(router) {
     }).select('firstName lastName email major year').exec(function(err, users) {
       if (err) throw err;
 
+      res.json({
+        success: true,
+        message: users
+      });
     });
   });
 
