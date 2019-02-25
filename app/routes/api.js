@@ -5,9 +5,9 @@ var Code = require('../models/code');
 var Request = require('../models/request');
 var Alumni = require('../models/alumni');
 var jwt = require('jsonwebtoken');
-var secret = process.env.SECRET;
 var nodemailer = require('nodemailer');
 var nodeGeocoder = require('node-geocoder');
+var secret = process.env.SECRET;
 
 module.exports = function(router) {
 
@@ -1569,10 +1569,6 @@ module.exports = function(router) {
       }
     }).select('firstName lastName email major year').exec(function(err, users) {
       if (err) throw err;
-
-      console.log(users);
-
-      
 
     });
   });

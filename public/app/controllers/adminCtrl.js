@@ -1,5 +1,5 @@
 angular.module('adminController', [])
-  .controller('adminCtrl', function($timeout, $route, $window, $scope, $filter, User) {
+  .controller('adminCtrl', function($timeout, $route, $window, $scope, $filter, $http, User) {
 
     var app = this;
     app.accessDenied = true;
@@ -122,6 +122,8 @@ angular.module('adminController', [])
 
     this.excel = function(eventData) {
       User.getExcelDoc(eventData).then(function(data) {
+
+        console.log(data.data);
       });
     };
 
