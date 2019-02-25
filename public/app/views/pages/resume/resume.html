@@ -5,7 +5,15 @@
     </div>
     <div class="col-sm-2 col-12">
       <div class="float-right">
-        <button type="button" class="btn btn-submit">Update Résumé</button>
+        <!-- <form class="" action="index.html" method="post">
+          <input type="file" name="resumeUpload" accept="application/pdf" />
+          <button type="button" class="btn btn-submit">Update Résumé</button>
+        </form> -->
+        <button>
+          Upload <input type="file" ng-file-select="onFileSelect($files)">
+        </button>
+
+
       </div>
     </div>
   </div>
