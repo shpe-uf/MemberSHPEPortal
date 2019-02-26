@@ -8,7 +8,6 @@ angular.module('adminController', [])
     app.isClicked = false;
     app.eventName;
     app.eventId;
-
     var orderBy = $filter('orderBy');
 
     this.openCreateEventModal = function() {
@@ -120,8 +119,9 @@ angular.module('adminController', [])
       });
     };
 
-    this.excel = function(eventData) {
-      User.getExcelDoc(eventData).then(function(data) {
+    this.excel = function(eventId) {
+      console.log(eventId);
+      User.getExcelDoc(eventId).then(function(data) {
         if (data.data.success) {
           const Json2csvParser = require('json2csv').Parser;
           var parser = new Json2csvParser;

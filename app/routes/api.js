@@ -1,12 +1,19 @@
 require('dotenv').config();
 
+// MODEL FILES
 var User = require('../models/user');
 var Code = require('../models/code');
 var Request = require('../models/request');
 var Alumni = require('../models/alumni');
+
+// NPM PACKAGES
 var jwt = require('jsonwebtoken');
 var nodemailer = require('nodemailer');
 var nodeGeocoder = require('node-geocoder');
+var Json2csvParser = require('json2csv').Parser;
+
+// MISCELLANEOUS
+var fs = require('fs');
 var secret = process.env.SECRET;
 
 module.exports = function(router) {
@@ -1567,13 +1574,19 @@ module.exports = function(router) {
       events: {
         _id: req.params.eventId
       }
-    }).select('firstName lastName email major year').exec(function(err, users) {
+    }).select('firstName lastName major year email').exec(function(err, users) {
       if (err) throw err;
 
-      res.json({
-        success: true,
-        message: users
+      var fields = ['firstName', 'lastName', 'major', 'year', 'email'];
+
+      var json2csvParser = new Json2csvParser({ fields });
+      var csv = json2csvParser.parse(users);
+
+      fs.writeFile('EventAttendance.csv', csv, function(err) {
+        if (err) throw err;
       });
+
+      res.sendFile("EventAttendance.csv");
     });
   });
 
