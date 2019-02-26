@@ -132,5 +132,14 @@ angular.module('userServices', [])
       return $http.get('api/getcoordinates/');
     };
 
+    userFactory.getUserInfo = function(username) {
+      console.log('end service');
+      return $http.get('api/getuserinfo/' + username);
+    };
+
+    userFactory.getuserEvent = function(id){
+      return $http.get('api/getuserinfo/' + events);
+    };
+
     return userFactory;
   });

@@ -1556,6 +1556,19 @@ module.exports = function(router) {
       });
     });
   });
+//ENDPOINT TO GENERATE INDIVIDUAL USER INFO
+  router.get('/getuserinfo/:username', function(req,res){
+      User.find({
+      username: req.params.username
+    }, function(err, user){
+      if(err) throw err;
+
+      res.json({
+        success: true,
+        message: user
+      });
+    });
+  });
 
   return router;
 };
