@@ -48,12 +48,12 @@
                 <td>{{ request.type }}</td>
                 <td class="text-center">{{ request.points }}</td>
                 <td class="text-center">
-                  <button type="button" class="btn btn-success" ng-click="admin.acceptRequest(request)" ng-if="!admin.isClicked">
+                  <button type="button" class="btn btn-outline-success" ng-click="admin.acceptRequest(request)" ng-if="!admin.isClicked">
                     <i class="fas fa-check"></i>
                   </button>
                 </td>
                 <td class="text-center">
-                  <button type="button" class="btn btn-danger" ng-click="admin.denyRequest(request)" ng-if="!admin.isClicked">
+                  <button type="button" class="btn btn-outline-danger" ng-click="admin.denyRequest(request)" ng-if="!admin.isClicked">
                     <i class="fas fa-times"></i>
                   </button>
                 </td>
@@ -95,9 +95,9 @@
                 <td class="text-center">{{ user.springPoints }}</td>
                 <td class="text-center">{{ user.summerPoints }}</td>
                 <td class="text-center">{{ user.points }}</td>
-                <td>
+                <td class="text-center">
                   <button type="button" class="btn btn-submit" ng-click="admin.openuserInfoModal(user.username)">
-                    <i class="fas fa-info-circle"></i>
+                    <i class="fas fa-info"></i>
                   </button>
                 </td>
               </tr>
@@ -240,7 +240,7 @@
           <b>EVENT:</b> {{ admin.eventName }} <br>
           <b>ATTENDANCE:</b> {{ admin.attendance.length }}
         </p>
-        <div class="attendance-table">
+        <div class="short-table">
           <table class="table table-responsive-lg table-striped" style="margin-bottom: 0px;">
             <th>NAME</th>
             <th>USERNAME</th>
@@ -299,7 +299,8 @@
     </div>
   </div>
 </div>
-<!-- USER EVENTS MODAL  -->
+
+<!-- USER INFORMATION MODAL  -->
 <div class="modal fade" id="userEventsModal" aria-labelledby="userEventsModalLabel">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
@@ -309,7 +310,7 @@
         </h3>
       </div>
       <div class="modal-body">
-        <div class="row">
+        <div class="row" style="margin-bottom: 16px;">
           <div class="col-12">
             <h4>{{ admin.user.lastName}}, {{ admin.user.firstName}}</h4>
           </div>
@@ -347,45 +348,34 @@
                   <td>Sex</td>
                   <td>{{ admin.user.sex }}</td>
                 </tr>
-                <tr>
-                  <td>Fall Points</td>
-                  <td>{{ admin.user.fallPoints }}</td>
-                </tr>
-                <tr>
-                  <td>Spring Points</td>
-                  <td>{{ admin.user.springPoints }}</td>
-                </tr>
-                <tr>
-                  <td>Summer Points</td>
-                  <td>{{ admin.user.summerPoints }}</td>
-                </tr>
               </tbody>
             </table>
           </div>
         </div>
         <div class="row">
           <div class="col-12">
-
-            <table class="table table-responsive-lg table-striped attendance-table">
-              <tr class="table-head">
-                <th>EVENT</th>
-                <th>TYPE</th>
-                <th class="text-center">SEMESTER</th>
-                <th class="text-center">POINTS</th>
-              </tr>
-              <tr ng-repeat="event in admin.eventArray | orderBy: 'expiration'">
-                <td>{{ event.name }}</td>
-                <td>{{ event.type }}</td>
-                <td class="text-center">{{ event.semester }}</td>
-                <td class="text-center">{{ event.points }}</td>
-              </tr>
-              <tr class="table-head">
-                <th>TOTAL POINTS</th>
-                <th></th>
-                <th></th>
-                <th class="text-center">{{ admin.user.points }}</th>
-              </tr>
-            </table>
+            <div class="short-table">
+              <table class="table table-responsive-lg table-striped" style="margin-bottom: 0px;">
+                <tr class="table-head">
+                  <th>EVENT</th>
+                  <th>TYPE</th>
+                  <th class="text-center">SEMESTER</th>
+                  <th class="text-center">POINTS</th>
+                </tr>
+                <tr ng-repeat="event in admin.eventArray | orderBy: 'expiration'">
+                  <td>{{ event.name }}</td>
+                  <td>{{ event.type }}</td>
+                  <td class="text-center">{{ event.semester }}</td>
+                  <td class="text-center">{{ event.points }}</td>
+                </tr>
+                <tr class="table-head">
+                  <th>TOTAL POINTS</th>
+                  <th></th>
+                  <th></th>
+                  <th class="text-center">{{ admin.user.points }}</th>
+                </tr>
+              </table>
+            </div>
           </div>
         </div>
         <div class="row">

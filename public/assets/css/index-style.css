@@ -257,8 +257,8 @@ iframe {
   color: #EB4616;
 }
 
-.attendance-table {
-  max-height: 500px;
+.short-table {
+  max-height: 400px;
   overflow-y: scroll;
   margin-bottom: 15px;
 }
@@ -414,4 +414,19 @@ iframe {
 
 .table-head {
   background-color: #D9D9D9 !important;
+}
+
+.fall-head {
+  background-color: #DC3545 !important;
+  color: #FFFFFF;
+}
+
+.spring-head {
+  background-color: #28A745 !important;
+  color: #FFFFFF;
+}
+
+.summer-head {
+  background-color: #FFC107 !important;
+  color: #FFFFFF;
 }
