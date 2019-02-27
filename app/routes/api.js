@@ -944,6 +944,8 @@ module.exports = function(router) {
     Code.findOne({
       _id: req.params.code
     }).populate().exec(function(err, event) {
+      if (err) throw err;
+
       res.json({
         success: true,
         message: event
@@ -1129,36 +1131,36 @@ module.exports = function(router) {
 
       User.find({
 
-     }).select('fallPoints springPoints summerPoints ').exec(function(err, userArray) {
-       if (err) throw err;
+      }).select('fallPoints springPoints summerPoints ').exec(function(err, userArray) {
+        if (err) throw err;
 
-       for (var i = 0; i < userArray.length; i++) {
-         if (user.fallPoints > userArray[i].fallPoints) {
-           fallBelow++;
-         }
-         if (user.springPoints > userArray[i].springPoints) {
-           springBelow++;
-         }
-         if (user.summerPoints > userArray[i].summerPoints) {
-           summerBelow++;
-         }
-       }
+        for (var i = 0; i < userArray.length; i++) {
+          if (user.fallPoints > userArray[i].fallPoints) {
+            fallBelow++;
+          }
+          if (user.springPoints > userArray[i].springPoints) {
+            springBelow++;
+          }
+          if (user.summerPoints > userArray[i].summerPoints) {
+            summerBelow++;
+          }
+        }
 
-       fallPercentile = Math.trunc((fallBelow/userArray.length) * 100);
-       springPercentile = Math.trunc((springBelow/userArray.length) * 100);
-       summerPercentile = Math.trunc((summerBelow/userArray.length) * 100);
+        fallPercentile = Math.trunc((fallBelow / userArray.length) * 100);
+        springPercentile = Math.trunc((springBelow / userArray.length) * 100);
+        summerPercentile = Math.trunc((summerBelow / userArray.length) * 100);
 
-       var percentile = {
-         fall: fallPercentile,
-         spring: springPercentile,
-         summer: summerPercentile
-       }
+        var percentile = {
+          fall: fallPercentile,
+          spring: springPercentile,
+          summer: summerPercentile
+        }
 
-       res.json({
-         success: true,
-         message: percentile
-       });
-     });
+        res.json({
+          success: true,
+          message: percentile
+        });
+      });
     });
   });
 
@@ -1322,7 +1324,8 @@ module.exports = function(router) {
         $sort: {
           count: -1
         }
-      }], function(err, result) {
+      }
+    ], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -1346,7 +1349,8 @@ module.exports = function(router) {
         $sort: {
           count: -1
         }
-      }], function(err, result) {
+      }
+    ], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -1370,7 +1374,8 @@ module.exports = function(router) {
         $sort: {
           count: -1
         }
-      }], function(err, result) {
+      }
+    ], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -1394,7 +1399,8 @@ module.exports = function(router) {
         $sort: {
           count: -1
         }
-      }], function(err, result) {
+      }
+    ], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -1418,7 +1424,8 @@ module.exports = function(router) {
         $sort: {
           count: -1
         }
-      }], function(err, result) {
+      }
+    ], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -1556,12 +1563,12 @@ module.exports = function(router) {
       });
     });
   });
-//ENDPOINT TO GENERATE INDIVIDUAL USER INFO
-  router.get('/getuserinfo/:username', function(req,res){
-      User.find({
+  //ENDPOINT TO GENERATE INDIVIDUAL USER INFO
+  router.get('/getuserinfo/:username', function(req, res) {
+    User.find({
       username: req.params.username
-    }, function(err, user){
-      if(err) throw err;
+    }, function(err, user) {
+      if (err) throw err;
 
       res.json({
         success: true,

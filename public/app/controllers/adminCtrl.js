@@ -164,13 +164,19 @@ angular.module('adminController', [])
       app.UserName = data;
 
       app.showEventsModal = true;
-      User.getUserInfo(data).then(function(userData){
-
-
-
-        if(userData.data.success){
+      User.getUserInfo(data).then(function(userData) {
+        if (userData.data.success) {
           app.user = userData.data.message[0];
-          console.log(app.user);
+          if (app.user.events.length > 0) {
+            for (var i = 0; i < app.user.events.length; i++) {
+              app.eventArray = [];
+              User.getCodeInfo(app.user.events[i]._id).then(function(eventsInfo) {
+                if (eventsInfo.data.success) {
+                  app.eventArray.push(eventsInfo.data.message);
+                }
+              });
+            };
+          }
         }
 
       });

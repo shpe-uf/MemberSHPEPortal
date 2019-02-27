@@ -302,8 +302,6 @@
         </h3>
       </div>
       <div class="modal-body">
-        <!-- <p style="text-transform: uppercase"><b>NAME:</b> {{ admin.user.firstName }} {{admin.user.lastName}} </br>
-          <b>EVENTS ATTENDED:</b> {{ admin.user.events.length }}</p> -->
         <div class="row">
           <div class="col-12">
             <h4>{{ admin.user.lastName}}, {{ admin.user.firstName}}</h4>
@@ -354,22 +352,35 @@
                   <td>Summer Points</td>
                   <td>{{ admin.user.summerPoints }}</td>
                 </tr>
-                <tr>
-                  <td>Total Points</td>
-                  <td>{{ admin.user.points }}</td>
-                </tr>
               </tbody>
             </table>
           </div>
         </div>
-        <!-- <table class="table table-responsive-lg table-striped attendance-table">
-          <tr>
-            <th>EVENT</th>
-          </tr>
-          <tr ng-repeat="user in admin.user | orderBy: 'event'">
-            <td>{{ admin.user.event }}</td>
-          </tr>
-        </table> -->
+        <div class="row">
+          <div class="col-12">
+
+            <table class="table table-responsive-lg table-striped">
+              <tr class="table-head">
+                <th>EVENT</th>
+                <th>TYPE</th>
+                <th class="text-center">SEMESTER</th>
+                <th class="text-center">POINTS</th>
+              </tr>
+              <tr ng-repeat="event in admin.eventArray | orderBy: 'expiration'">
+                <td>{{ event.name }}</td>
+                <td>{{ event.type }}</td>
+                <td class="text-center">{{ event.semester }}</td>
+                <td class="text-center">{{ event.points }}</td>
+              </tr>
+              <tr class="table-head">
+                <th>TOTAL POINTS</th>
+                <th></th>
+                <th></th>
+                <th class="text-center">{{ admin.user.points }}</th>
+              </tr>
+            </table>
+          </div>
+        </div>
         <div class="row">
           <div class="col-sm-12">
             <button type="reset" class="btn btn-danger float-right" ng-click="admin.closeUserInfoModal()">Close</button>
