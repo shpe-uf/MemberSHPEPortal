@@ -60,7 +60,7 @@ angular.module('userServices', [])
 
     // GRAB EVENT CODE INFORMATION FOR INDIVIDUAL USERS
     userFactory.getCodeInfo = function(codeData) {
-      return $http.get('api/getcodeinfo/' + codeData._id);
+      return $http.get('api/getcodeinfo/' + codeData);
     };
 
     // GRAB ALL THE REQUESTS
@@ -134,6 +134,10 @@ angular.module('userServices', [])
 
     userFactory.getExcelDoc = function(eventId) {
       return $http.get('api/getexceldoc/' + eventId);
+    };
+
+    userFactory.getUserInfo = function(username) {
+      return $http.get('api/getuserinfo/' + username);
     };
 
     return userFactory;

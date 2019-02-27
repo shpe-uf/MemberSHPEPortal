@@ -951,6 +951,8 @@ module.exports = function(router) {
     Code.findOne({
       _id: req.params.code
     }).populate().exec(function(err, event) {
+      if (err) throw err;
+
       res.json({
         success: true,
         message: event
@@ -1587,6 +1589,19 @@ module.exports = function(router) {
       });
 
       res.sendFile("EventAttendance.csv");
+    });
+  });
+  //ENDPOINT TO GENERATE INDIVIDUAL USER INFO
+  router.get('/getuserinfo/:username', function(req, res) {
+    User.find({
+      username: req.params.username
+    }, function(err, user) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: user
+      });
     });
   });
 

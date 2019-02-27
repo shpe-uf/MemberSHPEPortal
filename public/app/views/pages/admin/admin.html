@@ -84,7 +84,9 @@
                 <th class="text-center" ng-click="admin.sortBy('springPoints', admin.users)">SPRING POINTS</th>
                 <th class="text-center" ng-click="admin.sortBy('summerPoints', admin.users)">SUMMER POINTS</th>
                 <th class="text-center" ng-click="admin.sortBy('points', admin.users)">TOTAL POINTS</th>
+                <th class="text-center">INFO</th>
               </tr>
+
               <tr ng-repeat="user in admin.users | filter: membersSearchText">
                 <td>{{ user.lastName }}, {{ user.firstName }}</td>
                 <td>{{ user.username }}</td>
@@ -93,6 +95,11 @@
                 <td class="text-center">{{ user.springPoints }}</td>
                 <td class="text-center">{{ user.summerPoints }}</td>
                 <td class="text-center">{{ user.points }}</td>
+                <td>
+                  <button type="button" class="btn btn-submit" ng-click="admin.openuserInfoModal(user.username)">
+                    <i class="fas fa-info-circle"></i>
+                  </button>
+                </td>
               </tr>
             </table>
           </div>
@@ -288,6 +295,104 @@
             </div>
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- USER EVENTS MODAL  -->
+<div class="modal fade" id="userEventsModal" aria-labelledby="userEventsModalLabel">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="userEventsModal">
+          User Information
+        </h3>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12">
+            <h4>{{ admin.user.lastName}}, {{ admin.user.firstName}}</h4>
+          </div>
+          <div class="col-lg-6 col-12">
+            <img class="img-thumbnail" src="../../assets/images/profile.png">
+          </div>
+          <div class="col-lg-6 col-12">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td>Username</td>
+                  <td>{{ admin.user.username }}</td>
+                </tr>
+                <tr>
+                  <td>Email</td>
+                  <td>{{ admin.user.email }}</td>
+                </tr>
+                <tr>
+                  <td>Major</td>
+                  <td>{{ admin.user.major }}</td>
+                </tr>
+                <tr>
+                  <td>Year</td>
+                  <td>{{ admin.user.year }}</td>
+                </tr>
+                <tr>
+                  <td>Nationality</td>
+                  <td>{{ admin.user.nationality }}</td>
+                </tr>
+                <tr>
+                  <td>Ethnicity</td>
+                  <td>{{ admin.user.ethnicity }}</td>
+                </tr>
+                <tr>
+                  <td>Sex</td>
+                  <td>{{ admin.user.sex }}</td>
+                </tr>
+                <tr>
+                  <td>Fall Points</td>
+                  <td>{{ admin.user.fallPoints }}</td>
+                </tr>
+                <tr>
+                  <td>Spring Points</td>
+                  <td>{{ admin.user.springPoints }}</td>
+                </tr>
+                <tr>
+                  <td>Summer Points</td>
+                  <td>{{ admin.user.summerPoints }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+
+            <table class="table table-responsive-lg table-striped attendance-table">
+              <tr class="table-head">
+                <th>EVENT</th>
+                <th>TYPE</th>
+                <th class="text-center">SEMESTER</th>
+                <th class="text-center">POINTS</th>
+              </tr>
+              <tr ng-repeat="event in admin.eventArray | orderBy: 'expiration'">
+                <td>{{ event.name }}</td>
+                <td>{{ event.type }}</td>
+                <td class="text-center">{{ event.semester }}</td>
+                <td class="text-center">{{ event.points }}</td>
+              </tr>
+              <tr class="table-head">
+                <th>TOTAL POINTS</th>
+                <th></th>
+                <th></th>
+                <th class="text-center">{{ admin.user.points }}</th>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <button type="reset" class="btn btn-danger float-right" ng-click="admin.closeUserInfoModal()">Close</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

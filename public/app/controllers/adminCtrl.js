@@ -170,4 +170,33 @@ angular.module('adminController', [])
       app.users = orderBy(array, $scope.propertyName, $scope.reverse);
     };
 
+    this.openuserInfoModal = function(data) {
+      $("#userEventsModal").modal({
+        backdrop: 'static'
+      });
+      app.UserName = data;
+
+      app.showEventsModal = true;
+      User.getUserInfo(data).then(function(userData) {
+        if (userData.data.success) {
+          app.user = userData.data.message[0];
+          if (app.user.events.length > 0) {
+            for (var i = 0; i < app.user.events.length; i++) {
+              app.eventArray = [];
+              User.getCodeInfo(app.user.events[i]._id).then(function(eventsInfo) {
+                if (eventsInfo.data.success) {
+                  app.eventArray.push(eventsInfo.data.message);
+                }
+              });
+            };
+          }
+        }
+
+      });
+
+    };
+
+    this.closeUserInfoModal = function() {
+      $('#userEventsModal').modal('hide');
+    };
   });

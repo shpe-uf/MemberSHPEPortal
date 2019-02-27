@@ -188,7 +188,7 @@ angular.module('mainController', ['authServices', 'userServices'])
 
           if (app.events) {
             for (var i = 0; i < app.events.length; i++) {
-              User.getCodeInfo(app.events[i]).then(function(codeData) {
+              User.getCodeInfo(app.events[i]._id).then(function(codeData) {
                 app.codeArray.push(codeData.data.message);
               });
             }
