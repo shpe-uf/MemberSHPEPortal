@@ -431,3 +431,11 @@ td, th {
 .fa-admin {
   color: rgb(255, 215, 0);
 }
+
+.btn-block {
+  margin: 6px 0px 6px 0px;
+}
+
+a {
+  text-decoration: none !important;
+}
