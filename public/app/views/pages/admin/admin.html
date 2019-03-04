@@ -93,6 +93,7 @@
               <div class="col-12">
                 <table class="table table-responsive-lg table-striped">
                   <tr class="table-head">
+                    <th></th>
                     <th ng-click="admin.sortBy('lastName', admin.users)">NAME</th>
                     <th ng-click="admin.sortBy('username', admin.users)">USERNAME</th>
                     <th ng-click="admin.sortBy('email', admin.users)">EMAIL</th>
@@ -104,6 +105,7 @@
                   </tr>
 
                   <tr ng-repeat="user in admin.users | filter: membersSearchText">
+                    <td><i class="fas fa-star" ng-if="user.permission == 'admin'"></i></td>
                     <td>{{ user.lastName }}, {{ user.firstName }}</td>
                     <td>{{ user.username }}</td>
                     <td>{{ user.email }}</td>
