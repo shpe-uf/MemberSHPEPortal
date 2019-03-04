@@ -384,7 +384,10 @@
         </div>
         <div class="row">
           <div class="col-12">
-            <div class="short-table user-events-table">
+            <div class="jumbotron" ng-if="admin.eventArray.length == 0">
+              <p class="text-center">THIS USER HAS NO ATTENDANCE RECORD.</p>
+            </div>
+            <div class="short-table user-events-table" ng-if="admin.eventArray.length != 0">
               <table class="table table-responsive-lg table-striped" style="margin-bottom: 0px;">
                 <tr class="table-head">
                   <th>EVENT</th>
