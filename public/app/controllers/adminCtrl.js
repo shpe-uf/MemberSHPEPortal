@@ -24,7 +24,6 @@ angular.module('adminController', [])
 
     this.closeCreateEventModal = function(eventData) {
       $('#createEventModal').modal('hide');
-      app.eventData.type = '';
     };
 
     this.createEvent = function(eventData) {
