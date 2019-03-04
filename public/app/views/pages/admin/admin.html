@@ -105,7 +105,7 @@
                   </tr>
 
                   <tr ng-repeat="user in admin.users | filter: membersSearchText">
-                    <td><i class="fas fa-star" ng-if="user.permission == 'admin'"></i></td>
+                    <td><i class="fas fa-star fa-admin" ng-if="user.permission == 'admin'"></i></td>
                     <td>{{ user.lastName }}, {{ user.firstName }}</td>
                     <td>{{ user.username }}</td>
                     <td>{{ user.email }}</td>
@@ -246,7 +246,7 @@
           <div class="row">
             <div class="col-sm-12">
               <button type="submit" class="btn btn-success" ng-if="admin.showCreateEventModal">Submit</button>
-              <button type="reset" class="btn btn-danger" ng-click="admin.closeCreateEventModal(eventData)">Close</button>
+              <button type="reset" class="btn btn-danger float-right" ng-click="admin.closeCreateEventModal(eventData)">Close</button>
             </div>
           </div>
         </form>
@@ -255,7 +255,7 @@
   </div>
 </div>
 
-<!-- EVENT OPTIONS AND INFORMATION TABLE -->
+<!-- EVENT INFORMATION TABLE -->
 <div class="modal fade" id="eventInfoModal" aria-labelledby="eventInfoModalLabel">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
@@ -263,7 +263,7 @@
         <h2 class="modal-title" id="eventInfoModalLabel">Event Information</h2>
       </div>
       <div class="modal-body">
-        <h3>{{ admin.eventName }}</h3>
+        <h4>{{ admin.eventName }}</h4>
         <p style="text-transform: uppercase">
           <b>ATTENDANCE:</b> {{ admin.attendance.length }}
         </p>
@@ -305,7 +305,7 @@
         <h2 class="modal-title" id="manualInputLabel">Manual Input</h2>
       </div>
       <div class="modal-body">
-
+        <h4>{{ admin.eventName.name }}</h4>
         <div class="success-message" ng-show="admin.successMsg">
           <div class="alert alert-success">{{ admin.successMsg }}</div>
         </div>
@@ -321,9 +321,9 @@
           </div>
 
           <div class="row">
-            <div class="col-sm-12">
+            <div class="col-12">
               <button type="submit" class="btn btn-success">Submit</button>
-              <button type="reset" class="btn btn-danger" ng-click="admin.closeManualInputModal(user)">Close</button>
+              <button type="reset" class="btn btn-danger float-right" ng-click="admin.closeManualInputModal(user)">Close</button>
             </div>
           </div>
         </form>
@@ -344,7 +344,7 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-12">
-            <h3>{{ admin.user.firstName}} {{ admin.user.lastName}}</h3>
+            <h4>{{ admin.user.firstName}} {{ admin.user.lastName}}</h4>
           </div>
           <div class="col-lg-6 col-12 col-margin">
             <img class="img-thumbnail" src="../../assets/images/profile.png">

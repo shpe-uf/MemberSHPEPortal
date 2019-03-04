@@ -427,3 +427,7 @@ td, th {
   padding: 8px 8px 8px 8px !important;
   vertical-align: middle !important;
 }
+
+.fa-admin {
+  color: rgb(255, 215, 0);
+}
