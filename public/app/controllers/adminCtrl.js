@@ -4,7 +4,7 @@ angular.module('adminController', [])
     var app = this;
     app.accessDenied = true;
     app.showCreateEventModal = true;
-    app.showMoreModal = true;
+    app.showEventInfoModal = true;
     app.isClicked = false;
     app.eventName;
     app.eventId;
@@ -41,8 +41,8 @@ angular.module('adminController', [])
       });
     };
 
-    this.openMoreModal = function(eventData) {
-      $("#moreModal").modal({
+    this.openEventInfoModal = function(eventData) {
+      $("#eventInfoModal").modal({
         backdrop: 'static'
       });
 
@@ -53,11 +53,11 @@ angular.module('adminController', [])
         app.attendance = data.data.message;
       });
 
-      app.showMoreModal = true;
+      app.showEventInfoModal = true;
     };
 
-    this.closeMoreModal = function() {
-      $('#moreModal').modal('hide');
+    this.closeEventInfoModal = function() {
+      $('#eventInfoModal').modal('hide');
     };
 
     this.openManualInputModal = function(eventData) {
@@ -160,7 +160,9 @@ angular.module('adminController', [])
       }
     });
 
-    this.openuserInfoModal = function(data) {
+    this.openUserInfoModal = function(data) {
+      console.log(app.UserName);
+      console.log(data);
       $("#userEventsModal").modal({
         backdrop: 'static'
       });
@@ -187,6 +189,8 @@ angular.module('adminController', [])
     };
 
     this.closeUserInfoModal = function() {
+      app.UserName = false;
+      app.eventArray = [];
       $('#userEventsModal').modal('hide');
     };
 
