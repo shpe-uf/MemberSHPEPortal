@@ -165,7 +165,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title" id="createEventLabel">Create Event</h3>
+        <h2 class="modal-title" id="createEventLabel">Create Event</h2>
       </div>
       <div class="modal-body">
         <div class="success-message" ng-show="admin.successMsg">
@@ -225,26 +225,28 @@
   </div>
 </div>
 
-<!-- EVENT ATTENDANCE TABLE -->
+<!-- EVENT OPTIONS AND INFORMATION TABLE -->
 <div class="modal fade" id="moreModal" aria-labelledby="moreModalLabel">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title" id="moreModalLabel">Event Options & Information</h3>
+        <h2 class="modal-title" id="moreModalLabel">Event Options & Information</h2>
       </div>
       <div class="modal-body">
-        <h4>Event Options</h4>
+        <h3>{{ admin.eventName }}</h3>
+        <h5>Event Options</h5>
         <hr>
-        <h4>Attendance Record</h4>
+        <h5>Attendance Record</h5>
         <p style="text-transform: uppercase">
-          <b>EVENT:</b> {{ admin.eventName }} <br>
           <b>ATTENDANCE:</b> {{ admin.attendance.length }}
         </p>
-        <div class="short-table">
+        <div class="short-table attendance-table">
           <table class="table table-responsive-lg table-striped" style="margin-bottom: 0px;">
-            <th>NAME</th>
-            <th>USERNAME</th>
-            <th>EMAIL</th>
+            <tr class="table-head">
+              <th>NAME</th>
+              <th>USERNAME</th>
+              <th>EMAIL</th>
+            </tr>
             <tr ng-repeat="user in admin.attendance | orderBy: 'lastName'">
               <td>{{ user.lastName }}, {{ user.firstName }}</td>
               <td>{{ user.username }}</td>
@@ -270,7 +272,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title" id="manualInputLabel">Manual Input</h3>
+        <h2 class="modal-title" id="manualInputLabel">Manual Input</h2>
       </div>
       <div class="modal-body">
 
@@ -305,14 +307,14 @@
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title" id="userEventsModal">
-          User Information
-        </h3>
+        <h2 class="modal-title" id="userEventsModal">
+          Member Information
+        </h2>
       </div>
       <div class="modal-body">
         <div class="row" style="margin-bottom: 16px;">
           <div class="col-12">
-            <h4>{{ admin.user.lastName}}, {{ admin.user.firstName}}</h4>
+            <h3>{{ admin.user.firstName}} {{ admin.user.lastName}}</h3>
           </div>
           <div class="col-lg-6 col-12">
             <img class="img-thumbnail" src="../../assets/images/profile.png">
@@ -354,7 +356,7 @@
         </div>
         <div class="row">
           <div class="col-12">
-            <div class="short-table">
+            <div class="short-table user-events-table">
               <table class="table table-responsive-lg table-striped" style="margin-bottom: 0px;">
                 <tr class="table-head">
                   <th>EVENT</th>

@@ -160,16 +160,16 @@ hr {
 }
 
 .success-message {
-  -webkit-animation: pulse 0.3s both ease;
-  -moz-animation: pulse 0.3s both ease;
-  animation: pulse 0.3s both ease;
+  -webkit-animation: bounceIn 0.5s both ease;
+  -moz-animation: bounceIn 0.5s both ease;
+  animation: bounceIn 0.5s both ease;
   margin-bottom: 16px;
 }
 
 .error-message {
-  -webkit-animation: shake 0.3s both ease;
-  -moz-animation: shake 0.3s both ease;
-  animation: shake 0.3s both ease;
+  -webkit-animation: shake 0.5s both ease;
+  -moz-animation: shake 0.5s both ease;
+  animation: shake 0.5s both ease;
   margin-bottom: 16px;
 }
 
@@ -258,9 +258,16 @@ iframe {
 }
 
 .short-table {
-  max-height: 400px;
   overflow-y: scroll;
   margin-bottom: 15px;
+}
+
+.attendance-table {
+  max-height: 400px;
+}
+
+.user-events-table {
+  max-height: 270px;
 }
 
 /* LOGOUT LOADER */
@@ -347,8 +354,8 @@ iframe {
     transform: scale3D(0, 0, 1);
   }
 }
-
 /* LOGOUT LOADER */
+
 #mapid {
   height: 540px;
   width: 100%;
@@ -416,17 +423,7 @@ iframe {
   background-color: #D9D9D9 !important;
 }
 
-.fall-head {
-  background-color: #DC3545 !important;
-  color: #FFFFFF;
-}
-
-.spring-head {
-  background-color: #28A745 !important;
-  color: #FFFFFF;
-}
-
-.summer-head {
-  background-color: #FFC107 !important;
-  color: #FFFFFF;
+td, th {
+  padding: 8px 8px 8px 8px !important;
+  vertical-align: middle !important;
 }

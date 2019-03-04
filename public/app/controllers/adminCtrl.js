@@ -120,14 +120,12 @@ angular.module('adminController', [])
     };
 
     this.excel = function(eventId) {
-      console.log(eventId);
       User.getExcelDoc(eventId).then(function(data) {
-        if (data.data.success) {
-          const Json2csvParser = require('json2csv').Parser;
-          var parser = new Json2csvParser;
-          var result = parser.parse(data.data.message);
-          console.log(result);
-        }
+        var hiddenElement = document.createElement('a');
+        hiddenElement.href = "data:attachment/csv," + encodeURI(data.data);
+        hiddenElement.target = "_blank";
+        hiddenElement.download = eventId + ".csv";
+        hiddenElement.click();
       });
     };
 
@@ -163,20 +161,14 @@ angular.module('adminController', [])
       }
     });
 
-    this.sortBy = function(propertyName, array) {
-      $scope.reverse = (propertyName !== null && $scope.propertyName === propertyName) ?
-        !$scope.reverse : false;
-      $scope.propertyName = propertyName;
-      app.users = orderBy(array, $scope.propertyName, $scope.reverse);
-    };
-
     this.openuserInfoModal = function(data) {
       $("#userEventsModal").modal({
         backdrop: 'static'
       });
-      app.UserName = data;
 
+      app.UserName = data;
       app.showEventsModal = true;
+
       User.getUserInfo(data).then(function(userData) {
         if (userData.data.success) {
           app.user = userData.data.message[0];
@@ -191,12 +183,18 @@ angular.module('adminController', [])
             };
           }
         }
-
       });
 
     };
 
     this.closeUserInfoModal = function() {
       $('#userEventsModal').modal('hide');
+    };
+
+    this.sortBy = function(propertyName, array) {
+      $scope.reverse = (propertyName !== null && $scope.propertyName === propertyName) ?
+      !$scope.reverse : false;
+      $scope.propertyName = propertyName;
+      app.users = orderBy(array, $scope.propertyName, $scope.reverse);
     };
   });

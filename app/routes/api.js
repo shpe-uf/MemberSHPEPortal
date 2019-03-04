@@ -1571,6 +1571,7 @@ module.exports = function(router) {
     });
   });
 
+  // ENDPOINT TO CREATE EXCEL FILES FOR EVENT ATTENDANCE
   router.get('/getexceldoc/:eventId', function(req, res) {
     User.find({
       events: {
@@ -1581,16 +1582,22 @@ module.exports = function(router) {
 
       var fields = ['firstName', 'lastName', 'major', 'year', 'email'];
 
-      var json2csvParser = new Json2csvParser({ fields });
+      var json2csvParser = new Json2csvParser({
+        fields
+      });
+
       var csv = json2csvParser.parse(users);
 
-      fs.writeFile('EventAttendance.csv', csv, function(err) {
+      fs.writeFile('app/routes/excel/EventAttendance.csv', csv, function(err) {
         if (err) throw err;
       });
 
-      res.sendFile("EventAttendance.csv");
+      setTimeout(function() {
+        res.sendFile(__dirname + "/excel/EventAttendance.csv");
+      }, 1500);
     });
   });
+
   //ENDPOINT TO GENERATE INDIVIDUAL USER INFO
   router.get('/getuserinfo/:username', function(req, res) {
     User.find({

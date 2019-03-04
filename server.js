@@ -19,9 +19,9 @@ app.use('/api', appRoutes);
 
 mongoose.connect(process.env.URI, function(err) {
   if (err) {
-    console.log('\nDatabase connection error:\n' + err);
+    console.log('\nFAILURE: UNABLE TO CONNECT TO THE DATABASE:\n' + err);
   } else {
-    console.log('Succesfully connected to database');
+    console.log('\nSUCCESS: CONNECTED TO THE DATABASE\n');
   }
 });
 
@@ -30,5 +30,5 @@ app.get('*', function(req, res) {
 });
 
 app.listen(port, function() {
-  console.log('\nRunning the server on port ' + port);
+  console.log('\nSERVER RUNNING ON PORT: ' + port + '\n');
 });
