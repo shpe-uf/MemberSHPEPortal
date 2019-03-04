@@ -161,8 +161,6 @@ angular.module('adminController', [])
     });
 
     this.openUserInfoModal = function(data) {
-      console.log(app.UserName);
-      console.log(data);
       $("#userEventsModal").modal({
         backdrop: 'static'
       });
