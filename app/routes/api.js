@@ -648,7 +648,7 @@ module.exports = function(router) {
         });
         res.json({
           success: true,
-          message: newToken
+          token: newToken
         });
       }
     });
