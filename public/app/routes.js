@@ -28,6 +28,11 @@ var app = angular.module('appRoutes', ['ngRoute'])
         authenticated: true
       })
 
+      .when('/editprofile', {
+        templateUrl: 'app/views/pages/users/editprofile.html',
+        authenticated: true
+      })
+
       .when('/rewards', {
         templateUrl: 'app/views/pages/rewards/rewards.html',
         authenticated: true
