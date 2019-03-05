@@ -38,7 +38,7 @@ var usernameValidator = [
 var passwordValidator = [
   validate({
     validator: 'matches',
-    arguments: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/g,
+    arguments: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
     message: 'Password must be at least 8 characters. It must contain at least one lowercase character, one uppercase character, one number, and one special character.'
   })
 ];
@@ -132,6 +132,9 @@ var UserSchema = new Schema({
 
 UserSchema.pre('save', function(next) {
   var user = this;
+
+  if (!user.isModified('password')) return next();
+
   bcrypt.hash(user.password, null, null, function(err, hash) {
     if (err) return next(err);
     user.password = hash;
