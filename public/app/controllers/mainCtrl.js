@@ -225,9 +225,19 @@ angular.module('mainController', ['authServices', 'userServices'])
       showModal(2);
     };
 
-    app.updateProfile = function() {
+    this.editUser=function(newUserInfo){
+      console.log(app.newUserInfo);
+      User.editUserInfo(app.newUserInfo);
+    };
+
+    app.openUpdateProfile = function() {
       $("#profileUpdate").modal({
         backdrop: "static"
       });
     };
+
+    app.closeUpdateProfile = function() {
+      $('#profileUpdate').modal('hide');
+    };
   });
+

@@ -158,5 +158,10 @@ angular.module('userServices', [])
       return $http.get('api/getuserinfo/' + username);
     };
 
+    // UPDATING USER INFO
+    userFactory.editUserInfo = function(userInfo){
+      return $http.put('api/edituserinfo/', userInfo);
+    };
+
     return userFactory;
   });

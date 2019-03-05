@@ -1612,5 +1612,10 @@ module.exports = function(router) {
     });
   });
 
+  router.put('/edituserinfo/', function(req,res){
+    console.log(req.body);
+  });
+
+
   return router;
 };
