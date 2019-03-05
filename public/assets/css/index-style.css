@@ -1,16 +1,11 @@
 @font-face {
-  font-family: "Uni Neue";
-  src: url(../fonts/UniNeue-HeavyItalic.otf);
-}
-
-@font-face {
   font-family: "Avenir";
-  src: url(../fonts/Avenir-Book.otf);
+  src: url(../fonts/AvenirBook.otf);
 }
 
 @font-face {
-  font-family: "Brandon Grotesque";
-  src: url(../fonts/brandon-grotesque.otf);
+  font-family: "Futura PT Heavy";
+  src: url(../fonts/FuturaPTHeavy.otf);
 }
 
 * {
@@ -37,18 +32,18 @@ body {
 }
 
 .navbar-brand {
-  font-family: 'Brandon Grotesque';
+  font-family: 'Futura PT Heavy';
   font-size: 1.2rem;
   vertical-align: text-bottom;
 }
 
 .navbar-caps {
-  font-family: 'Brandon Grotesque';
+  font-family: 'Futura PT Heavy';
 }
 
 h1, h2, h3, h4, h5 {
   color: #EB4616;
-  font-family: 'Brandon Grotesque';
+  font-family: 'Futura PT Heavy';
   text-transform: uppercase;
 }
 
