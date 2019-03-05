@@ -21,14 +21,7 @@
         <!-- REQUESTS -->
         <div class="tab-pane fade show active" id="nav-request" role="tabpanel" aria-labelledby="nav-request-tab">
           <div class="container">
-            <div class="row" ng-if="admin.requests.length == 0">
-              <div class="col-12">
-                <div class="jumbotron">
-                  <p class="text-center">THERE ARE NO REQUESTS AT THIS TIME.</p>
-                </div>
-              </div>
-            </div>
-            <div class="row" ng-if="admin.requests.length != 0">
+            <div class="row">
               <div class="col-12">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
@@ -37,7 +30,7 @@
                   <input type="text" class="form-control" ng-model="requestSearchText">
                 </div>
               </div>
-              <div class="col-12">
+              <div class="col-12" ng-if="admin.requests.length != 0">
                 <table class="table table-responsive-lg table-striped">
                   <tr class="table-head">
                     <th>NAME</th>
@@ -68,20 +61,20 @@
                 </table>
               </div>
             </div>
+            <div class="row" ng-if="admin.requests.length == 0">
+              <div class="col-12">
+                <div class="jumbotron">
+                  <p class="text-center">THERE ARE NO REQUESTS AT THIS TIME.</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
         <!-- MEMBERS -->
         <div class="tab-pane fade" id="nav-member" role="tabpanel" aria-labelledby="nav-member-tab">
           <div class="container">
-            <div class="row" ng-if="admin.users.length == 0">
-              <div class="col-12">
-                <div class="jumbotron">
-                  <p class="text-center">THERE ARE NO MEMBERS AT THIS TIME.</p>
-                </div>
-              </div>
-            </div>
-            <div class="row" ng-if="admin.users.length != 0">
+            <div class="row">
               <div class="col-12">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
@@ -90,7 +83,7 @@
                   <input type="text" class="form-control" ng-model="membersSearchText">
                 </div>
               </div>
-              <div class="col-12">
+              <div class="col-12" ng-if="admin.users.length != 0">
                 <table class="table table-responsive-lg table-striped">
                   <tr class="table-head">
                     <th></th>
@@ -122,20 +115,20 @@
                 </table>
               </div>
             </div>
+            <div class="row" ng-if="admin.users.length == 0">
+              <div class="col-12">
+                <div class="jumbotron">
+                  <p class="text-center">THERE ARE NO MEMBERS AT THIS TIME.</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
         <!-- EVENTS -->
         <div class="tab-pane fade" id="nav-event" role="tabpanel" aria-labelledby="nav-event-tab">
           <div class="container">
-            <div class="row" ng-if="admin.codes.length == 0">
-              <div class="col-12">
-                <div class="jumbotron">
-                  <p class="text-center">THERE ARE NO EVENTS AT THIS TIME.</p>
-                </div>
-              </div>
-            </div>
-            <div class="row" ng-if="admin.codes.length != 0">
+            <div class="row">
               <div class="col-md-11 col-sm-11 col-10">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
@@ -149,7 +142,7 @@
                   <i class="far fa-calendar-alt"></i>
                 </button>
               </div>
-              <div class="col-12">
+              <div class="col-12" ng-if="admin.codes.length != 0">
                 <table class="table table-responsive-lg table-striped">
                   <tr class="table-head">
                     <th>NAME</th>
@@ -178,6 +171,13 @@
                     </td>
                   </tr>
                 </table>
+              </div>
+            </div>
+            <div class="row" ng-if="admin.codes.length == 0">
+              <div class="col-12">
+                <div class="jumbotron">
+                  <p class="text-center">THERE ARE NO EVENTS AT THIS TIME.</p>
+                </div>
               </div>
             </div>
           </div>
