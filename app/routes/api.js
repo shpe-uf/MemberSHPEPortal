@@ -1,13 +1,20 @@
 require('dotenv').config();
 
+// MODEL FILES
 var User = require('../models/user');
 var Code = require('../models/code');
 var Request = require('../models/request');
 var Alumni = require('../models/alumni');
+
+// NPM PACKAGES
 var jwt = require('jsonwebtoken');
-var secret = process.env.SECRET;
 var nodemailer = require('nodemailer');
 var nodeGeocoder = require('node-geocoder');
+var Json2csvParser = require('json2csv').Parser;
+
+// MISCELLANEOUS
+var fs = require('fs');
+var secret = process.env.SECRET;
 
 module.exports = function(router) {
 
@@ -87,6 +94,104 @@ module.exports = function(router) {
         message: members,
         success: true
       })
+    });
+  });
+
+  // ENDPOINT TO ADD SEMESTER FIELD TO CODES MODEL
+  router.put('/addsemester', function(req, res) {
+    Code.find({
+
+    }, function(err, events) {
+      if (err) throw err;
+
+      for (var i = 0; i < events.length; i++) {
+        Code.find({
+          code: events[i].code
+        }, function(err, event) {
+          var eventSemester = "";
+
+          if (event[0].expiration.getMonth() >= 0 && event[0].expiration.getMonth() <= 3) {
+            eventSemester = "Spring";
+          } else if (event[0].expiration.getMonth() >= 4 && event[0].expiration.getMonth() <= 6) {
+            eventSemester = "Summer";
+          } else {
+            eventSemester = "Fall";
+          }
+
+          Code.findOneAndUpdate({
+            code: event[0].code
+          }, {
+            $set: {
+              semester: eventSemester
+            }
+          }, function(err, newEvent) {
+            if (err) throw err;
+          });
+        });
+      };
+
+      res.send("Events updated!");
+    });
+  });
+
+  // ENDPOINT TO RETROACTIVELY SPLIT FALL AND SPRING SEMESTER POINTS
+  router.put('/split', async function(req, res) {
+    User.find({
+
+    }, function(err, users) {
+      if (err) throw err;
+
+      var userNum = req.body.number;
+
+      if (users[userNum].events.length == 0) {
+        User.findOneAndUpdate({
+          username: users[userNum].username
+        }, {
+          $set: {
+            fallPoints: 0,
+            springPoints: 0,
+            summerPoints: 0
+          }
+        }, function(err, newUser) {
+          if (err) throw err;
+        });
+      } else {
+        var fall = 0;
+        var spring = 0;
+        var summer = 0;
+
+        for (var j = 0; j < users[userNum].events.length; j++) {
+          Code.findOne({
+            _id: users[userNum].events[j]._id
+          }, function(err, code) {
+            if (err) throw err;
+
+            if (code.semester == "Fall") {
+              fall += code.points;
+            } else if (code.semester == "Spring") {
+              spring += code.points;
+            } else if (code.semester == "Summer") {
+              summer += code.points;
+            }
+          });
+        }
+
+        setTimeout(function() {
+          User.findOneAndUpdate({
+            username: users[userNum].username
+          }, {
+            $set: {
+              fallPoints: fall,
+              springPoints: spring,
+              summerPoints: summer
+            }
+          }, function(err, newUser) {
+            if (err) throw err;
+
+            res.send(newUser);
+          });
+        }, 1500);
+      }
     });
   });
 
@@ -197,6 +302,14 @@ module.exports = function(router) {
       }
 
       code.expiration = Date.now() + (req.body.expiration * 60 * 60 * 1000);
+
+      if (code.expiration.getMonth() >= 0 && code.expiration.getMonth() <= 3) {
+        code.semester = "Spring";
+      } else if (code.expiration.getMonth() >= 4 && code.expiration.getMonth() <= 6) {
+        code.semester = "Summer";
+      } else {
+        code.semester = "Fall";
+      }
 
       code.save(function(err) {
         if (err) {
@@ -337,7 +450,6 @@ module.exports = function(router) {
                 console.log(err);
                 throw err;
               } else {
-                console.log("EMAIL SENT");
                 res.json({
                   success: true,
                   message: 'Username has been sent to email.'
@@ -391,7 +503,6 @@ module.exports = function(router) {
                 console.log(err);
                 throw err;
               } else {
-                console.log("EMAIL SENT");
                 res.json({
                   success: true,
                   message: 'Reset link has been sent to your email.'
@@ -474,7 +585,6 @@ module.exports = function(router) {
                 console.log(err);
                 throw err;
               } else {
-                console.log("EMAIL SENT");
                 res.json({
                   success: true,
                   message: 'Password has been reset.'
@@ -700,34 +810,92 @@ module.exports = function(router) {
                   message: 'Unable to add code to profile'
                 });
               } else {
-
                 if (code.points == 1 && code.type == 'General Body Meeting') {
-                  User.findOneAndUpdate({
-                    username: req.decoded.username,
-                  }, {
-                    $push: {
-                      events: {
-                        _id: code
+                  if (code.semester == "Fall") {
+                    User.findOneAndUpdate({
+                      username: req.decoded.username,
+                    }, {
+                      $push: {
+                        events: {
+                          _id: code
+                        }
+                      },
+                      $inc: {
+                        points: code.points,
+                        fallPoints: code.points
                       }
-                    },
-                    $inc: {
-                      points: code.points
-                    }
-                  }, function(err, user) {
-                    if (err) throw (err);
+                    }, function(err, user) {
+                      if (err) throw (err);
 
-                    if (!user) {
-                      res.json({
-                        success: false,
-                        message: 'Unable to add code to profile'
-                      });
-                    } else {
-                      res.json({
-                        success: true,
-                        message: "Points redeemed!"
-                      });
-                    }
-                  });
+                      if (!user) {
+                        res.json({
+                          success: false,
+                          message: 'Unable to add code to profile'
+                        });
+                      } else {
+                        res.json({
+                          success: true,
+                          message: "Points redeemed!"
+                        });
+                      }
+                    });
+                  } else if (code.semester == "Spring") {
+                    User.findOneAndUpdate({
+                      username: req.decoded.username,
+                    }, {
+                      $push: {
+                        events: {
+                          _id: code
+                        }
+                      },
+                      $inc: {
+                        points: code.points,
+                        springPoints: code.points
+                      }
+                    }, function(err, user) {
+                      if (err) throw (err);
+
+                      if (!user) {
+                        res.json({
+                          success: false,
+                          message: 'Unable to add code to profile'
+                        });
+                      } else {
+                        res.json({
+                          success: true,
+                          message: "Points redeemed!"
+                        });
+                      }
+                    });
+                  } else if (code.semester == "Summer") {
+                    User.findOneAndUpdate({
+                      username: req.decoded.username,
+                    }, {
+                      $push: {
+                        events: {
+                          _id: code
+                        }
+                      },
+                      $inc: {
+                        points: code.points,
+                        summer: code.points
+                      }
+                    }, function(err, user) {
+                      if (err) throw (err);
+
+                      if (!user) {
+                        res.json({
+                          success: false,
+                          message: 'Unable to add code to profile'
+                        });
+                      } else {
+                        res.json({
+                          success: true,
+                          message: "Points redeemed!"
+                        });
+                      }
+                    });
+                  }
                 } else {
 
                   var newRequest = new Request();
@@ -740,6 +908,7 @@ module.exports = function(router) {
                   newRequest.type = code.type;
                   newRequest.points = code.points;
                   newRequest.status = 0;
+                  newRequest.semester = code.semester;
 
                   Request.findOne({
                     userId: user._id,
@@ -782,20 +951,14 @@ module.exports = function(router) {
     Code.findOne({
       _id: req.params.code
     }).populate().exec(function(err, event) {
+      if (err) throw err;
+
       res.json({
         success: true,
         message: event
       });
     });
   });
-
-  function createRequest(firstName, lastName, username, event, points) {
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.username = username;
-    this.event = event;
-    this.points = points;
-  };
 
   // ENDPOINT TO GRAB ALL OF THE REQUESTS (*)
   router.get('/getrequests', function(req, res) {
@@ -840,39 +1003,109 @@ module.exports = function(router) {
 
   // ENDPOINT TO APPROVE REQUESTS
   router.put('/approverequest', function(req, res) {
-    User.findOneAndUpdate({
-      username: req.body.username,
-    }, {
-      $push: {
-        events: {
-          _id: req.body.eventId
+    if (req.body.semester == "Fall") {
+      User.findOneAndUpdate({
+        username: req.body.username,
+      }, {
+        $push: {
+          events: {
+            _id: req.body.eventId
+          }
+        },
+        $inc: {
+          points: req.body.points,
+          fallPoints: req.body.points
         }
-      },
-      $inc: {
-        points: req.body.points
-      }
-    }, function(err, user) {
-      if (err) throw (err);
+      }, function(err, user) {
+        if (err) throw (err);
 
-      if (!user) {
-        res.json({
-          success: false,
-          message: 'Unable to accept request'
-        });
-      } else {
-        res.json({
-          success: true,
-          message: "Points redeemed!"
-        });
-      }
-    });
+        if (!user) {
+          res.json({
+            success: false,
+            message: 'Unable to accept request'
+          });
+        } else {
+          Request.deleteOne({
+            _id: req.body._id
+          }, function(err, deletedRequest) {
+            if (err) throw (err);
 
+            res.json({
+              success: true,
+              message: "Request accepted!"
+            });
+          });
+        }
+      });
+    } else if (req.body.semester == "Spring") {
+      User.findOneAndUpdate({
+        username: req.body.username,
+      }, {
+        $push: {
+          events: {
+            _id: req.body.eventId
+          }
+        },
+        $inc: {
+          points: req.body.points,
+          springPoints: req.body.points
+        }
+      }, function(err, user) {
+        if (err) throw (err);
 
-    Request.deleteOne({
-      _id: req.body._id
-    }, function(err, deletedRequest) {
-      if (err) throw (err);
-    });
+        if (!user) {
+          res.json({
+            success: false,
+            message: 'Unable to accept request'
+          });
+        } else {
+          Request.deleteOne({
+            _id: req.body._id
+          }, function(err, deletedRequest) {
+            if (err) throw (err);
+
+            res.json({
+              success: true,
+              message: "Request accepted!"
+            });
+          });
+        }
+      });
+    } else if (req.body.semester == "Summer") {
+      User.findOneAndUpdate({
+        username: req.body.username,
+      }, {
+        $push: {
+          events: {
+            _id: req.body.eventId
+          }
+        },
+        $inc: {
+          points: req.body.points,
+          summerPoints: req.body.points
+        }
+      }, function(err, user) {
+        if (err) throw (err);
+
+        if (!user) {
+          res.json({
+            success: false,
+            message: 'Unable to accept request'
+          });
+        } else {
+          Request.deleteOne({
+            _id: req.body._id
+          }, function(err, deletedRequest) {
+            if (err) throw (err);
+
+            res.json({
+              success: true,
+              message: "Request accepted!"
+            });
+          });
+        }
+      });
+    }
   });
 
   // ENDPOINT TO DENY REQUESTS
@@ -881,30 +1114,59 @@ module.exports = function(router) {
       _id: req.body._id
     }, function(err, deletedRequest) {
       if (err) throw (err);
+
+      res.json({
+        success: true,
+        message: "Request denied"
+      });
     });
   });
 
   // ENDPOINT TO CALCULATE USER POINT PERCENTILE
   router.get('/getpercentile/:username', function(req, res) {
-
-    var userPoints;
-    var totalUsers;
-    var belowUsers = 0;
+    var fallPercentile = 0;
+    var springPercentile = 0;
+    var summerPercentile = 0;
+    var fallBelow = 0;
+    var springBelow = 0;
+    var summerBelow = 0;
 
     User.findOne({
       username: req.decoded.username
-    }).populate().exec(function(err, user) {
-      userPoints = user.points;
-    });
-
-    User.find({
-
-    }).select('points').exec(function(err, userArray) {
+    }, function(err, user) {
       if (err) throw err;
 
-      res.json({
-        success: true,
-        message: userArray
+      User.find({
+
+      }).select('fallPoints springPoints summerPoints ').exec(function(err, userArray) {
+        if (err) throw err;
+
+        for (var i = 0; i < userArray.length; i++) {
+          if (user.fallPoints > userArray[i].fallPoints) {
+            fallBelow++;
+          }
+          if (user.springPoints > userArray[i].springPoints) {
+            springBelow++;
+          }
+          if (user.summerPoints > userArray[i].summerPoints) {
+            summerBelow++;
+          }
+        }
+
+        fallPercentile = Math.trunc((fallBelow / userArray.length) * 100);
+        springPercentile = Math.trunc((springBelow / userArray.length) * 100);
+        summerPercentile = Math.trunc((summerBelow / userArray.length) * 100);
+
+        var percentile = {
+          fall: fallPercentile,
+          spring: springPercentile,
+          summer: summerPercentile
+        }
+
+        res.json({
+          success: true,
+          message: percentile
+        });
       });
     });
   });
@@ -960,43 +1222,97 @@ module.exports = function(router) {
               message: 'Event code already redeemed by the user.'
             });
           } else {
-
             Code.findOne({
               _id: req.body.eventId
             }).select().exec(function(err, code) {
-              console.log(code);
-              console.log(user);
-
-              User.findOneAndUpdate({
-                username: user.username
-              }, {
-                $push: {
-                  events: {
-                    _id: code._id
+              if (code.semester == "Fall") {
+                User.findOneAndUpdate({
+                  username: user.username
+                }, {
+                  $push: {
+                    events: {
+                      _id: code._id
+                    }
+                  },
+                  $inc: {
+                    points: code.points,
+                    fallPoints: code.points
                   }
-                },
-                $inc: {
-                  points: code.points
-                }
-              }, function(err, newUser) {
-                if (err) throw err;
+                }, function(err, newUser) {
+                  if (err) throw err;
 
-                if (!newUser) {
-                  res.json({
-                    success: false,
-                    message: "Unable to add event to user"
-                  });
-                } else {
-                  res.json({
-                    success: true,
-                    message: "Points added to user"
-                  });
-                }
-              });
+                  if (!newUser) {
+                    res.json({
+                      success: false,
+                      message: "Unable to add event to user"
+                    });
+                  } else {
+                    res.json({
+                      success: true,
+                      message: "Points added to user"
+                    });
+                  }
+                });
+              } else if (code.semester == "Spring") {
+                User.findOneAndUpdate({
+                  username: user.username
+                }, {
+                  $push: {
+                    events: {
+                      _id: code._id
+                    }
+                  },
+                  $inc: {
+                    points: code.points,
+                    springPoints: code.points
+                  }
+                }, function(err, newUser) {
+                  if (err) throw err;
+
+                  if (!newUser) {
+                    res.json({
+                      success: false,
+                      message: "Unable to add event to user"
+                    });
+                  } else {
+                    res.json({
+                      success: true,
+                      message: "Points added to user"
+                    });
+                  }
+                });
+              } else if (code.semester == "Summer") {
+                User.findOneAndUpdate({
+                  username: user.username
+                }, {
+                  $push: {
+                    events: {
+                      _id: code._id
+                    }
+                  },
+                  $inc: {
+                    points: code.points,
+                    summerPoints: code.points
+                  }
+                }, function(err, newUser) {
+                  if (err) throw err;
+
+                  if (!newUser) {
+                    res.json({
+                      success: false,
+                      message: "Unable to add event to user"
+                    });
+                  } else {
+                    res.json({
+                      success: true,
+                      message: "Points added to user"
+                    });
+                  }
+                });
+              }
             });
           }
         }
-
       });
     }
   });
@@ -1126,6 +1442,98 @@ module.exports = function(router) {
     });
   });
 
+  // ENDPOINT TO RETRIVE TOTAL POINT DISTRIBUTION
+  router.get('/gettotalpointdistribution', function(req, res) {
+    User.aggregate([{
+      $group: {
+        _id: '$points',
+        count: {
+          $sum: 1
+        }
+      }
+    }, {
+      $sort: {
+        _id: 1
+      }
+    }], function(err, result) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: result
+      });
+    });
+  });
+
+  // ENDPOINT TO RETRIVE FALL POINT DISTRIBUTION
+  router.get('/getfallpointdistribution', function(req, res) {
+    User.aggregate([{
+      $group: {
+        _id: '$fallPoints',
+        count: {
+          $sum: 1
+        }
+      }
+    }, {
+      $sort: {
+        _id: 1
+      }
+    }], function(err, result) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: result
+      });
+    });
+  });
+
+  // ENDPOINT TO RETRIVE SPRING POINT DISTRIBUTION
+  router.get('/getspringpointdistribution', function(req, res) {
+    User.aggregate([{
+      $group: {
+        _id: '$springPoints',
+        count: {
+          $sum: 1
+        }
+      }
+    }, {
+      $sort: {
+        _id: 1
+      }
+    }], function(err, result) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: result
+      });
+    });
+  });
+
+  // ENDPOINT TO RETRIVE SPRING POINT DISTRIBUTION
+  router.get('/getsummerpointdistribution', function(req, res) {
+    User.aggregate([{
+      $group: {
+        _id: '$summerPoints',
+        count: {
+          $sum: 1
+        }
+      }
+    }, {
+      $sort: {
+        _id: 1
+      }
+    }], function(err, result) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: result
+      });
+    });
+  });
+
   // ENDPOINT TO RETRIEVE ALUMNI COLLECTION
   router.get('/getalumni', function(req, res) {
     Alumni.find({
@@ -1134,8 +1542,8 @@ module.exports = function(router) {
       if (err) throw err;
 
       res.json({
-        message: alumni,
-        success: true
+        success: true,
+        message: alumni
       });
     });
   });
@@ -1157,8 +1565,49 @@ module.exports = function(router) {
       }
 
       res.json({
-        message: coordinatesArray,
-        success: true
+        success: true,
+        message: coordinatesArray
+      });
+    });
+  });
+
+  // ENDPOINT TO CREATE EXCEL FILES FOR EVENT ATTENDANCE
+  router.get('/getexceldoc/:eventId', function(req, res) {
+    User.find({
+      events: {
+        _id: req.params.eventId
+      }
+    }).select('firstName lastName major year email').exec(function(err, users) {
+      if (err) throw err;
+
+      var fields = ['firstName', 'lastName', 'major', 'year', 'email'];
+
+      var json2csvParser = new Json2csvParser({
+        fields
+      });
+
+      var csv = json2csvParser.parse(users);
+
+      fs.writeFile('app/routes/excel/EventAttendance.csv', csv, function(err) {
+        if (err) throw err;
+      });
+
+      setTimeout(function() {
+        res.sendFile(__dirname + "/excel/EventAttendance.csv");
+      }, 1500);
+    });
+  });
+
+  //ENDPOINT TO GENERATE INDIVIDUAL USER INFO
+  router.get('/getuserinfo/:username', function(req, res) {
+    User.find({
+      username: req.params.username
+    }, function(err, user) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: user
       });
     });
   });

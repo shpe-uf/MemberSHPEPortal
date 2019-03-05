@@ -10,11 +10,13 @@
 
   <title>MemberSHPE UF</title>
 
-  <!-- STYLE CDNs - Bootstrap/Google Fonts/Font Awesome/Custom CSS/Animate -->
-  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <!-- BOOTSTRAP -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <!-- FONT AWESOME -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+  <!-- ANIMATE -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+  <!-- OPEN LAYERS -->
   <link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/css/ol.css" type="text/css">
 
   <!-- ANGULAR/JQUERY CDNs  -->
@@ -23,12 +25,12 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 
+  <!-- JSON2CSV -->
+  <script src="https://cdn.jsdelivr.net/npm/json2csv"></script>
   <!-- CHARTJS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
-
   <!-- GOOGLE PALETTE -->
   <script src="https://cdn.jsdelivr.net/npm/google-palette@1.1.0/palette.min.js"></script>
-
   <!-- LEAFLET MAPS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin="" />
   <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg==" crossorigin=""></script>
@@ -103,7 +105,6 @@
         <div class="modal-body">
           <p>{{ main.modalBody }}</p>
           <div ng-show="main.hideButton">
-            <!-- <p>ANIMATION GOES HERE</p> -->
             <div class="sk-cube-grid">
               <div class="sk-cube sk-cube1"></div>
               <div class="sk-cube sk-cube2"></div>

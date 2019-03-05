@@ -86,6 +86,8 @@ hr {
 .register-container, .login-container, .username-container, .password-container, .reset-container {
   background-color: rgba(255, 255, 255, 0.85);
   padding: 24px 24px 24px 24px;
+  margin-top: 36px;
+  margin-bottom: 36px;
   border-radius: 12px;
 }
 
@@ -139,6 +141,18 @@ hr {
   color: #FFFFFF;
 }
 
+.btn-excel {
+  background-color: #FFFFFF;
+  border-color: #1F6F43;
+  color: #1F6F43;
+}
+
+.btn-excel:hover {
+  background-color: #1F6F43;
+  border-color: #1F6F43;
+  color: #FFFFFF;
+}
+
 .alert {
   margin-bottom: 0px;
   padding: 6px 6px 6px 6px;
@@ -146,16 +160,16 @@ hr {
 }
 
 .success-message {
-  -webkit-animation: pulse 0.3s both ease;
-  -moz-animation: pulse 0.3s both ease;
-  animation: pulse 0.3s both ease;
+  -webkit-animation: bounceIn 0.5s both ease;
+  -moz-animation: bounceIn 0.5s both ease;
+  animation: bounceIn 0.5s both ease;
   margin-bottom: 16px;
 }
 
 .error-message {
-  -webkit-animation: shake 0.3s both ease;
-  -moz-animation: shake 0.3s both ease;
-  animation: shake 0.3s both ease;
+  -webkit-animation: shake 0.5s both ease;
+  -moz-animation: shake 0.5s both ease;
+  animation: shake 0.5s both ease;
   margin-bottom: 16px;
 }
 
@@ -197,18 +211,18 @@ th, td {
 .card-text {
   color: #FFFFFF;
   font-family: "Avenir";
+  font-size: 1.2rem;
+  margin-bottom: 0px;
 }
 
-.bg-points {
-  background-color: #28A745;
+.card-header {
+  color: #FFFFFF;
+  font-size: 1.5rem;
 }
 
-.bg-percentile {
-  background-color: #FFC107;
-}
-
-.bg-stat-1 {
-  background-color: #DC3545;
+.card-footer {
+  color: #FFFFFF;
+  font-size: 1.2rem;
 }
 
 .subtitle {
@@ -218,7 +232,7 @@ th, td {
 }
 
 .col-margin {
-  margin-bottom: 30px;
+  margin-bottom: 16px;
 }
 
 iframe {
@@ -229,7 +243,7 @@ iframe {
 .stat-text {
   overflow: hidden;
   white-space: nowrap;
-  font-size: 5rem;
+  font-size: 6rem;
   margin-bottom: 0px;
 }
 
@@ -243,10 +257,17 @@ iframe {
   color: #EB4616;
 }
 
-.attendance-table {
-  display: block;
-  max-height: 500px;
+.short-table {
   overflow-y: scroll;
+  margin-bottom: 15px;
+}
+
+.attendance-table {
+  max-height: 400px;
+}
+
+.user-events-table {
+  max-height: 270px;
 }
 
 /* LOGOUT LOADER */
@@ -333,8 +354,8 @@ iframe {
     transform: scale3D(0, 0, 1);
   }
 }
-
 /* LOGOUT LOADER */
+
 #mapid {
   height: 540px;
   width: 100%;
@@ -396,4 +417,13 @@ iframe {
   border-width: 2px;
   border-style: solid;
   border-color: #2D2D2D;
+}
+
+.table-head {
+  background-color: #D9D9D9 !important;
+}
+
+td, th {
+  padding: 8px 8px 8px 8px !important;
+  vertical-align: middle !important;
 }

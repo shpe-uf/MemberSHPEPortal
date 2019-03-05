@@ -71,8 +71,6 @@ angular.module('mainController', ['authServices', 'userServices'])
 
             var timeCheck = expireTime.exp - timeStamp;
 
-            console.log("TIME REMAINING: " + timeCheck);
-
             if (timeCheck <= 600) {
               showModal(1);
               $interval.cancel(interval);
@@ -153,7 +151,6 @@ angular.module('mainController', ['authServices', 'userServices'])
         app.isLoggedIn = true;
 
         Auth.getUser().then(function(data) {
-          console.log("USER IS LOGGED IN AND GETTING THE USER'S DATA");
           app.firstName = data.data.firstName;
           app.lastName = data.data.lastName;
           app.username = data.data.username;
@@ -164,6 +161,9 @@ angular.module('mainController', ['authServices', 'userServices'])
           app.ethnicity = data.data.ethnicity;
           app.sex = data.data.sex;
           app.points = data.data.points;
+          app.fallPoints = data.data.fallPoints
+          app.springPoints = data.data.springPoints
+          app.summerPoints = data.data.summerPoints
           app.events = data.data.events;
 
           User.getPermission().then(function(data) {
@@ -178,18 +178,9 @@ angular.module('mainController', ['authServices', 'userServices'])
 
           User.getPercentile(app.username).then(function(data) {
             if (data.data.success) {
-              var pointsArray = data.data.message;
-              var userPoints = app.points;
-              var totalUsers = pointsArray.length;
-              var belowUsers = 0;
-
-              for (var i = 0; i < pointsArray.length; i++) {
-                if (userPoints > pointsArray[i].points) {
-                  belowUsers += 1;
-                }
-              }
-
-              app.percentile = Math.trunc(((belowUsers / totalUsers) * 100));
+              app.fallPercentile = data.data.message.fall;
+              app.springPercentile = data.data.message.spring;
+              app.summerPercentile = data.data.message.summer;
             }
           });
 
@@ -197,7 +188,7 @@ angular.module('mainController', ['authServices', 'userServices'])
 
           if (app.events) {
             for (var i = 0; i < app.events.length; i++) {
-              User.getCodeInfo(app.events[i]).then(function(codeData) {
+              User.getCodeInfo(app.events[i]._id).then(function(codeData) {
                 app.codeArray.push(codeData.data.message);
               });
             }
@@ -205,7 +196,6 @@ angular.module('mainController', ['authServices', 'userServices'])
         });
 
       } else {
-        console.log("USER IS NOT LOGGED IN!");
         app.isLoggedIn = false;
         app.username = '';
         app.email = '';
