@@ -21,14 +21,7 @@
         <!-- REQUESTS -->
         <div class="tab-pane fade show active" id="nav-request" role="tabpanel" aria-labelledby="nav-request-tab">
           <div class="container">
-            <div class="row" ng-if="admin.requests.length == 0">
-              <div class="col-12">
-                <div class="jumbotron">
-                  <p class="text-center">THERE ARE NO REQUESTS AT THIS TIME.</p>
-                </div>
-              </div>
-            </div>
-            <div class="row" ng-if="admin.requests.length != 0">
+            <div class="row">
               <div class="col-12">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
@@ -37,7 +30,7 @@
                   <input type="text" class="form-control" ng-model="requestSearchText">
                 </div>
               </div>
-              <div class="col-12">
+              <div class="col-12" ng-if="admin.requests.length != 0">
                 <table class="table table-responsive-lg table-striped">
                   <tr class="table-head">
                     <th>NAME</th>
@@ -68,20 +61,20 @@
                 </table>
               </div>
             </div>
+            <div class="row" ng-if="admin.requests.length == 0">
+              <div class="col-12">
+                <div class="jumbotron">
+                  <p class="text-center">THERE ARE NO REQUESTS AT THIS TIME.</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
         <!-- MEMBERS -->
         <div class="tab-pane fade" id="nav-member" role="tabpanel" aria-labelledby="nav-member-tab">
           <div class="container">
-            <div class="row" ng-if="admin.users.length == 0">
-              <div class="col-12">
-                <div class="jumbotron">
-                  <p class="text-center">THERE ARE NO MEMBERS AT THIS TIME.</p>
-                </div>
-              </div>
-            </div>
-            <div class="row" ng-if="admin.users.length != 0">
+            <div class="row">
               <div class="col-12">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
@@ -90,9 +83,10 @@
                   <input type="text" class="form-control" ng-model="membersSearchText">
                 </div>
               </div>
-              <div class="col-12">
+              <div class="col-12" ng-if="admin.users.length != 0">
                 <table class="table table-responsive-lg table-striped">
                   <tr class="table-head">
+                    <th></th>
                     <th ng-click="admin.sortBy('lastName', admin.users)">NAME</th>
                     <th ng-click="admin.sortBy('username', admin.users)">USERNAME</th>
                     <th ng-click="admin.sortBy('email', admin.users)">EMAIL</th>
@@ -104,6 +98,7 @@
                   </tr>
 
                   <tr ng-repeat="user in admin.users | filter: membersSearchText">
+                    <td><i class="fas fa-star fa-admin" ng-if="user.permission == 'admin'"></i></td>
                     <td>{{ user.lastName }}, {{ user.firstName }}</td>
                     <td>{{ user.username }}</td>
                     <td>{{ user.email }}</td>
@@ -120,20 +115,20 @@
                 </table>
               </div>
             </div>
+            <div class="row" ng-if="admin.users.length == 0">
+              <div class="col-12">
+                <div class="jumbotron">
+                  <p class="text-center">THERE ARE NO MEMBERS AT THIS TIME.</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
         <!-- EVENTS -->
         <div class="tab-pane fade" id="nav-event" role="tabpanel" aria-labelledby="nav-event-tab">
           <div class="container">
-            <div class="row" ng-if="admin.events.length == 0">
-              <div class="col-12">
-                <div class="jumbotron">
-                  <p class="text-center">THERE ARE NO EVENTS AT THIS TIME.</p>
-                </div>
-              </div>
-            </div>
-            <div class="row" ng-if="admin.events.length != 0">
+            <div class="row">
               <div class="col-md-11 col-sm-11 col-10">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
@@ -147,7 +142,7 @@
                   <i class="far fa-calendar-alt"></i>
                 </button>
               </div>
-              <div class="col-12">
+              <div class="col-12" ng-if="admin.codes.length != 0">
                 <table class="table table-responsive-lg table-striped">
                   <tr class="table-head">
                     <th>NAME</th>
@@ -176,6 +171,13 @@
                     </td>
                   </tr>
                 </table>
+              </div>
+            </div>
+            <div class="row" ng-if="admin.codes.length == 0">
+              <div class="col-12">
+                <div class="jumbotron">
+                  <p class="text-center">THERE ARE NO EVENTS AT THIS TIME.</p>
+                </div>
               </div>
             </div>
           </div>
@@ -244,7 +246,7 @@
           <div class="row">
             <div class="col-sm-12">
               <button type="submit" class="btn btn-success" ng-if="admin.showCreateEventModal">Submit</button>
-              <button type="reset" class="btn btn-danger" ng-click="admin.closeCreateEventModal(eventData)">Close</button>
+              <button type="reset" class="btn btn-danger float-right" ng-click="admin.closeCreateEventModal(eventData)">Close</button>
             </div>
           </div>
         </form>
@@ -253,7 +255,7 @@
   </div>
 </div>
 
-<!-- EVENT OPTIONS AND INFORMATION TABLE -->
+<!-- EVENT INFORMATION TABLE -->
 <div class="modal fade" id="eventInfoModal" aria-labelledby="eventInfoModalLabel">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
@@ -261,7 +263,7 @@
         <h2 class="modal-title" id="eventInfoModalLabel">Event Information</h2>
       </div>
       <div class="modal-body">
-        <h3>{{ admin.eventName }}</h3>
+        <h4>{{ admin.eventName }}</h4>
         <p style="text-transform: uppercase">
           <b>ATTENDANCE:</b> {{ admin.attendance.length }}
         </p>
@@ -303,7 +305,7 @@
         <h2 class="modal-title" id="manualInputLabel">Manual Input</h2>
       </div>
       <div class="modal-body">
-
+        <h4>{{ admin.eventName.name }}</h4>
         <div class="success-message" ng-show="admin.successMsg">
           <div class="alert alert-success">{{ admin.successMsg }}</div>
         </div>
@@ -319,9 +321,9 @@
           </div>
 
           <div class="row">
-            <div class="col-sm-12">
+            <div class="col-12">
               <button type="submit" class="btn btn-success">Submit</button>
-              <button type="reset" class="btn btn-danger" ng-click="admin.closeManualInputModal(user)">Close</button>
+              <button type="reset" class="btn btn-danger float-right" ng-click="admin.closeManualInputModal(user)">Close</button>
             </div>
           </div>
         </form>
@@ -342,7 +344,7 @@
       <div class="modal-body">
         <div class="row">
           <div class="col-12">
-            <h3>{{ admin.user.firstName}} {{ admin.user.lastName}}</h3>
+            <h4>{{ admin.user.firstName}} {{ admin.user.lastName}}</h4>
           </div>
           <div class="col-lg-6 col-12 col-margin">
             <img class="img-thumbnail" src="../../assets/images/profile.png">
@@ -367,7 +369,7 @@
                   <td>{{ admin.user.year }}</td>
                 </tr>
                 <tr>
-                  <td>Nationality</td>
+                  <td>Country of Origin</td>
                   <td>{{ admin.user.nationality }}</td>
                 </tr>
                 <tr>

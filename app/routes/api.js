@@ -210,7 +210,7 @@ module.exports = function(router) {
     user.password = req.body.password;
     user.listServ = req.body.listServ;
 
-    if (req.body.username == null || req.body.password == null || req.body.email == null || req.body.firstName == null || req.body.lastName == null || req.body.major == null || req.body.year == null || req.body.nationality == null || req.body.ethnicity == null || req.body.sex == null || req.body.year == null || req.body.username == '' || req.body.password == '' || req.body.email == '' || req.body.firstName == '' || req.body.lastName == '' || req.body.major == '' || req.body.year == '' || req.body.nationality == '' || req.body.ethnicity == '' || req.body.sex == '') {
+    if (req.body.username == null || req.body.password == null || req.body.email == null || req.body.firstName == null || req.body.lastName == null || req.body.major == null || req.body.year == null || req.body.nationality == null || req.body.ethnicity == null || req.body.sex == null || req.body.username == '' || req.body.password == '' || req.body.email == '' || req.body.firstName == '' || req.body.lastName == '' || req.body.major == '' || req.body.year == '' || req.body.nationality == '' || req.body.ethnicity == '' || req.body.sex == '') {
       res.json({
         success: false,
         message: 'Make sure you filled out the entire form!'
@@ -218,7 +218,6 @@ module.exports = function(router) {
     } else {
       user.save(function(err) {
         if (err) {
-
           if (err.errors != null) {
             if (err.errors.firstName) {
               res.json({
@@ -649,7 +648,7 @@ module.exports = function(router) {
         });
         res.json({
           success: true,
-          message: newToken
+          token: newToken
         });
       }
     });

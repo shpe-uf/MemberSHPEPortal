@@ -6,7 +6,7 @@ var validate = require('mongoose-validator');
 var firstNameValidator = [
   validate({
     validator: 'matches',
-    arguments: /^[a-zA-Z]{3,20}$/i,
+    arguments: /^[a-zA-Z ]{3,20}$/i,
     message: 'First name must be at least 3 character, max 20. No special characters or numbers.'
   })
 ];
@@ -14,7 +14,7 @@ var firstNameValidator = [
 var lastNameValidator = [
   validate({
     validator: 'matches',
-    arguments: /^[a-zA-Z]{3,20}$/i,
+    arguments: /^[a-zA-Z ]{3,20}$/i,
     message: 'Last name must be at least 3 character, max 20. No special characters or numbers.'
   })
 ];
@@ -38,7 +38,7 @@ var usernameValidator = [
 var passwordValidator = [
   validate({
     validator: 'matches',
-    arguments: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}/g,
+    arguments: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
     message: 'Password must be at least 8 characters. It must contain at least one lowercase character, one uppercase character, one number, and one special character.'
   })
 ];
@@ -132,6 +132,9 @@ var UserSchema = new Schema({
 
 UserSchema.pre('save', function(next) {
   var user = this;
+
+  if (!user.isModified('password')) return next();
+
   bcrypt.hash(user.password, null, null, function(err, hash) {
     if (err) return next(err);
     user.password = hash;

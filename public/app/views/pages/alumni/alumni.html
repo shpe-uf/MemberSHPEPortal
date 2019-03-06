@@ -17,7 +17,10 @@
   <div class="row">
     <div class="col-sm-12">
       <div class="container">
-        <div class="row">
+        <div class="jumbotron" ng-if="alumni.alumniArray.length == 0">
+          <p class="text-center">THERE ARE NO ALUMNI ON RECORD AT THIS TIME.</p>
+        </div>
+        <div class="row" ng-if="alumni.alumniArray.length != 0">
           <div class="col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
@@ -27,7 +30,7 @@
             </div>
           </div>
         </div>
-        <table class="table table-responsive-lg table-striped">
+        <table class="table table-responsive-lg table-striped" ng-if="alumni.alumniArray.length != 0">
           <tr class="table-head">
             <th ng-click="alumni.sortBy('name', alumni.alumniArray)">NAME</th>
             <th ng-click="alumni.sortBy('undergrad', alumni.alumniArray)">UNDERGRAD. DEGREE</th>

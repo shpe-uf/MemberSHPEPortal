@@ -90,6 +90,10 @@ var app = angular.module('appRoutes', ['ngRoute'])
         templateUrl: 'app/views/pages/privacy.html'
       })
 
+      .when('/team', {
+        templateUrl: 'app/views/pages/team.html'
+      })
+
       .otherwise({
         redirectTo: '/'
       });

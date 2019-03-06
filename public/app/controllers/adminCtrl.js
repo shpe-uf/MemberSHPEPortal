@@ -169,11 +169,11 @@ angular.module('adminController', [])
       app.showEventsModal = true;
 
       User.getUserInfo(data).then(function(userData) {
+        app.eventArray = [];
         if (userData.data.success) {
           app.user = userData.data.message[0];
           if (app.user.events.length > 0) {
             for (var i = 0; i < app.user.events.length; i++) {
-              app.eventArray = [];
               User.getCodeInfo(app.user.events[i]._id).then(function(eventsInfo) {
                 if (eventsInfo.data.success) {
                   app.eventArray.push(eventsInfo.data.message);
