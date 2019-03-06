@@ -71,6 +71,8 @@ angular.module('mainController', ['authServices', 'userServices'])
 
             var timeCheck = expireTime.exp - timeStamp;
 
+            console.log("MINUTES LEFT: " + timeCheck/60);
+
             if (timeCheck <= 600) {
               showModal(1);
               $interval.cancel(interval);
