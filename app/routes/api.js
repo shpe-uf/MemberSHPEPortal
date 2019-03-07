@@ -5,6 +5,7 @@ var User = require('../models/user');
 var Code = require('../models/code');
 var Request = require('../models/request');
 var Alumni = require('../models/alumni');
+var Company = require('../models/company');
 
 // NPM PACKAGES
 var jwt = require('jsonwebtoken');
