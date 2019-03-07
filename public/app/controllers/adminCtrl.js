@@ -10,22 +10,6 @@ angular.module('adminController', [])
     app.eventId;
     var orderBy = $filter('orderBy');
 
-    this.openCreateEventModal = function() {
-      app.errorMsg = false;
-      app.successMsg = false;
-
-      $("#createEventModal").modal({
-        backdrop: 'static',
-        keyboard: false
-      });
-
-      app.showCreateEventModal = true;
-    };
-
-    this.closeCreateEventModal = function(eventData) {
-      $('#createEventModal').modal('hide');
-    };
-
     this.createEvent = function(eventData) {
       app.successMsg = false;
       app.errorMsg = false;
@@ -39,6 +23,68 @@ angular.module('adminController', [])
           app.errorMsg = data.data.message;
         }
       });
+    };
+
+    this.manualInput = function(member) {
+      app.successMsg = '';
+      app.errorMsg = '';
+
+
+      var manualInput = {
+        member: null,
+        eventId: null
+      };
+
+      manualInput.member = app.member;
+      manualInput.eventId = app.eventName._id;
+
+      User.manualInput(manualInput).then(function(data) {
+        if (data.data.success) {
+          app.successMsg = data.data.message;
+        } else {
+          app.errorMsg = data.data.message;
+        }
+      });
+    };
+
+    this.acceptRequest = function(approveData) {
+      app.isClicked = true;
+      User.approveRequest(approveData).then(function(data) {
+        $window.location.reload();
+      });
+    };
+
+    this.denyRequest = function(denyData) {
+      app.isClicked = true;
+      User.denyRequest(denyData).then(function(data) {
+        $window.location.reload();
+      });
+    };
+
+    this.excel = function(eventId) {
+      User.getExcelDoc(eventId).then(function(data) {
+        var hiddenElement = document.createElement('a');
+        hiddenElement.href = "data:attachment/csv," + encodeURI(data.data);
+        hiddenElement.target = "_blank";
+        hiddenElement.download = eventId + ".csv";
+        hiddenElement.click();
+      });
+    };
+
+    this.openCreateEventModal = function() {
+      app.errorMsg = false;
+      app.successMsg = false;
+
+      $("#createEventModal").modal({
+        backdrop: 'static',
+        keyboard: false
+      });
+
+      app.showCreateEventModal = true;
+    };
+
+    this.closeCreateEventModal = function() {
+      $('#createEventModal').modal('hide');
     };
 
     this.openEventInfoModal = function(eventData) {
@@ -71,28 +117,6 @@ angular.module('adminController', [])
       app.eventName = eventData
     }
 
-    this.manualInput = function(member) {
-      app.successMsg = '';
-      app.errorMsg = '';
-
-
-      var manualInput = {
-        member: null,
-        eventId: null
-      };
-
-      manualInput.member = app.member;
-      manualInput.eventId = app.eventName._id;
-
-      User.manualInput(manualInput).then(function(data) {
-        if (data.data.success) {
-          app.successMsg = data.data.message;
-        } else {
-          app.errorMsg = data.data.message;
-        }
-      });
-    };
-
     this.closeManualInputModal = function(member) {
       $('#manualInputModal').modal('hide');
 
@@ -103,62 +127,6 @@ angular.module('adminController', [])
       app.errorMsg = false;
       app.successMsg = false;
     };
-
-    this.acceptRequest = function(approveData) {
-      app.isClicked = true;
-      User.approveRequest(approveData).then(function(data) {
-        $window.location.reload();
-      });
-    };
-
-    this.denyRequest = function(denyData) {
-      app.isClicked = true;
-      User.denyRequest(denyData).then(function(data) {
-        $window.location.reload();
-      });
-    };
-
-    this.excel = function(eventId) {
-      User.getExcelDoc(eventId).then(function(data) {
-        var hiddenElement = document.createElement('a');
-        hiddenElement.href = "data:attachment/csv," + encodeURI(data.data);
-        hiddenElement.target = "_blank";
-        hiddenElement.download = eventId + ".csv";
-        hiddenElement.click();
-      });
-    };
-
-    User.getUsers().then(function(data) {
-      if (data.data.success) {
-        if (data.data.permission === 'admin') {
-          app.users = data.data.message;
-          app.accessDenied = false;
-        } else {
-          app.errorMsg = 'Insufficient permission';
-        }
-      } else {
-        app.errorMsg = data.data.message;
-      }
-    });
-
-    User.getCodes().then(function(data) {
-      if (data.data.success) {
-        if (data.data.permission === 'admin') {
-          app.codes = data.data.message;
-          app.accessDenied = false;
-        } else {
-          app.errorMsg = 'Insufficient permission';
-        }
-      } else {
-        app.errorMsg = 'Insufficient permission';
-      }
-    });
-
-    User.getRequests().then(function(data) {
-      if (data.data.success) {
-        app.requests = data.data.message;
-      }
-    });
 
     this.openUserInfoModal = function(data) {
       $("#userEventsModal").modal({
@@ -191,6 +159,52 @@ angular.module('adminController', [])
       app.eventArray = [];
       $('#userEventsModal').modal('hide');
     };
+
+    this.openAddCompanyModal = function() {
+      $("#addCompanyModal").modal({
+        backdrop: 'static'
+      });
+    }
+
+    this.closeAddCompanyModal = function() {
+      $('#addCompanyModal').modal('hide');
+    }
+
+    this.addCompany = function(companyData) {
+      console.log(companyData);
+    }
+
+    User.getUsers().then(function(data) {
+      if (data.data.success) {
+        if (data.data.permission === 'admin') {
+          app.users = data.data.message;
+          app.accessDenied = false;
+        } else {
+          app.errorMsg = 'Insufficient permission';
+        }
+      } else {
+        app.errorMsg = data.data.message;
+      }
+    });
+
+    User.getCodes().then(function(data) {
+      if (data.data.success) {
+        if (data.data.permission === 'admin') {
+          app.codes = data.data.message;
+          app.accessDenied = false;
+        } else {
+          app.errorMsg = 'Insufficient permission';
+        }
+      } else {
+        app.errorMsg = 'Insufficient permission';
+      }
+    });
+
+    User.getRequests().then(function(data) {
+      if (data.data.success) {
+        app.requests = data.data.message;
+      }
+    });
 
     this.sortBy = function(propertyName, array) {
       $scope.reverse = (propertyName !== null && $scope.propertyName === propertyName) ?
