@@ -1,14 +1,13 @@
 <div class="container custom-container">
   <div class="row">
-    <div class="col-sm-9 col-12">
+    <div class="col-sm-6 col-12">
       <h2>Rewards Program</h2>
     </div>
-    <div class="col-sm-3 col-12">
+    <div class="col-sm-6 col-12">
       <div class="float-right">
         <button type="button" class="btn btn-submit" ng-click="main.openRequestModal()">Redeem Points</button>
         <button type="button" class="btn btn-submit" ng-click="main.openPointsSystemModal()">
           <i class="fas fa-question"></i>
-          <!-- More Info -->
         </button>
       </div>
     </div>
@@ -30,7 +29,7 @@
               <h1 class="card-text stat-text">{{ main.fallPoints }}</h1>
             </div>
             <div class="card-footer text-center">
-               PERCENTILE: {{ main.fallPercentile }}%
+              PERCENTILE: {{ main.fallPercentile }}%
             </div>
           </div>
           <div class="card bg-success">
@@ -66,7 +65,10 @@
         <div class="row">
           <div class="col-sm-12">
             <h3 class="subtitle">Points Record</h3>
-            <table class="table table-responsive-lg table-striped">
+            <div class="jumbotron" ng-if="main.codeArray.length == 0">
+              <p class="text-center">THERE IS NO POINTS RECORD.</p>
+            </div>
+            <table class="table table-striped" ng-if="main.codeArray.length != 0">
               <tr class="table-head">
                 <th>EVENT</th>
                 <th>TYPE</th>
@@ -119,7 +121,7 @@
           <div class="row">
             <div class="col-sm-12">
               <button type="submit" class="btn btn-success" ng-if="main.showModal">Submit</button>
-              <button type="reset" class="btn btn-danger" ng-click="main.closeRequestModal(requestData)">Close</button>
+              <button type="reset" class="btn btn-danger float-right" ng-click="main.closeRequestModal(requestData)">Close</button>
             </div>
           </div>
         </form>
