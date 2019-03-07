@@ -47,6 +47,34 @@ var CompanySchema = new Schema({
   slogan: {
     type: String,
     required: true
+  },
+  academia: {
+    type: Boolean,
+    default: false
+  },
+  government: {
+    type: Boolean,
+    default: false
+  },
+  nonprofit:{
+    type: Boolean,
+    default: false
+  },
+  international: {
+    type: Boolean,
+    default: false
+  },
+  bbq: {
+    type: Boolean,
+    default: false
+  },
+  national: {
+    type: Boolean,
+    default: false
+  },
+  sponsor: {
+    type: Boolean,
+    default: false
   }
 });
 
