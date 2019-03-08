@@ -456,7 +456,6 @@ iframe {
   border-style: solid;
   border-color: #2D2D2D;
 } */
-
 .table-head {
   background-color: #D9D9D9 !important;
 }
@@ -482,10 +481,6 @@ a {
   display: block;
   width: 100%;
   height: auto;
-}
-
-.card {
-  margin-bottom: 16px;
 }
 
 .card-body, .list-group-item {
@@ -538,4 +533,14 @@ a {
   background-color: #33A445;
   border-color: #33A445;
   color: #FFFFFF;
+}
+
+.ellipsis {
+   overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   -webkit-box-orient: vertical;
+   -webkit-line-clamp: 1; /* number of lines to show */
+   /* line-height: X;
+   max-height: X*N; */
 }

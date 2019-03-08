@@ -171,5 +171,9 @@ angular.module('userServices', [])
       return $http.get('api/getcompanies/');
     };
 
+    userFactory.getCompanyInfo = function(companyId) {
+      return $http.get('api/getcompanyinfo/' + companyId);
+    };
+
     return userFactory;
   });

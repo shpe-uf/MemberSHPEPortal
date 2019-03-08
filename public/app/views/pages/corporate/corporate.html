@@ -1,0 +1,73 @@
+<div class="container custom-container">
+  <div class="row">
+    <div class="col-12">
+      <h2>Corporate Database</h2>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-12 col-md-3">
+      <h3 class="subtitle">Filters</h3>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Search</span>
+        </div>
+        <input type="text" class="form-control" ng-model="corporateSearchText">
+      </div>
+    </div>
+    <div class="col-12 col-md-9">
+      <div class="row">
+        <div class="col-12">
+          <h3 class="subtitle">Companies</h3>
+        </div>
+        <div class="col-12 col-sm-2 col-md-4" ng-repeat="company in corporate.companies | filter: corporateSearchText" style="margin-bottom: 16px;">
+          <div class="card">
+            <img class="card-img-top" src="../../../assets/images/logo-placeholder.png">
+          </div>
+          <div class="card-body text-center">
+            <h4 class="ellipsis">{{ company.name }}</h4>
+          </div>
+          <div class="card-footer text-center">
+            <button type="button" class="btn btn-submit btn-block" ng-click="corporate.openMoreInfoModal(company._id)">More Info</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="moreInfoModal" aria-labelledby="moreInfoModalLabel">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="moreInfoModal">Company Profile</h2>
+      </div>
+      <div class="modal-body">
+        <h3>{{ corporate.company.name }}</h3>
+        <h5>Slogan</h5>
+        <p>"{{ corporate.company.slogan }}"</p>
+        <h5>Majors</h5>
+        <p>{{ corporate.company.majorsList }}</p>
+        <h5>Industries</h5>
+        <p>{{ corporate.company.industryList }}</p>
+        <h5>Overview</h5>
+        <p>{{ corporate.company.overview }}</p>
+        <h5>Mission</h5>
+        <p>{{ corporate.company.mission }}</p>
+        <h5>Goals</h5>
+        <p>{{ corporate.company.goals }}</p>
+        <h5>Business Model/Operations Highlights</h5>
+        <p>{{ corporate.company.model }}</p>
+        <h5>News</h5>
+        <a href="{{ corporate.company.news }}" target="_blank" style="margin-bottom: 16px; display: inline-block;">{{ corporate.company.news }}</a>
+        <h5>Are you ready to apply?</h5>
+        <a href="{{ corporate.company.apply }}" target="_blank" style="margin-bottom: 16px; display: inline-block;">{{ corporate.company.apply }}</a>
+        <div class="row">
+          <div class="col-12">
+            <button type="button" class="btn btn-danger float-right" ng-click="corporate.closeMoreInfoModal()">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

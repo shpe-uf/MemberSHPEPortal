@@ -1756,5 +1756,18 @@ module.exports = function(router) {
     })
   });
 
+  router.get('/getcompanyinfo/:companyId', function(req, res) {
+    Company.findOne({
+      _id: req.params.companyId
+    }, function(err, company) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: company
+      });
+    });
+  })
+
   return router;
 };
