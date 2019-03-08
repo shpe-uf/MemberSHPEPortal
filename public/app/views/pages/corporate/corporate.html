@@ -20,15 +20,15 @@
         <div class="col-12">
           <h3 class="subtitle">Companies</h3>
         </div>
-        <div class="col-12 col-sm-2 col-md-4" ng-repeat="company in corporate.companies | filter: corporateSearchText" style="margin-bottom: 16px;">
+        <div class="col-12 col-sm-2 col-md-4" ng-repeat="company in corporate.companies | filter: corporateSearchText | orderBy: 'name'" style="margin-bottom: 16px;">
           <div class="card">
             <img class="card-img-top" src="../../../assets/images/logo-placeholder.png">
-          </div>
-          <div class="card-body text-center">
-            <h4 class="ellipsis">{{ company.name }}</h4>
-          </div>
-          <div class="card-footer text-center">
-            <button type="button" class="btn btn-submit btn-block" ng-click="corporate.openMoreInfoModal(company._id)">More Info</button>
+            <div class="card-body text-center">
+              <h4 class="ellipsis">{{ company.name }}</h4>
+            </div>
+            <div class="card-footer text-center">
+              <button type="button" class="btn btn-submit btn-block" ng-click="corporate.openMoreInfoModal(company._id)">Company Profile</button>
+            </div>
           </div>
         </div>
       </div>
@@ -37,31 +37,80 @@
 </div>
 
 <div class="modal fade" id="moreInfoModal" aria-labelledby="moreInfoModalLabel">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
     <div class="modal-content">
       <div class="modal-header">
         <h2 class="modal-title" id="moreInfoModal">Company Profile</h2>
       </div>
       <div class="modal-body">
-        <h3>{{ corporate.company.name }}</h3>
-        <h5>Slogan</h5>
-        <p>"{{ corporate.company.slogan }}"</p>
-        <h5>Majors</h5>
-        <p>{{ corporate.company.majorsList }}</p>
-        <h5>Industries</h5>
-        <p>{{ corporate.company.industryList }}</p>
-        <h5>Overview</h5>
-        <p>{{ corporate.company.overview }}</p>
-        <h5>Mission</h5>
-        <p>{{ corporate.company.mission }}</p>
-        <h5>Goals</h5>
-        <p>{{ corporate.company.goals }}</p>
-        <h5>Business Model/Operations Highlights</h5>
-        <p>{{ corporate.company.model }}</p>
-        <h5>News</h5>
-        <a href="{{ corporate.company.news }}" target="_blank" style="margin-bottom: 16px; display: inline-block;">{{ corporate.company.news }}</a>
-        <h5>Are you ready to apply?</h5>
-        <a href="{{ corporate.company.apply }}" target="_blank" style="margin-bottom: 16px; display: inline-block;">{{ corporate.company.apply }}</a>
+        <div class="row">
+          <div class="col-12">
+            <h3>{{ corporate.company.name }}</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-lg-4">
+            <img class="img-fluid" style="margin-bottom: 16px;" src="../../../assets/images/logo-placeholder.png">
+            <h5>Slogan</h5>
+            <p>"{{ corporate.company.slogan }}"</p>
+            <h5>Majors</h5>
+            <p>{{ corporate.company.majorsList }}</p>
+            <h5>Industries</h5>
+            <p>{{ corporate.company.industryList }}</p>
+          </div>
+          <div class="col-12 col-lg-8">
+            <h5>Overview</h5>
+            <p>{{ corporate.company.overview }}</p>
+            <h5>Mission</h5>
+            <p>{{ corporate.company.mission }}</p>
+            <h5>Goals</h5>
+            <p>{{ corporate.company.goals }}</p>
+            <h5>Business Model/Operations Highlights</h5>
+            <p>{{ corporate.company.model }}</p>
+            <h5>News Link</h5>
+            <a href="{{ corporate.company.news }}" target="_blank" style="margin-bottom: 16px; display: inline-block;">Click here</a>
+            <h5>Apply Link</h5>
+            <a href="{{ corporate.company.apply }}" target="_blank" style="margin-bottom: 16px; display: inline-block;">Click here</a>
+            <h5>Other Information</h5>
+            <div class="row" style="margin-bottom: 16px;">
+              <div class="col-12">
+                <i class="fas fa-check fa-corpDB-true" ng-if="corporate.company.academia"></i>
+                <i class="fas fa-times fa-corpDB-false" ng-if="!corporate.company.academia"></i>
+                Academia
+              </div>
+              <div class="col-12">
+                <i class="fas fa-check fa-corpDB-true" ng-if="corporate.company.government"></i>
+                <i class="fas fa-times fa-corpDB-false" ng-if="!corporate.company.government"></i>
+                Government Department/Contractor
+              </div>
+              <div class="col-12">
+                <i class="fas fa-check fa-corpDB-true" ng-if="corporate.company.nonprofit"></i>
+                <i class="fas fa-times fa-corpDB-false" ng-if="!corporate.company.nonprofit"></i>
+                Non-profit Organization
+              </div>
+              <div class="col-12">
+                <i class="fas fa-check fa-corpDB-true" ng-if="corporate.company.international"></i>
+                <i class="fas fa-times fa-corpDB-false" ng-if="!corporate.company.international"></i>
+                Visa Sponsorship
+              </div>
+              <div class="col-12">
+                <i class="fas fa-check fa-corpDB-true" ng-if="corporate.company.bbq"></i>
+                <i class="fas fa-times fa-corpDB-false" ng-if="!corporate.company.bbq"></i>
+                Attending BBQ with Industry
+              </div>
+              <div class="col-12">
+                <i class="fas fa-check fa-corpDB-true" ng-if="corporate.company.national"></i>
+                <i class="fas fa-times fa-corpDB-false" ng-if="!corporate.company.national"></i>
+                Attending SHPE National Convention
+              </div>
+              <div class="col-12">
+                <i class="fas fa-check fa-corpDB-true" ng-if="corporate.company.sponsor"></i>
+                <i class="fas fa-times fa-corpDB-false" ng-if="!corporate.company.sponsor"></i>
+                SHPE UF Sponsor
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="row">
           <div class="col-12">
             <button type="button" class="btn btn-danger float-right" ng-click="corporate.closeMoreInfoModal()">Close</button>

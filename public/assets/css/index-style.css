@@ -544,3 +544,13 @@ a {
    /* line-height: X;
    max-height: X*N; */
 }
+
+.fa-corpDB-true {
+  color: #28A745;
+  width: 20px;
+}
+
+.fa-corpDB-false {
+  color: #DC3545;
+  width: 20px;
+}
