@@ -171,7 +171,9 @@ angular.module('adminController', [])
     }
 
     this.addCompany = function(companyData) {
-      console.log(companyData);
+      User.addCompany(companyData).then(function(data) {
+
+      });
     }
 
     User.getUsers().then(function(data) {
@@ -206,9 +208,15 @@ angular.module('adminController', [])
       }
     });
 
+    User.getCompanies().then(function(data) {
+      if (data.data.success) {
+        app.companies = data.data.message;
+      }
+    });
+
     this.sortBy = function(propertyName, array) {
       $scope.reverse = (propertyName !== null && $scope.propertyName === propertyName) ?
-      !$scope.reverse : false;
+        !$scope.reverse : false;
       $scope.propertyName = propertyName;
       app.users = orderBy(array, $scope.propertyName, $scope.reverse);
     };

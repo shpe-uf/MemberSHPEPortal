@@ -9,8 +9,7 @@ var CompanySchema = new Schema({
     unique: true
   },
   logo:{
-    type: String,
-    required: true
+    type: String
   },
   majors: [{
     type: String,

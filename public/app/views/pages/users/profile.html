@@ -58,7 +58,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="profileUpdate" aria-labelledby="profileUpdateLabel">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h3 class="modal-title" id="profileUpdateLabel">Update Profile</h3>
@@ -67,7 +67,7 @@
           <div class="success-message" ng-show="main.successUpdateProfile">
               <div class="alert alert-success">{{ main.successUpdateProfile }}</div>
             </div>
-    
+
             <div class="error-message" ng-show="main.errorUpdateProfile">
               <div class="alert alert-danger">{{ main.errorUpdateProfile }}</div>
             </div>
@@ -76,7 +76,7 @@
                 <div class="alert alert-dark">{{ main.emptyUpdateProfile }}</div>
               </div>
 
-            
+
         <form name="editUserForm" ng-submit="main.editUser(newUserInfo)">
           <div class="form-group">
             <label for="firstName">First Name</label>
@@ -89,6 +89,7 @@
           <div class="form-group">
             <label for="userMajor">Major</label>
             <select class="form-control" name="major" id="userMajor" ng-model="main.newUserInfo.major">
+              <option value="" selected disabled>{{ main.major }}</option>
               <option>Aerospace Engineering</option>
               <option>Agricultural & Biological Engineering</option>
               <option>Biomedical Engineering</option>
@@ -112,6 +113,7 @@
           <div class="form-group">
             <label for="userYear">Year</label>
             <select class="form-control" id="userYear" ng-model="main.newUserInfo.year">
+              <option value="" selected disabled>{{ main.year }}</option>
               <option>1st Year</option>
               <option>2nd Year</option>
               <option>3rd Year</option>
@@ -124,6 +126,7 @@
           <div class="form-group">
             <label for="userNationality">Country of Origin</label>
             <select class="form-control" id="userNationality" ng-model="main.newUserInfo.nationality">
+              <option value="" selected disabled>{{ main.nationality }}</option>
               <option>Afghanistan</option>
               <option>Åland Islands</option>
               <option>Albania</option>
@@ -380,6 +383,7 @@
           <div class="form-group">
             <label for="userEthnicity">Ethnicity</label>
             <select class="form-control" id="userEthnicity" ng-model="main.newUserInfo.ethnicity">
+              <option value="" selected disabled>{{ main.ethnicity }}</option>
               <option>American Indian or Alaska Native</option>
               <option>Asian</option>
               <option>Black or African American</option>
@@ -394,6 +398,7 @@
           <div class="form-group">
             <label for="userSex">Sex</label>
             <select class="form-control" id="userSex" ng-model="main.newUserInfo.sex">
+              <option value="" selected disabled>{{ main.sex }}</option>
               <option>Female</option>
               <option>Male</option>
               <option>Other</option>
