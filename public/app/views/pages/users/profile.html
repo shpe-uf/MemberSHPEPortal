@@ -64,6 +64,19 @@
         <h3 class="modal-title" id="profileUpdateLabel">Update Profile</h3>
       </div>
       <div class="modal-body">
+          <div class="success-message" ng-show="main.successUpdateProfile">
+              <div class="alert alert-success">{{ main.successUpdateProfile }}</div>
+            </div>
+    
+            <div class="error-message" ng-show="main.errorUpdateProfile">
+              <div class="alert alert-danger">{{ main.errorUpdateProfile }}</div>
+            </div>
+
+            <div class="empty-message" ng-show="main.emptyUpdateProfile">
+                <div class="alert alert-dark">{{ main.emptyUpdateProfile }}</div>
+              </div>
+
+            
         <form name="editUserForm" ng-submit="main.editUser(newUserInfo)">
           <div class="form-group">
             <label for="firstName">First Name</label>
