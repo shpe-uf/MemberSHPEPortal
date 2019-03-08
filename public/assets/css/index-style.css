@@ -554,3 +554,11 @@ a {
   color: #DC3545;
   width: 20px;
 }
+
+a {
+  color: #00BCE4;
+}
+
+a:hover {
+  color: #0094B6;
+}

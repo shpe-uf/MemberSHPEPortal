@@ -10,7 +10,7 @@
       <h3 class="subtitle">Filters</h3>
       <div class="input-group mb-3">
         <div class="input-group-prepend">
-          <span class="input-group-text">Search</span>
+          <span class="input-group-text"><i class="fas fa-search"></i></span>
         </div>
         <input type="text" class="form-control" ng-model="corporateSearchText">
       </div>
@@ -67,10 +67,16 @@
             <p>{{ corporate.company.goals }}</p>
             <h5>Business Model/Operations Highlights</h5>
             <p>{{ corporate.company.model }}</p>
-            <h5>News Link</h5>
-            <a href="{{ corporate.company.news }}" target="_blank" style="margin-bottom: 16px; display: inline-block;">Click here</a>
-            <h5>Apply Link</h5>
-            <a href="{{ corporate.company.apply }}" target="_blank" style="margin-bottom: 16px; display: inline-block;">Click here</a>
+            <div class="row" style="margin-bottom: 16px;">
+              <div class="col-6">
+                <h5>News Link</h5>
+                <a href="{{ corporate.company.news }}" target="_blank" style="display: inline-block;">Click here</a>
+              </div>
+              <div class="col-6">
+                <h5>Apply Link</h5>
+                <a href="{{ corporate.company.apply }}" target="_blank" style="display: inline-block;">Click here</a>
+              </div>
+            </div>
             <h5>Other Information</h5>
             <div class="row" style="margin-bottom: 16px;">
               <div class="col-12">
