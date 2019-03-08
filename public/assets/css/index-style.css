@@ -204,6 +204,13 @@ hr {
   margin-bottom: 16px;
 }
 
+.empty-message {
+  -webkit-animation: bounceIn 0.5s both ease;
+  -moz-animation: bounceIn 0.5s both ease;
+  animation: bounceIn 0.5s both ease;
+  margin-bottom: 16px;
+}
+
 .nav-name {
   color: #00BCE4 !important;
   text-transform: uppercase;

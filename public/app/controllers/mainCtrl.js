@@ -5,6 +5,16 @@ angular.module('mainController', ['authServices', 'userServices'])
     app.loadme = false;
     app.showModal = true;
     app.events;
+    app.newUserInfo = {
+      firstName:"",
+      lastName:"",
+      major:"",
+      sex:"",
+      year:"",
+      nationality:"",
+      ethnicity:"",
+      username:""
+    };
 
     this.openRequestModal = function() {
       app.errorMsg = false;
@@ -164,9 +174,11 @@ angular.module('mainController', ['authServices', 'userServices'])
           app.sex = data.data.sex;
           app.points = data.data.points;
           app.fallPoints = data.data.fallPoints
-          app.springPoints = data.data.springPoints
-          app.summerPoints = data.data.summerPoints
+          app.springPoints = data.data.springPoints;
+          app.summerPoints = data.data.summerPoints;
           app.events = data.data.events;
+
+          app.newUserInfo.username = data.data.username;
 
           User.getPermission().then(function(data) {
             if (data.data.message === 'admin') {
@@ -227,9 +239,49 @@ angular.module('mainController', ['authServices', 'userServices'])
       showModal(2);
     };
 
-    app.updateProfile = function() {
+    this.editUser=function(newUserInfo){
+      console.log(app.newUserInfo);
+      User.editUserInfo(app.newUserInfo).then(function(data){
+        console.log(data.data)
+        if(data.data.empty){
+          app.errorUpdateProfile = false;
+          app.successUpdateProfile = false;
+          app.emptyUpdateProfile = data.data.message;
+        }
+        if(data.data.success){
+          app.errorUpdateProfile = false;
+          app.emptyUpdateProfile = false;
+          app.successUpdateProfile = data.data.message;
+          $timeout(function() {
+            app.successUpdateProfile = false;
+            $window.location.reload();
+          }, 1000);
+        }else{
+          app.emptyUpdateProfile = false;
+          app.successUpdateProfile = false;
+          app.errorUpdateProfile = data.data.message;
+        }
+      });
+    };
+
+    app.openUpdateProfile = function() {
+      app.errorUpdateProfile = false;
+      app.successUpdateProfile = false;
+
       $("#profileUpdate").modal({
         backdrop: "static"
       });
     };
+
+    app.closeUpdateProfile = function() {
+      $('#profileUpdate').modal('hide');
+      app.newUserInfo.firstName = "";
+      app.newUserInfo.lastName = "";
+      app.newUserInfo.nationality = "";
+      app.newUserInfo.sex = "";
+      app.newUserInfo.ethnicity = "";
+      app.newUserInfo.major = "";
+      app.newUserInfo.year = "";
+    };
   });
+
