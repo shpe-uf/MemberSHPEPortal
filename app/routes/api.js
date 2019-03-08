@@ -1711,36 +1711,51 @@ module.exports = function(router) {
       req.body.sponsor = false;
     }
 
-    var company = new Company();
-    company.name = req.body.name;
-    company.majors = req.body.majors;
-    company.overview = req.body.overview;
-    company.mission = req.body.mission;
-    company.goals = req.body.goals;
-    company.model = req.body.model;
-    company.news = req.body.news;
-    company.apply = req.body.apply;
-    company.industry = req.body.industry;
-    company.slogan = req.body.slogan;
-    company.academia = req.body.academia;
-    company.government = req.body.government;
-    company.nonprofit = req.body.nonprofit;
-    company.international = req.body.international;
-    company.bbq = req.body.bbq;
-    company.national = req.body.national;
-    company.sponsor = req.body.sponsor;
-
-    console.log("\nNEW COMPANY:");
-    console.log(company);
-
-    company.save(function(err) {
-      if (err) throw err;
-
+    if (req.body.name == "" || req.body.name == null || req.body.logo == "" || req.body.logo == null || req.body.majors == "" || req.body.majors == null || req.body.news == "" || req.body.news == null || req.body.apply == "" || req.body.apply == null || req.body.industry == "" || req.body.industry == null) {
       res.json({
-        success: true,
-        message: "Company successfully added to Corporate Database"
+        success: false,
+        message: "Name, logo, majors, industry, news link, and apply link are required."
+      })
+    } else {
+      var company = new Company();
+      company.name = req.body.name;
+      company.logo = req.body.logo;
+      company.majors = req.body.majors;
+      company.overview = req.body.overview;
+      company.mission = req.body.mission;
+      company.goals = req.body.goals;
+      company.model = req.body.model;
+      company.news = req.body.news;
+      company.apply = req.body.apply;
+      company.industry = req.body.industry;
+      company.slogan = req.body.slogan;
+      company.academia = req.body.academia;
+      company.government = req.body.government;
+      company.nonprofit = req.body.nonprofit;
+      company.international = req.body.international;
+      company.bbq = req.body.bbq;
+      company.national = req.body.national;
+      company.sponsor = req.body.sponsor;
+
+      company.save(function(err) {
+        if (err) {
+          if (err.code == 11000) {
+            res.json({
+              success: false,
+              message: "Company is already in the Corporate Database."
+            });
+          } else {
+            throw err;
+          }
+        } else {
+          res.json({
+            success: true,
+            message: "Company successfully added to Corporate Database."
+          });
+        }
       });
-    });
+    }
+
   });
 
   router.get('/getcompanies/', function(req, res) {

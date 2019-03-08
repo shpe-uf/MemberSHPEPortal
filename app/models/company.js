@@ -9,27 +9,24 @@ var CompanySchema = new Schema({
     unique: true
   },
   logo:{
-    type: String
+    type: String,
+    required: true
   },
   majors: [{
     type: String,
     required: true
   }],
   overview: {
-    type: String,
-    required: true
+    type: String
   },
   mission: {
-    type: String,
-    required: true
+    type: String
   },
   goals: {
-    type: String,
-    required: true
+    type: String
   },
   model: {
-    type: String,
-    required: true
+    type: String
   },
   news: {
     type: String,
@@ -44,8 +41,7 @@ var CompanySchema = new Schema({
     required: true
   }],
   slogan: {
-    type: String,
-    required: true
+    type: String
   },
   academia: {
     type: Boolean,

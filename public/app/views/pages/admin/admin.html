@@ -474,12 +474,12 @@
         <h2 class="modal-title" id="addCompanyModalLabel">Add a Company</h2>
       </div>
       <div class="modal-body">
-        <div class="success-message" ng-show="admin.successMsg">
-          <div class="alert alert-success">{{ admin.successMsg }}</div>
+        <div class="success-message" ng-show="admin.addCompanySuccessMsg">
+          <div class="alert alert-success">{{ admin.addCompanySuccessMsg }}</div>
         </div>
 
-        <div class="error-message" ng-show="admin.errorMsg">
-          <div class="alert alert-danger">{{ admin.errorMsg }}</div>
+        <div class="error-message" ng-show="admin.addCompanyErrorMsg">
+          <div class="alert alert-danger">{{ admin.addCompanyErrorMsg }}</div>
         </div>
 
         <form name="addCompanyForm" ng-submit="admin.addCompany(company);" novalidate>
@@ -491,7 +491,8 @@
 
             <div class="form-group col-12 col-md-6">
               <label for="companyLogo">Logo</label>
-              <input type="file" class="form-control-file" name="logo" id="companyLogo" ng-model="company.logo">
+              <input type="file" class="form-control-file" name="logo" id="companyLogo" ng-model="company.logo" ng-file-select="onFileSelect($files)">
+              <!-- <img ng-src="{{ company.logo }}"> -->
             </div>
           </div>
 
@@ -504,6 +505,32 @@
           </div>
 
           <div class="form-row">
+            <div class="form-group col-12 col-md-6">
+              <label for="companyMajors">Majors</label>
+              <select multiple class="form-control" name="majors" id="companyMajors" ng-model="company.majors">
+                <option>Aerospace Engineering</option>
+                <option>Agricultural & Biological Engineering</option>
+                <option>Biomedical Engineering</option>
+                <option>Chemical Engineering</option>
+                <option>Civil Engineering</option>
+                <option>Computer Engineering</option>
+                <option>Coastal & Oceanographic Engineering</option>
+                <option>Computer Science</option>
+                <option>Digital Arts & Sciences</option>
+                <option>Electrical Engineering</option>
+                <option>Environmental Engineering Sciences</option>
+                <option>Human-Centered Computing</option>
+                <option>Industrial & Systems Engineering</option>
+                <option>Materials Science & Engineering</option>
+                <option>Mechanical Engineering</option>
+                <option>Nuclear Engineering</option>
+                <option>Other</option>
+              </select>
+              <small id="companyMajorsHelp" class="form-text text-muted">
+                Hold down the CTRL (Windows) or CMD (Mac) button to select multiple items.
+              </small>
+            </div>
+
             <div class="form-group col-12 col-md-6">
               <label for="companyIndustry">Industries</label>
               <select multiple class="form-control" name="industry" id="companyIndustry" ng-model="company.industry">
@@ -657,32 +684,6 @@
                 Hold down the CTRL (Windows) or CMD (Mac) button to select multiple items.
               </small>
             </div>
-
-            <div class="form-group col-12 col-md-6">
-              <label for="companyMajors">Majors</label>
-              <select multiple class="form-control" name="majors" id="companyMajors" ng-model="company.majors">
-                <option>Aerospace Engineering</option>
-                <option>Agricultural & Biological Engineering</option>
-                <option>Biomedical Engineering</option>
-                <option>Chemical Engineering</option>
-                <option>Civil Engineering</option>
-                <option>Computer Engineering</option>
-                <option>Coastal & Oceanographic Engineering</option>
-                <option>Computer Science</option>
-                <option>Digital Arts & Sciences</option>
-                <option>Electrical Engineering</option>
-                <option>Environmental Engineering Sciences</option>
-                <option>Human-Centered Computing</option>
-                <option>Industrial & Systems Engineering</option>
-                <option>Materials Science & Engineering</option>
-                <option>Mechanical Engineering</option>
-                <option>Nuclear Engineering</option>
-                <option>Other</option>
-              </select>
-              <small id="companyMajorsHelp" class="form-text text-muted">
-                Hold down the CTRL (Windows) or CMD (Mac) button to select multiple items.
-              </small>
-            </div>
           </div>
 
           <div class="form-row">
@@ -759,7 +760,6 @@
               </div>
             </div>
           </div>
-
 
           <div class="row">
             <div class="col-12">

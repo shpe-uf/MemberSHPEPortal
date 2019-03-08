@@ -14,6 +14,24 @@
         </div>
         <input type="text" class="form-control" ng-model="corporateSearchText">
       </div>
+      <!-- <h5 class="subtitle">By Major</h5>
+      <div class="row short-table filter-table">
+        <div class="col-12" ng-repeat="major in corporate.majors">
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="{{ major }}" ng-model="variable" ng-true-value="+" ng-false-value="-">
+            <label class="custom-control-label" for="{{ major }}">{{ major }}</label>
+          </div>
+        </div>
+      </div>
+      <h5 class="subtitle">By Industry</h5>
+      <div class="row short-table filter-table">
+        <div class="col-12" ng-repeat="industry in corporate.industries">
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="{{ industry }}">
+            <label class="custom-control-label" for="{{ industry }}">{{ industry }}</label>
+          </div>
+        </div>
+      </div> -->
     </div>
     <div class="col-12 col-md-9">
       <div class="row">
@@ -22,11 +40,9 @@
         </div>
         <div class="col-12 col-sm-2 col-md-4" ng-repeat="company in corporate.companies | filter: corporateSearchText | orderBy: 'name'" style="margin-bottom: 16px;">
           <div class="card">
-            <img class="card-img-top" src="../../../assets/images/logo-placeholder.png">
-            <div class="card-body text-center">
-              <h4 class="ellipsis">{{ company.name }}</h4>
-            </div>
+            <img class="card-img-top" ng-src="{{ company.logo }}">
             <div class="card-footer text-center">
+              <h4 class="ellipsis">{{ company.name }}</h4>
               <button type="button" class="btn btn-submit btn-block" ng-click="corporate.openMoreInfoModal(company._id)">Company Profile</button>
             </div>
           </div>
@@ -50,23 +66,34 @@
         </div>
         <div class="row">
           <div class="col-12 col-lg-4">
-            <img class="img-fluid" style="margin-bottom: 16px;" src="../../../assets/images/logo-placeholder.png">
-            <h5>Slogan</h5>
-            <p>"{{ corporate.company.slogan }}"</p>
-            <h5>Majors</h5>
-            <p>{{ corporate.company.majorsList }}</p>
-            <h5>Industries</h5>
-            <p>{{ corporate.company.industryList }}</p>
+            <!-- <img class="img-fluid" style="margin-bottom: 16px;" src="../../../assets/images/logo-placeholder.png"> -->
+            <img class="img-fluid" ng-src="{{ corporate.company.logo }}" style="margin-bottom: 16px; width: 100%">
+            <div ng-if="corporate.company.slogan">
+              <h5>Slogan</h5>
+              <p>"{{ corporate.company.slogan }}"</p>
+            </div>
+              <h5>Majors</h5>
+              <p>{{ corporate.company.majorsList }}</p>
+              <h5>Industries</h5>
+              <p>{{ corporate.company.industryList }}</p>
           </div>
           <div class="col-12 col-lg-8">
-            <h5>Overview</h5>
-            <p>{{ corporate.company.overview }}</p>
-            <h5>Mission</h5>
-            <p>{{ corporate.company.mission }}</p>
-            <h5>Goals</h5>
-            <p>{{ corporate.company.goals }}</p>
-            <h5>Business Model/Operations Highlights</h5>
-            <p>{{ corporate.company.model }}</p>
+            <div ng-if="corporate.company.overview">
+              <h5>Overview</h5>
+              <p>{{ corporate.company.overview }}</p>
+            </div>
+            <div ng-if="corporate.company.mission">
+              <h5>Mission</h5>
+              <p>{{ corporate.company.mission }}</p>
+            </div>
+            <div ng-if="corporate.company.goals">
+              <h5>Goals</h5>
+              <p>{{ corporate.company.goals }}</p>
+            </div>
+            <div ng-if="corporate.company.model">
+              <h5>Business Model/Operations Highlights</h5>
+              <p>{{ corporate.company.model }}</p>
+            </div>
             <div class="row" style="margin-bottom: 16px;">
               <div class="col-6">
                 <h5>News Link</h5>

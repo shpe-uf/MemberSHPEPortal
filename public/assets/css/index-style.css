@@ -297,7 +297,7 @@ iframe {
 
 .short-table {
   overflow-y: scroll;
-  margin-bottom: 15px;
+  margin-bottom: 16px;
 }
 
 .attendance-table {
@@ -306,6 +306,10 @@ iframe {
 
 .user-events-table {
   max-height: 270px;
+}
+
+.filter-table {
+  max-height: 200px;
 }
 
 /* LOGOUT LOADER */
@@ -536,12 +540,13 @@ a {
 }
 
 .ellipsis {
-   overflow: hidden;
-   text-overflow: ellipsis;
-   display: -webkit-box;
-   -webkit-box-orient: vertical;
-   -webkit-line-clamp: 1; /* number of lines to show */
-   /* line-height: X;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  /* number of lines to show */
+  /* line-height: X;
    max-height: X*N; */
 }
 
