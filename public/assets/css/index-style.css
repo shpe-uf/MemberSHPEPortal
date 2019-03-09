@@ -567,3 +567,19 @@ a {
 a:hover {
   color: #0094B6;
 }
+
+.image {
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 100%;
+  /* padding-top: 100% !important; */
+}
+
+.image img {
+  position: absolute;
+  padding: 8px 8px 8px 8px;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+}

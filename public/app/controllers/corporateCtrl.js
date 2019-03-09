@@ -43,7 +43,6 @@ angular.module('corporateController', [])
       "Civil Engineering",
       "Commercial Real Estate",
       "Computer Engineering",
-      "Software Development/Engineering",
       "Construction",
       "Consumer Electronics",
       "Consumer Goods",
@@ -148,6 +147,7 @@ angular.module('corporateController', [])
       "Security/Investigations",
       "Semiconductors",
       "Shipbuilding",
+      "Software Development/Engineering",
       "Sporting Goods",
       "Sports",
       "Staffing/Recruiting",
@@ -203,7 +203,6 @@ angular.module('corporateController', [])
     User.getCompanies().then(function(data) {
       if (data.data.success) {
         app.companies = data.data.message;
-        console.log(app.companies);
       }
     });
   });

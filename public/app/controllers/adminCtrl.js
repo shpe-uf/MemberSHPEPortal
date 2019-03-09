@@ -184,15 +184,22 @@ angular.module('adminController', [])
       app.addCompanySuccessMsg = false;
       app.addCompanyErrorMsg = false;
 
-      User.addCompany(companyData).then(function(data) {
-        if (data.data.success) {
-          app.addCompanySuccessMsg = data.data.message;
-          app.addCompanyErrorMsg = false;
-        } else {
-          app.addCompanySuccessMsg = false;
-          app.addCompanyErrorMsg = data.data.message;
-        }
-      });
+      if (companyData.logo.length > 80000) {
+        app.addCompanyErrorMsg = "Logo file too large, please upload smaller file."
+      } else {
+        User.addCompany(companyData).then(function(data) {
+          if (data.data.success) {
+            app.addCompanySuccessMsg = data.data.message;
+            app.addCompanyErrorMsg = false;
+            $timeout(function() {
+              $window.location.reload();
+            }, 1000);
+          } else {
+            app.addCompanySuccessMsg = false;
+            app.addCompanyErrorMsg = data.data.message;
+          }
+        });
+      }
     }
 
     User.getUsers().then(function(data) {
@@ -248,8 +255,6 @@ angular.module('adminController', [])
       },
       link: function($scope, el) {
         function getFile(file) {
-          console.log("FILE:");
-          console.log(file);
           fileReader.readAsDataUrl(file, $scope)
             .then(function(result) {
               $timeout(function() {
@@ -301,8 +306,6 @@ angular.module('adminController', [])
     };
 
     var readAsDataURL = function(file, scope) {
-      console.log("FILE:");
-      console.log(file);
       var deferred = $q.defer();
 
       var reader = getReader(deferred, scope);

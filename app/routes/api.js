@@ -1682,41 +1682,40 @@ module.exports = function(router) {
   });
 
   router.post('/addcompany/', function(req, res) {
-
-    if (req.body.academia == null || req.body.academia == "") {
-      req.body.academia = false;
-    }
-
-    if (req.body.government == null || req.body.government == "") {
-      req.body.government = false;
-    }
-
-    if (req.body.nonprofit == null || req.body.nonprofit == "") {
-      req.body.nonprofit = false;
-    }
-
-    if (req.body.international == null || req.body.international == "") {
-      req.body.international = false;
-    }
-
-    if (req.body.bbq == null || req.body.bbq == "") {
-      req.body.bbq = false;
-    }
-
-    if (req.body.national == null || req.body.national == "") {
-      req.body.national = false;
-    }
-
-    if (req.body.sponsor == null || req.body.sponsor == "") {
-      req.body.sponsor = false;
-    }
-
     if (req.body.name == "" || req.body.name == null || req.body.logo == "" || req.body.logo == null || req.body.majors == "" || req.body.majors == null || req.body.news == "" || req.body.news == null || req.body.apply == "" || req.body.apply == null || req.body.industry == "" || req.body.industry == null) {
       res.json({
         success: false,
         message: "Name, logo, majors, industry, news link, and apply link are required."
       })
     } else {
+      if (req.body.academia == null || req.body.academia == "") {
+        req.body.academia = false;
+      }
+
+      if (req.body.government == null || req.body.government == "") {
+        req.body.government = false;
+      }
+
+      if (req.body.nonprofit == null || req.body.nonprofit == "") {
+        req.body.nonprofit = false;
+      }
+
+      if (req.body.international == null || req.body.international == "") {
+        req.body.international = false;
+      }
+
+      if (req.body.bbq == null || req.body.bbq == "") {
+        req.body.bbq = false;
+      }
+
+      if (req.body.national == null || req.body.national == "") {
+        req.body.national = false;
+      }
+
+      if (req.body.sponsor == null || req.body.sponsor == "") {
+        req.body.sponsor = false;
+      }
+
       var company = new Company();
       company.name = req.body.name;
       company.logo = req.body.logo;
@@ -1745,7 +1744,10 @@ module.exports = function(router) {
               message: "Company is already in the Corporate Database."
             });
           } else {
-            throw err;
+            res.json({
+              success: false,
+              message: err
+            });
           }
         } else {
           res.json({
