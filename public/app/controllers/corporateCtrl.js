@@ -1,5 +1,5 @@
-angular.module('corporateController', [])
-  .controller('corporateCtrl', function(User) {
+angular.module('corporateController', ['userServices'])
+  .controller('corporateCtrl', function($window, User) {
 
     var app = this;
     app.majors = [
