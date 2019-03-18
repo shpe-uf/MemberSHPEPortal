@@ -10,10 +10,10 @@
 
       <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-          <a class="nav-item nav-link active" id="nav-request-tab" data-toggle="tab" data-target="#nav-request" role="tab" aria-controls="nav-request" aria-selected="false">Requests</a>
-          <a class="nav-item nav-link" id="nav-member-tab" data-toggle="tab" data-target="#nav-member" role="tab" aria-controls="nav-member" aria-selected="true">Members</a>
-          <a class="nav-item nav-link" id="nav-event-tab" data-toggle="tab" data-target="#nav-event" role="tab" aria-controls="nav-event" aria-selected="false">Events</a>
-          <a class="nav-item nav-link" id="nav-corporate-tab" data-toggle="tab" data-target="#nav-corporate" role="tab" aria-controls="nav-corporate" aria-selected="false">Corporate Database</a>
+          <a class="nav-item nav-item-highlight nav-link active" id="nav-request-tab" data-toggle="tab" data-target="#nav-request" role="tab" aria-controls="nav-request" aria-selected="false">Requests</a>
+          <a class="nav-item nav-item-highlight nav-link" id="nav-member-tab" data-toggle="tab" data-target="#nav-member" role="tab" aria-controls="nav-member" aria-selected="true">Members</a>
+          <a class="nav-item nav-item-highlight nav-link" id="nav-event-tab" data-toggle="tab" data-target="#nav-event" role="tab" aria-controls="nav-event" aria-selected="false">Events</a>
+          <a class="nav-item nav-item-highlight nav-link" id="nav-corporate-tab" data-toggle="tab" data-target="#nav-corporate" role="tab" aria-controls="nav-corporate" aria-selected="false">Corporate Database</a>
         </div>
       </nav>
 
@@ -32,7 +32,8 @@
                 </div>
               </div>
               <div class="col-12" ng-if="admin.requests.length != 0">
-                <table class="table table-responsive-lg table-striped">
+                <table class="table table-responsive
+ table-striped">
                   <tr class="table-head">
                     <th>NAME</th>
                     <th>USERNAME</th>
@@ -85,7 +86,8 @@
                 </div>
               </div>
               <div class="col-12" ng-if="admin.users.length != 0">
-                <table class="table table-responsive-lg table-striped">
+                <table class="table table-responsive
+ table-striped">
                   <tr class="table-head">
                     <th></th>
                     <th ng-click="admin.sortBy('lastName', admin.users)">NAME</th>
@@ -144,7 +146,8 @@
                 </button>
               </div>
               <div class="col-12" ng-if="admin.codes.length != 0">
-                <table class="table table-responsive-lg table-striped">
+                <table class="table table-responsive
+ table-striped">
                   <tr class="table-head">
                     <th>NAME</th>
                     <th>CODE</th>
@@ -310,7 +313,7 @@
           <p class="text-center">THERE IS NO ATTENDANCE RECORD FOR THIS EVENT AT THIS TIME.</p>
         </div>
         <div class="short-table attendance-table" ng-if="admin.attendance.length != 0">
-          <table class="table table-responsive-lg table-striped" style="margin-bottom: 0px;">
+          <table class="table table-responsi table-striped" style="margin-bottom: 0px;">
             <tr class="table-head">
               <th>NAME</th>
               <th>USERNAME</th>
@@ -433,7 +436,7 @@
               <p class="text-center">THIS USER HAS NO ATTENDANCE RECORD.</p>
             </div>
             <div class="short-table user-events-table" ng-if="admin.eventArray.length != 0">
-              <table class="table table-responsive-lg table-striped" style="margin-bottom: 0px;">
+              <table class="table table-responsive table-striped" style="margin-bottom: 0px;">
                 <tr class="table-head">
                   <th>EVENT</th>
                   <th>TYPE</th>

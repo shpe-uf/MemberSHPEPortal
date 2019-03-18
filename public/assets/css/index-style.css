@@ -590,6 +590,30 @@ a:hover {
   display: -webkit-box;
   display: -moz-box;
 }
+
 .nav-tabs>a {
   float: none;
+}
+
+canvas {
+  margin-bottom: 16px;
+}
+
+.nav-link.active, .nav-item-highlight.show .nav-lin {
+  background-color: #FFFFFF !important;
+  border-top-width: 3px !important;
+  border-top-color: #00BCE4 !important;
+}
+
+.nav-item-highlight {
+  background-color: #DEE2E6 !important;
+  border-width: 1px !important;
+  border-top-width: 3px !important;
+  border-color: #DEE2E6 !important;
+  margin-right: 1px;
+  margin-left: 1px;
+}
+
+.tab-content {
+  border-top-width: 0px !important;
 }
