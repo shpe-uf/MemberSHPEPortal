@@ -42,6 +42,8 @@ var app = angular.module('appRoutes', ['ngRoute'])
 
       .when('/resume', {
         templateUrl: 'app/views/pages/resume/resume.html',
+        controller: 'resumeCtrl',
+        controllerAs: 'resume',
         authenticated: true
       })
 

@@ -284,4 +284,3 @@ angular.module('mainController', ['authServices', 'userServices'])
       app.newUserInfo.year = "";
     };
   });
-

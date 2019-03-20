@@ -5,7 +5,7 @@
     </div>
     <div class="col-sm-2 col-12">
       <div class="float-right">
-        <button type="button" class="btn btn-submit">Update Résumé</button>
+        <button type="button" class="btn btn-submit" ng-click="resume.openResumeModal()">Update Résumé</button>
       </div>
     </div>
   </div>
@@ -34,4 +34,28 @@
 
   </div>
 
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="resumeModal" aria-labelledby="resumeModalLabel">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="resumeModalLabel">Update Profile</h3>
+      </div>
+      <div class="modal-body">
+
+        <form name="editUserForm" ng-submit="resume.uploadResume(resume)">
+          <div class="form-group">
+            <label for="resumeFile">File</label>
+            <input type="file" class="form-control-file" name="logo" id="resumeFile" ng-model="company.logo" ng-file-select="onFileSelect($files)">
+          </div>
+          <button type="submit" class="btn btn-success">Submit</button>
+          <button type="reset" class="btn btn-danger float-right" ng-click="resume.closeResumeModal()">Close</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
 </div>
