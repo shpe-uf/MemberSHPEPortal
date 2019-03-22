@@ -184,6 +184,9 @@ angular.module('adminController', [])
       app.addCompanySuccessMsg = false;
       app.addCompanyErrorMsg = false;
 
+      console.log("COMPANY LOGO DATA");
+      console.log(companyData.logo);
+
       if (companyData.logo.length > 80000) {
         app.addCompanyErrorMsg = "Logo file too large, please upload smaller file."
       } else {
@@ -191,9 +194,9 @@ angular.module('adminController', [])
           if (data.data.success) {
             app.addCompanySuccessMsg = data.data.message;
             app.addCompanyErrorMsg = false;
-            $timeout(function() {
-              $window.location.reload();
-            }, 1000);
+            // $timeout(function() {
+            //   $window.location.reload();
+            // }, 1000);
           } else {
             app.addCompanySuccessMsg = false;
             app.addCompanyErrorMsg = data.data.message;
