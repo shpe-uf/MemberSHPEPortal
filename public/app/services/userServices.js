@@ -163,5 +163,9 @@ angular.module('userServices', [])
       return $http.put('api/edituserinfo/', userInfo);
     };
 
+    userFactory.uploadResume = function(resumeFile) {
+      return $http.post('api/uploadresume/'+ resumeFile);
+    }
+
     return userFactory;
   });

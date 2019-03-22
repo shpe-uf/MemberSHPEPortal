@@ -12,7 +12,7 @@ var router = express.Router();
 var appRoutes = require('./app/routes/api')(router);
 
 app.use(morgan('dev'));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '1024mb', extended:true}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 app.use('/api', appRoutes);

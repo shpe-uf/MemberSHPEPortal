@@ -1619,7 +1619,7 @@ module.exports = function (router) {
       if (err) throw err;
 
       if ((req.body.firstName == "" || req.body.firstName == null) && (req.body.lastName == "" || req.body.lastName == null) && (req.body.major == "" || req.body.major == null) && (req.body.major == "" || req.body.major == null) && (req.body.sex == "" || req.body.sex == null) && (req.body.year == "" || req.body.year == null) && (req.body.nationality == "" || req.body.nationality == null) && (req.body.ethnicity == "" || req.body.ethnicity == null)) {
-      
+
         res.json({
             empty:true,
             message:"No changes were made."
@@ -1647,7 +1647,7 @@ module.exports = function (router) {
         if (req.body.ethnicity == "" || req.body.ethnicity == null) {
           req.body.ethnicity = user.ethnicity;
         }
-  
+
         user.firstName = req.body.firstName;
         user.lastName = req.body.lastName;
         user.major = req.body.major;
@@ -1655,7 +1655,7 @@ module.exports = function (router) {
         user.year = req.body.year;
         user.nationality = req.body.nationality;
         user.ethnicity = req.body.ethnicity;
-  
+
         user.save(function (err) {
           if (err) {
             res.json({
@@ -1675,6 +1675,10 @@ module.exports = function (router) {
     });
   });
 
+  //ENDPOINT TO UPLOAD RESUME FILE
+  router.post('/uploadresume/:resume', function(req, res) {
+    console.log('upload resume');
+  });
 
   return router;
 };

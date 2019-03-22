@@ -45,11 +45,18 @@
         <h3 class="modal-title" id="resumeModalLabel">Update Profile</h3>
       </div>
       <div class="modal-body">
+        <div class="success-message" ng-show="resume.fileSuccessMsg">
+          <div class="alert alert-success">{{ resume.fileSuccessMsg }}</div>
+        </div>
+
+        <div class="error-message" ng-show="resume.fileErrorMsg">
+          <div class="alert alert-danger">{{ resume.fileErrorMsg }}</div>
+        </div>
 
         <form name="editUserForm" ng-submit="resume.uploadResume(resume)">
           <div class="form-group">
             <label for="resumeFile">File</label>
-            <input type="file" class="form-control-file" name="logo" id="resumeFile" ng-model="company.logo" ng-file-select="onFileSelect($files)">
+            <input type="file" class="form-control-file" name="logo" id="resumeFile" ng-model="resume.file" ng-file-select="onFileSelect($files)">
           </div>
           <button type="submit" class="btn btn-success">Submit</button>
           <button type="reset" class="btn btn-danger float-right" ng-click="resume.closeResumeModal()">Close</button>

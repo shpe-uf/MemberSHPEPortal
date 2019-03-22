@@ -3,6 +3,7 @@ angular.module('resumeController', ['userServices'])
 
     var app = this;
 
+
     $scope.resumeFile = "";
 
     $scope.$on("fileProgress", function(e, progress) {
@@ -10,6 +11,8 @@ angular.module('resumeController', ['userServices'])
     });
 
     this.openResumeModal = function() {
+      app.fileErrorMsg = false;
+      app.fileSuccessMsg = false;
 
       $("#resumeModal").modal({
         backdrop: 'static',
@@ -24,8 +27,18 @@ angular.module('resumeController', ['userServices'])
 
     };
 
-    this.uploadResume = function() {
-      console.log("works!");
+    this.uploadResume = function(resumeFile) {
+      console.log(resumeFile.file);
+      var fileType = resumeFile.file.substring(0, 20).toLowerCase();
+
+      if (fileType == 'data:application/pdf') {
+
+        User.uploadResume(resumeFile.file);
+      }
+      else {
+        app.fileErrorMsg = 'Please upload a file type PDF';
+        app.fileSuccessMsg = false;
+      }
     };
 
 
@@ -39,13 +52,14 @@ angular.module('resumeController', ['userServices'])
       },
       link: function($scope, el) {
         function getFile(file) {
-          console.log(file);
           fileReader.readAsDataUrl(file, $scope)
             .then(function(result) {
               $timeout(function() {
                 $scope.ngModel = result;
               });
             });
+
+
         }
 
         el.bind("change", function(e) {
