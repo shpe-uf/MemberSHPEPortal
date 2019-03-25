@@ -399,7 +399,7 @@ module.exports = function (router) {
               username: user.username,
               email: user.email
             }, secret, {
-              expiresIn: '2min'
+              expiresIn: '1h'
             });
 
             res.json({
@@ -644,7 +644,7 @@ module.exports = function (router) {
           username: user.username,
           email: user.email
         }, secret, {
-          expiresIn: '2min'
+          expiresIn: '1h'
         });
         res.json({
           success: true,

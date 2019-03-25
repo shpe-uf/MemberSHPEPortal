@@ -83,11 +83,12 @@ angular.module('mainController', ['authServices', 'userServices'])
 
             console.log("SECONDS LEFT: " + timeCheck);
 
-            if (timeCheck <= 60 && timeCheck > 0) {
+            if (timeCheck <= 600 && timeCheck > 0) {
+              console.log("TOKEN EXPIRATION: " + timeCheck);
               showModal(1);
               $interval.cancel(interval);
-            } else if (timeCheck <= 0) {
-              console.log("NEGATIVE");
+            } else if (timeCheck <= 0){
+              app.isLoggedIn = false;
               Auth.logout();
             }
           }
@@ -214,9 +215,9 @@ angular.module('mainController', ['authServices', 'userServices'])
 
       } else {
         app.isLoggedIn = false;
+        app.loadme = true;
         app.username = '';
         app.email = '';
-        app.loadme = true;
       }
     });
 
@@ -227,7 +228,7 @@ angular.module('mainController', ['authServices', 'userServices'])
         if (data.data.success) {
           app.successMsg = data.data.message;
           $timeout(function() {
-            $location.path('/profile');
+            $location.path('/rewards');
             app.loginData = '';
             app.successMsg = false;
             app.checkSession();
