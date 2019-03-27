@@ -32,34 +32,36 @@
                 </div>
               </div>
               <div class="col-12" ng-if="admin.requests.length != 0">
-                <table class="table table-striped table-responsive">
-                  <tr class="table-head">
-                    <th>NAME</th>
-                    <th>USERNAME</th>
-                    <th>EVENT</th>
-                    <th>TYPE</th>
-                    <th class="text-center">POINTS</th>
-                    <th class="text-center">APPROVE</th>
-                    <th class="text-center">DENY</th>
-                  </tr>
-                  <tr ng-repeat="request in admin.requests | filter: requestSearchText">
-                    <td>{{ request.lastName }}, {{ request.firstName }}</td>
-                    <td>{{ request.username }}</td>
-                    <td>{{ request.eventName }}</td>
-                    <td>{{ request.type }}</td>
-                    <td class="text-center">{{ request.points }}</td>
-                    <td class="text-center">
-                      <button type="button" class="btn btn-outline-success" ng-click="admin.acceptRequest(request)" ng-if="!admin.isClicked">
-                        <i class="fas fa-check"></i>
-                      </button>
-                    </td>
-                    <td class="text-center">
-                      <button type="button" class="btn btn-outline-danger" ng-click="admin.denyRequest(request)" ng-if="!admin.isClicked">
-                        <i class="fas fa-times"></i>
-                      </button>
-                    </td>
-                  </tr>
-                </table>
+                <div class="table-responsive">
+                  <table class="table table-striped">
+                    <tr class="table-head">
+                      <th>NAME</th>
+                      <th>USERNAME</th>
+                      <th>EVENT</th>
+                      <th>TYPE</th>
+                      <th class="text-center">POINTS</th>
+                      <th class="text-center">APPROVE</th>
+                      <th class="text-center">DENY</th>
+                    </tr>
+                    <tr ng-repeat="request in admin.requests | filter: requestSearchText">
+                      <td>{{ request.lastName }}, {{ request.firstName }}</td>
+                      <td>{{ request.username }}</td>
+                      <td>{{ request.eventName }}</td>
+                      <td>{{ request.type }}</td>
+                      <td class="text-center">{{ request.points }}</td>
+                      <td class="text-center">
+                        <button type="button" class="btn btn-outline-success" ng-click="admin.acceptRequest(request)" ng-if="!admin.isClicked">
+                          <i class="fas fa-check"></i>
+                        </button>
+                      </td>
+                      <td class="text-center">
+                        <button type="button" class="btn btn-outline-danger" ng-click="admin.denyRequest(request)" ng-if="!admin.isClicked">
+                          <i class="fas fa-times"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
               </div>
             </div>
             <div class="row" ng-if="admin.requests.length == 0">
@@ -85,35 +87,37 @@
                 </div>
               </div>
               <div class="col-12" ng-if="admin.users.length != 0">
-                <table class="table table-striped table-responsive">
-                  <tr class="table-head">
-                    <th></th>
-                    <th ng-click="admin.sortBy('lastName', admin.users)">NAME</th>
-                    <th ng-click="admin.sortBy('username', admin.users)">USERNAME</th>
-                    <th ng-click="admin.sortBy('email', admin.users)">EMAIL</th>
-                    <th class="text-center" ng-click="admin.sortBy('fallPoints', admin.users)">FALL POINTS</th>
-                    <th class="text-center" ng-click="admin.sortBy('springPoints', admin.users)">SPRING POINTS</th>
-                    <th class="text-center" ng-click="admin.sortBy('summerPoints', admin.users)">SUMMER POINTS</th>
-                    <th class="text-center" ng-click="admin.sortBy('points', admin.users)">TOTAL POINTS</th>
-                    <th class="text-center">INFO</th>
-                  </tr>
+                <div class="table-responsive">
+                  <table class="table table-striped">
+                    <tr class="table-head">
+                      <th></th>
+                      <th ng-click="admin.sortBy('lastName', admin.users)">NAME</th>
+                      <th ng-click="admin.sortBy('username', admin.users)">USERNAME</th>
+                      <th ng-click="admin.sortBy('email', admin.users)">EMAIL</th>
+                      <th class="text-center" ng-click="admin.sortBy('fallPoints', admin.users)">FALL POINTS</th>
+                      <th class="text-center" ng-click="admin.sortBy('springPoints', admin.users)">SPRING POINTS</th>
+                      <th class="text-center" ng-click="admin.sortBy('summerPoints', admin.users)">SUMMER POINTS</th>
+                      <th class="text-center" ng-click="admin.sortBy('points', admin.users)">TOTAL POINTS</th>
+                      <th class="text-center">INFO</th>
+                    </tr>
 
-                  <tr ng-repeat="user in admin.users | filter: membersSearchText">
-                    <td><i class="fas fa-star fa-admin" ng-if="user.permission == 'admin'"></i></td>
-                    <td>{{ user.lastName }}, {{ user.firstName }}</td>
-                    <td>{{ user.username }}</td>
-                    <td>{{ user.email }}</td>
-                    <td class="text-center">{{ user.fallPoints }}</td>
-                    <td class="text-center">{{ user.springPoints }}</td>
-                    <td class="text-center">{{ user.summerPoints }}</td>
-                    <td class="text-center">{{ user.points }}</td>
-                    <td class="text-center">
-                      <button type="button" class="btn btn-submit" ng-click="admin.openUserInfoModal(user.username)">
-                        <i class="fas fa-info"></i>
-                      </button>
-                    </td>
-                  </tr>
-                </table>
+                    <tr ng-repeat="user in admin.users | filter: membersSearchText">
+                      <td><i class="fas fa-star fa-admin" ng-if="user.permission == 'admin'"></i></td>
+                      <td>{{ user.lastName }}, {{ user.firstName }}</td>
+                      <td>{{ user.username }}</td>
+                      <td>{{ user.email }}</td>
+                      <td class="text-center">{{ user.fallPoints }}</td>
+                      <td class="text-center">{{ user.springPoints }}</td>
+                      <td class="text-center">{{ user.summerPoints }}</td>
+                      <td class="text-center">{{ user.points }}</td>
+                      <td class="text-center">
+                        <button type="button" class="btn btn-submit" ng-click="admin.openUserInfoModal(user.username)">
+                          <i class="fas fa-info"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
               </div>
             </div>
             <div class="row" ng-if="admin.users.length == 0">
@@ -144,34 +148,36 @@
                 </button>
               </div>
               <div class="col-12" ng-if="admin.codes.length != 0">
-                <table class="table table-striped table-responsive">
-                  <tr class="table-head">
-                    <th>NAME</th>
-                    <th>CODE</th>
-                    <th>TYPE</th>
-                    <th>EXPIRATION</th>
-                    <th class="text-center">POINTS</th>
-                    <th class="text-center">MANUAL INPUT</th>
-                    <th class="text-center">INFO</th>
-                  </tr>
-                  <tr ng-repeat="code in admin.codes | filter: eventSearchText | orderBy: 'expiration'">
-                    <td>{{ code.name }}</td>
-                    <td>{{ code.code }}</td>
-                    <td>{{ code.type }}</td>
-                    <td>{{ code.expiration | date:'MM/dd/yyyy @ hh:mm a' }}</td>
-                    <td class="text-center">{{ code.points }}</td>
-                    <td class="text-center">
-                      <button type="button" class="btn btn-submit" ng-click="admin.openManualInputModal(code)">
-                        <i class="fas fa-pen"></i>
-                      </button>
-                    </td>
-                    <td class="text-center">
-                      <button type="button" class="btn btn-submit" ng-click="admin.openEventInfoModal(code)">
-                        <i class="fas fa-info"></i>
-                      </button>
-                    </td>
-                  </tr>
-                </table>
+                <div class="table-responsive">
+                  <table class="table table-striped">
+                    <tr class="table-head">
+                      <th>NAME</th>
+                      <th>CODE</th>
+                      <th>TYPE</th>
+                      <th>EXPIRATION</th>
+                      <th class="text-center">POINTS</th>
+                      <th class="text-center">MANUAL INPUT</th>
+                      <th class="text-center">INFO</th>
+                    </tr>
+                    <tr ng-repeat="code in admin.codes | filter: eventSearchText | orderBy: 'expiration'">
+                      <td>{{ code.name }}</td>
+                      <td>{{ code.code }}</td>
+                      <td>{{ code.type }}</td>
+                      <td>{{ code.expiration | date:'MM/dd/yyyy @ hh:mm a' }}</td>
+                      <td class="text-center">{{ code.points }}</td>
+                      <td class="text-center">
+                        <button type="button" class="btn btn-submit" ng-click="admin.openManualInputModal(code)">
+                          <i class="fas fa-pen"></i>
+                        </button>
+                      </td>
+                      <td class="text-center">
+                        <button type="button" class="btn btn-submit" ng-click="admin.openEventInfoModal(code)">
+                          <i class="fas fa-info"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
               </div>
             </div>
             <div class="row" ng-if="admin.codes.length == 0">
@@ -202,14 +208,16 @@
                 </button>
               </div>
               <div class="col-12" ng-if="admin.companies.length != 0">
-                <table class="table table-striped table-responsive">
-                  <tr class="table-head">
-                    <th>NAME</th>
-                  </tr>
-                  <tr ng-repeat="company in admin.companies | filter: corporateSearchText | orderBy: 'name'">
-                    <td>{{ company.name }}</td>
-                  </tr>
-                </table>
+                <div class="table-responsive">
+                  <table class="table table-striped">
+                    <tr class="table-head">
+                      <th>NAME</th>
+                    </tr>
+                    <tr ng-repeat="company in admin.companies | filter: corporateSearchText | orderBy: 'name'">
+                      <td>{{ company.name }}</td>
+                    </tr>
+                  </table>
+                </div>
               </div>
             </div>
             <div class="row" ng-if="admin.companies.length == 0">
@@ -310,18 +318,20 @@
           <p class="text-center">THERE IS NO ATTENDANCE RECORD FOR THIS EVENT AT THIS TIME.</p>
         </div>
         <div class="short-table attendance-table" ng-if="admin.attendance.length != 0">
-          <table class="table table-striped" style="margin-bottom: 0px;">
-            <tr class="table-head">
-              <th>NAME</th>
-              <th>USERNAME</th>
-              <th>EMAIL</th>
-            </tr>
-            <tr ng-repeat="user in admin.attendance | orderBy: 'lastName'">
-              <td>{{ user.lastName }}, {{ user.firstName }}</td>
-              <td>{{ user.username }}</td>
-              <td>{{ user.email }}</td>
-            </tr>
-          </table>
+          <div class="table-responsive">
+            <table class="table table-striped" style="margin-bottom: 0px;">
+              <tr class="table-head">
+                <th>NAME</th>
+                <th>USERNAME</th>
+                <th>EMAIL</th>
+              </tr>
+              <tr ng-repeat="user in admin.attendance | orderBy: 'lastName'">
+                <td>{{ user.lastName }}, {{ user.firstName }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+              </tr>
+            </table>
+          </div>
         </div>
         <div class="row">
           <div class="col-sm-12">
@@ -389,42 +399,44 @@
             <img class="img-thumbnail" src="../../assets/images/profile.png">
           </div>
           <div class="col-lg-6 col-12">
-            <table class="table">
-              <tbody>
-                <tr>
-                  <td>Username</td>
-                  <td>{{ admin.user.username }}</td>
-                </tr>
-                <tr>
-                  <td>Email</td>
-                  <td>{{ admin.user.email }}</td>
-                </tr>
-                <tr>
-                  <td>Major</td>
-                  <td>{{ admin.user.major }}</td>
-                </tr>
-                <tr>
-                  <td>Year</td>
-                  <td>{{ admin.user.year }}</td>
-                </tr>
-                <tr>
-                  <td>Country of Origin</td>
-                  <td>{{ admin.user.nationality }}</td>
-                </tr>
-                <tr>
-                  <td>Ethnicity</td>
-                  <td>{{ admin.user.ethnicity }}</td>
-                </tr>
-                <tr>
-                  <td>Sex</td>
-                  <td>{{ admin.user.sex }}</td>
-                </tr>
-                <tr>
-                  <td>ListServ</td>
-                  <td>{{ admin.user.listServ }}</td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="table-responsive">
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td>Username</td>
+                    <td>{{ admin.user.username }}</td>
+                  </tr>
+                  <tr>
+                    <td>Email</td>
+                    <td>{{ admin.user.email }}</td>
+                  </tr>
+                  <tr>
+                    <td>Major</td>
+                    <td>{{ admin.user.major }}</td>
+                  </tr>
+                  <tr>
+                    <td>Year</td>
+                    <td>{{ admin.user.year }}</td>
+                  </tr>
+                  <tr>
+                    <td>Country of Origin</td>
+                    <td>{{ admin.user.nationality }}</td>
+                  </tr>
+                  <tr>
+                    <td>Ethnicity</td>
+                    <td>{{ admin.user.ethnicity }}</td>
+                  </tr>
+                  <tr>
+                    <td>Sex</td>
+                    <td>{{ admin.user.sex }}</td>
+                  </tr>
+                  <tr>
+                    <td>ListServ</td>
+                    <td>{{ admin.user.listServ }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
         <div class="row">
@@ -433,26 +445,28 @@
               <p class="text-center">THIS USER HAS NO ATTENDANCE RECORD.</p>
             </div>
             <div class="short-table user-events-table" ng-if="admin.eventArray.length != 0">
-              <table class="table table-striped" style="margin-bottom: 0px;">
-                <tr class="table-head">
-                  <th>EVENT</th>
-                  <th>TYPE</th>
-                  <th class="text-center">SEMESTER</th>
-                  <th class="text-center">POINTS</th>
-                </tr>
-                <tr ng-repeat="event in admin.eventArray | orderBy: 'expiration'">
-                  <td>{{ event.name }}</td>
-                  <td>{{ event.type }}</td>
-                  <td class="text-center">{{ event.semester }}</td>
-                  <td class="text-center">{{ event.points }}</td>
-                </tr>
-                <tr class="table-head">
-                  <th>TOTAL POINTS</th>
-                  <th></th>
-                  <th></th>
-                  <th class="text-center">{{ admin.user.points }}</th>
-                </tr>
-              </table>
+              <div class="table-responsive">
+                <table class="table table-striped" style="margin-bottom: 0px;">
+                  <tr class="table-head">
+                    <th>EVENT</th>
+                    <th>TYPE</th>
+                    <th class="text-center">SEMESTER</th>
+                    <th class="text-center">POINTS</th>
+                  </tr>
+                  <tr ng-repeat="event in admin.eventArray | orderBy: 'expiration'">
+                    <td>{{ event.name }}</td>
+                    <td>{{ event.type }}</td>
+                    <td class="text-center">{{ event.semester }}</td>
+                    <td class="text-center">{{ event.points }}</td>
+                  </tr>
+                  <tr class="table-head">
+                    <th>TOTAL POINTS</th>
+                    <th></th>
+                    <th></th>
+                    <th class="text-center">{{ admin.user.points }}</th>
+                  </tr>
+                </table>
+              </div>
             </div>
           </div>
         </div>

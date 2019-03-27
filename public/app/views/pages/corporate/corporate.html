@@ -17,7 +17,7 @@
         <div class="col-12 col-md-4 col-lg-3" ng-repeat="company in corporate.companies | filter: corporateSearchText | orderBy: 'name'" style="margin-bottom: 16px;">
           <div class="card">
             <div class="image">
-              <img class="card-img-top img img-responsive full-width" ng-src="{{ company.logo }}">
+              <img class="card-img-top img img-responsive" ng-src="{{ company.logo }}">
             </div>
             <div class="card-footer text-center">
               <h4 class="ellipsis">{{ company.name }}</h4>

@@ -30,28 +30,30 @@
             </div>
           </div>
         </div>
-        <table class="table table-responsive table-striped" ng-if="alumni.alumniArray.length != 0">
-          <tr class="table-head">
-            <th ng-click="alumni.sortBy('name', alumni.alumniArray)">NAME</th>
-            <th ng-click="alumni.sortBy('undergrad', alumni.alumniArray)">UNDERGRAD. DEGREE</th>
-            <th ng-click="alumni.sortBy('employer', alumni.alumniArray)">EMPLOYER</th>
-            <th ng-click="alumni.sortBy('position', alumni.alumniArray)">TITLE/POSITION</th>
-            <th ng-click="alumni.sortBy('city', alumni.alumniArray)">LOCATION</th>
-            <th class="text-center">LINKEDIN</th>
-          </tr>
-          <tr ng-repeat="alumni in alumni.alumniArray | filter: alumniSearchText">
-            <td>{{ alumni.name }}</td>
-            <td>{{ alumni.undergrad }}</td>
-            <td>{{ alumni.employer }}</td>
-            <td>{{ alumni.position }}</td>
-            <td>{{ alumni.city }}, {{ alumni.state }}, {{ alumni.country }}</td>
-            <td class="text-center">
-              <a class="btn btn-submit" href="{{ alumni.linkedIn }}" target="_blank">
-                <i class="fab fa-linkedin-in"></i>
-              </a>
-            </td>
-          </tr>
-        </table>
+        <div class="table-responsive">
+          <table class="table table-striped" ng-if="alumni.alumniArray.length != 0">
+            <tr class="table-head">
+              <th ng-click="alumni.sortBy('name', alumni.alumniArray)">NAME</th>
+              <th ng-click="alumni.sortBy('undergrad', alumni.alumniArray)">UNDERGRAD. DEGREE</th>
+              <th ng-click="alumni.sortBy('employer', alumni.alumniArray)">EMPLOYER</th>
+              <th ng-click="alumni.sortBy('position', alumni.alumniArray)">TITLE/POSITION</th>
+              <th ng-click="alumni.sortBy('city', alumni.alumniArray)">LOCATION</th>
+              <th class="text-center">LINKEDIN</th>
+            </tr>
+            <tr ng-repeat="alumni in alumni.alumniArray | filter: alumniSearchText">
+              <td>{{ alumni.name }}</td>
+              <td>{{ alumni.undergrad }}</td>
+              <td>{{ alumni.employer }}</td>
+              <td>{{ alumni.position }}</td>
+              <td>{{ alumni.city }}, {{ alumni.state }}, {{ alumni.country }}</td>
+              <td class="text-center">
+                <a class="btn btn-submit" href="{{ alumni.linkedIn }}" target="_blank">
+                  <i class="fab fa-linkedin-in"></i>
+                </a>
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>

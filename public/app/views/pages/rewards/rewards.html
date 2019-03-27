@@ -68,26 +68,28 @@
             <div class="jumbotron" ng-if="main.codeArray.length == 0">
               <p class="text-center">THERE IS NO POINTS RECORD.</p>
             </div>
-            <table class="table table-striped" ng-if="main.codeArray.length != 0">
-              <tr class="table-head">
-                <th>EVENT</th>
-                <th>TYPE</th>
-                <th class="text-center">SEMESTER</th>
-                <th class="text-center">POINTS</th>
-              </tr>
-              <tr ng-repeat="event in main.codeArray | orderBy: 'expiration'">
-                <td>{{ event.name }}</td>
-                <td>{{ event.type }}</td>
-                <td class="text-center">{{ event.semester }}</td>
-                <td class="text-center">{{ event.points }}</td>
-              </tr>
-              <tr class="table-head">
-                <th>TOTAL POINTS</th>
-                <th></th>
-                <th></th>
-                <th class="text-center">{{ main.points }}</th>
-              </tr>
-            </table>
+            <div class="table-responsive">
+              <table class="table table-striped" ng-if="main.codeArray.length != 0">
+                <tr class="table-head">
+                  <th>EVENT</th>
+                  <th>TYPE</th>
+                  <th class="text-center">SEMESTER</th>
+                  <th class="text-center">POINTS</th>
+                </tr>
+                <tr ng-repeat="event in main.codeArray | orderBy: 'expiration'">
+                  <td>{{ event.name }}</td>
+                  <td>{{ event.type }}</td>
+                  <td class="text-center">{{ event.semester }}</td>
+                  <td class="text-center">{{ event.points }}</td>
+                </tr>
+                <tr class="table-head">
+                  <th>TOTAL POINTS</th>
+                  <th></th>
+                  <th></th>
+                  <th class="text-center">{{ main.points }}</th>
+                </tr>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -139,48 +141,50 @@
         <h3 class="modal-title" id="pointsSystemModalLabel">Points System</h3>
       </div>
       <div class="modal-body">
-        <table class="table table-striped">
-          <tr>
-            <th>EVENT TYPE</th>
-            <th class="text-center">POINTS</th>
-          </tr>
-          <tr>
-            <td>General Body Meeting</td>
-            <td class="text-center">1</td>
-          </tr>
-          <tr>
-            <td>Cabinet Meeting *</td>
-            <td class="text-center">1</td>
-          </tr>
-          <tr>
-            <td>Workshop *</td>
-            <td class="text-center">1</td>
-          </tr>
-          <tr>
-            <td>Form/Survey *</td>
-            <td class="text-center">1</td>
-          </tr>
-          <tr>
-            <td>Social *</td>
-            <td class="text-center">1</td>
-          </tr>
-          <tr>
-            <td>Corporate Event *</td>
-            <td class="text-center">2</td>
-          </tr>
-          <tr>
-            <td>Fundraiser *</td>
-            <td class="text-center">3</td>
-          </tr>
-          <tr>
-            <td>Volunteering *</td>
-            <td class="text-center">4</td>
-          </tr>
-          <tr>
-            <td>Miscellaneous *</td>
-            <td class="text-center">5</td>
-          </tr>
-        </table>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <tr>
+              <th>EVENT TYPE</th>
+              <th class="text-center">POINTS</th>
+            </tr>
+            <tr>
+              <td>General Body Meeting</td>
+              <td class="text-center">1</td>
+            </tr>
+            <tr>
+              <td>Cabinet Meeting *</td>
+              <td class="text-center">1</td>
+            </tr>
+            <tr>
+              <td>Workshop *</td>
+              <td class="text-center">1</td>
+            </tr>
+            <tr>
+              <td>Form/Survey *</td>
+              <td class="text-center">1</td>
+            </tr>
+            <tr>
+              <td>Social *</td>
+              <td class="text-center">1</td>
+            </tr>
+            <tr>
+              <td>Corporate Event *</td>
+              <td class="text-center">2</td>
+            </tr>
+            <tr>
+              <td>Fundraiser *</td>
+              <td class="text-center">3</td>
+            </tr>
+            <tr>
+              <td>Volunteering *</td>
+              <td class="text-center">4</td>
+            </tr>
+            <tr>
+              <td>Miscellaneous *</td>
+              <td class="text-center">5</td>
+            </tr>
+          </table>
+        </div>
         <p>* These points must be approved by an officer.</p>
         <div class="row">
           <div class="col-sm-12">

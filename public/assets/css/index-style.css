@@ -573,6 +573,7 @@ a:hover {
   overflow: hidden;
   padding-bottom: 100%;
   /* padding-top: 100% !important; */
+  height: 100% !important;
 }
 
 .image img {
@@ -616,4 +617,8 @@ canvas {
 
 .tab-content {
   border-top-width: 0px !important;
+}
+
+.table-full {
+  width: 100vw;
 }
