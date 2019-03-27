@@ -100,7 +100,6 @@
                       <th class="text-center" ng-click="admin.sortBy('points', admin.users)">TOTAL POINTS</th>
                       <th class="text-center">INFO</th>
                     </tr>
-
                     <tr ng-repeat="user in admin.users | filter: membersSearchText">
                       <td><i class="fas fa-star fa-admin" ng-if="user.permission == 'admin'"></i></td>
                       <td>{{ user.lastName }}, {{ user.firstName }}</td>

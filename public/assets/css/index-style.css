@@ -398,11 +398,16 @@ iframe {
 }
 
 /* LOGOUT LOADER */
+
 #mapid {
   height: 540px;
   width: 100%;
-  margin-bottom: 15px !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
 }
+
+/* .mapid {
+} */
 
 .all-caps {
   text-transform: uppercase;

@@ -1,9 +1,6 @@
-angular.module('alumniController', [])
-  .controller('alumniCtrl', function($scope, $filter, User) {
+angular.module('alumniController', ['userServices'])
+  .controller('alumniCtrl', function($window, $scope, $filter, User) {
     var app = this;
-
-    app.alumniArray = [];
-    app.alumniLocations = [];
 
     var orderBy = $filter('orderBy');
 
