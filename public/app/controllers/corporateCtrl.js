@@ -2,6 +2,7 @@ angular.module('corporateController', ['userServices'])
   .controller('corporateCtrl', function($window, User) {
 
     var app = this;
+
     app.majors = [
       "Aerospace Engineering",
       "Agricultural & Biological Engineering",
@@ -21,6 +22,7 @@ angular.module('corporateController', ['userServices'])
       "Nuclear Engineering",
       "Other"
     ];
+
     app.industries = [
       "Accounting",
       "Airlines/Aviation",

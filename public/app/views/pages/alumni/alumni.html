@@ -36,12 +36,36 @@
       <div class="table-responsive">
         <table class="table table-striped">
           <tr class="table-head">
-            <th ng-click="alumni.sortBy('name', alumni.alumniArray)">NAME</th>
-            <th ng-click="alumni.sortBy('undergrad', alumni.alumniArray)">UNDERGRAD. DEGREE</th>
-            <th ng-click="alumni.sortBy('employer', alumni.alumniArray)">EMPLOYER</th>
-            <th ng-click="alumni.sortBy('position', alumni.alumniArray)">TITLE/POSITION</th>
-            <th ng-click="alumni.sortBy('nationality', alumni.alumniArray)">COUNTRY OF ORIGIN</th>
-            <th ng-click="alumni.sortBy('city', alumni.alumniArray)">LOCATION</th>
+            <th ng-click="alumni.sortBy('name', alumni.alumniArray)">
+              NAME
+              <i class="fas fa-caret-up"></i>
+              <i class="fas fa-caret-down"></i>
+            </th>
+            <th ng-click="alumni.sortBy('undergrad', alumni.alumniArray)">
+              UNDERGRAD. DEGREE
+              <i class="fas fa-caret-up"></i>
+              <i class="fas fa-caret-down"></i>
+            </th>
+            <th ng-click="alumni.sortBy('employer', alumni.alumniArray)">
+              EMPLOYER
+              <i class="fas fa-caret-up"></i>
+              <i class="fas fa-caret-down"></i>
+            </th>
+            <th ng-click="alumni.sortBy('position', alumni.alumniArray)">
+              TITLE/POSITION
+              <i class="fas fa-caret-up"></i>
+              <i class="fas fa-caret-down"></i>
+            </th>
+            <th ng-click="alumni.sortBy('nationality', alumni.alumniArray)">
+              COUNTRY OF ORIGIN
+              <i class="fas fa-caret-up"></i>
+              <i class="fas fa-caret-down"></i>
+            </th>
+            <th ng-click="alumni.sortBy('city', alumni.alumniArray)">
+              LOCATION
+              <i class="fas fa-caret-up"></i>
+              <i class="fas fa-caret-down"></i>
+            </th>
             <th class="text-center">LINKEDIN</th>
           </tr>
           <tr ng-repeat="alumni in alumni.alumniArray | filter: alumniSearch">

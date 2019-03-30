@@ -1,6 +1,10 @@
 angular.module('alumniController', ['userServices'])
   .controller('alumniCtrl', function($window, $scope, $filter, User) {
+
     var app = this;
+    // var orderDir = false;
+    // var orderName = false;
+    // $scope.propertyName = "name";
 
     var orderBy = $filter('orderBy');
 

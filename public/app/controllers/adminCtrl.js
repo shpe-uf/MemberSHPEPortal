@@ -186,8 +186,14 @@ angular.module('adminController', [])
 
       console.log("COMPANY LOGO DATA");
       console.log(companyData.logo);
+      console.log(companyData.logo.substring(0, 22));
 
-      if (companyData.logo.length > 80000) {
+      var src = companyData.logo;
+      var base64Length = src.length - (src.indexOf(',') + 1);
+      var padding = (src.charAt(src.length - 2) === '=') ? 2 : ((src.charAt(src.length - 1) === '=') ? 1 : 0);
+      var fileSize = base64Length * 0.75 - padding;
+
+      if (fileSize > 50000) {
         app.addCompanyErrorMsg = "Logo file too large, please upload smaller file."
       } else {
         User.addCompany(companyData).then(function(data) {
