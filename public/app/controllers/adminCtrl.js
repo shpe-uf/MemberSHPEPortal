@@ -184,30 +184,44 @@ angular.module('adminController', [])
       app.addCompanySuccessMsg = false;
       app.addCompanyErrorMsg = false;
 
-      console.log("COMPANY LOGO DATA");
-      console.log(companyData.logo);
-      console.log(companyData.logo.substring(0, 22));
+      console.log(companyData);
 
-      var src = companyData.logo;
-      var base64Length = src.length - (src.indexOf(',') + 1);
-      var padding = (src.charAt(src.length - 2) === '=') ? 2 : ((src.charAt(src.length - 1) === '=') ? 1 : 0);
-      var fileSize = base64Length * 0.75 - padding;
-
-      if (fileSize > 50000) {
-        app.addCompanyErrorMsg = "Logo file too large, please upload smaller file."
+      if (!companyData || companyData == null || companyData == undefined) {
+        app.addCompanyErrorMsg = "Make sure you filled out the entire form!";
       } else {
-        User.addCompany(companyData).then(function(data) {
-          if (data.data.success) {
-            app.addCompanySuccessMsg = data.data.message;
-            app.addCompanyErrorMsg = false;
-            // $timeout(function() {
-            //   $window.location.reload();
-            // }, 1000);
+        if (!companyData.logo || companyData.logo == null || companyData.logo == undefined || companyData.logo == "") {
+          app.addCompanyErrorMsg = "The logo file you uploaded was empty."
+        } else {
+          var fileFormat = companyData.logo.substring(11, 15);
+          fileFormat[fileFormat.length - 1] == ';' ? fileFormat = companyData.logo.substring(11, 14) : fileFormat;
+          console.log("fileFormat: " + fileFormat);
+
+          if (fileFormat == "jpeg" || fileFormat == "png" || fileFormat == "bmp" || fileFormat == "gif") {
+            var src = companyData.logo;
+            var base64Length = src.length - (src.indexOf(',') + 1);
+            var padding = (src.charAt(src.length - 2) === '=') ? 2 : ((src.charAt(src.length - 1) === '=') ? 1 : 0);
+            var fileSize = base64Length * 0.75 - padding;
+
+            if (fileSize > 50000) {
+              app.addCompanyErrorMsg = "Logo file too large, please upload smaller file."
+            } else {
+              User.addCompany(companyData).then(function(data) {
+                if (data.data.success) {
+                  app.addCompanySuccessMsg = data.data.message;
+                  app.addCompanyErrorMsg = false;
+                  // $timeout(function() {
+                  //   $window.location.reload();
+                  // }, 1000);
+                } else {
+                  app.addCompanySuccessMsg = false;
+                  app.addCompanyErrorMsg = data.data.message;
+                }
+              });
+            }
           } else {
-            app.addCompanySuccessMsg = false;
-            app.addCompanyErrorMsg = data.data.message;
+            app.addCompanyErrorMsg = "The logo file you loaded had the wrong file type, please use a .jpg, .jpeg, .png, .gif, or .bmp file."
           }
-        });
+        }
       }
     }
 
@@ -264,12 +278,18 @@ angular.module('adminController', [])
       },
       link: function($scope, el) {
         function getFile(file) {
-          fileReader.readAsDataUrl(file, $scope)
+          console.log(file);
+          if (file == undefined) {
+            $scope.ngModel = undefined;
+          } else {
+            fileReader.readAsDataUrl(file, $scope)
             .then(function(result) {
+              console.log(result);
               $timeout(function() {
                 $scope.ngModel = result;
               });
             });
+          }
         }
 
         el.bind("change", function(e) {
