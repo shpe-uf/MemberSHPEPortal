@@ -6,14 +6,14 @@ angular.module('mainController', ['authServices', 'userServices'])
     app.showModal = true;
     app.events;
     app.newUserInfo = {
-      firstName:"",
-      lastName:"",
-      major:"",
-      sex:"",
-      year:"",
-      nationality:"",
-      ethnicity:"",
-      username:""
+      firstName: "",
+      lastName: "",
+      major: "",
+      sex: "",
+      year: "",
+      nationality: "",
+      ethnicity: "",
+      username: ""
     };
 
     this.openRequestModal = function() {
@@ -81,14 +81,18 @@ angular.module('mainController', ['authServices', 'userServices'])
 
             var timeCheck = expireTime.exp - timeStamp;
 
-            console.log("MINUTES LEFT: " + timeCheck/60);
+            console.log("SECONDS LEFT: " + timeCheck);
 
-            if (timeCheck <= 600) {
+            if (timeCheck <= 600 && timeCheck > 0) {
+              console.log("TOKEN EXPIRATION: " + timeCheck);
               showModal(1);
               $interval.cancel(interval);
+            } else if (timeCheck <= 0){
+              app.isLoggedIn = false;
+              Auth.logout();
             }
           }
-        }, 30000);
+        }, 1000);
       }
     };
 
@@ -110,7 +114,7 @@ angular.module('mainController', ['authServices', 'userServices'])
 
         $timeout(function() {
           if (!app.choiceMade) app.endSession();
-        }, 10000);
+        }, 60000);
 
       } else if (option === 2) {
         app.hideButton = true;
@@ -134,7 +138,7 @@ angular.module('mainController', ['authServices', 'userServices'])
 
       User.renewSession(app.username).then(function(data) {
         if (data.data.success) {
-          AuthToken.setToken(data.data.message);
+          AuthToken.setToken(data.data.token);
           app.checkSession();
         } else {
           app.modalBody = data.data.message;
@@ -211,9 +215,9 @@ angular.module('mainController', ['authServices', 'userServices'])
 
       } else {
         app.isLoggedIn = false;
+        app.loadme = true;
         app.username = '';
         app.email = '';
-        app.loadme = true;
       }
     });
 
@@ -224,7 +228,7 @@ angular.module('mainController', ['authServices', 'userServices'])
         if (data.data.success) {
           app.successMsg = data.data.message;
           $timeout(function() {
-            $location.path('/profile');
+            $location.path('/rewards');
             app.loginData = '';
             app.successMsg = false;
             app.checkSession();
@@ -239,16 +243,14 @@ angular.module('mainController', ['authServices', 'userServices'])
       showModal(2);
     };
 
-    this.editUser=function(newUserInfo){
-      console.log(app.newUserInfo);
-      User.editUserInfo(app.newUserInfo).then(function(data){
-        console.log(data.data)
-        if(data.data.empty){
+    this.editUser = function(newUserInfo) {
+      User.editUserInfo(app.newUserInfo).then(function(data) {
+        if (data.data.empty) {
           app.errorUpdateProfile = false;
           app.successUpdateProfile = false;
           app.emptyUpdateProfile = data.data.message;
         }
-        if(data.data.success){
+        if (data.data.success) {
           app.errorUpdateProfile = false;
           app.emptyUpdateProfile = false;
           app.successUpdateProfile = data.data.message;
@@ -256,7 +258,7 @@ angular.module('mainController', ['authServices', 'userServices'])
             app.successUpdateProfile = false;
             $window.location.reload();
           }, 1000);
-        }else{
+        } else {
           app.emptyUpdateProfile = false;
           app.successUpdateProfile = false;
           app.errorUpdateProfile = data.data.message;
@@ -284,4 +286,3 @@ angular.module('mainController', ['authServices', 'userServices'])
       app.newUserInfo.year = "";
     };
   });
-
