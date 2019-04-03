@@ -166,7 +166,7 @@
                       <td class="text-center">{{ code.points }}</td>
                       <td class="text-center">
                         <button type="button" class="btn btn-submit" ng-click="admin.openManualInputModal(code)">
-                          <i class="fas fa-pen"></i>
+                          <i class="fas fa-i-cursor"></i>
                         </button>
                       </td>
                       <td class="text-center">
@@ -211,9 +211,41 @@
                   <table class="table table-striped">
                     <tr class="table-head">
                       <th>NAME</th>
+                      <th class="text-center">SPONSOR</th>
+                      <th class="text-center">BBQ - FALL</th>
+                      <th class="text-center">BBQ - SPRING</th>
+                      <th class="text-center">NAT. CONV.</th>
+                      <th class="text-center">EDIT</th>
+                      <th class="text-center">REMOVE</th>
                     </tr>
                     <tr ng-repeat="company in admin.companies | filter: corporateSearchText | orderBy: 'name'">
                       <td>{{ company.name }}</td>
+                      <td class="text-center">
+                        <i class="fas fa-check fa-true" ng-if="company.sponsor"></i>
+                        <i class="fas fa-times fa-false" ng-if="!company.sponsor"></i>
+                      </td>
+                      <td class="text-center">
+                        <i class="fas fa-check fa-true" ng-if="company.bbqFall"></i>
+                        <i class="fas fa-times fa-false" ng-if="!company.bbqFall"></i>
+                      </td>
+                      <td class="text-center">
+                        <i class="fas fa-check fa-true" ng-if="company.bbqSpring"></i>
+                        <i class="fas fa-times fa-false" ng-if="!company.bbqSpring"></i>
+                      </td>
+                      <td class="text-center">
+                        <i class="fas fa-check fa-true" ng-if="company.national"></i>
+                        <i class="fas fa-times fa-false" ng-if="!company.national"></i>
+                      </td>
+                      <td class="text-center">
+                        <button type="button" class="btn btn-outline-warning">
+                          <i class="far fa-edit"></i>
+                        </button>
+                      </td>
+                      <td class="text-center">
+                        <button type="button" class="btn btn-outline-danger">
+                          <i class="fas fa-times"></i>
+                        </button>
+                      </td>
                     </tr>
                   </table>
                 </div>
@@ -228,12 +260,9 @@
             </div>
           </div>
         </div>
-
       </div>
-
     </div>
   </div>
-
 </div>
 
 <!-- CREATE EVENT MODAL -->
@@ -481,7 +510,7 @@
 
 <!-- ADD A COMPANY -->
 <div class="modal fade" id="addCompanyModal" aria-labelledby="addCompanyModalLabel">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
     <div class="modal-content">
       <div class="modal-header">
         <h2 class="modal-title" id="addCompanyModalLabel">Add a Company</h2>
@@ -505,7 +534,7 @@
             <div class="form-group col-12 col-md-6">
               <label for="companyLogo">Logo</label>
               <input type="file" class="form-control-file" name="logo" id="companyLogo" ng-model="company.logo" ng-file-select="onFileSelect($files)">
-              <!-- <img ng-src="{{ company.logo }}"> -->
+              <!-- <img class="col-12 img-fluid" ng-src="{{ company.logo }}"> -->
             </div>
           </div>
 
@@ -753,14 +782,20 @@
               </div>
 
               <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" name="international" id="internationalSwitch" ng-model="company.international">
-                <label class="custom-control-label" for="internationalSwitch">International</label>
+                <input type="checkbox" class="custom-control-input" name="visa" id="visaSwitch" ng-model="company.visa">
+                <label class="custom-control-label" for="visaSwitch">Providing Visa Sponsorship</label>
               </div>
 
               <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" name="bbq" id="bbqSwitch" ng-model="company.bbq">
-                <label class="custom-control-label" for="bbqSwitch">Attending BBQ with Industry</label>
+                <input type="checkbox" class="custom-control-input" name="bbqFall" id="bbqFallSwitch" ng-model="company.bbqFall">
+                <label class="custom-control-label" for="bbqFallSwitch">Attending Fall BBQ with Industry</label>
               </div>
+
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" name="bbqSpring" id="bbqSpringSwitch" ng-model="company.bbqSpring">
+                <label class="custom-control-label" for="bbqSpringSwitch">Attending Spring BBQ with Industry</label>
+              </div>
+
 
               <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input" name="national" id="nationalSwitch" ng-model="company.national">

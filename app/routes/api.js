@@ -1700,12 +1700,16 @@ module.exports = function(router) {
         req.body.nonprofit = false;
       }
 
-      if (req.body.international == null || req.body.international == "") {
-        req.body.international = false;
+      if (req.body.visa == null || req.body.visa == "") {
+        req.body.visa = false;
       }
 
-      if (req.body.bbq == null || req.body.bbq == "") {
-        req.body.bbq = false;
+      if (req.body.bbqFall == null || req.body.bbqFall == "") {
+        req.body.bbqFall = false;
+      }
+
+      if (req.body.bbqSpring == null || req.body.bbqSpring == "") {
+        req.body.bbqSpring = false;
       }
 
       if (req.body.national == null || req.body.national == "") {
@@ -1731,8 +1735,9 @@ module.exports = function(router) {
       company.academia = req.body.academia;
       company.government = req.body.government;
       company.nonprofit = req.body.nonprofit;
-      company.international = req.body.international;
-      company.bbq = req.body.bbq;
+      company.visa = req.body.visa;
+      company.bbqFall = req.body.bbqFall;
+      company.bspringBq = req.body.bbqSpring;
       company.national = req.body.national;
       company.sponsor = req.body.sponsor;
 

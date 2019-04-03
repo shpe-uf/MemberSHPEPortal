@@ -55,11 +55,15 @@ var CompanySchema = new Schema({
     type: Boolean,
     default: false
   },
-  international: {
+  visa: {
     type: Boolean,
     default: false
   },
-  bbq: {
+  bbqFall: {
+    type: Boolean,
+    default: false
+  },
+  bbqSpring: {
     type: Boolean,
     default: false
   },

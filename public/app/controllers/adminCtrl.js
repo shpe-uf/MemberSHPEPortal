@@ -202,7 +202,7 @@ angular.module('adminController', [])
             var padding = (src.charAt(src.length - 2) === '=') ? 2 : ((src.charAt(src.length - 1) === '=') ? 1 : 0);
             var fileSize = base64Length * 0.75 - padding;
 
-            if (fileSize > 50000) {
+            if (fileSize > 100000) {
               app.addCompanyErrorMsg = "Logo file too large, please upload smaller file."
             } else {
               User.addCompany(companyData).then(function(data) {
@@ -283,12 +283,12 @@ angular.module('adminController', [])
             $scope.ngModel = undefined;
           } else {
             fileReader.readAsDataUrl(file, $scope)
-            .then(function(result) {
-              console.log(result);
-              $timeout(function() {
-                $scope.ngModel = result;
+              .then(function(result) {
+                console.log(result);
+                $timeout(function() {
+                  $scope.ngModel = result;
+                });
               });
-            });
           }
         }
 

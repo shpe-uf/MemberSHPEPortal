@@ -4,8 +4,20 @@
       <h2>Corporate Database</h2>
     </div>
   </div>
+
   <hr>
-  <div class="row">
+
+  <div class="row" ng-if="corporate.companies.length == 0">
+    <div class="col-sm-12">
+      <div class="container">
+        <div class="jumbotron">
+          <p class="text-center">THERE ARE NO COMPANIES IN THE CORPORATE DATABASE AT THIS TIME.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" ng-if="corporate.companies.length != 0">
     <div class="col-12">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
@@ -16,7 +28,7 @@
       <div class="row">
         <div class="col-12 col-md-4 col-lg-3" ng-repeat="company in corporate.companies | filter: corporateSearchText | orderBy: 'name'" style="margin-bottom: 16px;">
           <div class="card">
-            <img class="card-img-top" ng-src="{{ company.logo }}">
+            <img class="card-img-top img-company" ng-src="{{ company.logo }}">
             <div class="card-footer text-center">
               <h4 class="ellipsis">{{ company.name }}</h4>
               <button type="button" class="btn btn-submit btn-block" ng-click="corporate.openMoreInfoModal(company._id)">Profile</button>
@@ -82,38 +94,43 @@
             <h5>Other Information</h5>
             <div class="row" style="margin-bottom: 16px;">
               <div class="col-12">
-                <i class="fas fa-check fa-corpDB-true" ng-if="corporate.company.academia"></i>
-                <i class="fas fa-times fa-corpDB-false" ng-if="!corporate.company.academia"></i>
+                <i class="fas fa-check fa-true" ng-if="corporate.company.academia"></i>
+                <i class="fas fa-times fa-false" ng-if="!corporate.company.academia"></i>
                 Academia
               </div>
               <div class="col-12">
-                <i class="fas fa-check fa-corpDB-true" ng-if="corporate.company.government"></i>
-                <i class="fas fa-times fa-corpDB-false" ng-if="!corporate.company.government"></i>
+                <i class="fas fa-check fa-true" ng-if="corporate.company.government"></i>
+                <i class="fas fa-times fa-false" ng-if="!corporate.company.government"></i>
                 Government Department/Contractor
               </div>
               <div class="col-12">
-                <i class="fas fa-check fa-corpDB-true" ng-if="corporate.company.nonprofit"></i>
-                <i class="fas fa-times fa-corpDB-false" ng-if="!corporate.company.nonprofit"></i>
+                <i class="fas fa-check fa-true" ng-if="corporate.company.nonprofit"></i>
+                <i class="fas fa-times fa-false" ng-if="!corporate.company.nonprofit"></i>
                 Non-profit Organization
               </div>
               <div class="col-12">
-                <i class="fas fa-check fa-corpDB-true" ng-if="corporate.company.international"></i>
-                <i class="fas fa-times fa-corpDB-false" ng-if="!corporate.company.international"></i>
-                Visa Sponsorship
+                <i class="fas fa-check fa-true" ng-if="corporate.company.visa"></i>
+                <i class="fas fa-times fa-false" ng-if="!corporate.company.visa"></i>
+                Providing Visa Sponsorship
               </div>
               <div class="col-12">
-                <i class="fas fa-check fa-corpDB-true" ng-if="corporate.company.bbq"></i>
-                <i class="fas fa-times fa-corpDB-false" ng-if="!corporate.company.bbq"></i>
-                Attending BBQ with Industry
+                <i class="fas fa-check fa-true" ng-if="corporate.company.bbqFall"></i>
+                <i class="fas fa-times fa-false" ng-if="!corporate.company.bbqFall"></i>
+                Attending Fall BBQ with Industry
               </div>
               <div class="col-12">
-                <i class="fas fa-check fa-corpDB-true" ng-if="corporate.company.national"></i>
-                <i class="fas fa-times fa-corpDB-false" ng-if="!corporate.company.national"></i>
+                <i class="fas fa-check fa-true" ng-if="corporate.company.bbqSpring"></i>
+                <i class="fas fa-times fa-false" ng-if="!corporate.company.bbqSpring"></i>
+                Attending Spring BBQ with Industry
+              </div>
+              <div class="col-12">
+                <i class="fas fa-check fa-true" ng-if="corporate.company.national"></i>
+                <i class="fas fa-times fa-false" ng-if="!corporate.company.national"></i>
                 Attending SHPE National Convention
               </div>
               <div class="col-12">
-                <i class="fas fa-check fa-corpDB-true" ng-if="corporate.company.sponsor"></i>
-                <i class="fas fa-times fa-corpDB-false" ng-if="!corporate.company.sponsor"></i>
+                <i class="fas fa-check fa-true" ng-if="corporate.company.sponsor"></i>
+                <i class="fas fa-times fa-false" ng-if="!corporate.company.sponsor"></i>
                 SHPE UF Sponsor
               </div>
             </div>
