@@ -212,8 +212,8 @@
                     <tr class="table-head">
                       <th>NAME</th>
                       <th class="text-center">SPONSOR</th>
-                      <th class="text-center">BBQ - FALL</th>
-                      <th class="text-center">BBQ - SPRING</th>
+                      <th class="text-center">FALL BBQ</th>
+                      <th class="text-center">SPRING BBQ</th>
                       <th class="text-center">NAT. CONV.</th>
                       <th class="text-center">EDIT</th>
                       <th class="text-center">REMOVE</th>
@@ -510,7 +510,7 @@
 
 <!-- ADD A COMPANY -->
 <div class="modal fade" id="addCompanyModal" aria-labelledby="addCompanyModalLabel">
-  <div class="modal-dialog modal-dialog-centered modal-xl">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <h2 class="modal-title" id="addCompanyModalLabel">Add a Company</h2>
@@ -526,12 +526,12 @@
 
         <form name="addCompanyForm" ng-submit="admin.addCompany(company);" novalidate>
           <div class="form-row">
-            <div class="form-group col-12 col-md-6">
+            <div class="form-group col-12 col-lg-6">
               <label for="companyName">Name</label>
               <input type="text" class="form-control" name="name" id="companyName" ng-model="company.name">
             </div>
 
-            <div class="form-group col-12 col-md-6">
+            <div class="form-group col-12 col-lg-6">
               <label for="companyLogo">Logo</label>
               <input type="file" class="form-control-file" name="logo" id="companyLogo" ng-model="company.logo" ng-file-select="onFileSelect($files)">
               <!-- <img class="col-12 img-fluid" ng-src="{{ company.logo }}"> -->
@@ -547,7 +547,7 @@
           </div>
 
           <div class="form-row">
-            <div class="form-group col-12 col-md-6">
+            <div class="form-group col-12 col-lg-6">
               <label for="companyMajors">Majors</label>
               <select multiple class="form-control" name="majors" id="companyMajors" ng-model="company.majors">
                 <option>Aerospace Engineering</option>
@@ -573,7 +573,7 @@
               </small>
             </div>
 
-            <div class="form-group col-12 col-md-6">
+            <div class="form-group col-12 col-lg-6">
               <label for="companyIndustry">Industries</label>
               <select multiple class="form-control" name="industry" id="companyIndustry" ng-model="company.industry">
                 <option>Accounting</option>
@@ -729,36 +729,36 @@
           </div>
 
           <div class="form-row">
-            <div class="form-group col-12 col-md-6">
+            <div class="form-group col-12 col-lg-6">
               <label for="companyOverview">Overview</label>
               <textarea class="form-control" name="overview" id="companyOverview" ng-model="company.overview" rows="3"></textarea>
             </div>
 
-            <div class="form-group col-12 col-md-6">
+            <div class="form-group col-12 col-lg-6">
               <label for="companyMission">Mission</label>
               <textarea class="form-control" name="mission" id="companyMission" ng-model="company.mission" rows="3"></textarea>
             </div>
           </div>
 
           <div class="form-row">
-            <div class="form-group col-12 col-md-6">
+            <div class="form-group col-12 col-lg-6">
               <label for="companyGoals">Goals</label>
               <textarea class="form-control" name="goals" id="companyGoals" ng-model="company.goals" rows="3"></textarea>
             </div>
 
-            <div class="form-group col-12 col-md-6">
+            <div class="form-group col-12 col-lg-6">
               <label for="companyModel">Business Model/Operations Highlights</label>
               <textarea class="form-control" name="model" id="companyModel" ng-model="company.model" rows="3"></textarea>
             </div>
           </div>
 
           <div class="form-row">
-            <div class="form-group col-12 col-md-6">
+            <div class="form-group col-12 col-lg-6">
               <label for="companyNews">News Link</label>
               <input type="text" class="form-control" name="news" id="companyNews" ng-model="company.news">
             </div>
 
-            <div class="form-group col-12 col-md-6">
+            <div class="form-group col-12 col-lg-6">
               <label for="companyApply">Apply Link</label>
               <input type="text" class="form-control" name="apply" id="companyApply" ng-model="company.apply">
             </div>
