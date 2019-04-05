@@ -184,6 +184,16 @@ hr {
   color: #FFFFFF;
 }
 
+.btn-light {
+  background-color: #EEEEEE;
+  border-color: #EEEEEE;
+}
+
+.btn-light:hover {
+  background-color: #CBCBCB;
+  border-color: #CBCBCB;
+}
+
 .alert {
   margin-bottom: 0px;
   padding: 6px 6px 6px 6px;

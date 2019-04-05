@@ -1737,7 +1737,7 @@ module.exports = function(router) {
       company.nonprofit = req.body.nonprofit;
       company.visa = req.body.visa;
       company.bbqFall = req.body.bbqFall;
-      company.bspringBq = req.body.bbqSpring;
+      company.bbqSpring = req.body.bbqSpring;
       company.national = req.body.national;
       company.sponsor = req.body.sponsor;
 
@@ -1789,7 +1789,22 @@ module.exports = function(router) {
         message: company
       });
     });
-  })
+  });
+
+  router.delete('/removecompany/:companyName', function(req, res) {
+    Company.deleteOne({
+      name: req.params.companyName
+    }, function(err, deletedCompany) {
+      if (err) throw err;
+
+      console.log(deletedCompany);
+
+      res.json({
+        success: true,
+        message: req.params.companyName + " has been removed."
+      });
+    });
+  });
 
   return router;
 };

@@ -242,7 +242,7 @@
                         </button>
                       </td>
                       <td class="text-center">
-                        <button type="button" class="btn btn-outline-danger">
+                        <button type="button" class="btn btn-outline-danger" ng-click="admin.openRemoveCompanyModal(company.name)">
                           <i class="fas fa-times"></i>
                         </button>
                       </td>
@@ -320,8 +320,8 @@
 
           <div class="row">
             <div class="col-sm-12">
-              <button type="submit" class="btn btn-success" ng-if="admin.showCreateEventModal">Submit</button>
-              <button type="reset" class="btn btn-danger float-right" ng-click="admin.closeCreateEventModal(eventData)">Close</button>
+              <button type="reset" class="btn btn-light" ng-click="admin.closeCreateEventModal(eventData)">Close</button>
+              <button type="submit" class="btn btn-success float-right" ng-if="admin.showCreateEventModal">Submit</button>
             </div>
           </div>
         </form>
@@ -363,10 +363,10 @@
         </div>
         <div class="row">
           <div class="col-sm-12">
-            <button type="button" class="btn btn-excel" ng-click="admin.excel(admin.eventId);" ng-if="admin.attendance.length != 0">
+            <button type="reset" class="btn btn-light" ng-click="admin.closeEventInfoModal()">Close</button>
+            <button type="button" class="btn btn-excel float-right" ng-click="admin.excel(admin.eventId);" ng-if="admin.attendance.length != 0">
               <i class="far fa-file-excel"></i> Download
             </button>
-            <button type="reset" class="btn btn-danger float-right" ng-click="admin.closeEventInfoModal()">Close</button>
           </div>
         </div>
       </div>
@@ -399,8 +399,8 @@
 
           <div class="row">
             <div class="col-12">
-              <button type="submit" class="btn btn-success">Submit</button>
-              <button type="reset" class="btn btn-danger float-right" ng-click="admin.closeManualInputModal(user)">Close</button>
+              <button type="reset" class="btn btn-light" ng-click="admin.closeManualInputModal(user)">Close</button>
+              <button type="submit" class="btn btn-success float-right">Submit</button>
             </div>
           </div>
         </form>
@@ -500,7 +500,7 @@
         </div>
         <div class="row">
           <div class="col-sm-12">
-            <button type="reset" class="btn btn-danger float-right" ng-click="admin.closeUserInfoModal()">Close</button>
+            <button type="reset" class="btn btn-light" ng-click="admin.closeUserInfoModal()">Close</button>
           </div>
         </div>
       </div>
@@ -787,6 +787,11 @@
               </div>
 
               <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" name="sponsor" id="sponsorSwitch" ng-model="company.sponsor">
+                <label class="custom-control-label" for="sponsorSwitch">SHPE UF Sponsor</label>
+              </div>
+
+              <div class="custom-control custom-switch">
                 <input type="checkbox" class="custom-control-input" name="bbqFall" id="bbqFallSwitch" ng-model="company.bbqFall">
                 <label class="custom-control-label" for="bbqFallSwitch">Attending Fall BBQ with Industry</label>
               </div>
@@ -801,18 +806,44 @@
                 <input type="checkbox" class="custom-control-input" name="national" id="nationalSwitch" ng-model="company.national">
                 <label class="custom-control-label" for="nationalSwitch">Attending National Convention</label>
               </div>
-
-              <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" name="sponsor" id="sponsorSwitch" ng-model="company.sponsor">
-                <label class="custom-control-label" for="sponsorSwitch">SHPE UF Sponsor</label>
-              </div>
             </div>
           </div>
 
           <div class="row">
             <div class="col-12">
-              <button type="submit" class="btn btn-success">Submit</button>
-              <button type="reset" class="btn btn-danger float-right" ng-click="admin.closeAddCompanyModal()">Close</button>
+              <button type="reset" class="btn btn-light" ng-click="admin.closeAddCompanyModal()">Close</button>
+              <button type="submit" class="btn btn-success float-right">Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MANUAL INPUT MODAL -->
+<div class="modal fade" id="removeCompanyModal" aria-labelledby="removeCompanyModalLabel">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="removeCompanyLabel">Remove Company</h2>
+      </div>
+      <div class="modal-body">
+        <div class="success-message" ng-show="admin.removeCompanySuccessMsg">
+          <div class="alert alert-success">{{ admin.removeCompanySuccessMsg }}</div>
+        </div>
+
+        <div class="error-message" ng-show="admin.removeCompanyErrorMsg">
+          <div class="alert alert-danger">{{ admin.removeCompanyErrorMsg }}</div>
+        </div>
+
+        <form name="removeCompanyForm" ng-submit="admin.removeCompany(admin.companyName);" novalidate>
+          <p>Are you sure you want to remove <b>{{ admin.companyName }}</b> from the Corporate Database?</p>
+
+          <div class="row">
+            <div class="col-12">
+              <button type="reset" class="btn btn-light" ng-click="admin.closeRemoveCompanyModal()">Cancel, keep company</button>
+              <button type="submit" class="btn btn-danger float-right">Yes, remove company</button>
             </div>
           </div>
         </form>

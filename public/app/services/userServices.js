@@ -175,5 +175,9 @@ angular.module('userServices', [])
       return $http.get('api/getcompanyinfo/' + companyId);
     };
 
+    userFactory.removeCompany = function (companyName) {
+      return $http.delete('api/removecompany/' + companyName);
+    };
+
     return userFactory;
   });

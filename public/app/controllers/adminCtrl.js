@@ -7,7 +7,7 @@ angular.module('adminController', [])
     app.showEventInfoModal = true;
     app.isClicked = false;
     app.eventName;
-    app.eventId;
+    app.companyName;
     var orderBy = $filter('orderBy');
 
     $scope.imageSrc = "";
@@ -99,7 +99,6 @@ angular.module('adminController', [])
       });
 
       app.eventName = eventData.name;
-      app.eventId = eventData._id;
 
       User.getAttendance(eventData._id).then(function(data) {
         app.attendance = data.data.message;
@@ -115,12 +114,12 @@ angular.module('adminController', [])
     this.openManualInputModal = function(eventData) {
       app.successMsg = false;
       app.errorMsg = false;
+      app.eventName = eventData;
 
       $("#manualInputModal").modal({
-        backdrop: 'static'
+        backdrop: 'static',
+        keyboard: false
       });
-
-      app.eventName = eventData
     }
 
     this.closeManualInputModal = function(member) {
@@ -157,7 +156,6 @@ angular.module('adminController', [])
           }
         }
       });
-
     };
 
     this.closeUserInfoModal = function() {
@@ -224,6 +222,39 @@ angular.module('adminController', [])
         }
       }
     }
+
+    this.openRemoveCompanyModal = function(companyName) {
+      app.companyName = companyName;
+
+      $("#removeCompanyModal").modal({
+        backdrop: 'static',
+        keyboard: false
+      });
+    };
+
+    this.closeRemoveCompanyModal = function() {
+      $('#removeCompanyModal').modal('hide');
+    };
+
+    this.removeCompany = function(companyName) {
+      app.removeCompanySuccessMsg = false;
+      app.removeCompanyErrorMsg = false;
+
+      User.removeCompany(companyName).then(function(data) {
+        console.log(data.data);
+        if (data.data.success) {
+          app.removeCompanySuccessMsg = data.data.message;
+          app.removeCompanyErrorMsg = false;
+
+          $timeout(function() {
+            $window.location.reload();
+          }, 1000);
+        } else {
+          app.removeCompanySuccessMsg = false;
+          app.removeCompanyErrorMsg = data.data.message;
+        }
+      });
+    };
 
     User.getUsers().then(function(data) {
       if (data.data.success) {
