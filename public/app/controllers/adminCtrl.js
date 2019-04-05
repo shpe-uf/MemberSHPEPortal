@@ -207,9 +207,9 @@ angular.module('adminController', [])
                 if (data.data.success) {
                   app.addCompanySuccessMsg = data.data.message;
                   app.addCompanyErrorMsg = false;
-                  // $timeout(function() {
-                  //   $window.location.reload();
-                  // }, 1000);
+                  $timeout(function() {
+                    $window.location.reload();
+                  }, 1000);
                 } else {
                   app.addCompanySuccessMsg = false;
                   app.addCompanyErrorMsg = data.data.message;

@@ -204,7 +204,42 @@ angular.module('corporateController', ['userServices'])
 
     User.getCompanies().then(function(data) {
       if (data.data.success) {
-        app.companies = data.data.message;
+        app.companies = [];
+
+        for (var i = 0; i < data.data.message.length; i++) {
+          var company = data.data.message[i];
+          company.options = "";
+
+          if (company.academia) {
+            company.options += "academia, ";
+          }
+
+          if (company.nonprofit) {
+            company.options += "nonprofit, non-profit, ";
+          }
+
+          if (company.visa) {
+            company.options += "visa, visa sponsorship, provides visa sponsorship, ";
+          }
+
+          if (company.bbqFall) {
+            company.options += "fall, bbq, bbq fall, fall bbq, bbq with industry, fall bbq with industry, ";
+          }
+
+          if (company.bbqSpring) {
+            company.options += "spring, bbq, bbq spring, spring bbq, bbq with industry ,spring bbq with industry, ";
+          }
+
+          if (company.national) {
+            company.options += "national, national convention, shpe national convention, "
+          }
+
+          if (company.sponsor) {
+            company.options += "shpe uf sponsor, sponsor, shpe sponsor, ";
+          }
+
+          app.companies.push(company);
+        }
       }
     });
   });
