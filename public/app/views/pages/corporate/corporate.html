@@ -11,7 +11,7 @@
   <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
       <a class="nav-item nav-item-highlight nav-link active" id="nav-company-tab" data-toggle="tab" data-target="#nav-company" role="tab" aria-controls="nav-company" aria-selected="false">Companies</a>
-      <a class="nav-item nav-item-highlight nav-link" id="nav-bookmark-tab" data-toggle="tab" data-target="#nav-bookmark" role="tab" aria-controls="nav-bookmark" aria-selected="true">Bookmarks</a>
+      <a class="nav-item nav-item-highlight nav-link" id="nav-bookmark-tab" ng-click="corporate.getBookmarks()" data-toggle="tab" data-target="#nav-bookmark" role="tab" aria-controls="nav-bookmark" aria-selected="true">Bookmarks</a>
     </div>
   </nav>
 
@@ -43,34 +43,9 @@
                   <img class="card-img-top img-company" ng-src="{{ company.logo }}">
                   <div class="card-footer text-center">
                     <h4 class="ellipsis">{{ company.name }}</h4>
-                    <div class="row">
-                      <div class="col-9 col-sm-8" style="padding-right: 3px;">
-                        <button type="button" class="btn btn-block btn-submit" ng-click="corporate.openMoreInfoModal(company._id)">Profile</button>
-                      </div>
-                      <div class="col-3 col-sm-4" style="padding-left: 3px;">
-                        <button type="button" class="btn btn-block btn-outline-success" ng-click="corporate.addBookmark(main.username, company._id)">
-                          <i class="far fa-bookmark"></i>
-                        </button>
-                      </div>
-                    </div>
+                    <button type="button" class="btn btn-block btn-submit" ng-click="corporate.openMoreInfoModal(company._id)">Profile</button>
                   </div>
                 </div>
-                <!-- <div class="card sponsor" ng-if="company.sponsor">
-                  <img class="card-img-top img-company" ng-src="{{ company.logo }}">
-                  <div class="card-footer text-center">
-                    <h4 class="ellipsis">{{ company.name }}</h4>
-                    <div class="row">
-                      <div class="col-9 col-sm-8" style="padding-right: 3px;">
-                        <button type="button" class="btn btn-block btn-submit" ng-click="corporate.openMoreInfoModal(company._id)">Profile</button>
-                      </div>
-                      <div class="col-3 col-sm-4" style="padding-left: 3px;">
-                        <button type="button" class="btn btn-block btn-outline-success">
-                          <i class="far fa-bookmark"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div> -->
               </div>
             </div>
           </div>
@@ -81,7 +56,35 @@
     <!-- BOOKMARKS -->
     <div class="tab-pane fade show active" id="nav-bookmark" role="tabpanel" aria-labelledby="nav-bookmark-tab">
       <div class="container">
-
+        <div class="row" ng-repeat="bookmark in corporate.bookmarks | orderBy: 'name'">
+          <div class="col-sm-3">
+            <img class="img-fluid img-company" ng-src="{{ bookmark.logo }}">
+          </div>
+          <div class="col-sm-7">
+            <h3>{{ bookmark.name }}</h3>
+            <div class="row" style="margin-bottom: 16px">
+              <div class="col-12">
+                <p>{{ bookmark.overview }}</p>
+              </div>
+              <div class="col-6">
+                <h5>News Link</h5>
+                <a href="{{ bookmark.apply }}" target="_blank" style="display: inline-block;">Click here</a>
+              </div>
+              <div class="col-6">
+                <h5>Apply Link</h5>
+                <a href="{{ bookmark.apply }}" target="_blank" style="display: inline-block;">Click here</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <button type="button" class="btn btn-block btn-submit" ng-click="corporate.openMoreInfoModal(bookmark._id)">Profile</button>
+            <button type="button" class="btn btn-block btn-outline-danger" ng-click="corporate.openMoreInfoModal(bookmark._id)">Remove</button>
+          </div>
+          <div class="col-12">
+            <hr>
+          </div>
+        </div>
+        <!-- <p ng-repeat="bookmark in corporate.bookmarks">{{ bookmark.name }}, {{ bookmark.slogan}} , {{ bookmark._id }}</p> -->
       </div>
     </div>
   </div>
@@ -192,7 +195,7 @@
         <div class="row">
           <div class="col-12">
             <button type="button" class="btn btn-light" ng-click="corporate.closeMoreInfoModal()">Close</button>
-            <button type="button" class="btn btn-success float-right">Bookmark</button>
+            <button type="button" class="btn btn-success float-right" ng-click="corporate.addBookmark(corporate.company._id)">Bookmark</button>
           </div>
         </div>
       </div>

@@ -1,7 +1,8 @@
-angular.module('corporateController', ['userServices'])
-  .controller('corporateCtrl', function($window, User) {
+angular.module('corporateController', ['userServices', 'authServices'])
+  .controller('corporateCtrl', function($window, User, Auth) {
 
     var app = this;
+    app.bookmarks = [];
 
     app.majors = [
       "Aerospace Engineering",
@@ -99,21 +100,36 @@ angular.module('corporateController', ['userServices'])
       $('#moreInfoModal').modal('hide');
     };
 
-    this.addBookmark = function(username, companyId) {
-      var bookmarkData = {
-        username: username,
-        companyId: companyId
-      };
-
-      User.addBookmark(bookmarkData).then(function(data) {
-
+    this.addBookmark = function(companyId) {
+      User.addBookmark(companyId).then(function(data) {
+        if (data.data.success) {
+          // WHAT SHOULD I DO HERE?
+        }
       });
     }
 
-    User.getCompanies().then(function(data) {
-      if (data.data.success) {
-        app.companies = [];
+    this.getBookmarks = function() {
+      if (Auth.isLoggedIn()) {
+        Auth.getUser().then(function(data) {
+          var bookmarkIds = data.data.bookmarks;
+          if (bookmarkIds.length > 0) {
+            app.bookmarks = [];
+            for (var i = 0; i < bookmarkIds.length; i++) {
+              User.getBookmarkInfo(bookmarkIds[i]._id).then(function(data) {
+                if (data.data.success) {
+                  app.bookmarks.push(data.data.message);
+                }
+              });
+            }
+          }
+        });
+      }
+    }
 
+    User.getCompanies().then(function(data) {
+      app.companies = [];
+
+      if (data.data.success) {
         for (var i = 0; i < data.data.message.length; i++) {
           var company = data.data.message[i];
           company.options = "";

@@ -175,12 +175,16 @@ angular.module('userServices', [])
       return $http.get('api/getcompanyinfo/' + companyId);
     };
 
-    userFactory.removeCompany = function (companyName) {
+    userFactory.removeCompany = function(companyName) {
       return $http.delete('api/removecompany/' + companyName);
     };
 
-    userFactory.addBookmark = function(bookmarkData) {
-      return $http.put('api/addbookmark/', bookmarkData);
+    userFactory.addBookmark = function(companyId) {
+      return $http.put('api/addbookmark/'+ companyId);
+    };
+
+    userFactory.getBookmarkInfo = function(companyId) {
+      return $http.get('api/getbookmarkinfo/' + companyId);
     };
 
     return userFactory;

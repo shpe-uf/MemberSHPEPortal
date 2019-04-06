@@ -167,8 +167,6 @@ angular.module('mainController', ['authServices', 'userServices'])
         app.isLoggedIn = true;
 
         Auth.getUser().then(function(data) {
-          console.log(data.data);
-
           app.firstName = data.data.firstName;
           app.lastName = data.data.lastName;
           app.username = data.data.username;
@@ -183,6 +181,7 @@ angular.module('mainController', ['authServices', 'userServices'])
           app.springPoints = data.data.springPoints;
           app.summerPoints = data.data.summerPoints;
           app.events = data.data.events;
+          app.bookmarks = data.data.bookmarks;
 
           app.newUserInfo.username = data.data.username;
 

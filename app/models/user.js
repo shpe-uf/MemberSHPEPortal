@@ -131,7 +131,8 @@ var UserSchema = new Schema({
   bookmarks: [{
     company: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Company'
+      ref: 'Company',
+      unique: true
     }
   }]
 });

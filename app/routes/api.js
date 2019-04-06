@@ -1811,27 +1811,61 @@ module.exports = function(router) {
     });
   });
 
-  router.put('/addbookmark/', function(req, res) {
-    User.findOneAndUpdate({
-      username: req.body.username
-    }, {
-      $push: {
-        bookmarks: {
-          _id: req.body.companyId
-        }
-      }
+  router.put('/addbookmark/:companyId', function(req, res) {
+    User.findOne({
+      username: req.decoded.username
     }, function(err, user) {
       if (err) throw err;
 
-      if (!user) {
+      var isDuplicate = false;
+
+      for (var i = 0; i < user.bookmarks.length; i++) {
+        if (req.body.companyId == user.bookmarks[i]._id) {
+          isDuplicate = true;
+          break;
+        }
+      }
+
+      if (isDuplicate) {
         res.json({
           success: false
         });
       } else {
-        res.json({
-          success: true
+        User.findOneAndUpdate({
+          username: req.decoded.username
+        }, {
+          $push: {
+            bookmarks: {
+              _id: req.params.companyId
+            }
+          }
+        }, function(err, newUser) {
+          if (err) throw err;
+
+          if (!newUser) {
+            res.json({
+              success: false
+            });
+          } else {
+            res.json({
+              success: true
+            });
+          }
         });
       }
+    });
+  });
+
+  router.get('/getbookmarkinfo/:companyId', function(req, res) {
+    Company.findOne({
+      _id: req.params.companyId
+    }, function(err, company) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: company
+      });
     });
   });
 
