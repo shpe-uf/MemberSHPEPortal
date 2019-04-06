@@ -99,6 +99,17 @@ angular.module('corporateController', ['userServices'])
       $('#moreInfoModal').modal('hide');
     };
 
+    this.addBookmark = function(username, companyId) {
+      var bookmarkData = {
+        username: username,
+        companyId: companyId
+      };
+
+      User.addBookmark(bookmarkData).then(function(data) {
+
+      });
+    }
+
     User.getCompanies().then(function(data) {
       if (data.data.success) {
         app.companies = [];

@@ -179,5 +179,9 @@ angular.module('userServices', [])
       return $http.delete('api/removecompany/' + companyName);
     };
 
+    userFactory.addBookmark = function(bookmarkData) {
+      return $http.put('api/addbookmark/', bookmarkData);
+    };
+
     return userFactory;
   });

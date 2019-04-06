@@ -1811,5 +1811,29 @@ module.exports = function(router) {
     });
   });
 
+  router.put('/addbookmark/', function(req, res) {
+    User.findOneAndUpdate({
+      username: req.body.username
+    }, {
+      $push: {
+        bookmarks: {
+          _id: req.body.companyId
+        }
+      }
+    }, function(err, user) {
+      if (err) throw err;
+
+      if (!user) {
+        res.json({
+          success: false
+        });
+      } else {
+        res.json({
+          success: true
+        });
+      }
+    });
+  });
+
   return router;
 };
