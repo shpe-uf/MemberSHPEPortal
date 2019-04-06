@@ -3,6 +3,9 @@
     <div class="col-12">
       <h2>Corporate Database</h2>
     </div>
+    <!-- <div class="col-12">
+      <p style="margin-bottom: 0px !important">{{ corporate.companies.length }} Companies</p>
+    </div> -->
   </div>
 
   <hr>
@@ -27,7 +30,14 @@
       </div>
       <div class="row">
         <div class="col-12 col-md-4 col-lg-3" ng-repeat="company in corporate.companies | filter: corporateSearchText | orderBy: 'name'" style="margin-bottom: 16px;">
-          <div class="card">
+          <div class="card" ng-if="!company.sponsor">
+            <img class="card-img-top img-company" ng-src="{{ company.logo }}">
+            <div class="card-footer text-center">
+              <h4 class="ellipsis">{{ company.name }}</h4>
+              <button type="button" class="btn btn-submit btn-block" ng-click="corporate.openMoreInfoModal(company._id)">Profile</button>
+            </div>
+          </div>
+          <div class="card sponsor" ng-if="company.sponsor">
             <img class="card-img-top img-company" ng-src="{{ company.logo }}">
             <div class="card-footer text-center">
               <h4 class="ellipsis">{{ company.name }}</h4>
@@ -114,6 +124,16 @@
                 Providing Visa Sponsorship
               </div>
               <div class="col-12">
+                <i class="fas fa-check fa-true" ng-if="corporate.company.sponsor"></i>
+                <i class="fas fa-times fa-false" ng-if="!corporate.company.sponsor"></i>
+                SHPE UF Sponsor
+              </div>
+              <div class="col-12">
+                <i class="fas fa-check fa-true" ng-if="corporate.company.ipc"></i>
+                <i class="fas fa-times fa-false" ng-if="!corporate.company.ipc"></i>
+                Industry Partnership Council
+              </div>
+              <div class="col-12">
                 <i class="fas fa-check fa-true" ng-if="corporate.company.bbqFall"></i>
                 <i class="fas fa-times fa-false" ng-if="!corporate.company.bbqFall"></i>
                 Attending Fall BBQ with Industry
@@ -128,18 +148,13 @@
                 <i class="fas fa-times fa-false" ng-if="!corporate.company.national"></i>
                 Attending SHPE National Convention
               </div>
-              <div class="col-12">
-                <i class="fas fa-check fa-true" ng-if="corporate.company.sponsor"></i>
-                <i class="fas fa-times fa-false" ng-if="!corporate.company.sponsor"></i>
-                SHPE UF Sponsor
-              </div>
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-12">
             <button type="button" class="btn btn-light" ng-click="corporate.closeMoreInfoModal()">Close</button>
-            <button type="button" class="btn btn-success float-right">Add to favorites</button>
+            <button type="button" class="btn btn-success float-right">Bookmark</button>
           </div>
         </div>
       </div>

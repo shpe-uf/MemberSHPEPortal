@@ -1720,6 +1720,10 @@ module.exports = function(router) {
         req.body.sponsor = false;
       }
 
+      if (req.body.ipc == null || req.body.ipc == "") {
+        req.body.ipc = false;
+      }
+
       var company = new Company();
       company.name = req.body.name;
       company.logo = req.body.logo;
@@ -1740,6 +1744,7 @@ module.exports = function(router) {
       company.bbqSpring = req.body.bbqSpring;
       company.national = req.body.national;
       company.sponsor = req.body.sponsor;
+      company.ipc = req.body.ipc;
 
       company.save(function(err) {
         if (err) {

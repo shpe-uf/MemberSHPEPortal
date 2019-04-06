@@ -74,6 +74,10 @@ var CompanySchema = new Schema({
   sponsor: {
     type: Boolean,
     default: false
+  },
+  ipc: {
+    type: Boolean,
+    default: false
   }
 });
 

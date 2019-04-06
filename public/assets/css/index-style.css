@@ -185,8 +185,8 @@ hr {
 }
 
 .btn-light {
-  background-color: #EEEEEE;
-  border-color: #EEEEEE;
+  background-color: #E2E2E2;
+  border-color: #E2E2E2;
 }
 
 .btn-light:hover {
@@ -415,8 +415,6 @@ iframe {
   padding-right: 0px !important;
 }
 
-/* .mapid {
-} */
 .all-caps {
   text-transform: uppercase;
   font-size: 1.2rem;
@@ -628,4 +626,10 @@ canvas {
 
 .table-full {
   width: 100vw;
+}
+
+.sponsor {
+  border: 3px;
+  border-style: solid;
+  border-color: gold;
 }

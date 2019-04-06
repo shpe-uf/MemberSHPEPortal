@@ -8,6 +8,71 @@ angular.module('adminController', [])
     app.isClicked = false;
     app.eventName;
     app.companyName;
+
+    app.majors = [
+      "Aerospace Engineering",
+      "Agricultural & Biological Engineering",
+      "Biomedical Engineering",
+      "Chemical Engineering",
+      "Civil Engineering",
+      "Coastal & Oceanographic Engineering",
+      "Computer Engineering",
+      "Computer Science",
+      "Digital Arts & Sciences",
+      "Electrical Engineering",
+      "Environmental Engineering Sciences",
+      "Human-Centered Computing",
+      "Industrial & Systems Engineering",
+      "Materials Science & Engineering",
+      "Mechanical Engineering",
+      "Nuclear Engineering",
+      "Other"
+    ];
+
+    app.industries = [
+      "Aeronautical/Aerospace/Aviation",
+      "Agriculture",
+      "Automotive",
+      "Banking",
+      "Biomedical",
+      "Biotechnology",
+      "Capital Goods/Machinery",
+      "Chemical",
+      "Computer Hardware",
+      "Conglomerate",
+      "Construction",
+      "Consulting",
+      "Consumer Goods",
+      "Defense",
+      "Electronics",
+      "Energy",
+      "Financial Services",
+      "Food Processing",
+      "Government",
+      "Healthcare",
+      "Hydraulics",
+      "Hygiene/Sanitation",
+      "Information Technology",
+      "Insurance",
+      "Law/Legal",
+      "Manufacturing",
+      "Materials",
+      "Medical Supplies",
+      "Pharmaceuticals",
+      "Recruiting/Staffing",
+      "Research/Development",
+      "Retail",
+      "Safety",
+      "Security",
+      "Semiconductors",
+      "Social Media",
+      "Software Development",
+      "Telecommunications",
+      "Transportation",
+      "Utilities",
+      "Other"
+    ];
+
     var orderBy = $filter('orderBy');
 
     $scope.imageSrc = "";
