@@ -161,7 +161,6 @@ hr {
 }
 
 .btn-submit {
-  background-color: #FFFFFF;
   border-color: #EB4616;
   color: #EB4616;
 }
@@ -629,7 +628,8 @@ canvas {
 }
 
 .sponsor {
-  border: 3px;
+  /* border: 3px;
   border-style: solid;
-  border-color: gold;
+  border-color: gold; */
+  background-color: gold;
 }

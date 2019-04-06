@@ -30,20 +30,38 @@
       </div>
       <div class="row">
         <div class="col-12 col-md-4 col-lg-3" ng-repeat="company in corporate.companies | filter: corporateSearchText | orderBy: 'name'" style="margin-bottom: 16px;">
-          <div class="card" ng-if="!company.sponsor">
+          <div class="card">
             <img class="card-img-top img-company" ng-src="{{ company.logo }}">
             <div class="card-footer text-center">
               <h4 class="ellipsis">{{ company.name }}</h4>
-              <button type="button" class="btn btn-submit btn-block" ng-click="corporate.openMoreInfoModal(company._id)">Profile</button>
+              <div class="row">
+                <div class="col-9 col-sm-8" style="padding-right: 3px;">
+                  <button type="button" class="btn btn-block btn-submit" ng-click="corporate.openMoreInfoModal(company._id)">Profile</button>
+                </div>
+                <div class="col-3 col-sm-4" style="padding-left: 3px;">
+                  <button type="button" class="btn btn-block btn-outline-success">
+                    <i class="far fa-bookmark"></i>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="card sponsor" ng-if="company.sponsor">
+          <!-- <div class="card sponsor" ng-if="company.sponsor">
             <img class="card-img-top img-company" ng-src="{{ company.logo }}">
             <div class="card-footer text-center">
               <h4 class="ellipsis">{{ company.name }}</h4>
-              <button type="button" class="btn btn-submit btn-block" ng-click="corporate.openMoreInfoModal(company._id)">Profile</button>
+              <div class="row">
+                <div class="col-9 col-sm-8" style="padding-right: 3px;">
+                  <button type="button" class="btn btn-block btn-submit" ng-click="corporate.openMoreInfoModal(company._id)">Profile</button>
+                </div>
+                <div class="col-3 col-sm-4" style="padding-left: 3px;">
+                  <button type="button" class="btn btn-block btn-outline-success">
+                    <i class="far fa-bookmark"></i>
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
