@@ -2,6 +2,7 @@ angular.module('corporateController', ['userServices', 'authServices'])
   .controller('corporateCtrl', function($window, User, Auth) {
 
     var app = this;
+    app.companies = [];
     app.bookmarks = [];
 
     app.majors = [
@@ -77,6 +78,7 @@ angular.module('corporateController', ['userServices', 'authServices'])
         app.company = data.data.message;
         app.company.majorsList = "";
         app.company.industryList = "";
+        app.company.bookmark;
 
         for (var i = 0; i < app.company.majors.length; i++) {
           if (i === app.company.majors.length - 1) {
@@ -93,6 +95,12 @@ angular.module('corporateController', ['userServices', 'authServices'])
             app.company.industryList += (app.company.industry[i] + ", ");
           }
         }
+
+        if (app.bookmarks.find(bookmark => bookmark._id === app.company._id) != undefined) {
+          app.company.bookmark = true;
+        } else {
+          app.company.bookmark = false;
+        }
       });
     };
 
@@ -103,32 +111,30 @@ angular.module('corporateController', ['userServices', 'authServices'])
     this.addBookmark = function(companyId) {
       User.addBookmark(companyId).then(function(data) {
         if (data.data.success) {
-          // WHAT SHOULD I DO HERE?
+          app.company.bookmark = true;
+          app.bookmarks.push(app.company)
         }
       });
     }
 
-    this.getBookmarks = function() {
-      if (Auth.isLoggedIn()) {
-        Auth.getUser().then(function(data) {
-          var bookmarkIds = data.data.bookmarks;
-          if (bookmarkIds.length > 0) {
-            app.bookmarks = [];
-            for (var i = 0; i < bookmarkIds.length; i++) {
-              User.getBookmarkInfo(bookmarkIds[i]._id).then(function(data) {
-                if (data.data.success) {
-                  app.bookmarks.push(data.data.message);
-                }
-              });
-            }
+    if (Auth.isLoggedIn()) {
+      Auth.getUser().then(function(data) {
+        var bookmarkIds = data.data.bookmarks;
+
+        if (bookmarkIds.length > 0) {
+          app.bookmarks = [];
+          for (var i = 0; i < bookmarkIds.length; i++) {
+            User.getBookmarkInfo(bookmarkIds[i]._id).then(function(data) {
+              if (data.data.success) {
+                app.bookmarks.push(data.data.message);
+              }
+            });
           }
-        });
-      }
+        }
+      });
     }
 
     User.getCompanies().then(function(data) {
-      app.companies = [];
-
       if (data.data.success) {
         for (var i = 0; i < data.data.message.length; i++) {
           var company = data.data.message[i];

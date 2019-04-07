@@ -3,24 +3,20 @@
     <div class="col-12">
       <h2>Corporate Database</h2>
     </div>
-    <!-- <div class="col-12">
-      <p style="margin-bottom: 0px !important">{{ corporate.companies.length }} Companies</p>
-    </div> -->
   </div>
 
   <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
       <a class="nav-item nav-item-highlight nav-link active" id="nav-company-tab" data-toggle="tab" data-target="#nav-company" role="tab" aria-controls="nav-company" aria-selected="false">Companies</a>
-      <a class="nav-item nav-item-highlight nav-link" id="nav-bookmark-tab" ng-click="corporate.getBookmarks()" data-toggle="tab" data-target="#nav-bookmark" role="tab" aria-controls="nav-bookmark" aria-selected="true">Bookmarks</a>
+      <a class="nav-item nav-item-highlight nav-link" id="nav-bookmark-tab" data-toggle="tab" data-target="#nav-bookmark" role="tab" aria-controls="nav-bookmark" aria-selected="true">Bookmarks</a>
     </div>
   </nav>
 
   <div class="tab-content" id="nav-tabContent">
-
     <!-- COMPANIES -->
-    <div class="tab-pane fade show active" id="nav-company" role="tabpanel" aria-labelledby="nav-company-tab">
+    <div class="tab-pane fade show active" id="nav-company" role="tabpanel" aria-labelledby=" nav-company-tab">
       <div class="container">
-        <div class="row" ng-if="corporate.companies.length == 0">
+        <!-- <div class="row" ng-if="corporate.companies.length == 0">
           <div class="col-sm-12">
             <div class="container">
               <div class="jumbotron">
@@ -28,8 +24,8 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="row" ng-if="corporate.companies.length != 0">
+        </div> -->
+        <div class="row">
           <div class="col-12">
             <div class="input-group mb-3">
               <div class="input-group-prepend">
@@ -39,7 +35,14 @@
             </div>
             <div class="row">
               <div class="col-12 col-md-4 col-lg-3" ng-repeat="company in corporate.companies | filter: corporateSearchText | orderBy: 'name'" style="margin-bottom: 16px;">
-                <div class="card">
+                <div class="card" ng-if="!company.sponsor">
+                  <img class="card-img-top img-company" ng-src="{{ company.logo }}">
+                  <div class="card-footer text-center">
+                    <h4 class="ellipsis">{{ company.name }}</h4>
+                    <button type="button" class="btn btn-block btn-submit" ng-click="corporate.openMoreInfoModal(company._id)">Profile</button>
+                  </div>
+                </div>
+                <div class="card sponsor" ng-if="company.sponsor">
                   <img class="card-img-top img-company" ng-src="{{ company.logo }}">
                   <div class="card-footer text-center">
                     <h4 class="ellipsis">{{ company.name }}</h4>
@@ -54,7 +57,7 @@
     </div>
 
     <!-- BOOKMARKS -->
-    <div class="tab-pane fade show active" id="nav-bookmark" role="tabpanel" aria-labelledby="nav-bookmark-tab">
+    <div class="tab-pane fade show" id="nav-bookmark" role="tabpanel" aria-labelledby="nav-bookmark-tab">
       <div class="container">
         <div class="row" ng-repeat="bookmark in corporate.bookmarks | orderBy: 'name'">
           <div class="col-sm-3">
@@ -88,7 +91,6 @@
       </div>
     </div>
   </div>
-
 </div>
 
 <div class="modal fade" id="moreInfoModal" aria-labelledby="moreInfoModalLabel">
@@ -132,6 +134,11 @@
               <h5>Business Model/Operations Highlights</h5>
               <p>{{ corporate.company.model }}</p>
             </div>
+            <!-- <div>
+              <h5>Others</h5>
+              <p>{{ corporate.company.bookmark }}</p>
+              <p>{{ corporate.company.options }}</p>
+            </div> -->
             <div class="row" style="margin-bottom: 16px;">
               <div class="col-6">
                 <h5>News Link</h5>
@@ -195,7 +202,8 @@
         <div class="row">
           <div class="col-12">
             <button type="button" class="btn btn-light" ng-click="corporate.closeMoreInfoModal()">Close</button>
-            <button type="button" class="btn btn-success float-right" ng-click="corporate.addBookmark(corporate.company._id)">Bookmark</button>
+            <button type="button" class="btn btn-success float-right" ng-if="!corporate.company.bookmark" ng-click="corporate.addBookmark(corporate.company._id)">Add Bookmark</button>
+            <button type="button" class="btn btn-danger float-right" ng-if="corporate.company.bookmark">Remove Bookmark</button>
           </div>
         </div>
       </div>
