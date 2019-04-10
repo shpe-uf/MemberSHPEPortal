@@ -74,6 +74,10 @@ var UserSchema = new Schema({
     type: String,
     required: true
   },
+  nationalmember:{
+    type: String,
+    required: true
+  },
   email: {
     type: String,
     lowercase: true,

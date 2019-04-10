@@ -382,8 +382,20 @@
                 </tr>
               </tbody>
             </table>
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              <label class="btn btn-secondary active">
+                <input type="radio" name="options" id="option1" autocomplete="off" checked> Admin
+              </label>
+              <label class="btn btn-submit">
+                <input type="radio" name="options" id="option2" autocomplete="off"> National Member
+              </label>
+              <label class="btn btn-submit">
+                <input type="radio" name="options" id="option3" autocomplete="off"> Inactive
+              </label>
+            </div>
           </div>
         </div>
+
         <div class="row">
           <div class="col-12">
             <div class="jumbotron" ng-if="admin.eventArray.length == 0">
