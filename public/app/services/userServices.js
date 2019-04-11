@@ -162,6 +162,12 @@ angular.module('userServices', [])
     userFactory.editUserInfo = function(userInfo){
       return $http.put('api/edituserinfo/', userInfo);
     };
+    //CHANGING USER PERMISSION
+    userFactory.changeUserPermission = function(updateUser){
+      return $http.put('api/changeuserpermission/', updateUser);
+    };
 
     return userFactory;
+
+
   });

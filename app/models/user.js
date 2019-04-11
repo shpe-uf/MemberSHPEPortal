@@ -43,6 +43,7 @@ var passwordValidator = [
   })
 ];
 
+
 var UserSchema = new Schema({
   firstName: {
     type: String,
@@ -71,10 +72,6 @@ var UserSchema = new Schema({
     required: true
   },
   sex: {
-    type: String,
-    required: true
-  },
-  nationalmember:{
     type: String,
     required: true
   },
@@ -119,7 +116,7 @@ var UserSchema = new Schema({
   },
   permission: {
     type: String,
-    require: true,
+    require: ["user", "admin", "national"],
     default: 'user'
   },
   listServ: {

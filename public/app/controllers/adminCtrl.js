@@ -1,4 +1,4 @@
-angular.module('adminController', [])
+angular.module('adminController', ['userServices'])
   .controller('adminCtrl', function($timeout, $route, $window, $scope, $filter, $http, User) {
 
     var app = this;
@@ -9,6 +9,7 @@ angular.module('adminController', [])
     app.eventName;
     app.eventId;
     var orderBy = $filter('orderBy');
+
 
     this.openCreateEventModal = function() {
       app.errorMsg = false;
@@ -194,8 +195,20 @@ angular.module('adminController', [])
 
     this.sortBy = function(propertyName, array) {
       $scope.reverse = (propertyName !== null && $scope.propertyName === propertyName) ?
-      !$scope.reverse : false;
+        !$scope.reverse : false;
       $scope.propertyName = propertyName;
       app.users = orderBy(array, $scope.propertyName, $scope.reverse);
+    };
+
+    this.changePermission = function(username, permissiontype) {
+      var userData = {
+        username: username,
+        permission: permissiontype
+      };
+      console.log(userData)
+      User.changeUserPermission(userData).then(function(data){
+        if (data.data.success == true)
+        app.user.permission = permissiontype;
+      });
     };
   });

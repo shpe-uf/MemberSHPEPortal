@@ -539,3 +539,9 @@ a {
   border-color: #33A445;
   color: #FFFFFF;
 }
+
+.btn-group-toggle{
+  margin-bottom: 16px;
+  text-align: center;
+
+}

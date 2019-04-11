@@ -380,18 +380,19 @@
                   <td>Sex</td>
                   <td>{{ admin.user.sex }}</td>
                 </tr>
+                <tr>
+                  <<td>Permission</td>
+                    <td>{{ admin.user.permission }}</td>
+                </tr>
               </tbody>
             </table>
-            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-              <label class="btn btn-secondary active">
-                <input type="radio" name="options" id="option1" autocomplete="off" checked> Admin
-              </label>
-              <label class="btn btn-submit">
-                <input type="radio" name="options" id="option2" autocomplete="off"> National Member
-              </label>
-              <label class="btn btn-submit">
-                <input type="radio" name="options" id="option3" autocomplete="off"> Inactive
-              </label>
+            <div class="row text-center" style ="margin-bottom : 16px">
+              <div class="container">
+                <button type="button" class="btn btn-submit btn-block" ng-hide = "admin.user.permission == 'user' " ng-click= "admin.changePermission(admin.user.username, 'user')">Make User</button>
+                <button type="button" class="btn btn-submit btn-block" ng-hide = "admin.user.permission == 'national' " ng-click= "admin.changePermission(admin.user.username,'national')">Make National Member</button>
+                <button type="button" class="btn btn-submit btn-block" ng-hide = "admin.user.permission == 'admin' " ng-click= "admin.changePermission(admin.user.username , 'admin')">Make Admin </button>
+
+              </div>
             </div>
           </div>
         </div>

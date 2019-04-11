@@ -81,7 +81,7 @@ angular.module('mainController', ['authServices', 'userServices'])
 
             var timeCheck = expireTime.exp - timeStamp;
 
-            console.log("SECONDS LEFT: " + timeCheck);
+            // console.log("SECONDS LEFT: " + timeCheck);
 
             if (timeCheck <= 600 && timeCheck > 0) {
               console.log("TOKEN EXPIRATION: " + timeCheck);
