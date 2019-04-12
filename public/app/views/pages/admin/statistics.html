@@ -17,6 +17,7 @@
           <a class="nav-item nav-link" id="nav-ethnicity-tab" data-toggle="tab" data-target="#nav-ethnicity" role="tab" aria-controls="nav-ethnicity" aria-selected="false">Ethnicity</a>
           <a class="nav-item nav-link" id="nav-point-distribution-tab" data-toggle="tab" data-target="#nav-point-distribution" role="tab" aria-controls="nav-point-distribution" aria-selected="false" ng-click="stats.pointDistribution();">Point
             Distribution</a>
+          <a class="nav-item nav-link" id="nav-gbm-attendance-tab" data-toggle="tab" data-target="#nav-gbm-attendance" role="tab" aria-controls="nav-gbm-attendance" aria-selected="false" ng-click="stats.gbmAttendance();">GBM Attendance</a>
         </div>
       </nav>
 
@@ -194,6 +195,24 @@
         </div>
       </div>
 
+      <div class="tab-pane fade" id="nav-gbm-attendance" role="tabpanel" aria-labelledby="nav-gbm-attendance-tab">
+        <div class="container">
+          <div class="row" ng-show="stats.pointDistributionArray.length == 0">
+            <div class="col-12">
+              <div class="jumbotron">
+                <p class="text-center">THERE IS NO DATA AVAILABLE.</p>
+              </div>
+            </div>
+          </div>
+          <div class="row" ng-hide="stats.pointDistributionArray.length == 0">
+            <div class="col-sm-12">
+              <canvas id="gbmDistributionChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      
     </div>
   </div>
 </div>
