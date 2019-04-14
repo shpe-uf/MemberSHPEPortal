@@ -216,7 +216,7 @@
                       <th class="text-center">SPRING BBQ</th>
                       <th class="text-center">NAT. CONV.</th>
                       <th class="text-center">EDIT</th>
-                      <th class="text-center">REMOVE</th>
+                      <!-- <th class="text-center">REMOVE</th> -->
                     </tr>
                     <tr ng-repeat="company in admin.companies | filter: corporateSearchText | orderBy: 'name'">
                       <td>{{ company.name }}</td>
@@ -241,11 +241,11 @@
                           <i class="far fa-edit"></i>
                         </button>
                       </td>
-                      <td class="text-center">
+                      <!-- <td class="text-center">
                         <button type="button" class="btn btn-outline-danger" ng-click="admin.openRemoveCompanyModal(company.name)">
                           <i class="fas fa-times"></i>
                         </button>
-                      </td>
+                      </td> -->
                     </tr>
                   </table>
                 </div>

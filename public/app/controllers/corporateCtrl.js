@@ -1,5 +1,5 @@
 angular.module('corporateController', ['userServices', 'authServices'])
-  .controller('corporateCtrl', function($window, User, Auth) {
+  .controller('corporateCtrl', function($timeout, $window, User, Auth) {
 
     var app = this;
     app.companies = [];
@@ -116,6 +116,17 @@ angular.module('corporateController', ['userServices', 'authServices'])
         }
       });
     }
+
+    this.removeBookmark = function(companyId) {
+      console.log("remove bookmark");
+      User.removeBookmark(companyId).then(function(data) {
+        if (data.data.success) {
+          $timeout(function() {
+            $window.location.reload();
+          }, 1000);
+        }
+      });
+    };
 
     if (Auth.isLoggedIn()) {
       Auth.getUser().then(function(data) {

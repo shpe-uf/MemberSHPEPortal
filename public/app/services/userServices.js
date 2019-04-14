@@ -163,28 +163,38 @@ angular.module('userServices', [])
       return $http.put('api/edituserinfo/', userInfo);
     };
 
+    // ADD A COMPANY INTO THE CORPORATE DATABASE
     userFactory.addCompany = function(companyInfo) {
       return $http.post('api/addcompany/', companyInfo);
     };
 
+    // GET ALL OF THE COMPANIES IN THE CORPORATE DATABASE
     userFactory.getCompanies = function() {
       return $http.get('api/getcompanies/');
     };
 
+    // GET THE INFORMATION FOR A SPECIFIC COMPANY
     userFactory.getCompanyInfo = function(companyId) {
       return $http.get('api/getcompanyinfo/' + companyId);
     };
 
+    // REMOVE A COMPANY FROM THE CORPORATE DATABASE
     userFactory.removeCompany = function(companyName) {
       return $http.delete('api/removecompany/' + companyName);
     };
 
+    // ADD A BOOKMARK TO THE USER
     userFactory.addBookmark = function(companyId) {
-      return $http.put('api/addbookmark/'+ companyId);
+      return $http.put('api/addbookmark/' + companyId);
     };
 
+    // GET THE INFORMATION FOR A USER'S BOOKMARKS
     userFactory.getBookmarkInfo = function(companyId) {
       return $http.get('api/getbookmarkinfo/' + companyId);
+    };
+
+    userFactory.removeBookmark = function(companyId) {
+      return $http.put('api/removebookmark/' + companyId);
     };
 
     return userFactory;

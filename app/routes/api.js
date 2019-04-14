@@ -1802,8 +1802,6 @@ module.exports = function(router) {
     }, function(err, deletedCompany) {
       if (err) throw err;
 
-      console.log(deletedCompany);
-
       res.json({
         success: true,
         message: req.params.companyName + " has been removed."
@@ -1865,6 +1863,25 @@ module.exports = function(router) {
       res.json({
         success: true,
         message: company
+      });
+    });
+  });
+
+  router.put('/removebookmark/:companyId', function(req, res) {
+    User.update({
+      username: req.decoded.username
+    }, {
+      $pull: {
+        bookmarks: {
+          _id: req.params.companyId
+        }
+      }
+    }, function(err, user) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: req.params.companyId
       });
     });
   });

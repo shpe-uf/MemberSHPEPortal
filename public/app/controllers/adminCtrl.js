@@ -247,8 +247,6 @@ angular.module('adminController', [])
       app.addCompanySuccessMsg = false;
       app.addCompanyErrorMsg = false;
 
-      console.log(companyData);
-
       if (!companyData || companyData == null || companyData == undefined) {
         app.addCompanyErrorMsg = "Make sure you filled out the entire form!";
       } else {
