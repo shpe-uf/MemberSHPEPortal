@@ -1,11 +1,11 @@
 @font-face {
   font-family: "Avenir";
-  src: url(../fonts/AvenirBook.otf);
+  src: url(../fonts/SFCompactText-Light.otf);
 }
 
 @font-face {
   font-family: "Futura PT Heavy";
-  src: url(../fonts/FuturaPTHeavy.otf);
+  src: url(../fonts/SFCompactText-Bold.otf);
 }
 
 * {
@@ -455,21 +455,6 @@ iframe {
   color: #00BCE4;
 }
 
-/* .custom-control-label::after {
-  position: absolute;
-  top: .25rem;
-  left: -1.5rem;
-  display: block;
-  width: 1rem;
-  height: 1rem;
-  content: "";
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 50% 50%;
-  border-width: 2px;
-  border-style: solid;
-  border-color: #2D2D2D;
-} */
 .table-head {
   background-color: #D9D9D9 !important;
 }
@@ -631,4 +616,8 @@ canvas {
   border: 3px;
   border-style: solid;
   border-color: #FFD600;
+}
+
+.fa-sync {
+  padding: 48px 16px;
 }

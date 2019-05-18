@@ -2,6 +2,8 @@ angular.module('corporateController', ['userServices', 'authServices'])
   .controller('corporateCtrl', function($timeout, $window, User, Auth) {
 
     var app = this;
+    app.loading = true;
+    app.empty = true;
     app.companies = [];
     app.bookmarks = [];
 
@@ -118,7 +120,6 @@ angular.module('corporateController', ['userServices', 'authServices'])
     }
 
     this.removeBookmark = function(companyId) {
-      console.log("remove bookmark");
       User.removeBookmark(companyId).then(function(data) {
         if (data.data.success) {
           $timeout(function() {
@@ -147,6 +148,9 @@ angular.module('corporateController', ['userServices', 'authServices'])
 
     User.getCompanies().then(function(data) {
       if (data.data.success) {
+        app.loading = false;
+        app.empty = false;
+
         for (var i = 0; i < data.data.message.length; i++) {
           var company = data.data.message[i];
           company.options = "";
@@ -189,6 +193,8 @@ angular.module('corporateController', ['userServices', 'authServices'])
 
           app.companies.push(company);
         }
+      } else if (data.data.message.length === 0 || data.data.success != true) {
+        app.empty = true;
       }
     });
   });

@@ -18,13 +18,16 @@
       <div class="container">
         <div class="row">
           <div class="col-12">
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fas fa-search"></i></span>
+            <div class="row" ng-if="corporate.loading">
+              <div class="col-sm-12">
+                <div class="jumbotron text-center turquoise">
+                  <i class="fas fa-sync fa-spin fa-10x">
+                  </i>
+                  <h2 class="turquoise">Loading</h2>
+                </div>
               </div>
-              <input type="text" class="form-control" ng-model="corporateSearchText">
             </div>
-            <div class="row" ng-if="corporate.companies.length == 0">
+            <div class="row" ng-if="corporate.empty && !corporate.loading">
               <div class="col-sm-12">
                 <div class="container">
                   <div class="jumbotron">
@@ -33,7 +36,15 @@
                 </div>
               </div>
             </div>
-            <div class="row" ng-if="corporate.companies.length != 0">
+            <div class="row" ng-if="!corporate.empty">
+              <div class="col-sm-12">
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+                  </div>
+                  <input type="text" class="form-control" ng-model="corporateSearchText">
+                </div>
+              </div>
               <div class="col-12 col-md-4 col-lg-3" ng-repeat="company in corporate.companies | filter: corporateSearchText | orderBy: 'name'" style="margin-bottom: 16px;">
                 <div class="card" ng-if="!company.sponsor">
                   <img class="card-img-top img-company" ng-src="{{ company.logo }}">
@@ -59,7 +70,16 @@
     <!-- BOOKMARKS -->
     <div class="tab-pane fade show" id="nav-bookmark" role="tabpanel" aria-labelledby="nav-bookmark-tab">
       <div class="container">
-        <div class="row" ng-repeat="bookmark in corporate.bookmarks | orderBy: 'name'">
+        <div class="row" ng-if="corporate.bookmarks == 0">
+          <div class="col-sm-12">
+            <div class="container">
+              <div class="jumbotron">
+                <p class="text-center">YOU HAVE NO COMPANIES BOOKMARKED.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" ng-if="corporate.bookmarks != 0" ng-repeat="bookmark in corporate.bookmarks | orderBy: 'name'">
           <div class="col-sm-3">
             <img class="img-fluid img-company" ng-src="{{ bookmark.logo }}">
           </div>
