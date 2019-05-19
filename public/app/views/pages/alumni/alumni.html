@@ -1,7 +1,7 @@
 <div class="container custom-container">
   <div class="row">
     <div class="col-12">
-      <h1 class="display-4">Alumni Directory</h1>
+      <h1>Alumni Directory</h1>
     </div>
   </div>
 
@@ -17,10 +17,8 @@
 
   <div class="row" ng-if="alumni.alumniArray.length == 0">
     <div class="col-sm-12">
-      <div class="container">
-        <div class="jumbotron">
-          <p class="text-center">THERE ARE NO ALUMNI ON RECORD AT THIS TIME.</p>
-        </div>
+      <div class="jumbotron">
+        <p class="text-center">THERE ARE NO ALUMNI ON RECORD AT THIS TIME.</p>
       </div>
     </div>
   </div>
@@ -38,33 +36,21 @@
           <tr class="table-head">
             <th ng-click="alumni.sortBy('name', alumni.alumniArray)">
               NAME
-              <i class="fas fa-caret-up"></i>
-              <i class="fas fa-caret-down"></i>
             </th>
             <th ng-click="alumni.sortBy('undergrad', alumni.alumniArray)">
               UNDERGRAD. DEGREE
-              <i class="fas fa-caret-up"></i>
-              <i class="fas fa-caret-down"></i>
             </th>
             <th ng-click="alumni.sortBy('employer', alumni.alumniArray)">
               EMPLOYER
-              <i class="fas fa-caret-up"></i>
-              <i class="fas fa-caret-down"></i>
             </th>
             <th ng-click="alumni.sortBy('position', alumni.alumniArray)">
               TITLE/POSITION
-              <i class="fas fa-caret-up"></i>
-              <i class="fas fa-caret-down"></i>
             </th>
             <th ng-click="alumni.sortBy('nationality', alumni.alumniArray)">
               COUNTRY OF ORIGIN
-              <i class="fas fa-caret-up"></i>
-              <i class="fas fa-caret-down"></i>
             </th>
             <th ng-click="alumni.sortBy('city', alumni.alumniArray)">
               LOCATION
-              <i class="fas fa-caret-up"></i>
-              <i class="fas fa-caret-down"></i>
             </th>
             <th class="text-center">LINKEDIN</th>
           </tr>

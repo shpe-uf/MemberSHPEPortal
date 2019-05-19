@@ -1,11 +1,11 @@
 @font-face {
-  font-family: "body-font";
-  src: url(../fonts/SFCompactText-Light.otf);
+  font-family: "heading-font";
+  src: url(../fonts/UniSansBold.otf);
 }
 
 @font-face {
-  font-family: "heading-font";
-  src: url(../fonts/Akhand-Bold.otf);
+  font-family: "body-font";
+  src: url(../fonts/SFCompactTextLight.otf);
 }
 
 * {
@@ -422,25 +422,17 @@ iframe {
   font-family: 'body-font';
 }
 
-.row-rewards, .row-alumni, .row-resume {
+.row-feature {
   padding-top: 12px;
   padding-bottom: 12px;
   margin-top: 6px;
   margin-bottom: 6px;
   border-style: solid;
-  border-radius: 12px;
-  border-width: 3px;
+  border-radius: 6px;
+  border-width: 1.5px;
 }
 
-.row-rewards {
-  border-color: #003050;
-}
-
-.row-alumni {
-  border-color: #EB4616;
-}
-
-.row-resume {
+.row-feature {
   border-color: #00BCE4;
 }
 

@@ -1,7 +1,7 @@
 <div class="container custom-container">
   <div class="row">
     <div class="col-12">
-      <h1 class="display-4">Corporate Database</h1>
+      <h1>Corporate Database</h1>
     </div>
   </div>
 
@@ -84,17 +84,17 @@
             <img class="img-fluid img-company" ng-src="{{ bookmark.logo }}">
           </div>
           <div class="col-sm-7">
-            <h3>{{ bookmark.name }}</h3>
+            <h2>{{ bookmark.name }}</h2>
             <div class="row" style="margin-bottom: 16px">
               <div class="col-12">
                 <p>{{ bookmark.overview }}</p>
               </div>
               <div class="col-6">
-                <h5>News Link</h5>
+                <h4>News Link</h4>
                 <a href="{{ bookmark.apply }}" target="_blank" style="display: inline-block;">Click here</a>
               </div>
               <div class="col-6">
-                <h5>Apply Link</h5>
+                <h4>Apply Link</h4>
                 <a href="{{ bookmark.apply }}" target="_blank" style="display: inline-block;">Click here</a>
               </div>
             </div>
@@ -128,42 +128,42 @@
           <div class="col-12 col-lg-4">
             <img class="img-fluid img-logo" ng-src="{{ corporate.company.logo }}">
             <div ng-if="corporate.company.slogan">
-              <h5>Slogan</h5>
+              <h4>Slogan</h4>
               <p>"{{ corporate.company.slogan }}"</p>
             </div>
-            <h5>Majors</h5>
+            <h4>Majors</h4>
             <p>{{ corporate.company.majorsList }}</p>
-            <h5>Industries</h5>
+            <h4>Industries</h4>
             <p>{{ corporate.company.industryList }}</p>
           </div>
           <div class="col-12 col-lg-8">
             <div ng-if="corporate.company.overview">
-              <h5>Overview</h5>
+              <h4>Overview</h4>
               <p>{{ corporate.company.overview }}</p>
             </div>
             <div ng-if="corporate.company.mission">
-              <h5>Mission</h5>
+              <h4>Mission</h4>
               <p>{{ corporate.company.mission }}</p>
             </div>
             <div ng-if="corporate.company.goals">
-              <h5>Goals</h5>
+              <h4>Goals</h4>
               <p>{{ corporate.company.goals }}</p>
             </div>
             <div ng-if="corporate.company.model">
-              <h5>Business Model/Operations Highlights</h5>
+              <h4>Business Model/Operations Highlights</h4>
               <p>{{ corporate.company.model }}</p>
             </div>
             <div class="row" style="margin-bottom: 16px;">
               <div class="col-6">
-                <h5>News Link</h5>
+                <h4>News Link</h4>
                 <a href="{{ corporate.company.news }}" target="_blank" style="display: inline-block;">Click here</a>
               </div>
               <div class="col-6">
-                <h5>Apply Link</h5>
+                <h4>Apply Link</h4>
                 <a href="{{ corporate.company.apply }}" target="_blank" style="display: inline-block;">Click here</a>
               </div>
             </div>
-            <h5>Other Information</h5>
+            <h4>Other Information</h4>
             <div class="row" style="margin-bottom: 16px;">
               <div class="col-12">
                 <i class="fas fa-check fa-true" ng-if="corporate.company.academia"></i>

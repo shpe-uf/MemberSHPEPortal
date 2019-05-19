@@ -159,6 +159,8 @@ angular.module('corporateController', ['userServices', 'authServices'])
     }
 
     User.getCompanies().then(function(data) {
+      console.log(data.data.success);
+      console.log(data.data.message.length);
       if (data.data.success) {
         app.loading = false;
         app.empty = false;
@@ -205,7 +207,10 @@ angular.module('corporateController', ['userServices', 'authServices'])
 
           app.companies.push(company);
         }
-      } else if (data.data.message.length === 0 || data.data.success != true) {
+      }
+
+      if (data.data.message.length == 0) {
+        console.log("LINE 211");
         app.empty = true;
       }
     });
