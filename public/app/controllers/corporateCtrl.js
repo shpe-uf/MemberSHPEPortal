@@ -122,9 +122,21 @@ angular.module('corporateController', ['userServices', 'authServices'])
     this.removeBookmark = function(companyId) {
       User.removeBookmark(companyId).then(function(data) {
         if (data.data.success) {
-          $timeout(function() {
-            $window.location.reload();
-          }, 1000);
+          var bookmarkIds = data.data.message;
+          app.company.bookmark = false;
+
+          if (bookmarkIds.length > 0) {
+            app.bookmarks = [];
+            for (var i = 0; i < bookmarkIds.length; i++) {
+              User.getBookmarkInfo(bookmarkIds[i]._id).then(function(data) {
+                if (data.data.success) {
+                  app.bookmarks.push(data.data.message);
+                }
+              });
+            }
+          } else {
+            app.bookmarks = [];
+          }
         }
       });
     };

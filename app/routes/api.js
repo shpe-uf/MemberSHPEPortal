@@ -66,7 +66,7 @@ module.exports = function(router) {
           }
 
           for (var i = 0; i < coordinates.length; i++) {
-            Alumni.update({
+            Alumni.updateOne({
               _id: alumni[i].id
             }, {
               coordinates: {
@@ -1840,13 +1840,16 @@ module.exports = function(router) {
         }, function(err, newUser) {
           if (err) throw err;
 
+          console.log(newUser);
+
           if (!newUser) {
             res.json({
               success: false
             });
           } else {
             res.json({
-              success: true
+              success: true,
+              message: "Hello"
             });
           }
         });
@@ -1868,7 +1871,7 @@ module.exports = function(router) {
   });
 
   router.put('/removebookmark/:companyId', function(req, res) {
-    User.update({
+    User.updateOne({
       username: req.decoded.username
     }, {
       $pull: {
@@ -1879,9 +1882,18 @@ module.exports = function(router) {
     }, function(err, user) {
       if (err) throw err;
 
-      res.json({
-        success: true,
-        message: req.params.companyId
+      User.findOne({
+        username: req.decoded.username
+      }, function(err, updatedUser) {
+        if (err) throw err;
+
+        console.log("UPDATED USER BOOKMARKS");
+        console.log(updatedUser.bookmarks);
+
+        res.json({
+          success: true,
+          message: updatedUser.bookmarks
+        });
       });
     });
   });
