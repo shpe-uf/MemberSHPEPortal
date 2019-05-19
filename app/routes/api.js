@@ -1797,14 +1797,34 @@ module.exports = function(router) {
   });
 
   router.delete('/removecompany/:companyName', function(req, res) {
-    Company.deleteOne({
+    Company.findOne({
       name: req.params.companyName
-    }, function(err, deletedCompany) {
+    }, function(err, company) {
       if (err) throw err;
 
-      res.json({
-        success: true,
-        message: req.params.companyName + " has been removed."
+      Company.deleteOne({
+        name: req.params.companyName
+      }, function(err, deletedCompany) {
+        if (err) throw err;
+
+        User.updateMany({
+          bookmarks: {
+            _id: company._id
+          }
+        }, {
+          $pull: {
+            bookmarks: {
+              _id: company._id
+            }
+          }
+        }, function (err, users) {
+          if (err) throw err;
+
+          res.json({
+            success: true,
+            message: req.params.companyName + " has been removed."
+          });
+        });
       });
     });
   });
