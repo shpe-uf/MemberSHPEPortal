@@ -133,6 +133,7 @@ angular.module('adminController', [])
     };
 
     this.excel = function(eventId) {
+      console.log(eventId);
       User.getExcelDoc(eventId).then(function(data) {
         var hiddenElement = document.createElement('a');
         hiddenElement.href = "data:attachment/csv," + encodeURI(data.data);
@@ -160,10 +161,12 @@ angular.module('adminController', [])
 
     this.openEventInfoModal = function(eventData) {
       $("#eventInfoModal").modal({
-        backdrop: 'static'
+        backdrop: 'static',
+        keyboard: false
       });
 
       app.eventName = eventData.name;
+      app.eventId = eventData._id;
 
       User.getAttendance(eventData._id).then(function(data) {
         app.attendance = data.data.message;
@@ -200,7 +203,8 @@ angular.module('adminController', [])
 
     this.openUserInfoModal = function(data) {
       $("#userEventsModal").modal({
-        backdrop: 'static'
+        backdrop: 'static',
+        keyboard: false
       });
 
       app.UserName = data;
@@ -233,7 +237,8 @@ angular.module('adminController', [])
       app.addCompanySuccessMsg = false;
       app.addCompanyErrorMsg = false;
       $("#addCompanyModal").modal({
-        backdrop: 'static'
+        backdrop: 'static',
+        keyboard: false
       });
     }
 
@@ -284,6 +289,27 @@ angular.module('adminController', [])
           }
         }
       }
+    }
+
+    this.openEditCompanyModal = function(companyId) {
+      User.getCompanyInfo(companyId).then(function(companyData) {
+        if (companyData.data.success) {
+          app.editCompanySuccessMsg = false;
+          app.editCompanyErrorMsg = false;
+          app.editCompanyData = companyData.data.message;
+          $("#editCompanyModal").modal({
+            backdrop: 'static',
+            keyboard: false
+          });
+          $('#nonprofitSwitch').prop('indeterminate', true)
+        }
+      });
+    }
+
+    this.closeEditCompanyModal = function() {
+      $('#editCompanyModal').modal('hide');
+      app.editCompanySuccessMsg = false;
+      app.editCompanyErrorMsg = false;
     }
 
     this.openRemoveCompanyModal = function(companyName) {

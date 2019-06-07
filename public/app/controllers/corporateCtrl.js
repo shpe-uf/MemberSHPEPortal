@@ -123,6 +123,7 @@ angular.module('corporateController', ['userServices', 'authServices'])
       User.removeBookmark(companyId).then(function(data) {
         if (data.data.success) {
           var bookmarkIds = data.data.message;
+          app.company.bookmark = false;
 
           if (bookmarkIds.length > 0) {
             app.bookmarks = [];
@@ -133,7 +134,6 @@ angular.module('corporateController', ['userServices', 'authServices'])
                 }
               });
             }
-            app.company.bookmark = false;
           } else {
             app.bookmarks = [];
           }

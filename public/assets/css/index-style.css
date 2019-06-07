@@ -226,17 +226,17 @@ hr {
   text-transform: uppercase;
 }
 
-.nav-name:hover {
-  color: #007C96 !important;
-}
+/* .nav-name:hover {
+  color: #EB4616 !important;
+} */
 
 .admin-text {
   color: #00BCE4 !important;
 }
 
-.admin-text:hover {
-  color: #007C96 !important;
-}
+/* .admin-text:hover {
+  color: #EB4616 !important;
+} */
 
 .tab-pane {
   padding: 30px 10px 30px 10px;

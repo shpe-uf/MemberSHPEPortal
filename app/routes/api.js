@@ -1573,12 +1573,15 @@ module.exports = function(router) {
 
   // ENDPOINT TO CREATE EXCEL FILES FOR EVENT ATTENDANCE
   router.get('/getexceldoc/:eventId', function(req, res) {
+    console.log(req.params.eventId);
     User.find({
       events: {
         _id: req.params.eventId
       }
     }).select('firstName lastName major year email').exec(function(err, users) {
       if (err) throw err;
+
+      console.log(users);
 
       var fields = ['firstName', 'lastName', 'major', 'year', 'email'];
 
@@ -1594,7 +1597,7 @@ module.exports = function(router) {
 
       setTimeout(function() {
         res.sendFile(__dirname + "/excel/EventAttendance.csv");
-      }, 1500);
+      }, 2000);
     });
   });
 
