@@ -215,7 +215,7 @@
                       <th class="text-center">FALL BBQ</th>
                       <th class="text-center">SPRING BBQ</th>
                       <th class="text-center">NAT. CONV.</th>
-                      <th class="text-center">EDIT</th>
+                      <!-- <th class="text-center">EDIT</th> -->
                       <th class="text-center">REMOVE</th>
                       <th class="text-center">INFO</th>
                     </tr>
@@ -237,11 +237,11 @@
                         <i class="fas fa-check fa-true" ng-if="company.national"></i>
                         <i class="fas fa-times fa-false" ng-if="!company.national"></i>
                       </td>
-                      <td class="text-center">
+                      <!-- <td class="text-center">
                         <button type="button" class="btn btn-outline-warning" ng-click="admin.openEditCompanyModal(company._id)">
                           <i class="far fa-edit"></i>
                         </button>
-                      </td>
+                      </td> -->
                       <td class="text-center">
                         <button type="button" class="btn btn-outline-danger" ng-click="admin.openRemoveCompanyModal(company.name)">
                           <i class="fas fa-times"></i>
@@ -674,7 +674,7 @@
 </div>
 
 <!-- EDIT A COMPANY -->
-<div class="modal fade" id="editCompanyModal" aria-labelledby="editCompanyModalLabel">
+<!-- <div class="modal fade" id="editCompanyModal" aria-labelledby="editCompanyModalLabel">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -700,7 +700,6 @@
             <div class="form-group col-12 col-lg-6">
               <label for="companyLogo">Logo</label>
               <input type="file" class="form-control-file" name="logo" id="companyLogo" ng-model="editCompany.logo" ng-file-select="onFileSelect($files)">
-              <!-- <img class="col-12 img-fluid" ng-src="{{ editCompany.logo }}"> -->
             </div>
           </div>
 
@@ -830,9 +829,9 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
-<!-- MANUAL INPUT MODAL -->
+<!-- REMOVE COMPANY MODAL -->
 <div class="modal fade" id="removeCompanyModal" aria-labelledby="removeCompanyModalLabel">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -858,6 +857,117 @@
             </div>
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="moreInfoModal" aria-labelledby="moreInfoModalLabel">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="moreInfoModal">Company Profile</h2>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12">
+            <h3>{{ admin.company.name }}</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 col-lg-4">
+            <img class="img-fluid img-logo" ng-src="{{ admin.company.logo }}">
+            <div ng-if="admin.company.slogan">
+              <h4>Slogan</h4>
+              <p>"{{ admin.company.slogan }}"</p>
+            </div>
+            <h4>Majors</h4>
+            <p>{{ admin.company.majorsList }}</p>
+            <h4>Industries</h4>
+            <p>{{ admin.company.industryList }}</p>
+          </div>
+          <div class="col-12 col-lg-8">
+            <div ng-if="admin.company.overview">
+              <h4>Overview</h4>
+              <p>{{ admin.company.overview }}</p>
+            </div>
+            <div ng-if="admin.company.mission">
+              <h4>Mission</h4>
+              <p>{{ admin.company.mission }}</p>
+            </div>
+            <div ng-if="admin.company.goals">
+              <h4>Goals</h4>
+              <p>{{ admin.company.goals }}</p>
+            </div>
+            <div ng-if="admin.company.model">
+              <h4>Business Model/Operations Highlights</h4>
+              <p>{{ admin.company.model }}</p>
+            </div>
+            <div class="row" style="margin-bottom: 16px;">
+              <div class="col-6">
+                <h4>News Link</h4>
+                <a href="{{ admin.company.news }}" target="_blank" style="display: inline-block;">Click here</a>
+              </div>
+              <div class="col-6">
+                <h4>Apply Link</h4>
+                <a href="{{ admin.company.apply }}" target="_blank" style="display: inline-block;">Click here</a>
+              </div>
+            </div>
+            <h4>Other Information</h4>
+            <div class="row" style="margin-bottom: 16px;">
+              <div class="col-12">
+                <i class="fas fa-check fa-true" ng-if="admin.company.academia"></i>
+                <i class="fas fa-times fa-false" ng-if="!admin.company.academia"></i>
+                Academia
+              </div>
+              <div class="col-12">
+                <i class="fas fa-check fa-true" ng-if="admin.company.government"></i>
+                <i class="fas fa-times fa-false" ng-if="!admin.company.government"></i>
+                Government Department/Contractor
+              </div>
+              <div class="col-12">
+                <i class="fas fa-check fa-true" ng-if="admin.company.nonprofit"></i>
+                <i class="fas fa-times fa-false" ng-if="!admin.company.nonprofit"></i>
+                Non-profit Organization
+              </div>
+              <div class="col-12">
+                <i class="fas fa-check fa-true" ng-if="admin.company.visa"></i>
+                <i class="fas fa-times fa-false" ng-if="!admin.company.visa"></i>
+                Providing Visa Sponsorship
+              </div>
+              <div class="col-12">
+                <i class="fas fa-check fa-true" ng-if="admin.company.sponsor"></i>
+                <i class="fas fa-times fa-false" ng-if="!admin.company.sponsor"></i>
+                SHPE UF Sponsor
+              </div>
+              <div class="col-12">
+                <i class="fas fa-check fa-true" ng-if="admin.company.ipc"></i>
+                <i class="fas fa-times fa-false" ng-if="!admin.company.ipc"></i>
+                Industry Partnership Council
+              </div>
+              <div class="col-12">
+                <i class="fas fa-check fa-true" ng-if="admin.company.bbqFall"></i>
+                <i class="fas fa-times fa-false" ng-if="!admin.company.bbqFall"></i>
+                Attending Fall BBQ with Industry
+              </div>
+              <div class="col-12">
+                <i class="fas fa-check fa-true" ng-if="admin.company.bbqSpring"></i>
+                <i class="fas fa-times fa-false" ng-if="!admin.company.bbqSpring"></i>
+                Attending Spring BBQ with Industry
+              </div>
+              <div class="col-12">
+                <i class="fas fa-check fa-true" ng-if="admin.company.national"></i>
+                <i class="fas fa-times fa-false" ng-if="!admin.company.national"></i>
+                Attending SHPE National Convention
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <button type="button" class="btn btn-light" ng-click="admin.closeCompanyInfoModal()">Close</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
