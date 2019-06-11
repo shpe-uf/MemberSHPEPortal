@@ -1,6 +1,6 @@
 angular.module('emailController', ['userServices'])
 
-  .controller('usernameCtrl', function(User) {
+  .controller('usernameCtrl', function($timeout, $window, $location, User) {
 
     app = this;
 
@@ -11,6 +11,9 @@ angular.module('emailController', ['userServices'])
         User.sendUsername(app.userData.email).then(function(data) {
           if (data.data.success) {
             app.successMsg = data.data.message;
+            $timeout(function() {
+              $location.path('/login');
+            }, 1000);
           } else {
             app.errorMsg = data.data.message;
           }
@@ -21,7 +24,7 @@ angular.module('emailController', ['userServices'])
     };
   })
 
-  .controller('passwordCtrl', function(User) {
+  .controller('passwordCtrl', function($timeout, $window, $location, User) {
 
     app = this;
 
@@ -45,7 +48,7 @@ angular.module('emailController', ['userServices'])
     };
   })
 
-  .controller('resetCtrl', function(User, $routeParams, $scope) {
+  .controller('resetCtrl', function($timeout, $window, $location, $routeParams, $scope, User) {
 
     app = this;
     app.hide = true;
@@ -71,6 +74,9 @@ angular.module('emailController', ['userServices'])
         User.savePassword(app.regData).then(function(data) {
           if (data.data.success) {
             app.successMsg = data.data.message;
+            $timeout(function() {
+              $location.path('/login');
+            }, 1000);
           } else {
             app.errorMsg = data.data.message.errors.password.message;
           }

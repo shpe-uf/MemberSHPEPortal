@@ -13,17 +13,22 @@ var appRoutes = require('./app/routes/api')(router);
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(express.static(__dirname + '/public'));
 app.use('/api', appRoutes);
 
-mongoose.connect(process.env.URI, function(err) {
-  if (err) {
-    console.log('\nFAILURE: UNABLE TO CONNECT TO THE DATABASE:\n' + err);
-  } else {
-    console.log('\nSUCCESS: CONNECTED TO THE DATABASE\n');
-  }
-});
+mongoose.connect(process.env.URI, {
+    useNewUrlParser: true
+  },
+  function(err) {
+    if (err) {
+      console.log('\nFAILURE: UNABLE TO CONNECT TO THE DATABASE:\n' + err);
+    } else {
+      console.log('\nSUCCESS: CONNECTED TO THE DATABASE\n');
+    }
+  });
 
 app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname + '/public/app/views/index.html'));

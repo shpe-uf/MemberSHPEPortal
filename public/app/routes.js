@@ -61,6 +61,13 @@ var app = angular.module('appRoutes', ['ngRoute'])
         permission: ['admin']
       })
 
+      .when('/corporate', {
+        templateUrl: 'app/views/pages/corporate/corporate.html',
+        controller: 'corporateCtrl',
+        controllerAs: 'corporate',
+        authenticated: true
+      })
+
       .when('/forgotusername', {
         templateUrl: 'app/views/pages/users/reset/username.html',
         controller: 'usernameCtrl',
