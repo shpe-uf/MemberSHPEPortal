@@ -54,6 +54,9 @@ var UserSchema = new Schema({
     required: true,
     validate: lastNameValidator
   },
+  picture: {
+    type: String
+  },
   major: {
     type: String,
     required: true
