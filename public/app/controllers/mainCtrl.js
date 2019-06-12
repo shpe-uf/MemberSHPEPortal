@@ -181,6 +181,7 @@ angular.module('mainController', ['authServices', 'userServices'])
           app.springPoints = data.data.springPoints;
           app.summerPoints = data.data.summerPoints;
           app.events = data.data.events;
+          app.bookmarks = data.data.bookmarks;
 
           app.newUserInfo.username = data.data.username;
 

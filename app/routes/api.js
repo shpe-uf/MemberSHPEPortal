@@ -5,6 +5,7 @@ var User = require('../models/user');
 var Code = require('../models/code');
 var Request = require('../models/request');
 var Alumni = require('../models/alumni');
+var Company = require('../models/company');
 
 // NPM PACKAGES
 var jwt = require('jsonwebtoken');
@@ -65,7 +66,7 @@ module.exports = function(router) {
           }
 
           for (var i = 0; i < coordinates.length; i++) {
-            Alumni.update({
+            Alumni.updateOne({
               _id: alumni[i].id
             }, {
               coordinates: {
@@ -1579,6 +1580,8 @@ module.exports = function(router) {
     }).select('firstName lastName major year email').exec(function(err, users) {
       if (err) throw err;
 
+      console.log(users);
+
       var fields = ['firstName', 'lastName', 'major', 'year', 'email'];
 
       var json2csvParser = new Json2csvParser({
@@ -1593,7 +1596,7 @@ module.exports = function(router) {
 
       setTimeout(function() {
         res.sendFile(__dirname + "/excel/EventAttendance.csv");
-      }, 1500);
+      }, 2000);
     });
   });
 
@@ -1612,7 +1615,6 @@ module.exports = function(router) {
   });
 
   router.put('/edituserinfo/', function(req, res) {
-
     User.findOne({
       username: req.body.username
     }, function(err, user) {
@@ -1629,21 +1631,27 @@ module.exports = function(router) {
         if (req.body.firstName == "" || req.body.firstName == null) {
           req.body.firstName = user.firstName;
         }
+
         if (req.body.lastName == "" || req.body.lastName == null) {
           req.body.lastName = user.lastName;
         }
+
         if (req.body.major == "" || req.body.major == null) {
           req.body.major = user.major;
         }
+
         if (req.body.sex == "" || req.body.sex == null) {
           req.body.sex = user.sex;
         }
+
         if (req.body.year == "" || req.body.year == null) {
           req.body.year = user.year;
         }
+
         if (req.body.nationality == "" || req.body.nationality == null) {
           req.body.nationality = user.nationality;
         }
+
         if (req.body.ethnicity == "" || req.body.ethnicity == null) {
           req.body.ethnicity = user.ethnicity;
         }
@@ -1687,6 +1695,241 @@ module.exports = function(router) {
       })
     })
 
+  router.post('/addcompany/', function(req, res) {
+    if (req.body.name == "" || req.body.name == null || req.body.logo == "" || req.body.logo == null || req.body.majors == "" || req.body.majors == null || req.body.news == "" || req.body.news == null || req.body.apply == "" || req.body.apply == null || req.body.industry == "" || req.body.industry == null) {
+      res.json({
+        success: false,
+        message: "Name, logo, majors, industry, news link, and apply link are required."
+      })
+    } else {
+      if (req.body.academia == null || req.body.academia == "") {
+        req.body.academia = false;
+      }
+
+      if (req.body.government == null || req.body.government == "") {
+        req.body.government = false;
+      }
+
+      if (req.body.nonprofit == null || req.body.nonprofit == "") {
+        req.body.nonprofit = false;
+      }
+
+      if (req.body.visa == null || req.body.visa == "") {
+        req.body.visa = false;
+      }
+
+      if (req.body.bbqFall == null || req.body.bbqFall == "") {
+        req.body.bbqFall = false;
+      }
+
+      if (req.body.bbqSpring == null || req.body.bbqSpring == "") {
+        req.body.bbqSpring = false;
+      }
+
+      if (req.body.national == null || req.body.national == "") {
+        req.body.national = false;
+      }
+
+      if (req.body.sponsor == null || req.body.sponsor == "") {
+        req.body.sponsor = false;
+      }
+
+      if (req.body.ipc == null || req.body.ipc == "") {
+        req.body.ipc = false;
+      }
+
+      var company = new Company();
+      company.name = req.body.name;
+      company.logo = req.body.logo;
+      company.majors = req.body.majors;
+      company.overview = req.body.overview;
+      company.mission = req.body.mission;
+      company.goals = req.body.goals;
+      company.model = req.body.model;
+      company.news = req.body.news;
+      company.apply = req.body.apply;
+      company.industry = req.body.industry;
+      company.slogan = req.body.slogan;
+      company.academia = req.body.academia;
+      company.government = req.body.government;
+      company.nonprofit = req.body.nonprofit;
+      company.visa = req.body.visa;
+      company.bbqFall = req.body.bbqFall;
+      company.bbqSpring = req.body.bbqSpring;
+      company.national = req.body.national;
+      company.sponsor = req.body.sponsor;
+      company.ipc = req.body.ipc;
+
+      company.save(function(err) {
+        if (err) {
+          if (err.code == 11000) {
+            res.json({
+              success: false,
+              message: "Company is already in the Corporate Database."
+            });
+          } else {
+            res.json({
+              success: false,
+              message: err
+            });
+          }
+        } else {
+          res.json({
+            success: true,
+            message: "Company successfully added to Corporate Database."
+          });
+        }
+      });
+    }
+
+  });
+
+  router.get('/getcompanies/', function(req, res) {
+    Company.find({
+
+    }, function(err, company) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: company
+      })
+    })
+  });
+
+  router.get('/getcompanyinfo/:companyId', function(req, res) {
+    Company.findOne({
+      _id: req.params.companyId
+    }, function(err, company) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: company
+      });
+    });
+  });
+
+  router.delete('/removecompany/:companyName', function(req, res) {
+    Company.findOne({
+      name: req.params.companyName
+    }, function(err, company) {
+      if (err) throw err;
+
+      Company.deleteOne({
+        name: req.params.companyName
+      }, function(err, deletedCompany) {
+        if (err) throw err;
+
+        User.updateMany({
+          bookmarks: {
+            _id: company._id
+          }
+        }, {
+          $pull: {
+            bookmarks: {
+              _id: company._id
+            }
+          }
+        }, function (err, users) {
+          if (err) throw err;
+
+          res.json({
+            success: true,
+            message: req.params.companyName + " has been removed."
+          });
+        });
+      });
+    });
+  });
+
+  router.put('/addbookmark/:companyId', function(req, res) {
+    User.findOne({
+      username: req.decoded.username
+    }, function(err, user) {
+      if (err) throw err;
+
+      var isDuplicate = false;
+
+      for (var i = 0; i < user.bookmarks.length; i++) {
+        if (req.body.companyId == user.bookmarks[i]._id) {
+          isDuplicate = true;
+          break;
+        }
+      }
+
+      if (isDuplicate) {
+        res.json({
+          success: false
+        });
+      } else {
+        User.findOneAndUpdate({
+          username: req.decoded.username
+        }, {
+          $push: {
+            bookmarks: {
+              _id: req.params.companyId
+            }
+          }
+        }, function(err, newUser) {
+          if (err) throw err;
+
+          console.log(newUser);
+
+          if (!newUser) {
+            res.json({
+              success: false
+            });
+          } else {
+            res.json({
+              success: true,
+              message: "Hello"
+            });
+          }
+        });
+      }
+    });
+  });
+
+  router.get('/getbookmarkinfo/:companyId', function(req, res) {
+    Company.findOne({
+      _id: req.params.companyId
+    }, function(err, company) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: company
+      });
+    });
+  });
+
+  router.put('/removebookmark/:companyId', function(req, res) {
+    User.updateOne({
+      username: req.decoded.username
+    }, {
+      $pull: {
+        bookmarks: {
+          _id: req.params.companyId
+        }
+      }
+    }, function(err, user) {
+      if (err) throw err;
+
+      User.findOne({
+        username: req.decoded.username
+      }, function(err, updatedUser) {
+        if (err) throw err;
+
+        console.log("UPDATED USER BOOKMARKS");
+        console.log(updatedUser.bookmarks);
+
+        res.json({
+          success: true,
+          message: updatedUser.bookmarks
+        });
+      });
+    });
   });
 
   return router;
