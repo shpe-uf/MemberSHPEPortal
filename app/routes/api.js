@@ -1692,8 +1692,9 @@ module.exports = function(router) {
       if (err) throw err;
       res.json({
         success: true
-      })
-    })
+      });
+    });
+  });
 
   router.post('/addcompany/', function(req, res) {
     if (req.body.name == "" || req.body.name == null || req.body.logo == "" || req.body.logo == null || req.body.majors == "" || req.body.majors == null || req.body.news == "" || req.body.news == null || req.body.apply == "" || req.body.apply == null || req.body.industry == "" || req.body.industry == null) {
@@ -1831,7 +1832,7 @@ module.exports = function(router) {
               _id: company._id
             }
           }
-        }, function (err, users) {
+        }, function(err, users) {
           if (err) throw err;
 
           res.json({

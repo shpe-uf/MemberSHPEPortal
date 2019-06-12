@@ -1,4 +1,4 @@
-angular.module('adminController', ['UserServices'])
+angular.module('adminController', ['userServices'])
   .controller('adminCtrl', function($timeout, $route, $window, $scope, $filter, $http, fileReader, User) {
 
     var app = this;
@@ -383,10 +383,12 @@ angular.module('adminController', ['UserServices'])
         username: username,
         permission: permissiontype
       };
-      console.log(userData)
       User.changeUserPermission(userData).then(function(data) {
         if (data.data.success == true)
           app.user.permission = permissiontype;
+          User.getUsers().then(function(data) {
+            app.users = data.data.message;
+          });
       });
     };
 
