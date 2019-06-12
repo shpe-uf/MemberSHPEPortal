@@ -162,6 +162,10 @@ angular.module('userServices', [])
     userFactory.editUserInfo = function(userInfo) {
       return $http.put('api/edituserinfo/', userInfo);
     };
+    //CHANGING USER PERMISSION
+    userFactory.changeUserPermission = function(updateUser){
+      return $http.put('api/changeuserpermission/', updateUser);
+    };
 
     // ADD A COMPANY INTO THE CORPORATE DATABASE
     userFactory.addCompany = function(companyInfo) {
@@ -198,4 +202,6 @@ angular.module('userServices', [])
     };
 
     return userFactory;
+
+
   });

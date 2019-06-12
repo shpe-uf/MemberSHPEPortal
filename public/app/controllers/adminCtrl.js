@@ -1,4 +1,4 @@
-angular.module('adminController', [])
+angular.module('adminController', ['userServices'])
   .controller('adminCtrl', function($timeout, $route, $window, $scope, $filter, $http, fileReader, User) {
 
     var app = this;
@@ -376,6 +376,20 @@ angular.module('adminController', [])
 
     this.closeCompanyInfoModal = function() {
       $('#moreInfoModal').modal('hide');
+    };
+
+    this.changePermission = function(username, permissiontype) {
+      var userData = {
+        username: username,
+        permission: permissiontype
+      };
+      User.changeUserPermission(userData).then(function(data) {
+        if (data.data.success == true)
+          app.user.permission = permissiontype;
+          User.getUsers().then(function(data) {
+            app.users = data.data.message;
+          });
+      });
     };
 
     User.getUsers().then(function(data) {

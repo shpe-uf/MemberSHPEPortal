@@ -1573,7 +1573,6 @@ module.exports = function(router) {
 
   // ENDPOINT TO CREATE EXCEL FILES FOR EVENT ATTENDANCE
   router.get('/getexceldoc/:eventId', function(req, res) {
-    console.log(req.params.eventId);
     User.find({
       events: {
         _id: req.params.eventId
@@ -1681,6 +1680,19 @@ module.exports = function(router) {
           }
         });
       }
+    });
+  });
+
+  router.put('/changeuserpermission/', function(req, res) {
+    User.findOneAndUpdate({
+      username: req.body.username
+    }, {
+      permission: req.body.permission
+    }, function(err, user) {
+      if (err) throw err;
+      res.json({
+        success: true
+      });
     });
   });
 
@@ -1820,7 +1832,7 @@ module.exports = function(router) {
               _id: company._id
             }
           }
-        }, function (err, users) {
+        }, function(err, users) {
           if (err) throw err;
 
           res.json({

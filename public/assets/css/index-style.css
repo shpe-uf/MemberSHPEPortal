@@ -62,7 +62,7 @@ html {
   vertical-align: text-bottom;
 }
 
-.navbar-caps {
+.caps {
   font-family: 'heading-font';
 }
 
@@ -229,7 +229,6 @@ hr {
 /* .nav-name:hover {
   color: #EB4616 !important;
 } */
-
 .admin-text {
   color: #00BCE4 !important;
 }
@@ -237,7 +236,6 @@ hr {
 /* .admin-text:hover {
   color: #EB4616 !important;
 } */
-
 .tab-pane {
   padding: 30px 10px 30px 10px;
 }
@@ -529,6 +527,11 @@ a {
   background-color: #33A445;
   border-color: #33A445;
   color: #FFFFFF;
+}
+
+.btn-group-toggle {
+  margin-bottom: 16px;
+  text-align: center;
 }
 
 .ellipsis {
