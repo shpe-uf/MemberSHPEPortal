@@ -338,8 +338,8 @@ angular.module('statsController', [])
       for (var i = 0; i < pointDistributionArray.total.length; i++) {
         if (pointDistributionArray.total[i]._id != null) {
           var point = {
-            x: pointDistributionArray.total[i]._id,
-            y: pointDistributionArray.total[i].count
+            x: pointDistributionArray.total[i].count,
+            y: pointDistributionArray.total[i]._id
           };
           totalData.push(point);
         }
@@ -348,8 +348,8 @@ angular.module('statsController', [])
       for (var i = 0; i < pointDistributionArray.fall.length; i++) {
         if (pointDistributionArray.fall[i]._id != null) {
           var point = {
-            x: pointDistributionArray.fall[i]._id,
-            y: pointDistributionArray.fall[i].count
+            x: pointDistributionArray.fall[i].count,
+            y: pointDistributionArray.fall[i]._id
           };
           fallData.push(point);
         }
@@ -358,8 +358,8 @@ angular.module('statsController', [])
       for (var i = 0; i < pointDistributionArray.spring.length; i++) {
         if (pointDistributionArray.spring[i]._id != null) {
           var point = {
-            x: pointDistributionArray.spring[i]._id,
-            y: pointDistributionArray.spring[i].count
+            x: pointDistributionArray.spring[i].count,
+            y: pointDistributionArray.spring[i]._id
           };
           springData.push(point);
         }
@@ -368,8 +368,8 @@ angular.module('statsController', [])
       for (var i = 0; i < pointDistributionArray.summer.length; i++) {
         if (pointDistributionArray.summer[i]._id != null) {
           var point = {
-            x: pointDistributionArray.summer[i]._id,
-            y: pointDistributionArray.summer[i].count
+            x: pointDistributionArray.summer[i].count,
+            y: pointDistributionArray.summer[i]._id
           };
           summerData.push(point);
         }
@@ -421,14 +421,14 @@ angular.module('statsController', [])
                 display: true,
                 scaleLabel: {
                   display: true,
-                  labelString: 'Points'
+                  labelString: '# of Members'
                 }
               }],
               yAxes: [{
                 display: true,
                 scaleLabel: {
                   display: true,
-                  labelString: '# of Members'
+                  labelString: 'Points'
                 }
               }]
             }

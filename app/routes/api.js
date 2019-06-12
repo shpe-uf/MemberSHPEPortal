@@ -5,6 +5,7 @@ var User = require('../models/user');
 var Code = require('../models/code');
 var Request = require('../models/request');
 var Alumni = require('../models/alumni');
+var Company = require('../models/company');
 
 // NPM PACKAGES
 var jwt = require('jsonwebtoken');
@@ -16,7 +17,7 @@ var Json2csvParser = require('json2csv').Parser;
 var fs = require('fs');
 var secret = process.env.SECRET;
 
-module.exports = function (router) {
+module.exports = function(router) {
 
   var transporter = nodemailer.createTransport({
     service: process.env.SERVICE,
@@ -34,10 +35,10 @@ module.exports = function (router) {
   };
 
   // ENDPOINT TO ADD ALUMNI COORDINATES
-  router.get('/alumnicoordinates', function (req, res) {
+  router.get('/alumnicoordinates', function(req, res) {
     Alumni.find({
 
-    }).select('id city state country').exec(function (err, alumni) {
+    }).select('id city state country').exec(function(err, alumni) {
       if (err) throw err;
 
       var locations = [];
@@ -49,7 +50,7 @@ module.exports = function (router) {
 
       var geocoder = nodeGeocoder(ngcOptions);
 
-      geocoder.batchGeocode(locations, function (err, results) {
+      geocoder.batchGeocode(locations, function(err, results) {
         if (err) throw err;
 
         if (results) {
@@ -65,7 +66,7 @@ module.exports = function (router) {
           }
 
           for (var i = 0; i < coordinates.length; i++) {
-            Alumni.update({
+            Alumni.updateOne({
               _id: alumni[i].id
             }, {
               coordinates: {
@@ -74,7 +75,7 @@ module.exports = function (router) {
               },
             }, {
               multi: true
-            }, function (err, updatedAlumni) {
+            }, function(err, updatedAlumni) {
               if (err) throw err;
             });
           }
@@ -84,10 +85,10 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO GET LISTSERV
-  router.get('/listServ', function (req, res) {
+  router.get('/listServ', function(req, res) {
     User.find({
       listServ: true
-    }).select('firstName lastName email').exec(function (err, members) {
+    }).select('firstName lastName email').exec(function(err, members) {
       if (err) throw err;
 
       res.json({
@@ -98,16 +99,16 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO ADD SEMESTER FIELD TO CODES MODEL
-  router.put('/addsemester', function (req, res) {
+  router.put('/addsemester', function(req, res) {
     Code.find({
 
-    }, function (err, events) {
+    }, function(err, events) {
       if (err) throw err;
 
       for (var i = 0; i < events.length; i++) {
         Code.find({
           code: events[i].code
-        }, function (err, event) {
+        }, function(err, event) {
           var eventSemester = "";
 
           if (event[0].expiration.getMonth() >= 0 && event[0].expiration.getMonth() <= 3) {
@@ -124,7 +125,7 @@ module.exports = function (router) {
             $set: {
               semester: eventSemester
             }
-          }, function (err, newEvent) {
+          }, function(err, newEvent) {
             if (err) throw err;
           });
         });
@@ -135,10 +136,10 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO RETROACTIVELY SPLIT FALL AND SPRING SEMESTER POINTS
-  router.put('/split', async function (req, res) {
+  router.put('/split', async function(req, res) {
     User.find({
 
-    }, function (err, users) {
+    }, function(err, users) {
       if (err) throw err;
 
       var userNum = req.body.number;
@@ -152,7 +153,7 @@ module.exports = function (router) {
             springPoints: 0,
             summerPoints: 0
           }
-        }, function (err, newUser) {
+        }, function(err, newUser) {
           if (err) throw err;
         });
       } else {
@@ -163,7 +164,7 @@ module.exports = function (router) {
         for (var j = 0; j < users[userNum].events.length; j++) {
           Code.findOne({
             _id: users[userNum].events[j]._id
-          }, function (err, code) {
+          }, function(err, code) {
             if (err) throw err;
 
             if (code.semester == "Fall") {
@@ -176,7 +177,7 @@ module.exports = function (router) {
           });
         }
 
-        setTimeout(function () {
+        setTimeout(function() {
           User.findOneAndUpdate({
             username: users[userNum].username
           }, {
@@ -185,7 +186,7 @@ module.exports = function (router) {
               springPoints: spring,
               summerPoints: summer
             }
-          }, function (err, newUser) {
+          }, function(err, newUser) {
             if (err) throw err;
 
             res.send(newUser);
@@ -196,7 +197,7 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO CREATE/REGISTER USERS
-  router.post('/users', function (req, res) {
+  router.post('/users', function(req, res) {
     var user = new User();
     user.firstName = req.body.firstName;
     user.lastName = req.body.lastName;
@@ -216,7 +217,7 @@ module.exports = function (router) {
         message: 'Make sure you filled out the entire form!'
       });
     } else {
-      user.save(function (err) {
+      user.save(function(err) {
         if (err) {
           if (err.errors != null) {
             if (err.errors.firstName) {
@@ -274,7 +275,7 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO CREATE EVENT CODES
-  router.post('/codes', function (req, res) {
+  router.post('/codes', function(req, res) {
     if (req.body.name == null || req.body.code == null || req.body.type == null || req.body.expiration == null || req.body.name == '' || req.body.code == '' || req.body.type == '' || req.body.expiration == '') {
       res.json({
         success: false,
@@ -310,7 +311,7 @@ module.exports = function (router) {
         code.semester = "Fall";
       }
 
-      code.save(function (err) {
+      code.save(function(err) {
         if (err) {
           if (err.errors != null) {
             if (err.errors.name) {
@@ -368,10 +369,10 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO SIGN IN AND AUTHENTICATE USER
-  router.post('/authenticate', function (req, res) {
+  router.post('/authenticate', function(req, res) {
     User.findOne({
       username: req.body.username
-    }).select().exec(function (err, user) {
+    }).select().exec(function(err, user) {
       if (err) throw err;
 
       if (!user) {
@@ -414,10 +415,10 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO SEND THE USER A FORGOT USERNAME EMAIL
-  router.get('/forgetusername/:email', function (req, res) {
+  router.get('/forgetusername/:email', function(req, res) {
     User.findOne({
       email: req.params.email
-    }).select('email firstName username').exec(function (err, user) {
+    }).select('email firstName username').exec(function(err, user) {
       if (err) {
         res.json({
           success: false,
@@ -444,7 +445,7 @@ module.exports = function (router) {
               html: 'Hello<strong> ' + user.firstName + '</strong>,<br><br>You have requested the username for your MemberSHPE UF account.<br><br> Your username is: <strong>' + user.username + '</strong><br><br>If you think it was sent incorrectly, please contact a SHPE UF officer.<br><br><strong>MemberSHPE Team</strong>'
             };
 
-            transporter.sendMail(email, function (err, info) {
+            transporter.sendMail(email, function(err, info) {
               if (err) {
                 console.log(err);
                 throw err;
@@ -462,10 +463,10 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO SEND THE USER A RESET PASSWORD EMAIL
-  router.put('/resetpassword/', function (req, res) {
+  router.put('/resetpassword/', function(req, res) {
     User.findOne({
       username: req.body.username
-    }).select('username email resettoken firstName').exec(function (err, user) {
+    }).select('username email resettoken firstName').exec(function(err, user) {
 
       if (err) throw err;
 
@@ -482,7 +483,7 @@ module.exports = function (router) {
           expiresIn: '24h'
         });
 
-        user.save(function (err) {
+        user.save(function(err) {
           if (err) {
             res.json({
               success: false,
@@ -497,7 +498,7 @@ module.exports = function (router) {
               html: 'Hello<strong> ' + user.firstName + '</strong>,<br><br>You recently requested a password reset link. Please click on the link below to reset your password:<br><br><a href="http://membershpeuf.herokuapp.com/reset/' + user.resettoken + '">Password Reset Link</a>'
             };
 
-            transporter.sendMail(email, function (err, info) {
+            transporter.sendMail(email, function(err, info) {
               if (err) {
                 console.log(err);
                 throw err;
@@ -515,15 +516,15 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO RESET THE PASSWORD
-  router.get('/resetpassword/:token', function (req, res) {
+  router.get('/resetpassword/:token', function(req, res) {
     User.findOne({
       resettoken: req.params.token
-    }).select().exec(function (err, user) {
+    }).select().exec(function(err, user) {
       if (err) throw err;
 
       var token = req.params.token;
 
-      jwt.verify(token, secret, function (err, decoded) {
+      jwt.verify(token, secret, function(err, decoded) {
         if (err) {
           res.json({
             success: false,
@@ -548,10 +549,10 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO SAVE PASSWORD
-  router.put('/savepassword', function (req, res) {
+  router.put('/savepassword', function(req, res) {
     User.findOne({
       username: req.body.username
-    }).select('firstName username email password resettoken').exec(function (err, user) {
+    }).select('firstName username email password resettoken').exec(function(err, user) {
       if (err) throw err;
 
       if (req.body.password == null || req.body.password == '') {
@@ -563,7 +564,7 @@ module.exports = function (router) {
         user.password = req.body.password;
         user.resettoken = false;
 
-        user.save(function (err) {
+        user.save(function(err) {
           if (err) {
             res.json({
               success: false,
@@ -579,7 +580,7 @@ module.exports = function (router) {
               html: 'Hello<strong> ' + user.firstName + '</strong>,<br><br>This email is to notify you that your password was reset at MemberSHPE UF'
             };
 
-            transporter.sendMail(email, function (err, info) {
+            transporter.sendMail(email, function(err, info) {
               if (err) {
                 console.log(err);
                 throw err;
@@ -597,11 +598,11 @@ module.exports = function (router) {
   });
 
   // MIDDLEWARE TO LOG USER IN
-  router.use(function (req, res, next) {
+  router.use(function(req, res, next) {
     var token = req.body.token || req.body.query || req.headers['x-access-token'];
 
     if (token) {
-      jwt.verify(token, secret, function (err, decoded) {
+      jwt.verify(token, secret, function(err, decoded) {
         if (err) {
           res.json({
             success: false,
@@ -621,19 +622,19 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO SEND USER PROFILE INFORMATION
-  router.post('/me', function (req, res) {
+  router.post('/me', function(req, res) {
     User.findOne({
       username: req.decoded.username
-    }).select().exec(function (err, user) {
+    }).select().exec(function(err, user) {
       res.send(user);
     });
   });
 
   // ENDPOINT TO RENEW THE USER TOKEN
-  router.get('/renewtoken/:username', function (req, res) {
+  router.get('/renewtoken/:username', function(req, res) {
     User.findOne({
       username: req.params.username
-    }).select().exec(function (err, user) {
+    }).select().exec(function(err, user) {
       if (!user) {
         res.json({
           success: false,
@@ -655,10 +656,10 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO DETERMINE USER PERMISSION
-  router.get('/permission', function (req, res) {
+  router.get('/permission', function(req, res) {
     User.findOne({
       username: req.decoded.username
-    }, function (err, user) {
+    }, function(err, user) {
       if (err) throw err;
 
       if (!user) {
@@ -676,14 +677,14 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO RETRIEVE ALL USERS
-  router.get('/admin', function (req, res) {
+  router.get('/admin', function(req, res) {
     User.find({
 
-    }, function (err, users) {
+    }, function(err, users) {
       if (err) throw err;
       User.findOne({
         username: req.decoded.username
-      }, function (err, mainUser) {
+      }, function(err, mainUser) {
         if (err) throw err;
 
         if (!mainUser) {
@@ -717,14 +718,14 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO RETRIEVE EVENT CODES
-  router.get('/getcodes', function (req, res) {
+  router.get('/getcodes', function(req, res) {
     Code.find({
 
-    }, function (err, events) {
+    }, function(err, events) {
       if (err) throw err;
       User.findOne({
         username: req.decoded.username
-      }, function (err, mainUser) {
+      }, function(err, mainUser) {
         if (err) throw err;
 
         if (!mainUser) {
@@ -758,7 +759,7 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO ADD A REQUEST (*)
-  router.put('/addrequest', function (req, res) {
+  router.put('/addrequest', function(req, res) {
 
     if (req.body.code == null || req.body.code == '') {
       res.json({
@@ -768,7 +769,7 @@ module.exports = function (router) {
     } else {
       Code.findOne({
         code: req.body.code.toLowerCase()
-      }).select().exec(function (err, code) {
+      }).select().exec(function(err, code) {
 
         if (err) throw err;
 
@@ -785,7 +786,7 @@ module.exports = function (router) {
         } else {
           User.findOne({
             username: req.decoded.username
-          }, function (err, user) {
+          }, function(err, user) {
             if (err) throw err;
 
             var isDuplicate = false;
@@ -823,7 +824,7 @@ module.exports = function (router) {
                         points: code.points,
                         fallPoints: code.points
                       }
-                    }, function (err, user) {
+                    }, function(err, user) {
                       if (err) throw (err);
 
                       if (!user) {
@@ -851,7 +852,7 @@ module.exports = function (router) {
                         points: code.points,
                         springPoints: code.points
                       }
-                    }, function (err, user) {
+                    }, function(err, user) {
                       if (err) throw (err);
 
                       if (!user) {
@@ -879,7 +880,7 @@ module.exports = function (router) {
                         points: code.points,
                         summer: code.points
                       }
-                    }, function (err, user) {
+                    }, function(err, user) {
                       if (err) throw (err);
 
                       if (!user) {
@@ -912,7 +913,7 @@ module.exports = function (router) {
                   Request.findOne({
                     userId: user._id,
                     eventId: code._id
-                  }).select().exec(function (err, request) {
+                  }).select().exec(function(err, request) {
                     if (err) throw err;
 
                     if (request) {
@@ -921,7 +922,7 @@ module.exports = function (router) {
                         message: 'Request has already been submitted.'
                       });
                     } else {
-                      newRequest.save(function (err) {
+                      newRequest.save(function(err) {
                         if (err) {
                           res.json({
                             success: false,
@@ -946,10 +947,10 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO GRAB EVENT CODE INFORMATION FOR INDIVIDUAL USERS
-  router.get('/getcodeinfo/:code', function (req, res) {
+  router.get('/getcodeinfo/:code', function(req, res) {
     Code.findOne({
       _id: req.params.code
-    }).populate().exec(function (err, event) {
+    }).populate().exec(function(err, event) {
       if (err) throw err;
 
       res.json({
@@ -960,14 +961,14 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO GRAB ALL OF THE REQUESTS (*)
-  router.get('/getrequests', function (req, res) {
+  router.get('/getrequests', function(req, res) {
     Request.find({
 
-    }, function (err, requests) {
+    }, function(err, requests) {
       if (err) throw err;
       User.findOne({
         username: req.decoded.username
-      }, function (err, mainUser) {
+      }, function(err, mainUser) {
         if (err) throw err;
 
         if (!mainUser) {
@@ -1001,7 +1002,7 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO APPROVE REQUESTS
-  router.put('/approverequest', function (req, res) {
+  router.put('/approverequest', function(req, res) {
     if (req.body.semester == "Fall") {
       User.findOneAndUpdate({
         username: req.body.username,
@@ -1015,7 +1016,7 @@ module.exports = function (router) {
           points: req.body.points,
           fallPoints: req.body.points
         }
-      }, function (err, user) {
+      }, function(err, user) {
         if (err) throw (err);
 
         if (!user) {
@@ -1026,7 +1027,7 @@ module.exports = function (router) {
         } else {
           Request.deleteOne({
             _id: req.body._id
-          }, function (err, deletedRequest) {
+          }, function(err, deletedRequest) {
             if (err) throw (err);
 
             res.json({
@@ -1049,7 +1050,7 @@ module.exports = function (router) {
           points: req.body.points,
           springPoints: req.body.points
         }
-      }, function (err, user) {
+      }, function(err, user) {
         if (err) throw (err);
 
         if (!user) {
@@ -1060,7 +1061,7 @@ module.exports = function (router) {
         } else {
           Request.deleteOne({
             _id: req.body._id
-          }, function (err, deletedRequest) {
+          }, function(err, deletedRequest) {
             if (err) throw (err);
 
             res.json({
@@ -1083,7 +1084,7 @@ module.exports = function (router) {
           points: req.body.points,
           summerPoints: req.body.points
         }
-      }, function (err, user) {
+      }, function(err, user) {
         if (err) throw (err);
 
         if (!user) {
@@ -1094,7 +1095,7 @@ module.exports = function (router) {
         } else {
           Request.deleteOne({
             _id: req.body._id
-          }, function (err, deletedRequest) {
+          }, function(err, deletedRequest) {
             if (err) throw (err);
 
             res.json({
@@ -1108,10 +1109,10 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO DENY REQUESTS
-  router.put('/denyrequest', function (req, res) {
+  router.put('/denyrequest', function(req, res) {
     Request.deleteOne({
       _id: req.body._id
-    }, function (err, deletedRequest) {
+    }, function(err, deletedRequest) {
       if (err) throw (err);
 
       res.json({
@@ -1122,7 +1123,7 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO CALCULATE USER POINT PERCENTILE
-  router.get('/getpercentile/:username', function (req, res) {
+  router.get('/getpercentile/:username', function(req, res) {
     var fallPercentile = 0;
     var springPercentile = 0;
     var summerPercentile = 0;
@@ -1132,12 +1133,12 @@ module.exports = function (router) {
 
     User.findOne({
       username: req.decoded.username
-    }, function (err, user) {
+    }, function(err, user) {
       if (err) throw err;
 
       User.find({
 
-      }).select('fallPoints springPoints summerPoints ').exec(function (err, userArray) {
+      }).select('fallPoints springPoints summerPoints ').exec(function(err, userArray) {
         if (err) throw err;
 
         for (var i = 0; i < userArray.length; i++) {
@@ -1171,12 +1172,12 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO GRAB EVENT ATTENDANCE
-  router.get('/getattendance/:eventid', function (req, res) {
+  router.get('/getattendance/:eventid', function(req, res) {
     User.find({
       events: {
         _id: req.params.eventid
       }
-    }).populate().exec(function (err, users) {
+    }).populate().exec(function(err, users) {
       if (err) throw err;
 
       res.json({
@@ -1187,7 +1188,7 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO MANUALLY INPUT POINTS FOR MEMBERS
-  router.put('/manualinput', function (req, res) {
+  router.put('/manualinput', function(req, res) {
     if (req.body.member == null || req.body.member == "" || req.body.member == undefined || req.body.member.userName == null || req.body.member.userName == '' || req.body.member.userName == undefined) {
       res.json({
         success: false,
@@ -1196,7 +1197,7 @@ module.exports = function (router) {
     } else {
       User.findOne({
         username: req.body.member.userName
-      }).select().exec(function (err, user) {
+      }).select().exec(function(err, user) {
         if (err) throw err;
 
         if (!user) {
@@ -1223,7 +1224,7 @@ module.exports = function (router) {
           } else {
             Code.findOne({
               _id: req.body.eventId
-            }).select().exec(function (err, code) {
+            }).select().exec(function(err, code) {
               if (code.semester == "Fall") {
                 User.findOneAndUpdate({
                   username: user.username
@@ -1237,7 +1238,7 @@ module.exports = function (router) {
                     points: code.points,
                     fallPoints: code.points
                   }
-                }, function (err, newUser) {
+                }, function(err, newUser) {
                   if (err) throw err;
 
                   if (!newUser) {
@@ -1265,7 +1266,7 @@ module.exports = function (router) {
                     points: code.points,
                     springPoints: code.points
                   }
-                }, function (err, newUser) {
+                }, function(err, newUser) {
                   if (err) throw err;
 
                   if (!newUser) {
@@ -1293,7 +1294,7 @@ module.exports = function (router) {
                     points: code.points,
                     summerPoints: code.points
                   }
-                }, function (err, newUser) {
+                }, function(err, newUser) {
                   if (err) throw err;
 
                   if (!newUser) {
@@ -1317,7 +1318,7 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO RETRIEVE TABLE WITH COUNT OF MEMBER MAJORS
-  router.get('/getmembermajorstat', function (req, res) {
+  router.get('/getmembermajorstat', function(req, res) {
     User.aggregate([{
         $group: {
           _id: '$major',
@@ -1331,7 +1332,7 @@ module.exports = function (router) {
           count: -1
         }
       }
-    ], function (err, result) {
+    ], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -1342,7 +1343,7 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO RETRIEVE TABLE WITH COUNT OF MEMBER YEARS
-  router.get('/getmemberyearstat', function (req, res) {
+  router.get('/getmemberyearstat', function(req, res) {
     User.aggregate([{
         $group: {
           _id: '$year',
@@ -1356,7 +1357,7 @@ module.exports = function (router) {
           count: -1
         }
       }
-    ], function (err, result) {
+    ], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -1367,7 +1368,7 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO RETRIEVE TABLE WITH COUNT OF MEMBER NATIONALITIES
-  router.get('/getmembernationalitystat', function (req, res) {
+  router.get('/getmembernationalitystat', function(req, res) {
     User.aggregate([{
         $group: {
           _id: '$nationality',
@@ -1381,7 +1382,7 @@ module.exports = function (router) {
           count: -1
         }
       }
-    ], function (err, result) {
+    ], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -1392,7 +1393,7 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO RETRIEVE TABLE WITH COUNT OF MEMBER SEXES
-  router.get('/getmembersexstat', function (req, res) {
+  router.get('/getmembersexstat', function(req, res) {
     User.aggregate([{
         $group: {
           _id: '$sex',
@@ -1406,7 +1407,7 @@ module.exports = function (router) {
           count: -1
         }
       }
-    ], function (err, result) {
+    ], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -1417,7 +1418,7 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO RETRIEVE TABLE WITH COUNT OF MEMBER ETHNICITIES
-  router.get('/getmemberethnicitystat', function (req, res) {
+  router.get('/getmemberethnicitystat', function(req, res) {
     User.aggregate([{
         $group: {
           _id: '$ethnicity',
@@ -1431,7 +1432,7 @@ module.exports = function (router) {
           count: -1
         }
       }
-    ], function (err, result) {
+    ], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -1442,7 +1443,7 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO RETRIVE TOTAL POINT DISTRIBUTION
-  router.get('/gettotalpointdistribution', function (req, res) {
+  router.get('/gettotalpointdistribution', function(req, res) {
     User.aggregate([{
       $group: {
         _id: '$points',
@@ -1454,7 +1455,7 @@ module.exports = function (router) {
       $sort: {
         _id: 1
       }
-    }], function (err, result) {
+    }], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -1465,7 +1466,7 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO RETRIVE FALL POINT DISTRIBUTION
-  router.get('/getfallpointdistribution', function (req, res) {
+  router.get('/getfallpointdistribution', function(req, res) {
     User.aggregate([{
       $group: {
         _id: '$fallPoints',
@@ -1477,7 +1478,7 @@ module.exports = function (router) {
       $sort: {
         _id: 1
       }
-    }], function (err, result) {
+    }], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -1488,7 +1489,7 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO RETRIVE SPRING POINT DISTRIBUTION
-  router.get('/getspringpointdistribution', function (req, res) {
+  router.get('/getspringpointdistribution', function(req, res) {
     User.aggregate([{
       $group: {
         _id: '$springPoints',
@@ -1500,7 +1501,7 @@ module.exports = function (router) {
       $sort: {
         _id: 1
       }
-    }], function (err, result) {
+    }], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -1511,7 +1512,7 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO RETRIVE SPRING POINT DISTRIBUTION
-  router.get('/getsummerpointdistribution', function (req, res) {
+  router.get('/getsummerpointdistribution', function(req, res) {
     User.aggregate([{
       $group: {
         _id: '$summerPoints',
@@ -1523,7 +1524,7 @@ module.exports = function (router) {
       $sort: {
         _id: 1
       }
-    }], function (err, result) {
+    }], function(err, result) {
       if (err) throw err;
 
       res.json({
@@ -1534,10 +1535,10 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO RETRIEVE ALUMNI COLLECTION
-  router.get('/getalumni', function (req, res) {
+  router.get('/getalumni', function(req, res) {
     Alumni.find({
 
-    }, function (err, alumni) {
+    }, function(err, alumni) {
       if (err) throw err;
 
       res.json({
@@ -1548,10 +1549,10 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO GENERATE ALUMNI COORDINATES
-  router.get('/getcoordinates', function (req, res) {
+  router.get('/getcoordinates', function(req, res) {
     Alumni.find({
 
-    }).select('coordinates').exec(function (err, alumni) {
+    }).select('coordinates').exec(function(err, alumni) {
       if (err) throw err;
 
       var coordinatesArray = [];
@@ -1571,13 +1572,16 @@ module.exports = function (router) {
   });
 
   // ENDPOINT TO CREATE EXCEL FILES FOR EVENT ATTENDANCE
-  router.get('/getexceldoc/:eventId', function (req, res) {
+  router.get('/getexceldoc/:eventId', function(req, res) {
+    console.log(req.params.eventId);
     User.find({
       events: {
         _id: req.params.eventId
       }
-    }).select('firstName lastName major year email').exec(function (err, users) {
+    }).select('firstName lastName major year email').exec(function(err, users) {
       if (err) throw err;
+
+      console.log(users);
 
       var fields = ['firstName', 'lastName', 'major', 'year', 'email'];
 
@@ -1587,21 +1591,21 @@ module.exports = function (router) {
 
       var csv = json2csvParser.parse(users);
 
-      fs.writeFile('app/routes/excel/EventAttendance.csv', csv, function (err) {
+      fs.writeFile('app/routes/excel/EventAttendance.csv', csv, function(err) {
         if (err) throw err;
       });
 
-      setTimeout(function () {
+      setTimeout(function() {
         res.sendFile(__dirname + "/excel/EventAttendance.csv");
-      }, 1500);
+      }, 2000);
     });
   });
 
   //ENDPOINT TO GENERATE INDIVIDUAL USER INFO
-  router.get('/getuserinfo/:username', function (req, res) {
+  router.get('/getuserinfo/:username', function(req, res) {
     User.find({
       username: req.params.username
-    }, function (err, user) {
+    }, function(err, user) {
       if (err) throw err;
 
       res.json({
@@ -1611,39 +1615,44 @@ module.exports = function (router) {
     });
   });
 
-  router.put('/edituserinfo/', function (req, res) {
-
+  router.put('/edituserinfo/', function(req, res) {
     User.findOne({
       username: req.body.username
-    }, function (err, user) {
+    }, function(err, user) {
       if (err) throw err;
 
       if ((req.body.firstName == "" || req.body.firstName == null) && (req.body.lastName == "" || req.body.lastName == null) && (req.body.major == "" || req.body.major == null) && (req.body.major == "" || req.body.major == null) && (req.body.sex == "" || req.body.sex == null) && (req.body.year == "" || req.body.year == null) && (req.body.nationality == "" || req.body.nationality == null) && (req.body.ethnicity == "" || req.body.ethnicity == null)) {
 
         res.json({
-            empty:true,
-            message:"No changes were made."
+          empty: true,
+          message: "No changes were made."
         });
 
-      }else{
+      } else {
         if (req.body.firstName == "" || req.body.firstName == null) {
           req.body.firstName = user.firstName;
         }
+
         if (req.body.lastName == "" || req.body.lastName == null) {
           req.body.lastName = user.lastName;
         }
+
         if (req.body.major == "" || req.body.major == null) {
           req.body.major = user.major;
         }
+
         if (req.body.sex == "" || req.body.sex == null) {
           req.body.sex = user.sex;
         }
+
         if (req.body.year == "" || req.body.year == null) {
           req.body.year = user.year;
         }
+
         if (req.body.nationality == "" || req.body.nationality == null) {
           req.body.nationality = user.nationality;
         }
+
         if (req.body.ethnicity == "" || req.body.ethnicity == null) {
           req.body.ethnicity = user.ethnicity;
         }
@@ -1656,7 +1665,7 @@ module.exports = function (router) {
         user.nationality = req.body.nationality;
         user.ethnicity = req.body.ethnicity;
 
-        user.save(function (err) {
+        user.save(function(err) {
           if (err) {
             res.json({
               success: false,
@@ -1675,6 +1684,242 @@ module.exports = function (router) {
     });
   });
 
+  router.post('/addcompany/', function(req, res) {
+    if (req.body.name == "" || req.body.name == null || req.body.logo == "" || req.body.logo == null || req.body.majors == "" || req.body.majors == null || req.body.news == "" || req.body.news == null || req.body.apply == "" || req.body.apply == null || req.body.industry == "" || req.body.industry == null) {
+      res.json({
+        success: false,
+        message: "Name, logo, majors, industry, news link, and apply link are required."
+      })
+    } else {
+      if (req.body.academia == null || req.body.academia == "") {
+        req.body.academia = false;
+      }
+
+      if (req.body.government == null || req.body.government == "") {
+        req.body.government = false;
+      }
+
+      if (req.body.nonprofit == null || req.body.nonprofit == "") {
+        req.body.nonprofit = false;
+      }
+
+      if (req.body.visa == null || req.body.visa == "") {
+        req.body.visa = false;
+      }
+
+      if (req.body.bbqFall == null || req.body.bbqFall == "") {
+        req.body.bbqFall = false;
+      }
+
+      if (req.body.bbqSpring == null || req.body.bbqSpring == "") {
+        req.body.bbqSpring = false;
+      }
+
+      if (req.body.national == null || req.body.national == "") {
+        req.body.national = false;
+      }
+
+      if (req.body.sponsor == null || req.body.sponsor == "") {
+        req.body.sponsor = false;
+      }
+
+      if (req.body.ipc == null || req.body.ipc == "") {
+        req.body.ipc = false;
+      }
+
+      var company = new Company();
+      company.name = req.body.name;
+      company.logo = req.body.logo;
+      company.majors = req.body.majors;
+      company.overview = req.body.overview;
+      company.mission = req.body.mission;
+      company.goals = req.body.goals;
+      company.model = req.body.model;
+      company.news = req.body.news;
+      company.apply = req.body.apply;
+      company.industry = req.body.industry;
+      company.slogan = req.body.slogan;
+      company.academia = req.body.academia;
+      company.government = req.body.government;
+      company.nonprofit = req.body.nonprofit;
+      company.visa = req.body.visa;
+      company.bbqFall = req.body.bbqFall;
+      company.bbqSpring = req.body.bbqSpring;
+      company.national = req.body.national;
+      company.sponsor = req.body.sponsor;
+      company.ipc = req.body.ipc;
+
+      company.save(function(err) {
+        if (err) {
+          if (err.code == 11000) {
+            res.json({
+              success: false,
+              message: "Company is already in the Corporate Database."
+            });
+          } else {
+            res.json({
+              success: false,
+              message: err
+            });
+          }
+        } else {
+          res.json({
+            success: true,
+            message: "Company successfully added to Corporate Database."
+          });
+        }
+      });
+    }
+
+  });
+
+  router.get('/getcompanies/', function(req, res) {
+    Company.find({
+
+    }, function(err, company) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: company
+      })
+    })
+  });
+
+  router.get('/getcompanyinfo/:companyId', function(req, res) {
+    Company.findOne({
+      _id: req.params.companyId
+    }, function(err, company) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: company
+      });
+    });
+  });
+
+  router.delete('/removecompany/:companyName', function(req, res) {
+    Company.findOne({
+      name: req.params.companyName
+    }, function(err, company) {
+      if (err) throw err;
+
+      Company.deleteOne({
+        name: req.params.companyName
+      }, function(err, deletedCompany) {
+        if (err) throw err;
+
+        User.updateMany({
+          bookmarks: {
+            _id: company._id
+          }
+        }, {
+          $pull: {
+            bookmarks: {
+              _id: company._id
+            }
+          }
+        }, function (err, users) {
+          if (err) throw err;
+
+          res.json({
+            success: true,
+            message: req.params.companyName + " has been removed."
+          });
+        });
+      });
+    });
+  });
+
+  router.put('/addbookmark/:companyId', function(req, res) {
+    User.findOne({
+      username: req.decoded.username
+    }, function(err, user) {
+      if (err) throw err;
+
+      var isDuplicate = false;
+
+      for (var i = 0; i < user.bookmarks.length; i++) {
+        if (req.body.companyId == user.bookmarks[i]._id) {
+          isDuplicate = true;
+          break;
+        }
+      }
+
+      if (isDuplicate) {
+        res.json({
+          success: false
+        });
+      } else {
+        User.findOneAndUpdate({
+          username: req.decoded.username
+        }, {
+          $push: {
+            bookmarks: {
+              _id: req.params.companyId
+            }
+          }
+        }, function(err, newUser) {
+          if (err) throw err;
+
+          console.log(newUser);
+
+          if (!newUser) {
+            res.json({
+              success: false
+            });
+          } else {
+            res.json({
+              success: true,
+              message: "Hello"
+            });
+          }
+        });
+      }
+    });
+  });
+
+  router.get('/getbookmarkinfo/:companyId', function(req, res) {
+    Company.findOne({
+      _id: req.params.companyId
+    }, function(err, company) {
+      if (err) throw err;
+
+      res.json({
+        success: true,
+        message: company
+      });
+    });
+  });
+
+  router.put('/removebookmark/:companyId', function(req, res) {
+    User.updateOne({
+      username: req.decoded.username
+    }, {
+      $pull: {
+        bookmarks: {
+          _id: req.params.companyId
+        }
+      }
+    }, function(err, user) {
+      if (err) throw err;
+
+      User.findOne({
+        username: req.decoded.username
+      }, function(err, updatedUser) {
+        if (err) throw err;
+
+        console.log("UPDATED USER BOOKMARKS");
+        console.log(updatedUser.bookmarks);
+
+        res.json({
+          success: true,
+          message: updatedUser.bookmarks
+        });
+      });
+    });
+  });
 
   return router;
 };

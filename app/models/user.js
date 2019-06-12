@@ -130,6 +130,13 @@ var UserSchema = new Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Code'
     }
+  }],
+  bookmarks: [{
+    company: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Company',
+      unique: true
+    }
   }]
 });
 
