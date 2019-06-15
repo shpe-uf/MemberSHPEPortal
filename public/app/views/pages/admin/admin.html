@@ -90,7 +90,7 @@
                 <div class="table-responsive">
                   <table class="table table-striped">
                     <tr class="table-head">
-                      <th></th>
+                      <th ng-click="admin.sortBy('permission', admin.users)"></th>
                       <th ng-click="admin.sortBy('lastName', admin.users)">NAME</th>
                       <th ng-click="admin.sortBy('username', admin.users)">USERNAME</th>
                       <th ng-click="admin.sortBy('email', admin.users)">EMAIL</th>
@@ -101,7 +101,9 @@
                       <th class="text-center">INFO</th>
                     </tr>
                     <tr ng-repeat="user in admin.users | filter: membersSearchText">
-                      <td><i class="fas fa-star fa-admin" ng-if="user.permission == 'admin'"></i></td>
+                      <td ng-if="user.permission == 'admin'"><i class="fas fa-star fa-admin"></i></td>
+                      <td ng-if="user.permission == 'user'"><i class="far fa-user"></i></td>
+                      <td ng-if="user.permission == 'national'"><i class="fas fa-user"></i></td>
                       <td>{{ user.lastName }}, {{ user.firstName }}</td>
                       <td>{{ user.username }}</td>
                       <td>{{ user.email }}</td>
@@ -433,47 +435,59 @@
             <img class="img-thumbnail" src="../../assets/images/profile.png">
           </div>
           <div class="col-lg-6 col-12">
-            <div class="table-responsive">
-              <table class="table">
-                <tbody>
-                  <tr>
-                    <td>Username</td>
-                    <td>{{ admin.user.username }}</td>
-                  </tr>
-                  <tr>
-                    <td>Email</td>
-                    <td>{{ admin.user.email }}</td>
-                  </tr>
-                  <tr>
-                    <td>Major</td>
-                    <td>{{ admin.user.major }}</td>
-                  </tr>
-                  <tr>
-                    <td>Year</td>
-                    <td>{{ admin.user.year }}</td>
-                  </tr>
-                  <tr>
-                    <td>Country of Origin</td>
-                    <td>{{ admin.user.nationality }}</td>
-                  </tr>
-                  <tr>
-                    <td>Ethnicity</td>
-                    <td>{{ admin.user.ethnicity }}</td>
-                  </tr>
-                  <tr>
-                    <td>Sex</td>
-                    <td>{{ admin.user.sex }}</td>
-                  </tr>
-                  <tr>
-                    <td>ListServ</td>
-                    <td ng-if="admin.user.listServ">Yes</td>
-                    <td ng-if="!admin.user.listServ">No</td>
-                  </tr>
-                </tbody>
-              </table>
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td>Username</td>
+                  <td>{{ admin.user.username }}</td>
+                </tr>
+                <tr>
+                  <td>Email</td>
+                  <td>{{ admin.user.email }}</td>
+                </tr>
+                <tr>
+                  <td>Major</td>
+                  <td>{{ admin.user.major }}</td>
+                </tr>
+                <tr>
+                  <td>Year</td>
+                  <td>{{ admin.user.year }}</td>
+                </tr>
+                <tr>
+                  <td>Country of Origin</td>
+                  <td>{{ admin.user.nationality }}</td>
+                </tr>
+                <tr>
+                  <td>Ethnicity</td>
+                  <td>{{ admin.user.ethnicity }}</td>
+                </tr>
+                <tr>
+                  <td>Sex</td>
+                  <td>{{ admin.user.sex }}</td>
+                </tr>
+                <tr>
+                  <td>ListServ</td>
+                  <td ng-if="admin.user.listServ">Yes</td>
+                  <td ng-if="!admin.user.listServ">No</td>
+                </tr>
+                <tr>
+                  <td>Permission</td>
+                  <td ng-if="admin.user.permission == 'user'">User</td>
+                  <td ng-if="admin.user.permission == 'national'">National Member</td>
+                  <td ng-if="admin.user.permission == 'admin'">Administrator</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="row text-center" style="margin-bottom : 16px">
+              <div class="container">
+                <button type="button" class="btn btn-submit btn-block" ng-hide="admin.user.permission == 'user' " ng-click="admin.changePermission(admin.user.username, 'user')">Make User</button>
+                <button type="button" class="btn btn-submit btn-block" ng-hide="admin.user.permission == 'national' " ng-click="admin.changePermission(admin.user.username,'national')">Make National Member</button>
+                <button type="button" class="btn btn-submit btn-block" ng-hide="admin.user.permission == 'admin' " ng-click="admin.changePermission(admin.user.username , 'admin')">Make Admin </button>
+              </div>
             </div>
           </div>
         </div>
+
         <div class="row">
           <div class="col-12">
             <div class="jumbotron" ng-if="admin.eventArray.length == 0">
