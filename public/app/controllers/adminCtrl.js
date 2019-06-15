@@ -386,9 +386,9 @@ angular.module('adminController', ['userServices'])
       User.changeUserPermission(userData).then(function(data) {
         if (data.data.success == true)
           app.user.permission = permissiontype;
-          User.getUsers().then(function(data) {
-            app.users = data.data.message;
-          });
+        User.getUsers().then(function(data) {
+          app.users = data.data.message;
+        });
       });
     };
 

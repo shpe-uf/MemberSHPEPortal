@@ -100,7 +100,7 @@
   <div class="ng-view"></div>
 
   <div class="modal fade" id="tokenExpire" aria-labelledby="tokenExpireLabel">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
       <div class="modal-content">
         <div class="modal-header">
           <h1 id="tokenExpireLabel">{{ main.modalHeader }}</h1>
@@ -120,8 +120,8 @@
               <div class="sk-cube sk-cube9"></div>
             </div>
           </div>
-          <button type="button" ng-click="main.renewSession();" ng-hide="main.hideButton" class="btn btn-success">Yes</button>
-          <button type="button" ng-click="main.endSession();" ng-hide="main.hideButton" class="btn btn-danger">No</button>
+          <button type="button" ng-click="main.endSession();" ng-hide="main.hideButton" class="btn btn-danger btn-block">No</button>
+          <button type="button" ng-click="main.renewSession();" ng-hide="main.hideButton" class="btn btn-success btn-block">Yes</button>
         </div>
       </div>
     </div>
