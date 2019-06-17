@@ -109,7 +109,8 @@ angular.module('mainController', ['authServices', 'userServices'])
         app.modalBody = 'Your session will expire in 10 minutes. Would you like to renew your session?';
 
         $("#tokenExpire").modal({
-          backdrop: "static"
+          backdrop: "static",
+          keyboard: false
         });
 
         $timeout(function() {
@@ -121,7 +122,8 @@ angular.module('mainController', ['authServices', 'userServices'])
         app.modalHeader = 'Logging out';
 
         $("#tokenExpire").modal({
-          backdrop: "static"
+          backdrop: "static",
+          keyboard: false
         });
 
         $timeout(function() {
@@ -273,7 +275,8 @@ angular.module('mainController', ['authServices', 'userServices'])
       app.successUpdateProfile = false;
 
       $("#profileUpdate").modal({
-        backdrop: "static"
+        backdrop: "static",
+        keyboard: false
       });
     };
 

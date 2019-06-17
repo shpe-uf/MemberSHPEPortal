@@ -73,7 +73,8 @@ angular.module('corporateController', ['userServices', 'authServices'])
 
     this.openMoreInfoModal = function(companyId) {
       $("#moreInfoModal").modal({
-        backdrop: 'static'
+        backdrop: 'static',
+        keyboard: false
       });
 
       User.getCompanyInfo(companyId).then(function(data) {
