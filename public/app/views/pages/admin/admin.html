@@ -2,6 +2,7 @@
   <div class="row">
     <div class="col-sm-12">
       <h1>Admin Panel</h1>
+      <!-- <h2>{{ main.username }}</h2> -->
     </div>
   </div>
 
@@ -479,10 +480,15 @@
               </tbody>
             </table>
             <div class="row text-center" style="margin-bottom : 16px">
-              <div class="container">
-                <button type="button" class="btn btn-submit btn-block" ng-hide="admin.user.permission == 'user' " ng-click="admin.changePermission(admin.user.username, 'user')">Make User</button>
-                <button type="button" class="btn btn-submit btn-block" ng-hide="admin.user.permission == 'national' " ng-click="admin.changePermission(admin.user.username,'national')">Make National Member</button>
-                <button type="button" class="btn btn-submit btn-block" ng-hide="admin.user.permission == 'admin' " ng-click="admin.changePermission(admin.user.username , 'admin')">Make Admin </button>
+              <div class="container" ng-if="admin.user.username != main.username">
+                <button type="button" class="btn btn-submit btn-block" ng-hide="admin.user.permission == 'user'" ng-click="admin.changePermission(admin.user.username, 'user')">Make User</button>
+                <button type="button" class="btn btn-submit btn-block" ng-hide="admin.user.permission == 'national'" ng-click="admin.changePermission(admin.user.username,'national')">Make National Member</button>
+                <button type="button" class="btn btn-submit btn-block" ng-hide="admin.user.permission == 'admin'" ng-click="admin.changePermission(admin.user.username , 'admin')">Make Administrator </button>
+              </div>
+              <div class="container" ng-if="admin.user.username == main.username">
+                <button type="button" class="btn btn-submit btn-block disabled" aria-disabled="true" ng-hide="admin.user.permission == 'user'">Make User</button>
+                <button type="button" class="btn btn-submit btn-block disabled" aria-disabled="true" ng-hide="admin.user.permission == 'national'">Make National Member</button>
+                <button type="button" class="btn btn-submit btn-block disabled" aria-disabled="true" ng-hide="admin.user.permission == 'admin'">Make Administrator </button>
               </div>
             </div>
           </div>
