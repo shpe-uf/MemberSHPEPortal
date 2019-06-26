@@ -87,7 +87,7 @@ angular.module('mainController', ['authServices', 'userServices'])
               console.log("TOKEN EXPIRATION: " + timeCheck);
               showModal(1);
               $interval.cancel(interval);
-            } else if (timeCheck <= 0){
+            } else if (timeCheck <= 0) {
               app.isLoggedIn = false;
               Auth.logout();
             }

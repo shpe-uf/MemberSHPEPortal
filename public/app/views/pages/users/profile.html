@@ -79,9 +79,7 @@
           <div class="alert alert-dark">{{ main.emptyUpdateProfile }}</div>
         </div>
 
-
         <form name="editUserForm" ng-submit="main.editUser(newUserInfo)">
-          <button type="button" class="btn btn-submit btn-block" style="margin-bottom: 16px">Update profile photo</button>
           <div class="form-group">
             <label for="firstName">First Name</label>
             <input type="text" class="form-control" id="firstName" placeholder="{{ main.firstName }}" ng-model="main.newUserInfo.firstName">
