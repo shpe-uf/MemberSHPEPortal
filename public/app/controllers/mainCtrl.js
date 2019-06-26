@@ -1,4 +1,4 @@
-angular.module('mainController', ['authServices', 'userServices'])
+angular.module('mainController', ['ngImgCrop', 'authServices', 'userServices'])
   .controller('mainCtrl', function($timeout, $location, $rootScope, $interval, $window, $route, Auth, User, AuthToken) {
 
     var app = this;
@@ -15,6 +15,21 @@ angular.module('mainController', ['authServices', 'userServices'])
       ethnicity: "",
       username: ""
     };
+
+    app.myImage = '';
+    app.myCroppedImage = '';
+
+    var handleFileSelect = function(evt) {
+      var file = evt.currentTarget.files[0];
+      var reader = new FileReader();
+      reader.onload = function(evt) {
+        app.$apply(function(app) {
+          app.myImage = evt.target.result;
+        });
+      };
+      reader.readAsDataURL(file);
+    };
+    angular.element(document.querySelector('#fileInput')).on('change', handleFileSelect);
 
     this.openRequestModal = function() {
       app.errorMsg = false;
