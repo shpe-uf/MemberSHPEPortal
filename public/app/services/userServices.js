@@ -213,5 +213,10 @@ angular.module('userServices', [])
       return $http.get('api/getmembership/');
     };
 
+    // DOWNLOAD GRADUATING SENIORS LIST
+    userFactory.downloadGradSeniors = function() {
+      return $http.get('api/getgradseniors/');
+    };
+
     return userFactory;
   });

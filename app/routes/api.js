@@ -1957,5 +1957,28 @@ module.exports = function(router) {
     });
   });
 
+  // ENDPOINT TO GET MEMBERSHIP
+  router.get('/getgradseniors/', function(req, res) {
+    User.find({
+      $or: [{'year': '4th Year'}, {'year': '5th Year or higher'}, {'year': 'Graduate Student'}]
+    }).select('firstName lastName major email').exec(function(err, members) {
+      if (err) throw err;
+
+      var fields = ['firstName', 'lastName', 'major', 'email'];
+
+      var json2csvParser = new Json2csvParser({
+        fields
+      });
+
+      var csv = json2csvParser.parse(members);
+
+      fs.writeFile('app/routes/excel/Graduating Seniors List.csv', csv, function(err) {
+        if (err) throw err;
+
+        res.sendFile(__dirname + "/excel/Graduating Seniors List.csv");
+      });
+    });
+  });
+
   return router;
 };

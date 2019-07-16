@@ -412,6 +412,16 @@ angular.module('adminController', ['userServices'])
       });
     };
 
+    this.downloadGradSeniorsList = function() {
+      User.downloadGradSeniors().then(function(data) {
+        var hiddenElement = document.createElement('a');
+        hiddenElement.href = "data:attachment/csv," + encodeURI(data.data);
+        hiddenElement.target = "_blank";
+        hiddenElement.download = "Graduating Seniors List.csv";
+        hiddenElement.click();
+      });
+    };
+
     User.getUsers().then(function(data) {
       if (data.data.success) {
         if (data.data.permission === 'admin') {
