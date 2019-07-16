@@ -6,6 +6,7 @@ angular.module('adminController', ['userServices'])
     app.showCreateEventModal = true;
     app.showEventInfoModal = true;
     app.isClicked = false;
+    app.wipeConfirm = false;
     app.eventName;
     app.companyName;
 
@@ -344,7 +345,6 @@ angular.module('adminController', ['userServices'])
       });
     };
 
-
     this.openCompanyInfoModal = function(companyId) {
       $("#moreInfoModal").modal({
         backdrop: 'static'
@@ -420,6 +420,18 @@ angular.module('adminController', ['userServices'])
         hiddenElement.download = "Graduating Seniors List.csv";
         hiddenElement.click();
       });
+    };
+
+    this.openWipeDatabasesModal = function() {
+      $("#wipeDatabasesModal").modal({
+        backdrop: 'static',
+        keyboard: false
+      });
+    };
+
+    this.closeWipeDatabasesModal = function() {
+      $('#wipeDatabasesModal').modal('hide');
+      app.wipeConfirm = false;
     };
 
     User.getUsers().then(function(data) {

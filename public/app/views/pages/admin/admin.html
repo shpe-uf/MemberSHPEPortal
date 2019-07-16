@@ -288,8 +288,8 @@
                 <button type="button" class="btn btn-submit btn-block" ng-click="admin.openCreateEventModal()">
                   <i class="far fa-folder"></i> Build and Download Archive
                 </button>
-                <button type="button" class="btn btn-danger btn-block" ng-click="admin.openCreateEventModal()">
-                  <i class="fas fa-exclamation-triangle"></i> Wipe Databases
+                <button type="button" class="btn btn-danger btn-block" ng-click="admin.openWipeDatabasesModal()">
+                  <i class="fas fa-exclamation-triangle"></i> Wipe Databases <i class="fas fa-exclamation-triangle"></i>
                 </button>
               </div>
             </div>
@@ -1016,6 +1016,51 @@
             <button type="button" class="btn btn-light" ng-click="admin.closeCompanyInfoModal()">Close</button>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REMOVE COMPANY MODAL -->
+<div class="modal fade" id="wipeDatabasesModal" aria-labelledby="wipeDatabasesModalLabel">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title danger" id="wipeDatabasesLabel">Wipe Databases</h2>
+      </div>
+      <div class="modal-body">
+        <div class="success-message" ng-show="admin.wipeDatabasesSuccessMsg">
+          <div class="alert alert-success">{{ admin.wipeDatabasesSuccessMsg }}</div>
+        </div>
+
+        <div class="error-message" ng-show="admin.wipeDatabasesErrorMsg">
+          <div class="alert alert-danger">{{ admin.wipeDatabasesErrorMsg }}</div>
+        </div>
+
+        <form name="wipeDatabasesForm" ng-submit="admin.wipeDatabases()" novalidate>
+          <div class="row">
+            <div class="col-12 text-center">
+              <i class="fas fa-10x fa-exclamation-triangle danger" style="margin-bottom: 16px"></i>
+              <div ng-if="!admin.wipeConfirm">
+                <p>By wiping the databases you'll be deleting all the data stored in our databases, such as user accounts, events, and requests! The only data that will not be affected are accounts with Admin access, companies in the Corporate
+                  Database, and alumni in the Alumni Directory.</p>
+                <p>If you decide to wipe the databases, please be advised, if you confirm your decision to wipe the databases it will be <b class="danger">absolutely impossible to recover all of the data.</b></p>
+                <p>Please use the <b class="turquoise">Build and Download Archive</b> tool before proceeding to at least maintain all of the data and records in Excel spreadsheets for posterity, you'll then be allowed to wipe the databases.</p>
+              </div>
+              <div ng-if="admin.wipeConfirm">
+                <p class="danger" style="text-transform: uppercase"><b>Are you absolutely sure you wish to wipe the databases?</b></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <button type="reset" class="btn btn-light" ng-click="admin.closeWipeDatabasesModal()">No, nevermind</button>
+              <button type="button" class="btn btn-submit float-right" ng-if="!admin.wipeConfirm" ng-click="admin.wipeConfirm=true">Build and Download Archive</button>
+              <button type="submit" class="btn btn-danger float-right" ng-if="admin.wipeConfirm">Yes, wipe databases</button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   </div>

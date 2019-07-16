@@ -13,7 +13,7 @@
 }
 
 body {
-  color: #252525;
+  color: #6C777D !important;
   font-family: 'body-font';
   margin-bottom: 40px;
 }
@@ -620,4 +620,8 @@ canvas {
 
 .fa-sync {
   padding: 48px 16px;
+}
+
+.danger {
+  color: #DC3545;
 }
