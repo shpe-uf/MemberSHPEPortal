@@ -2,7 +2,6 @@
   <div class="row">
     <div class="col-sm-12">
       <h1>Admin Panel</h1>
-      <!-- <h2>{{ main.username }}</h2> -->
     </div>
   </div>
 
@@ -15,6 +14,7 @@
           <a class="nav-item nav-item-highlight nav-link" id="nav-member-tab" data-toggle="tab" data-target="#nav-member" role="tab" aria-controls="nav-member" aria-selected="false">Members</a>
           <a class="nav-item nav-item-highlight nav-link" id="nav-event-tab" data-toggle="tab" data-target="#nav-event" role="tab" aria-controls="nav-event" aria-selected="false">Events</a>
           <a class="nav-item nav-item-highlight nav-link" id="nav-corporate-tab" data-toggle="tab" data-target="#nav-corporate" role="tab" aria-controls="nav-corporate" aria-selected="false">Corporate Database</a>
+          <a class="nav-item nav-item-highlight nav-link" id="nav-other-tab" data-toggle="tab" data-target="#nav-other" role="tab" aria-controls="nav-other" aria-selected="false">Other Tools</a>
         </div>
       </nav>
 
@@ -269,6 +269,27 @@
             </div>
           </div>
         </div>
+
+
+        <!-- OTHER TOOLS -->
+        <div class="tab-pane fade" id="nav-other" role="tabpanel" aria-labelledby="nav-other-tab">
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <button type="button" class="btn btn-submit" ng-click="admin.downloadListServ()" style="margin-bottom:16px">
+                  <i class="far fa-address-book"></i> Download ListServ List
+                </button>
+                <button type="button" class="btn btn-submit" ng-click="admin.openCreateEventModal()" style="margin-bottom:16px">
+                  <i class="far fa-list-alt"></i> Download Graduating Seniors List
+                </button>
+                <button type="button" class="btn btn-submit" ng-click="admin.openCreateEventModal()" style="margin-bottom:16px">
+                  <i class="far fa-folder"></i> Build and Download Archive
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -373,7 +394,7 @@
         <div class="row">
           <div class="col-sm-12">
             <button type="reset" class="btn btn-light" ng-click="admin.closeEventInfoModal()">Close</button>
-            <button type="button" class="btn btn-excel float-right" ng-click="admin.excel(admin.eventId);" ng-if="admin.attendance.length != 0">
+            <button type="button" class="btn btn-excel float-right" ng-click="admin.excel(admin.eventId, admin.eventName);" ng-if="admin.attendance.length != 0">
               <i class="far fa-file-excel"></i> Download
             </button>
           </div>
@@ -485,7 +506,7 @@
                 <button type="button" class="btn btn-submit btn-block" ng-hide="admin.user.permission == 'national'" ng-click="admin.changePermission(admin.user.username,'national')">Make National Member</button>
                 <button type="button" class="btn btn-submit btn-block" ng-hide="admin.user.permission == 'admin'" ng-click="admin.changePermission(admin.user.username , 'admin')">Make Administrator </button>
               </div>
-              <div class="container" ng-if="admin.user.username == main.username">
+              <div class="container" ng-if="admin.user.username == main.username || admin.user.username == 'cecrigope'">
                 <button type="button" class="btn btn-submit btn-block disabled" aria-disabled="true" ng-hide="admin.user.permission == 'user'">Make User</button>
                 <button type="button" class="btn btn-submit btn-block disabled" aria-disabled="true" ng-hide="admin.user.permission == 'national'">Make National Member</button>
                 <button type="button" class="btn btn-submit btn-block disabled" aria-disabled="true" ng-hide="admin.user.permission == 'admin'">Make Administrator </button>

@@ -84,20 +84,6 @@ module.exports = function(router) {
     });
   });
 
-  // ENDPOINT TO GET LISTSERV
-  router.get('/listServ', function(req, res) {
-    User.find({
-      listServ: true
-    }).select('firstName lastName email').exec(function(err, members) {
-      if (err) throw err;
-
-      res.json({
-        message: members,
-        success: true
-      })
-    });
-  });
-
   // ENDPOINT TO ADD SEMESTER FIELD TO CODES MODEL
   router.put('/addsemester', function(req, res) {
     Code.find({
@@ -1580,8 +1566,6 @@ module.exports = function(router) {
     }).select('firstName lastName major year email').exec(function(err, users) {
       if (err) throw err;
 
-      console.log(users);
-
       var fields = ['firstName', 'lastName', 'major', 'year', 'email'];
 
       var json2csvParser = new Json2csvParser({
@@ -1592,11 +1576,9 @@ module.exports = function(router) {
 
       fs.writeFile('app/routes/excel/EventAttendance.csv', csv, function(err) {
         if (err) throw err;
-      });
 
-      setTimeout(function() {
         res.sendFile(__dirname + "/excel/EventAttendance.csv");
-      }, 2000);
+      });
     });
   });
 
@@ -1922,13 +1904,33 @@ module.exports = function(router) {
       }, function(err, updatedUser) {
         if (err) throw err;
 
-        console.log("UPDATED USER BOOKMARKS");
-        console.log(updatedUser.bookmarks);
-
         res.json({
           success: true,
           message: updatedUser.bookmarks
         });
+      });
+    });
+  });
+
+  // ENDPOINT TO GET LISTSERV
+  router.get('/getlistServ/', function(req, res) {
+    User.find({
+      listServ: true
+    }).select('firstName lastName email major year').exec(function(err, members) {
+      if (err) throw err;
+
+      var fields = ['firstName', 'lastName', 'email', 'major', 'year'];
+
+      var json2csvParser = new Json2csvParser({
+        fields
+      });
+
+      var csv = json2csvParser.parse(members);
+
+      fs.writeFile('app/routes/excel/ListServ.csv', csv, function(err) {
+        if (err) throw err;
+
+        res.sendFile(__dirname + "/excel/ListServ.csv");
       });
     });
   });

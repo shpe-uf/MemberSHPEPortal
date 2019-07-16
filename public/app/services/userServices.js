@@ -162,6 +162,7 @@ angular.module('userServices', [])
     userFactory.editUserInfo = function(userInfo) {
       return $http.put('api/edituserinfo/', userInfo);
     };
+
     //CHANGING USER PERMISSION
     userFactory.changeUserPermission = function(updateUser){
       return $http.put('api/changeuserpermission/', updateUser);
@@ -192,16 +193,20 @@ angular.module('userServices', [])
       return $http.put('api/addbookmark/' + companyId);
     };
 
+    // REMOVE A BOOKMARK FROM THE USER
+    userFactory.removeBookmark = function(companyId) {
+      return $http.put('api/removebookmark/' + companyId);
+    };
+
     // GET THE INFORMATION FOR A USER'S BOOKMARKS
     userFactory.getBookmarkInfo = function(companyId) {
       return $http.get('api/getbookmarkinfo/' + companyId);
     };
 
-    userFactory.removeBookmark = function(companyId) {
-      return $http.put('api/removebookmark/' + companyId);
+    // DOWNLOAD LISTSERV LIST
+    userFactory.downloadListServ = function() {
+      return $http.get('api/getlistserv/');
     };
 
     return userFactory;
-
-
   });

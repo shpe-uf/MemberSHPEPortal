@@ -132,13 +132,12 @@ angular.module('adminController', ['userServices'])
       });
     };
 
-    this.excel = function(eventId) {
-      console.log(eventId);
+    this.excel = function(eventId, eventName) {
       User.getExcelDoc(eventId).then(function(data) {
         var hiddenElement = document.createElement('a');
         hiddenElement.href = "data:attachment/csv," + encodeURI(data.data);
         hiddenElement.target = "_blank";
-        hiddenElement.download = eventId + ".csv";
+        hiddenElement.download = eventName + " Attendance.csv";
         hiddenElement.click();
       });
     };
@@ -378,17 +377,28 @@ angular.module('adminController', ['userServices'])
       $('#moreInfoModal').modal('hide');
     };
 
-    this.changePermission = function(username, permissiontype) {
+    this.changePermission = function(username, permissionType) {
       var userData = {
         username: username,
-        permission: permissiontype
+        permission: permissionType
       };
       User.changeUserPermission(userData).then(function(data) {
-        if (data.data.success == true)
-          app.user.permission = permissiontype;
-        User.getUsers().then(function(data) {
-          app.users = data.data.message;
-        });
+        if (data.data.success == true) {
+          app.user.permission = permissionType;
+          User.getUsers().then(function(data) {
+            app.users = data.data.message;
+          });
+        }
+      });
+    };
+
+    this.downloadListServ = function() {
+      User.downloadListServ().then(function(data) {
+        var hiddenElement = document.createElement('a');
+        hiddenElement.href = "data:attachment/csv," + encodeURI(data.data);
+        hiddenElement.target = "_blank";
+        hiddenElement.download = "ListServ List.csv";
+        hiddenElement.click();
       });
     };
 
