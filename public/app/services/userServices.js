@@ -208,5 +208,10 @@ angular.module('userServices', [])
       return $http.get('api/getlistserv/');
     };
 
+    // DOWNLOAD MEMBERSHIP LIST
+    userFactory.downloadMembership = function() {
+      return $http.get('api/getmembership/');
+    };
+
     return userFactory;
   });

@@ -402,6 +402,16 @@ angular.module('adminController', ['userServices'])
       });
     };
 
+    this.downloadMembershipList = function() {
+      User.downloadMembership().then(function(data) {
+        var hiddenElement = document.createElement('a');
+        hiddenElement.href = "data:attachment/csv," + encodeURI(data.data);
+        hiddenElement.target = "_blank";
+        hiddenElement.download = "Membership List.csv";
+        hiddenElement.click();
+      });
+    };
+
     User.getUsers().then(function(data) {
       if (data.data.success) {
         if (data.data.permission === 'admin') {

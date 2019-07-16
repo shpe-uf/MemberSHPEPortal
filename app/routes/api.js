@@ -1935,5 +1935,27 @@ module.exports = function(router) {
     });
   });
 
+  // ENDPOINT TO GET MEMBERSHIP
+  router.get('/getmembership/', function(req, res) {
+    User.find({
+    }).select('firstName lastName username major year nationality ethnicity sex email listServ permission fallPoints springPoints summerPoints points').exec(function(err, members) {
+      if (err) throw err;
+
+      var fields = ['firstName', 'lastName', 'username', 'major', 'year', 'nationality', 'ethnicity', 'sex', 'email', 'listServ', 'permission', 'fallPoints', 'springPoints', 'summerPoints', 'points'];
+
+      var json2csvParser = new Json2csvParser({
+        fields
+      });
+
+      var csv = json2csvParser.parse(members);
+
+      fs.writeFile('app/routes/excel/Membership List.csv', csv, function(err) {
+        if (err) throw err;
+
+        res.sendFile(__dirname + "/excel/Membership List.csv");
+      });
+    });
+  });
+
   return router;
 };

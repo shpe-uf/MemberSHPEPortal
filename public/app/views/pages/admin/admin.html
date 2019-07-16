@@ -275,14 +275,17 @@
         <div class="tab-pane fade" id="nav-other" role="tabpanel" aria-labelledby="nav-other-tab">
           <div class="container">
             <div class="row">
-              <div class="col-12">
-                <button type="button" class="btn btn-submit" ng-click="admin.downloadListServ()" style="margin-bottom:16px">
+              <div class="col-12 offset-md-3 col-md-6 offset-lg-4 col-lg-4">
+                <button type="button" class="btn btn-submit btn-block" ng-click="admin.downloadMembershipList()">
+                  <i class="fas fa-users"></i> Download Membership List
+                </button>
+                <button type="button" class="btn btn-submit btn-block" ng-click="admin.downloadListServ()">
                   <i class="far fa-address-book"></i> Download ListServ List
                 </button>
-                <button type="button" class="btn btn-submit" ng-click="admin.openCreateEventModal()" style="margin-bottom:16px">
-                  <i class="far fa-list-alt"></i> Download Graduating Seniors List
+                <button type="button" class="btn btn-submit btn-block" ng-click="admin.openCreateEventModal()">
+                  <i class="fas fa-graduation-cap"></i> Download Graduating Seniors List
                 </button>
-                <button type="button" class="btn btn-submit" ng-click="admin.openCreateEventModal()" style="margin-bottom:16px">
+                <button type="button" class="btn btn-submit btn-block" ng-click="admin.openCreateEventModal()">
                   <i class="far fa-folder"></i> Build and Download Archive
                 </button>
               </div>
