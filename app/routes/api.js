@@ -1577,8 +1577,58 @@ module.exports = function(router) {
       fs.writeFile('app/routes/excel/EventAttendance.csv', csv, function(err) {
         if (err) throw err;
 
-        res.sendFile(__dirname + "/excel/EventAttendance.csv");
+        setTimeout(function() {
+          res.sendFile(__dirname + "/excel/EventAttendance.csv");
+        }, 2000);
       });
+    });
+  });
+
+  // ENDPOINT TO CREATE EXCEL FILES FOR EVENT ATTENDANCE
+  router.get('/getexcelcorpdbdoc/', function(req, res) {
+    console.log("LINE 1589");
+    Company.find().select('name majors overview mission goals model news apply industry slogan academia government nonprofit visa bbqFall bbqSpring national sponsor ipc').exec(function(err, companies) {
+      if (err) throw err;
+
+      for (var i = 0; i < companies.length; i++) {
+        var majorsList = "";
+        var industryList = "";
+
+        for (var j = 0; j < companies[i].majors.length; j++) {
+          if (j === companies[i].majors.length - 1) {
+            majorsList += companies[i].majors[j];
+          } else {
+            majorsList += (companies[i].majors[j] + "| ");
+          }
+        }
+
+        for (var j = 0; j < companies[i].industry.length; j++) {
+          if (j === companies[i].industry.length - 1) {
+            industryList += companies[i].industry[j];
+          } else {
+            industryList += (companies[i].industry[j] + "| ");
+          }
+        }
+
+        companies[i].majors = majorsList;
+        companies[i].industry = industryList;
+      }
+
+      var fields = ['name', 'majors', 'overview', 'mission', 'goals', 'model', 'news', 'apply', 'industry', 'slogan', 'academia', 'government', 'nonprofit', 'visa', 'bbqFall', 'bbqSpring', 'national', 'sponsor', 'ipc'];
+
+      var json2csvParser = new Json2csvParser({
+        fields
+      });
+
+      var csv = json2csvParser.parse(companies);
+
+      setTimeout(function() {
+        fs.writeFile('app/routes/excel/Corporate Database.csv', csv, function(err) {
+          if (err) throw err;
+
+          res.sendFile(__dirname + "/excel/Corporate Database.csv");
+        });
+      }, 10000);
     });
   });
 
@@ -1930,15 +1980,16 @@ module.exports = function(router) {
       fs.writeFile('app/routes/excel/ListServ.csv', csv, function(err) {
         if (err) throw err;
 
-        res.sendFile(__dirname + "/excel/ListServ.csv");
+        setTimeout(function() {
+          res.sendFile(__dirname + "/excel/ListServ.csv");
+        }, 2000);
       });
     });
   });
 
   // ENDPOINT TO GET MEMBERSHIP
   router.get('/getmembership/', function(req, res) {
-    User.find({
-    }).select('firstName lastName username major year nationality ethnicity sex email listServ permission fallPoints springPoints summerPoints points').exec(function(err, members) {
+    User.find({}).select('firstName lastName username major year nationality ethnicity sex email listServ permission fallPoints springPoints summerPoints points').exec(function(err, members) {
       if (err) throw err;
 
       var fields = ['firstName', 'lastName', 'username', 'major', 'year', 'nationality', 'ethnicity', 'sex', 'email', 'listServ', 'permission', 'fallPoints', 'springPoints', 'summerPoints', 'points'];
@@ -1952,7 +2003,9 @@ module.exports = function(router) {
       fs.writeFile('app/routes/excel/Membership List.csv', csv, function(err) {
         if (err) throw err;
 
-        res.sendFile(__dirname + "/excel/Membership List.csv");
+        setTimeout(function() {
+          res.sendFile(__dirname + "/excel/Membership List.csv");
+        }, 2000);
       });
     });
   });
@@ -1960,7 +2013,13 @@ module.exports = function(router) {
   // ENDPOINT TO GET MEMBERSHIP
   router.get('/getgradseniors/', function(req, res) {
     User.find({
-      $or: [{'year': '4th Year'}, {'year': '5th Year or higher'}, {'year': 'Graduate Student'}]
+      $or: [{
+        'year': '4th Year'
+      }, {
+        'year': '5th Year or higher'
+      }, {
+        'year': 'Graduate Student'
+      }]
     }).select('firstName lastName major email').exec(function(err, members) {
       if (err) throw err;
 
@@ -1975,7 +2034,9 @@ module.exports = function(router) {
       fs.writeFile('app/routes/excel/Graduating Seniors List.csv', csv, function(err) {
         if (err) throw err;
 
-        res.sendFile(__dirname + "/excel/Graduating Seniors List.csv");
+        setTimeout(function() {
+          res.sendFile(__dirname + "/excel/Graduating Seniors List.csv");
+        }, 2000);
       });
     });
   });

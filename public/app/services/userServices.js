@@ -218,5 +218,10 @@ angular.module('userServices', [])
       return $http.get('api/getgradseniors/');
     };
 
+    // GET CORPORATE DATABASE DATA AS A CSV FILE
+    userFactory.getExcelCorpDBDoc = function() {
+      return $http.get('api/getexcelcorpdbdoc/');
+    };
+
     return userFactory;
   });
