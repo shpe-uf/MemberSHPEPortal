@@ -145,7 +145,6 @@ angular.module('adminController', ['userServices'])
 
     this.excelCorpDB = function() {
       User.getExcelCorpDBDoc().then(function(data) {
-        console.log("GOT DATA!");
         var hiddenElement = document.createElement('a');
         hiddenElement.href = "data:attachment/csv," + encodeURI(data.data);
         hiddenElement.target = "_blank";

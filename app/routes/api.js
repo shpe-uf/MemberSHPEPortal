@@ -1586,7 +1586,6 @@ module.exports = function(router) {
 
   // ENDPOINT TO CREATE EXCEL FILES FOR EVENT ATTENDANCE
   router.get('/getexcelcorpdbdoc/', function(req, res) {
-    console.log("LINE 1589");
     Company.find().select('name majors overview mission goals model news apply industry slogan academia government nonprofit visa bbqFall bbqSpring national sponsor ipc').exec(function(err, companies) {
       if (err) throw err;
 
@@ -1628,7 +1627,7 @@ module.exports = function(router) {
 
           res.sendFile(__dirname + "/excel/Corporate Database.csv");
         });
-      }, 10000);
+      }, 2000);
     });
   });
 
