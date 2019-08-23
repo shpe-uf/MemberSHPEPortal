@@ -432,6 +432,12 @@ angular.module('adminController', ['userServices'])
       });
     };
 
+    this.downloadArchive = function() {
+      User.downloadArchive().then(function(data) {
+        console.log(data.data);
+      });
+    };
+
     this.openWipeDatabasesModal = function() {
       $("#wipeDatabasesModal").modal({
         backdrop: 'static',

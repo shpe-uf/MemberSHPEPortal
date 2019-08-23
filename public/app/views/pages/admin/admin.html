@@ -160,6 +160,7 @@
                       <th class="text-center">POINTS</th>
                       <th class="text-center">MANUAL INPUT</th>
                       <th class="text-center">INFO</th>
+                      <th class="text-center">EXCEL</th>
                     </tr>
                     <tr ng-repeat="code in admin.codes | filter: eventSearchText | orderBy: 'expiration'">
                       <td>{{ code.name }}</td>
@@ -175,6 +176,11 @@
                       <td class="text-center">
                         <button type="button" class="btn btn-submit" ng-click="admin.openEventInfoModal(code)">
                           <i class="fas fa-info"></i>
+                        </button>
+                      </td>
+                      <td class="text-center">
+                        <button type="button" class="btn btn-excel" ng-click="admin.excel(code._id, code.name)">
+                          <i class="far fa-file-excel"></i>
                         </button>
                       </td>
                     </tr>
@@ -290,9 +296,9 @@
                 <button type="button" class="btn btn-submit btn-block" ng-click="admin.downloadGradSeniorsList()">
                   <i class="fas fa-graduation-cap"></i> Download Graduating Seniors List
                 </button>
-                <button type="button" class="btn btn-submit btn-block" ng-click="admin.openCreateEventModal()">
+                <!-- <button type="button" class="btn btn-submit btn-block" ng-click="admin.downloadArchive()">
                   <i class="far fa-folder"></i> Build and Download Archive
-                </button>
+                </button> -->
                 <button type="button" class="btn btn-danger btn-block" ng-click="admin.openWipeDatabasesModal()">
                   <i class="fas fa-exclamation-triangle"></i> Wipe Databases <i class="fas fa-exclamation-triangle"></i>
                 </button>

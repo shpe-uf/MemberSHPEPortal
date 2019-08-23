@@ -1577,9 +1577,9 @@ module.exports = function(router) {
       fs.writeFile('app/routes/excel/EventAttendance.csv', csv, function(err) {
         if (err) throw err;
 
-        setTimeout(function() {
+        // setTimeout(function() {
           res.sendFile(__dirname + "/excel/EventAttendance.csv");
-        }, 2000);
+        // }, 2000);
       });
     });
   });
@@ -2009,7 +2009,7 @@ module.exports = function(router) {
     });
   });
 
-  // ENDPOINT TO GET MEMBERSHIP
+  // ENDPOINT TO GET GRADUATING SENIORS
   router.get('/getgradseniors/', function(req, res) {
     User.find({
       $or: [{
@@ -2037,6 +2037,44 @@ module.exports = function(router) {
           res.sendFile(__dirname + "/excel/Graduating Seniors List.csv");
         }, 2000);
       });
+    });
+  });
+
+  router.get('/getarchive', function(req, res) {
+    Code.find({
+
+    }, function(err, events) {
+      if (err) throw err;
+
+      for (var i = 0; i < events.length; i++) {
+        console.log("========================================");
+        console.log(events[i].name);
+        var eventName = events[i].name;
+
+        User.find({
+          events: {
+            _id: events[i]._id
+          }
+        }).select('firstName lastName major year nationality ethnicity sex email').exec(function(err, members) {
+          if (err) throw err;
+
+          var fields = ['firstName', 'lastName', 'major', 'year', 'nationality', 'ethnicity', 'sex', 'email'];
+
+          console.log(members);
+
+          var json2csvParser = new Json2csvParser({
+            fields
+          });
+
+          var csv = json2csvParser.parse(members);
+          var filePath = "app/routes/excel/" + eventName + ".csv";
+          var shortFilePath = "/excel/" + eventName + ".csv";
+
+          fs.writeFile(filePath, csv, function(err) {
+            if (err) throw err;
+          });
+        });
+      }
     });
   });
 
