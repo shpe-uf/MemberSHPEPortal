@@ -1577,9 +1577,9 @@ module.exports = function(router) {
       fs.writeFile('app/routes/excel/EventAttendance.csv', csv, function(err) {
         if (err) throw err;
 
-        // setTimeout(function() {
+        setTimeout(function() {
           res.sendFile(__dirname + "/excel/EventAttendance.csv");
-        // }, 2000);
+        }, 500);
       });
     });
   });
