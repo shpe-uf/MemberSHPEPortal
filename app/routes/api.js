@@ -1579,7 +1579,7 @@ module.exports = function(router) {
 
         setTimeout(function() {
           res.sendFile(__dirname + "/excel/EventAttendance.csv");
-        }, 500);
+        }, 1500);
       });
     });
   });

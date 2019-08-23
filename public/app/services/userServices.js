@@ -149,8 +149,8 @@ angular.module('userServices', [])
     };
 
     // GENERATE AN EXCEL DOCUMENT FOR A SPECIFIC EVENT
-    userFactory.getExcelDoc = function(eventId) {
-      return $http.get('api/getexceldoc/' + eventId);
+    userFactory.getExcelDoc = function(eventInfo){
+      return $http.get('api/getexceldoc/' + eventInfo);
     };
 
     // GET SPECIFIC INFO FOR A USER
