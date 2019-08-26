@@ -182,6 +182,7 @@ angular.module('mainController', ['authServices', 'userServices'])
           app.summerPoints = data.data.summerPoints;
           app.events = data.data.events;
           app.bookmarks = data.data.bookmarks;
+          app.permission = data.data.permission;
 
           app.newUserInfo.username = data.data.username;
 

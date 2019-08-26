@@ -227,5 +227,21 @@ angular.module('userServices', [])
       return $http.get('api/getexcelcorpdbdoc/');
     };
 
+    userFactory.deleteRequests = function() {
+      return $http.put('api/deleterequests/');
+    };
+
+    userFactory.deleteEvents = function() {
+      return $http.put('api/deleteevents/');
+    };
+
+    userFactory.deleteUsers = function() {
+      return $http.put('api/deleteusers');
+    };
+
+    userFactory.resetPoints = function() {
+      return $http.put('api/resetpoints');
+    };
+
     return userFactory;
   });

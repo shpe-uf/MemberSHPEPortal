@@ -10,6 +10,11 @@ angular.module('adminController', ['userServices'])
     app.eventName;
     app.companyName;
 
+    app.requestsDeleted = false;
+    app.eventsDeleted = false;
+    app.usersDeleted = false;
+    app.pointsReset = false;
+
     app.majors = [
       "Aerospace Engineering",
       "Agricultural & Biological Engineering",
@@ -449,6 +454,33 @@ angular.module('adminController', ['userServices'])
       $('#wipeDatabasesModal').modal('hide');
       app.wipeConfirm = false;
     };
+
+    this.reset = function() {
+      User.deleteRequests().then(function(data) {
+        if (data.data.success) {
+          requestsDeleted = true;
+          User.deleteEvents().then(function(data) {
+            if (data.data.success) {
+              eventsDeleted = true;
+              User.deleteUsers().then(function(data) {
+                if (data.data.success) {
+                  usersDeleted = true;
+                  User.resetPoints().then(function(data) {
+                    if (data.data.success) {
+                      pointsReset = true;
+                    }
+                    if (requestsDeleted && eventsDeleted && usersDeleted && pointsReset) {
+                      $window.location.reload();
+                    }
+                  });
+                }
+              });
+            }
+          });
+        }
+      });
+    }
+
 
     User.getUsers().then(function(data) {
       if (data.data.success) {

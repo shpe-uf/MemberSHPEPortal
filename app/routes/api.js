@@ -2078,5 +2078,57 @@ module.exports = function(router) {
     });
   });
 
+  router.put('/deleterequests', function(req, res) {
+    Request.deleteMany({}, function(err, confirmation) {
+      if (err) throw err;
+
+      res.send({
+        success: true
+      });
+    });
+  });
+
+  router.put('/deleteevents', function(req, res) {
+    Code.deleteMany({}, function(err, confirmation) {
+      if (err) throw err;
+
+      res.send({
+        success: true
+      });
+    });
+  });
+
+  router.put('/deleteusers', function(req, res) {
+    User.deleteMany({
+      $or: [{
+        'permission': 'user'
+      }, {
+        'permission': 'national'
+      }]
+    }, function(err, confirmation) {
+      if (err) throw err;
+
+      res.send({
+        success: true
+      })
+    });
+  });
+
+  router.put('/resetpoints', function(req, res) {
+    User.updateMany({}, {
+      points: 0,
+      fallPoints: 0,
+      springPoints: 0,
+      summerPoints: 0,
+      events: []
+    }, function(err, confirmation) {
+      if (err) throw err;
+
+      res.send({
+        success: true
+      });
+    });
+  });
+
   return router;
 };
