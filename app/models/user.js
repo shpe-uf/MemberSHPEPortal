@@ -38,7 +38,7 @@ var usernameValidator = [
 var passwordValidator = [
   validate({
     validator: 'matches',
-    arguments: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+    arguments: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-.]).{8,}$/,
     message: 'Password must be at least 8 characters. It must contain at least one lowercase character, one uppercase character, one number, and one special character.'
   })
 ];

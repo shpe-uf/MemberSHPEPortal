@@ -149,8 +149,8 @@ angular.module('userServices', [])
     };
 
     // GENERATE AN EXCEL DOCUMENT FOR A SPECIFIC EVENT
-    userFactory.getExcelDoc = function(eventId) {
-      return $http.get('api/getexceldoc/' + eventId);
+    userFactory.getExcelDoc = function(eventInfo){
+      return $http.get('api/getexceldoc/' + eventInfo);
     };
 
     // GET SPECIFIC INFO FOR A USER
@@ -162,6 +162,7 @@ angular.module('userServices', [])
     userFactory.editUserInfo = function(userInfo) {
       return $http.put('api/edituserinfo/', userInfo);
     };
+
     //CHANGING USER PERMISSION
     userFactory.changeUserPermission = function(updateUser){
       return $http.put('api/changeuserpermission/', updateUser);
@@ -192,16 +193,55 @@ angular.module('userServices', [])
       return $http.put('api/addbookmark/' + companyId);
     };
 
+    // REMOVE A BOOKMARK FROM THE USER
+    userFactory.removeBookmark = function(companyId) {
+      return $http.put('api/removebookmark/' + companyId);
+    };
+
     // GET THE INFORMATION FOR A USER'S BOOKMARKS
     userFactory.getBookmarkInfo = function(companyId) {
       return $http.get('api/getbookmarkinfo/' + companyId);
     };
 
-    userFactory.removeBookmark = function(companyId) {
-      return $http.put('api/removebookmark/' + companyId);
+    // DOWNLOAD LISTSERV LIST
+    userFactory.downloadListServ = function() {
+      return $http.get('api/getlistserv/');
+    };
+
+    // DOWNLOAD MEMBERSHIP LIST
+    userFactory.downloadMembership = function() {
+      return $http.get('api/getmembership/');
+    };
+
+    // DOWNLOAD GRADUATING SENIORS LIST
+    userFactory.downloadGradSeniors = function() {
+      return $http.get('api/getgradseniors/');
+    };
+
+    userFactory.downloadArchive = function() {
+      return $http.get('api/getarchive/');
+    };
+
+    // GET CORPORATE DATABASE DATA AS A CSV FILE
+    userFactory.getExcelCorpDBDoc = function() {
+      return $http.get('api/getexcelcorpdbdoc/');
+    };
+
+    userFactory.deleteRequests = function() {
+      return $http.put('api/deleterequests/');
+    };
+
+    userFactory.deleteEvents = function() {
+      return $http.put('api/deleteevents/');
+    };
+
+    userFactory.deleteUsers = function() {
+      return $http.put('api/deleteusers');
+    };
+
+    userFactory.resetPoints = function() {
+      return $http.put('api/resetpoints');
     };
 
     return userFactory;
-
-
   });

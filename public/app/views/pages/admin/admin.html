@@ -2,7 +2,6 @@
   <div class="row">
     <div class="col-sm-12">
       <h1>Admin Panel</h1>
-      <!-- <h2>{{ main.username }}</h2> -->
     </div>
   </div>
 
@@ -15,6 +14,7 @@
           <a class="nav-item nav-item-highlight nav-link" id="nav-member-tab" data-toggle="tab" data-target="#nav-member" role="tab" aria-controls="nav-member" aria-selected="false">Members</a>
           <a class="nav-item nav-item-highlight nav-link" id="nav-event-tab" data-toggle="tab" data-target="#nav-event" role="tab" aria-controls="nav-event" aria-selected="false">Events</a>
           <a class="nav-item nav-item-highlight nav-link" id="nav-corporate-tab" data-toggle="tab" data-target="#nav-corporate" role="tab" aria-controls="nav-corporate" aria-selected="false">Corporate Database</a>
+          <a class="nav-item nav-item-highlight nav-link" id="nav-other-tab" data-toggle="tab" data-target="#nav-other" role="tab" aria-controls="nav-other" aria-selected="false">Other Tools</a>
         </div>
       </nav>
 
@@ -160,6 +160,7 @@
                       <th class="text-center">POINTS</th>
                       <th class="text-center">MANUAL INPUT</th>
                       <th class="text-center">INFO</th>
+                      <th class="text-center">EXCEL</th>
                     </tr>
                     <tr ng-repeat="code in admin.codes | filter: eventSearchText | orderBy: 'expiration'">
                       <td>{{ code.name }}</td>
@@ -175,6 +176,11 @@
                       <td class="text-center">
                         <button type="button" class="btn btn-submit" ng-click="admin.openEventInfoModal(code)">
                           <i class="fas fa-info"></i>
+                        </button>
+                      </td>
+                      <td class="text-center">
+                        <button type="button" class="btn btn-excel" ng-click="admin.excel(code._id, code.name)">
+                          <i class="far fa-file-excel"></i>
                         </button>
                       </td>
                     </tr>
@@ -196,7 +202,7 @@
         <div class="tab-pane fade" id="nav-corporate" role="tabpanel" aria-labelledby="nav-corporate-tab">
           <div class="container">
             <div class="row">
-              <div class="col-10">
+              <div class="col-9">
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-search"></i></span>
@@ -204,10 +210,15 @@
                   <input type="text" class="form-control" ng-model="corporateSearchText">
                 </div>
               </div>
-              <div class="col-2">
-                <button type="button" class="btn btn-submit float-right" ng-click="admin.openAddCompanyModal()" style="margin-bottom:16px">
-                  <i class="fas fa-plus"></i>
-                </button>
+              <div class="col-3">
+                <div class="float-right">
+                  <button type="button" class="btn btn-excel" ng-click="admin.excelCorpDB()" style="margin-bottom:16px">
+                    <i class="far fa-file-excel"></i>
+                  </button>
+                  <button type="button" class="btn btn-submit" ng-click="admin.openAddCompanyModal()" style="margin-bottom:16px">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
               </div>
               <div class="col-12" ng-if="admin.companies.length != 0">
                 <div class="table-responsive">
@@ -269,6 +280,33 @@
             </div>
           </div>
         </div>
+
+
+        <!-- OTHER TOOLS -->
+        <div class="tab-pane fade" id="nav-other" role="tabpanel" aria-labelledby="nav-other-tab">
+          <div class="container">
+            <div class="row">
+              <div class="col-12 offset-md-3 col-md-6 offset-lg-4 col-lg-4">
+                <button type="button" class="btn btn-submit btn-block" ng-click="admin.downloadMembershipList()">
+                  <i class="fas fa-users"></i> Download Membership List
+                </button>
+                <button type="button" class="btn btn-submit btn-block" ng-click="admin.downloadListServ()">
+                  <i class="far fa-address-book"></i> Download ListServ List
+                </button>
+                <button type="button" class="btn btn-submit btn-block" ng-click="admin.downloadGradSeniorsList()">
+                  <i class="fas fa-graduation-cap"></i> Download Graduating Seniors List
+                </button>
+                <!-- <button type="button" class="btn btn-submit btn-block" ng-click="admin.downloadArchive()">
+                  <i class="far fa-folder"></i> Build and Download Archive
+                </button> -->
+                <button type="button" class="btn btn-danger btn-block" ng-click="admin.openWipeDatabasesModal()">
+                  <i class="fas fa-exclamation-triangle"></i> Wipe Databases <i class="fas fa-exclamation-triangle"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -373,7 +411,7 @@
         <div class="row">
           <div class="col-sm-12">
             <button type="reset" class="btn btn-light" ng-click="admin.closeEventInfoModal()">Close</button>
-            <button type="button" class="btn btn-excel float-right" ng-click="admin.excel(admin.eventId);" ng-if="admin.attendance.length != 0">
+            <button type="button" class="btn btn-excel float-right" ng-click="admin.excel(admin.eventId, admin.eventName);" ng-if="admin.attendance.length != 0">
               <i class="far fa-file-excel"></i> Download
             </button>
           </div>
@@ -485,7 +523,7 @@
                 <button type="button" class="btn btn-submit btn-block" ng-hide="admin.user.permission == 'national'" ng-click="admin.changePermission(admin.user.username,'national')">Make National Member</button>
                 <button type="button" class="btn btn-submit btn-block" ng-hide="admin.user.permission == 'admin'" ng-click="admin.changePermission(admin.user.username , 'admin')">Make Administrator </button>
               </div>
-              <div class="container" ng-if="admin.user.username == main.username">
+              <div class="container" ng-if="admin.user.username == main.username || admin.user.username == 'cecrigope'">
                 <button type="button" class="btn btn-submit btn-block disabled" aria-disabled="true" ng-hide="admin.user.permission == 'user'">Make User</button>
                 <button type="button" class="btn btn-submit btn-block disabled" aria-disabled="true" ng-hide="admin.user.permission == 'national'">Make National Member</button>
                 <button type="button" class="btn btn-submit btn-block disabled" aria-disabled="true" ng-hide="admin.user.permission == 'admin'">Make Administrator </button>
@@ -989,6 +1027,51 @@
             <button type="button" class="btn btn-light" ng-click="admin.closeCompanyInfoModal()">Close</button>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REMOVE COMPANY MODAL -->
+<div class="modal fade" id="wipeDatabasesModal" aria-labelledby="wipeDatabasesModalLabel">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title danger" id="wipeDatabasesLabel">Wipe Databases</h2>
+      </div>
+      <div class="modal-body">
+        <div class="success-message" ng-show="admin.wipeDatabasesSuccessMsg">
+          <div class="alert alert-success">{{ admin.wipeDatabasesSuccessMsg }}</div>
+        </div>
+
+        <div class="error-message" ng-show="admin.wipeDatabasesErrorMsg">
+          <div class="alert alert-danger">{{ admin.wipeDatabasesErrorMsg }}</div>
+        </div>
+
+        <form name="wipeDatabasesForm" ng-submit="admin.wipeDatabases()" novalidate>
+          <div class="row">
+            <div class="col-12 text-center">
+              <i class="fas fa-10x fa-exclamation-triangle danger" style="margin-bottom: 16px"></i>
+              <div ng-if="!admin.wipeConfirm">
+                <p>By wiping the databases you'll be deleting all the data stored in our databases, such as user accounts, events, and requests! The only data that will not be affected are accounts with Admin access, companies in the Corporate
+                  Database, and alumni in the Alumni Directory.</p>
+                <p>If you decide to wipe the databases, please be advised, it will be <b class="danger">absolutely impossible to recover all of the data.</b></p>
+                <p>Please download all of the attendance records on MemberSHPE using the Excel Download feature before proceeding.</p>
+              </div>
+              <div ng-if="admin.wipeConfirm">
+                <p class="danger" style="text-transform: uppercase"><b>Are you absolutely sure you wish to wipe the databases?</b></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <button type="reset" class="btn btn-light" ng-click="admin.closeWipeDatabasesModal()">No, nevermind</button>
+              <button type="button" class="btn btn-submit float-right" ng-if="!admin.wipeConfirm" ng-click="admin.wipeConfirm=true">Yes, wipe databases</button>
+              <button type="submit" class="btn btn-danger float-right" ng-if="admin.wipeConfirm" ng-click="admin.reset()">Yes, wipe databases</button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   </div>

@@ -6,8 +6,14 @@ angular.module('adminController', ['userServices'])
     app.showCreateEventModal = true;
     app.showEventInfoModal = true;
     app.isClicked = false;
+    app.wipeConfirm = false;
     app.eventName;
     app.companyName;
+
+    app.requestsDeleted = false;
+    app.eventsDeleted = false;
+    app.usersDeleted = false;
+    app.pointsReset = false;
 
     app.majors = [
       "Aerospace Engineering",
@@ -132,13 +138,22 @@ angular.module('adminController', ['userServices'])
       });
     };
 
-    this.excel = function(eventId) {
-      console.log(eventId);
+    this.excel = function(eventId, eventName) {
       User.getExcelDoc(eventId).then(function(data) {
         var hiddenElement = document.createElement('a');
         hiddenElement.href = "data:attachment/csv," + encodeURI(data.data);
         hiddenElement.target = "_blank";
-        hiddenElement.download = eventId + ".csv";
+        hiddenElement.download = eventName + " Attendance.csv";
+        hiddenElement.click();
+      });
+    };
+
+    this.excelCorpDB = function() {
+      User.getExcelCorpDBDoc().then(function(data) {
+        var hiddenElement = document.createElement('a');
+        hiddenElement.href = "data:attachment/csv," + encodeURI(data.data);
+        hiddenElement.target = "_blank";
+        hiddenElement.download = "Corporate Database.csv";
         hiddenElement.click();
       });
     };
@@ -345,7 +360,6 @@ angular.module('adminController', ['userServices'])
       });
     };
 
-
     this.openCompanyInfoModal = function(companyId) {
       $("#moreInfoModal").modal({
         backdrop: 'static'
@@ -378,19 +392,95 @@ angular.module('adminController', ['userServices'])
       $('#moreInfoModal').modal('hide');
     };
 
-    this.changePermission = function(username, permissiontype) {
+    this.changePermission = function(username, permissionType) {
       var userData = {
         username: username,
-        permission: permissiontype
+        permission: permissionType
       };
       User.changeUserPermission(userData).then(function(data) {
-        if (data.data.success == true)
-          app.user.permission = permissiontype;
-        User.getUsers().then(function(data) {
-          app.users = data.data.message;
-        });
+        if (data.data.success == true) {
+          app.user.permission = permissionType;
+          User.getUsers().then(function(data) {
+            app.users = data.data.message;
+          });
+        }
       });
     };
+
+    this.downloadListServ = function() {
+      User.downloadListServ().then(function(data) {
+        var hiddenElement = document.createElement('a');
+        hiddenElement.href = "data:attachment/csv," + encodeURI(data.data);
+        hiddenElement.target = "_blank";
+        hiddenElement.download = "ListServ List.csv";
+        hiddenElement.click();
+      });
+    };
+
+    this.downloadMembershipList = function() {
+      User.downloadMembership().then(function(data) {
+        var hiddenElement = document.createElement('a');
+        hiddenElement.href = "data:attachment/csv," + encodeURI(data.data);
+        hiddenElement.target = "_blank";
+        hiddenElement.download = "Membership List.csv";
+        hiddenElement.click();
+      });
+    };
+
+    this.downloadGradSeniorsList = function() {
+      User.downloadGradSeniors().then(function(data) {
+        var hiddenElement = document.createElement('a');
+        hiddenElement.href = "data:attachment/csv," + encodeURI(data.data);
+        hiddenElement.target = "_blank";
+        hiddenElement.download = "Graduating Seniors List.csv";
+        hiddenElement.click();
+      });
+    };
+
+    this.downloadArchive = function() {
+      User.downloadArchive().then(function(data) {
+        console.log(data.data);
+      });
+    };
+
+    this.openWipeDatabasesModal = function() {
+      $("#wipeDatabasesModal").modal({
+        backdrop: 'static',
+        keyboard: false
+      });
+    };
+
+    this.closeWipeDatabasesModal = function() {
+      $('#wipeDatabasesModal').modal('hide');
+      app.wipeConfirm = false;
+    };
+
+    this.reset = function() {
+      User.deleteRequests().then(function(data) {
+        if (data.data.success) {
+          requestsDeleted = true;
+          User.deleteEvents().then(function(data) {
+            if (data.data.success) {
+              eventsDeleted = true;
+              User.deleteUsers().then(function(data) {
+                if (data.data.success) {
+                  usersDeleted = true;
+                  User.resetPoints().then(function(data) {
+                    if (data.data.success) {
+                      pointsReset = true;
+                    }
+                    if (requestsDeleted && eventsDeleted && usersDeleted && pointsReset) {
+                      $window.location.reload();
+                    }
+                  });
+                }
+              });
+            }
+          });
+        }
+      });
+    }
+
 
     User.getUsers().then(function(data) {
       if (data.data.success) {

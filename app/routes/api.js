@@ -84,20 +84,6 @@ module.exports = function(router) {
     });
   });
 
-  // ENDPOINT TO GET LISTSERV
-  router.get('/listServ', function(req, res) {
-    User.find({
-      listServ: true
-    }).select('firstName lastName email').exec(function(err, members) {
-      if (err) throw err;
-
-      res.json({
-        message: members,
-        success: true
-      })
-    });
-  });
-
   // ENDPOINT TO ADD SEMESTER FIELD TO CODES MODEL
   router.put('/addsemester', function(req, res) {
     Code.find({
@@ -1580,8 +1566,6 @@ module.exports = function(router) {
     }).select('firstName lastName major year email').exec(function(err, users) {
       if (err) throw err;
 
-      console.log(users);
-
       var fields = ['firstName', 'lastName', 'major', 'year', 'email'];
 
       var json2csvParser = new Json2csvParser({
@@ -1592,10 +1576,57 @@ module.exports = function(router) {
 
       fs.writeFile('app/routes/excel/EventAttendance.csv', csv, function(err) {
         if (err) throw err;
+
+        setTimeout(function() {
+          res.sendFile(__dirname + "/excel/EventAttendance.csv");
+        }, 1500);
+      });
+    });
+  });
+
+  // ENDPOINT TO CREATE EXCEL FILES FOR EVENT ATTENDANCE
+  router.get('/getexcelcorpdbdoc/', function(req, res) {
+    Company.find().select('name majors overview mission goals model news apply industry slogan academia government nonprofit visa bbqFall bbqSpring national sponsor ipc').exec(function(err, companies) {
+      if (err) throw err;
+
+      for (var i = 0; i < companies.length; i++) {
+        var majorsList = "";
+        var industryList = "";
+
+        for (var j = 0; j < companies[i].majors.length; j++) {
+          if (j === companies[i].majors.length - 1) {
+            majorsList += companies[i].majors[j];
+          } else {
+            majorsList += (companies[i].majors[j] + "| ");
+          }
+        }
+
+        for (var j = 0; j < companies[i].industry.length; j++) {
+          if (j === companies[i].industry.length - 1) {
+            industryList += companies[i].industry[j];
+          } else {
+            industryList += (companies[i].industry[j] + "| ");
+          }
+        }
+
+        companies[i].majors = majorsList;
+        companies[i].industry = industryList;
+      }
+
+      var fields = ['name', 'majors', 'overview', 'mission', 'goals', 'model', 'news', 'apply', 'industry', 'slogan', 'academia', 'government', 'nonprofit', 'visa', 'bbqFall', 'bbqSpring', 'national', 'sponsor', 'ipc'];
+
+      var json2csvParser = new Json2csvParser({
+        fields
       });
 
+      var csv = json2csvParser.parse(companies);
+
       setTimeout(function() {
-        res.sendFile(__dirname + "/excel/EventAttendance.csv");
+        fs.writeFile('app/routes/excel/Corporate Database.csv', csv, function(err) {
+          if (err) throw err;
+
+          res.sendFile(__dirname + "/excel/Corporate Database.csv");
+        });
       }, 2000);
     });
   });
@@ -1922,13 +1953,179 @@ module.exports = function(router) {
       }, function(err, updatedUser) {
         if (err) throw err;
 
-        console.log("UPDATED USER BOOKMARKS");
-        console.log(updatedUser.bookmarks);
-
         res.json({
           success: true,
           message: updatedUser.bookmarks
         });
+      });
+    });
+  });
+
+  // ENDPOINT TO GET LISTSERV
+  router.get('/getlistServ/', function(req, res) {
+    User.find({
+      listServ: true
+    }).select('firstName lastName email major year').exec(function(err, members) {
+      if (err) throw err;
+
+      var fields = ['firstName', 'lastName', 'email', 'major', 'year'];
+
+      var json2csvParser = new Json2csvParser({
+        fields
+      });
+
+      var csv = json2csvParser.parse(members);
+
+      fs.writeFile('app/routes/excel/ListServ.csv', csv, function(err) {
+        if (err) throw err;
+
+        setTimeout(function() {
+          res.sendFile(__dirname + "/excel/ListServ.csv");
+        }, 2000);
+      });
+    });
+  });
+
+  // ENDPOINT TO GET MEMBERSHIP
+  router.get('/getmembership/', function(req, res) {
+    User.find({}).select('firstName lastName username major year nationality ethnicity sex email listServ permission fallPoints springPoints summerPoints points').exec(function(err, members) {
+      if (err) throw err;
+
+      var fields = ['firstName', 'lastName', 'username', 'major', 'year', 'nationality', 'ethnicity', 'sex', 'email', 'listServ', 'permission', 'fallPoints', 'springPoints', 'summerPoints', 'points'];
+
+      var json2csvParser = new Json2csvParser({
+        fields
+      });
+
+      var csv = json2csvParser.parse(members);
+
+      fs.writeFile('app/routes/excel/Membership List.csv', csv, function(err) {
+        if (err) throw err;
+
+        setTimeout(function() {
+          res.sendFile(__dirname + "/excel/Membership List.csv");
+        }, 2000);
+      });
+    });
+  });
+
+  // ENDPOINT TO GET GRADUATING SENIORS
+  router.get('/getgradseniors/', function(req, res) {
+    User.find({
+      $or: [{
+        'year': '4th Year'
+      }, {
+        'year': '5th Year or higher'
+      }, {
+        'year': 'Graduate Student'
+      }]
+    }).select('firstName lastName major email').exec(function(err, members) {
+      if (err) throw err;
+
+      var fields = ['firstName', 'lastName', 'major', 'email'];
+
+      var json2csvParser = new Json2csvParser({
+        fields
+      });
+
+      var csv = json2csvParser.parse(members);
+
+      fs.writeFile('app/routes/excel/Graduating Seniors List.csv', csv, function(err) {
+        if (err) throw err;
+
+        setTimeout(function() {
+          res.sendFile(__dirname + "/excel/Graduating Seniors List.csv");
+        }, 2000);
+      });
+    });
+  });
+
+  router.get('/getarchive', function(req, res) {
+    Code.find({
+
+    }, function(err, events) {
+      if (err) throw err;
+
+      for (var i = 0; i < events.length; i++) {
+        console.log("========================================");
+        console.log(events[i].name);
+        var eventName = events[i].name;
+
+        User.find({
+          events: {
+            _id: events[i]._id
+          }
+        }).select('firstName lastName major year nationality ethnicity sex email').exec(function(err, members) {
+          if (err) throw err;
+
+          var fields = ['firstName', 'lastName', 'major', 'year', 'nationality', 'ethnicity', 'sex', 'email'];
+
+          console.log(members);
+
+          var json2csvParser = new Json2csvParser({
+            fields
+          });
+
+          var csv = json2csvParser.parse(members);
+          var filePath = "app/routes/excel/" + eventName + ".csv";
+          var shortFilePath = "/excel/" + eventName + ".csv";
+
+          fs.writeFile(filePath, csv, function(err) {
+            if (err) throw err;
+          });
+        });
+      }
+    });
+  });
+
+  router.put('/deleterequests', function(req, res) {
+    Request.deleteMany({}, function(err, confirmation) {
+      if (err) throw err;
+
+      res.send({
+        success: true
+      });
+    });
+  });
+
+  router.put('/deleteevents', function(req, res) {
+    Code.deleteMany({}, function(err, confirmation) {
+      if (err) throw err;
+
+      res.send({
+        success: true
+      });
+    });
+  });
+
+  router.put('/deleteusers', function(req, res) {
+    User.deleteMany({
+      $or: [{
+        'permission': 'user'
+      }, {
+        'permission': 'national'
+      }]
+    }, function(err, confirmation) {
+      if (err) throw err;
+
+      res.send({
+        success: true
+      })
+    });
+  });
+
+  router.put('/resetpoints', function(req, res) {
+    User.updateMany({}, {
+      points: 0,
+      fallPoints: 0,
+      springPoints: 0,
+      summerPoints: 0,
+      events: []
+    }, function(err, confirmation) {
+      if (err) throw err;
+
+      res.send({
+        success: true
       });
     });
   });
