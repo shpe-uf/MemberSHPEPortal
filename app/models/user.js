@@ -63,6 +63,11 @@ var UserSchema = new Schema({
     type: String,
     required: true
   },
+  graduating: {
+    type: String,
+    required: ["no", "fall", "spring", "summer"],
+    default: "no"
+  },
   nationality: {
     type: String,
     required: true

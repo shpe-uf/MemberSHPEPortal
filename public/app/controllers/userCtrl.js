@@ -309,6 +309,8 @@ angular.module('userControllers', ['userServices'])
         app.regData.listServ = false;
       }
 
+      console.log(app.regData);
+
       User.create(app.regData).then(function(data) {
         if (data.data.success) {
           app.successMsg = data.data.message;

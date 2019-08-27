@@ -28,17 +28,26 @@
           </div>
 
           <div class="form-row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
               <label for="userMajor">Major  <span ng-show="(!regForm.major.$pristine && regForm.major.$error.required) || (regForm.$submitted && regForm.major.$error.required)"> (This field is required)</span></label>
               <select class="form-control" name="major" id="userMajor" ng-model="register.regData.major" required>
                 <option ng-repeat="major in register.majors">{{ major }}</option>
               </select>
             </div>
 
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
               <label for="userYear">Year <span ng-show="(!regForm.year.$pristine && regForm.year.$error.required) || (regForm.$submitted && regForm.year.$error.required)"> (This field is required)</span></label>
               <select class="form-control" name="year" id="userYear" ng-model="register.regData.year" required>
                 <option ng-repeat="year in register.years">{{ year }}</option>
+              </select>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="userYear">Graduating? <span ng-show="(!regForm.year.$pristine && regForm.year.$error.required) || (regForm.$submitted && regForm.year.$error.required)"> (This field is required)</span></label>
+              <select class="form-control" name="graduating" id="userGraduating" ng-model="register.regData.graduating" required>
+                <option value="no">No</option>
+                <option value="fall">Fall Semester</option>
+                <option value="spring">Spring Semester</option>
+                <option value="summer">Summer Semester</option>
               </select>
             </div>
           </div>
