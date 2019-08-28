@@ -58,8 +58,14 @@ html {
 
 .navbar-brand {
   font-family: 'heading-font';
-  font-size: 1.2rem;
+  font-size: 2rem;
   vertical-align: text-bottom;
+}
+
+.orange-text {
+  font-family: 'heading-font';
+  font-size: 2rem;
+  color: #EB4616;
 }
 
 .caps {
@@ -627,4 +633,13 @@ canvas {
 
 .danger {
   color: #DC3545;
+}
+
+.quote-jumbotron {
+  background: url("../images/home-3.jpg");
+  background-position: 50% 0%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 120px 32px;
+  border-radius: 0px;
 }
