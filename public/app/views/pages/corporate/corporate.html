@@ -38,6 +38,9 @@
             </div>
             <div class="row" ng-if="!corporate.empty">
               <div class="col-sm-12">
+                <div style="padding-bottom: 16px !important">
+                  <div class="alert alert-danger">The data shown is for illustrational purposes only.</div>
+                </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-search"></i></span>
@@ -79,32 +82,37 @@
             </div>
           </div>
         </div>
-        <div class="row" ng-if="corporate.bookmarks != 0" ng-repeat="bookmark in corporate.bookmarks | orderBy: 'name'">
-          <div class="col-sm-3">
-            <img class="img-fluid img-company" ng-src="{{ bookmark.logo }}">
+        <div ng-if="corporate.bookmarks != 0">
+          <div style="padding-bottom: 16px !important">
+            <div class="alert alert-danger">The data shown is for illustrational purposes only.</div>
           </div>
-          <div class="col-sm-7">
-            <h2>{{ bookmark.name }}</h2>
-            <div class="row" style="margin-bottom: 16px">
-              <div class="col-12">
-                <p>{{ bookmark.overview }}</p>
-              </div>
-              <div class="col-6">
-                <h4>News Link</h4>
-                <a href="{{ bookmark.apply }}" target="_blank" style="display: inline-block;">Click here</a>
-              </div>
-              <div class="col-6">
-                <h4>Apply Link</h4>
-                <a href="{{ bookmark.apply }}" target="_blank" style="display: inline-block;">Click here</a>
+          <div class="row" ng-repeat="bookmark in corporate.bookmarks | orderBy: 'name'">
+            <div class="col-sm-3">
+              <img class="img-fluid img-company" ng-src="{{ bookmark.logo }}">
+            </div>
+            <div class="col-sm-7">
+              <h2>{{ bookmark.name }}</h2>
+              <div class="row" style="margin-bottom: 16px">
+                <div class="col-12">
+                  <p>{{ bookmark.overview }}</p>
+                </div>
+                <div class="col-6">
+                  <h4>News Link</h4>
+                  <a href="{{ bookmark.apply }}" target="_blank" style="display: inline-block;">Click here</a>
+                </div>
+                <div class="col-6">
+                  <h4>Apply Link</h4>
+                  <a href="{{ bookmark.apply }}" target="_blank" style="display: inline-block;">Click here</a>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-sm-2">
-            <button type="button" class="btn btn-block btn-submit" ng-click="corporate.openMoreInfoModal(bookmark._id)">Profile</button>
-            <button type="button" class="btn btn-block btn-outline-danger" ng-click="corporate.removeBookmark(bookmark._id)">Remove</button>
-          </div>
-          <div class="col-12">
-            <hr>
+            <div class="col-sm-2">
+              <button type="button" class="btn btn-block btn-submit" ng-click="corporate.openMoreInfoModal(bookmark._id)">Profile</button>
+              <button type="button" class="btn btn-block btn-outline-danger" ng-click="corporate.removeBookmark(bookmark._id)">Remove</button>
+            </div>
+            <div class="col-12">
+              <hr>
+            </div>
           </div>
         </div>
       </div>
@@ -119,6 +127,9 @@
         <h2 class="modal-title" id="moreInfoModal">Company Profile</h2>
       </div>
       <div class="modal-body">
+        <div style="padding-bottom: 16px !important">
+          <div class="alert alert-danger">The data shown is for illustrational purposes only.</div>
+        </div>
         <div class="row">
           <div class="col-12">
             <h3>{{ corporate.company.name }}</h3>
