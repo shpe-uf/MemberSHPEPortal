@@ -38,9 +38,6 @@
             </div>
             <div class="row" ng-if="!corporate.empty">
               <div class="col-sm-12">
-                <div style="padding-bottom: 16px !important">
-                  <div class="alert alert-danger">The data shown is for illustrational purposes only.</div>
-                </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-search"></i></span>
@@ -83,9 +80,6 @@
           </div>
         </div>
         <div ng-if="corporate.bookmarks != 0">
-          <div style="padding-bottom: 16px !important">
-            <div class="alert alert-danger">The data shown is for illustrational purposes only.</div>
-          </div>
           <div class="row" ng-repeat="bookmark in corporate.bookmarks | orderBy: 'name'">
             <div class="col-sm-3">
               <img class="img-fluid img-company" ng-src="{{ bookmark.logo }}">
