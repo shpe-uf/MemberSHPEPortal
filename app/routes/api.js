@@ -1582,7 +1582,7 @@ module.exports = function(router) {
 
         setTimeout(function() {
           res.sendFile(__dirname + "/excel/EventAttendance.csv");
-        }, 1500);
+        }, 3000);
       });
     });
   });
@@ -1630,7 +1630,7 @@ module.exports = function(router) {
 
           res.sendFile(__dirname + "/excel/Corporate Database.csv");
         });
-      }, 2000);
+      }, 3000);
     });
   });
 
@@ -1984,7 +1984,7 @@ module.exports = function(router) {
 
         setTimeout(function() {
           res.sendFile(__dirname + "/excel/ListServ.csv");
-        }, 2000);
+        }, 3000);
       });
     });
   });
@@ -2007,7 +2007,7 @@ module.exports = function(router) {
 
         setTimeout(function() {
           res.sendFile(__dirname + "/excel/Membership List.csv");
-        }, 2000);
+        }, 3000);
       });
     });
   });
@@ -2038,7 +2038,7 @@ module.exports = function(router) {
 
         setTimeout(function() {
           res.sendFile(__dirname + "/excel/Graduating Seniors List.csv");
-        }, 2000);
+        }, 3000);
       });
     });
   });
