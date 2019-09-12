@@ -121,7 +121,7 @@ var UserSchema = new Schema({
   },
   permission: {
     type: String,
-    require: ["user", "admin", "national"],
+    require: ["user", "admin", "national", "director"],
     default: 'user'
   },
   listServ: {

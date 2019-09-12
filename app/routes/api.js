@@ -655,6 +655,8 @@ module.exports = function(router) {
           message: 'User not found'
         });
       } else {
+
+        console.log(user.permission);
         res.json({
           success: true,
           message: user.permission

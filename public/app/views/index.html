@@ -64,18 +64,19 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top module-border-wrap">
     <div class="container">
       <a class="navbar-brand" href="/">
-        <!-- <img src="../../assets/images/membershpe_logo.png" height="35" class="d-inline-block align-top"> -->
         SHPE <span class="orange-text">UF</span>
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="/contactus">Contact Us</a>
-        </li>
-      </ul>
       <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto mt-2 mg-lg-0">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/contactus">Contact Us</a>
+            </li>
+          </ul>
+        </ul>
         <ul class="navbar-nav">
           <li class="nav-item">
             <a class="nav-link" href="/register" ng-show="!main.isLoggedIn">Register</a>
@@ -90,7 +91,7 @@
             <a class="nav-link nav-name dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-show="main.isLoggedIn">{{ main.firstName }} {{ main.lastName }}</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <a class="dropdown-item admin-text" href="/admin" ng-show="main.authorized && main.isLoggedIn">Admin Panel</a>
-              <a class="dropdown-item admin-text" href="/statistics" ng-show="main.authorized && main.isLoggedIn">Statistics</a>
+              <a class="dropdown-item admin-text" href="/statistics" ng-show="main.authorized && main.permission == 'admin' && main.isLoggedIn">Statistics</a>
               <a class="dropdown-item" href="/profile">My Profile</a>
               <a class="dropdown-item" href="/rewards">Points Program</a>
               <a class="dropdown-item national-text" href="/alumni" ng-show="main.permission != 'user'">Alumni Directory</a>

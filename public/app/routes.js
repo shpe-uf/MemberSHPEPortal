@@ -38,7 +38,7 @@ var app = angular.module('appRoutes', ['ngRoute'])
         controller: 'alumniCtrl',
         controllerAs: 'alumni',
         authenticated: true,
-        permission: ['admin', 'national']
+        permission: ['admin', 'national', 'director']
       })
 
       .when('/resume', {
@@ -51,7 +51,7 @@ var app = angular.module('appRoutes', ['ngRoute'])
         controller: 'adminCtrl',
         controllerAs: 'admin',
         authenticated: true,
-        permission: ['admin']
+        permission: ['admin', 'director']
       })
 
       .when('/statistics', {
@@ -67,7 +67,7 @@ var app = angular.module('appRoutes', ['ngRoute'])
         controller: 'corporateCtrl',
         controllerAs: 'corporate',
         authenticated: true,
-        permission: ['admin', 'national']
+        permission: ['admin', 'national', 'director']
       })
 
       .when('/forgotusername', {
@@ -138,6 +138,13 @@ app.run(['$rootScope', 'Auth', '$location', 'User', function($rootScope, Auth, $
 
             if (next.$$route.permission.length == 2) {
               if ((next.$$route.permission[0] !== data.data.message) && (next.$$route.permission[1] !== data.data.message)) {
+                event.preventDefault();
+                $location.path('/');
+              }
+            }
+
+            if (next.$$route.permission.length == 3) {
+              if ((next.$$route.permission[0] !== data.data.message) && (next.$$route.permission[1] !== data.data.message) && (next.$$route.permission[2] !== data.data.message)) {
                 event.preventDefault();
                 $location.path('/');
               }

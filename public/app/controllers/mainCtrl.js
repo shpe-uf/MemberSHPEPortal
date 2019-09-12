@@ -187,7 +187,7 @@ angular.module('mainController', ['authServices', 'userServices'])
           app.newUserInfo.username = data.data.username;
 
           User.getPermission().then(function(data) {
-            if (data.data.message === 'admin') {
+            if (data.data.message === 'admin' || data.data.message === 'director') {
               app.authorized = true;
               app.loadme = true;
             } else {
