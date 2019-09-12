@@ -103,6 +103,10 @@ var app = angular.module('appRoutes', ['ngRoute'])
         templateUrl: 'app/views/pages/team.html'
       })
 
+      .when('/contactus', {
+        templateUrl: 'app/views/pages/contact-us.html'
+      })
+
       .otherwise({
         redirectTo: '/'
       });

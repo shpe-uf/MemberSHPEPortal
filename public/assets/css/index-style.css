@@ -104,6 +104,17 @@ hr {
   text-align: center;
 }
 
+.contact-title {
+  background-image: url(../images/eboard.jpg);
+  background-position: 50% 25%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 0px;
+  padding-bottom: 6rem;
+  padding-top: 6rem;
+  text-align: center;
+}
+
 .jumbotron {
   margin-bottom: 30px;
 }
