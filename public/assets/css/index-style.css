@@ -1,5 +1,5 @@
 @font-face {
-  font-family: "heading-font";
+  font-family: "head-font";
   src: url(../fonts/UniSansBold.otf);
 }
 
@@ -57,24 +57,24 @@ html {
 }
 
 .navbar-brand {
-  font-family: 'heading-font';
+  font-family: 'head-font';
   font-size: 2rem;
   vertical-align: text-bottom;
 }
 
 .orange-text {
-  font-family: 'heading-font';
+  font-family: 'head-font';
   font-size: 2rem;
   color: #EB4616;
 }
 
 .caps {
-  font-family: 'heading-font';
+  font-family: 'head-font';
 }
 
 h1, h2, h3, h4, h5 {
   color: #EB4616;
-  font-family: 'heading-font';
+  font-family: 'head-font';
   text-transform: uppercase;
 }
 
